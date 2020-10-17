@@ -1,0 +1,43 @@
+Continents,Territories,Neighbours,,,,,
+North America,Alaska,Northwest Territory,Alberta,Kamchatka,,,
+North America,Alberta,Alaska,Northwest Territory,Ontario,Western United States,,
+North America,Central America,Western United States,Eastern United States,Venezuela,,,
+North America,Eastern United States,Central America,Western United States,Ontario,Quebec,,
+North America,Greenland,Northwest Territory,Ontario,Quebec,Iceland,,
+North America,Northwest Territory,Alaska,Alberta,Ontario,Greenland,,
+North America,Ontario,Alberta,Quebec,Northwest Territory,Eastern United States,Greenland,Western United States
+North America,Quebec,Ontario,Greenland,Eastern United States,,,
+North America,Western United States,Central America,Eastern United States,Ontario,Alberta,,
+South America,Argentina,Peru,Brazil,,,,
+South America,Brazil,Peru,Argentina,Venezuela,North Africa,,
+South America,Peru,Brazil,Venezuela,Argentina,,,
+South America,Venezuela,Central America,Brazil,Peru,,,
+Europe,Great Britan,Iceland,Scandinavia,Northern Europe,Western Europe,,
+Europe,Iceland,Greenland,Scandinavia,Great Britan,,,
+Europe,Northern Europe,Great Britan,Scandinavia,Western Europe,Southern Europe,Ukraine,
+Europe,Scandinavia,Ukraine,Northern Europe,Great Britan,Iceland,,
+Europe,Southern Europe,Northern Europe,Western Europe,Ukraine,Middle East,Egypt,North Africa
+Europe,Ukraine,Scandinavia,Northern Europe,Southern Europe,Middle East,Afghanistan,Ural
+Europe,Western Europe,Great Britan,Northern Europe,Southern Europe,North Africa,,
+Africa,Congo,East Africa,North Africa,South Africa,,,
+Africa,East Africa,Egypt,Congo,Madagascar,South Africa,North Africa,Middle East
+Africa,Egypt,North Africa,East Africa,Middle East,Southern Europe,,
+Africa,Madagascar,East Africa,South Africa,,,,
+Africa,North Africa,Brazil,Western Europe,Southern Europe,Egypt,East Africa,Congo
+Africa,South Africa,Congo,East Africa,Madagascar,,,
+Asia,Afghanistan,Ukraine,Ural,China,India,Middle East,
+Asia,China,Ural,Siberia,Mongolia,Siam,India,Afghanistan
+Asia,India,Afghanistan,China,Siam,Middle East,,
+Asia,Irkutsk,Siberia,Yakutsk,Kamchatka,Mongolia,,
+Asia,Japan,Mongolia,Kamchatka,,,,
+Asia,Kamchatka,Yakutsk,Alaska,Japan,,,
+Asia,Middle East,Southern Europe,Ukraine,Afghanistan,India,East Africa,Egypt
+Asia,Mongolia,Siberia,Irkutsk,Kamchatka,Japan,China,
+Asia,Siam,India,China,Indonesia,,,
+Asia,Siberia,Ural,Yakutsk,Irkutsk,Mongolia,China,
+Asia,Ural,Ukraine,Siberia,China,Afghanistan,,
+Asia,Yakutsk,Siberia,Kamchatka,Irkutsk,,,
+Australia,Eastern Australia,Western Australia,New Guinea,,,,
+Australia,Indonesia,Siam,Western Australia,New Guinea,,,
+Australia,New Guinea,Indonesia,Western Australia,Eastern Australia,,,
+Australia,Western Australia,Eastern Australia,Indonesia,New Guinea,,,
