@@ -9,7 +9,7 @@ public class Dice {
     private final int[] rolls;
 
     /**
-     * Class constructor for src.Dice class.
+     * Class constructor for Dice class.
      * Takes the number of dice to roll and stores the results of each roll into an array of integers.
      * @param numDice the number of dice to roll
      */
@@ -28,7 +28,7 @@ public class Dice {
      * For ex: If the attacker wants to roll with 3 dice, the attacker MUST HAVE a MINIMUM of 4 troops in their territory.
      * @param troops number of troops in the attacking territory.
      * @param numDice number of dice attacker wants to roll with.
-     * @return src.Dice (attacker's rolls)
+     * @return Dice (attacker's rolls)
      */
     public Dice setUpAttackingDice(int troops, int numDice) {
         if(troops > 1 || numDice > 0) {
@@ -38,7 +38,8 @@ public class Dice {
         }
         if(troops <= 1 ) {
             System.out.println("You need at least two troops to attack.");
-        } else {
+        }
+        if(numDice == 0) {
             System.out.println("You cannot roll with zero dice");
         }
         // MAKE SURE TO HANDLE NULL RETURNED FROM THIS METHOD
@@ -49,7 +50,7 @@ public class Dice {
      * This method is used to set up the number of dice the defender will roll with (not optional).
      * The defender will roll with two dice if they have AT LEAST two troops, otherwise the defender will roll one die.
      * @param troops number of troops in the defending territory.
-     * @return src.Dice (defender's rolls)
+     * @return Dice (defender's rolls)
      */
     public Dice setUpDefendingDice(int troops) {
         if(troops > 0) {
@@ -142,8 +143,8 @@ public class Dice {
     }
 
     /**
-     * This method is used to return the rolls generated calling the constructor of the src.Dice class.
-     * @return int[] rolls created when constructing a src.Dice object.
+     * This method is used to return the rolls generated calling the constructor of the Dice class.
+     * @return int[] rolls created when constructing a Dice object.
      */
     public int[] getRoll() {
         return rolls;
