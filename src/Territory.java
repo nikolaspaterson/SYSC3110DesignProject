@@ -39,8 +39,11 @@ public class Territory {
     }
 
     public boolean isNeighbour(Territory territoryToCheck) {
-        // NEED TO ADD IMPLEMENTATION
-        return true;
+        if(this.neighbours.contains(territoryToCheck)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String toString() {
