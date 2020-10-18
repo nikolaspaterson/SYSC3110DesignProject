@@ -6,16 +6,16 @@ The goal of this team project is to reproduce a simplified version of the classi
 
 ### Project Milestones
 
--[ ] Milestone 1: Create a text-based playable game.
--[ ] Milestone 2: Make game GUI based.
--[ ] Milestone 3: Implement AI players and many more features!
--[ ] Milestone 4: Save/load game and custom maps
+- [ ] Milestone 1: Create a text-based playable game.
+- [ ] Milestone 2: Make game GUI based.
+- [ ] Milestone 3: Implement AI players and many more features!
+- [ ] Milestone 4: Save/load game and custom maps
 
 Group 3 in currently in the process of stucturing the game and making sure our classes work together. 
 There are currently a lot of know issues as we are still trying to make the game playable.
 We are all eager to work on this project and cant wait to get a working demo!
 
-This project was created by @aelsammak, @dieuleparfait, @Erik-Iuhas and @nikolaspaterson, with feedback from Carletons best TA @MikeVezina.
+This project was created by [@aelsammak](https://github.com/aelsammak), [@dieuleparfait](https://github.com/dieuleparfait), [@Erik-Iuhas](https://github.com/Erik-Iuhas) and [@nikolaspaterson](https://github.com/nikolaspaterson), with feedback from Carletons best TA [@MikeVezina](https://github.com/MikeVezina).
 
 ### Copyright matters
 If you are interested in our game please check out its original insperation, [Risk: Global Domination](https://store.steampowered.com/app/1128810/RISK_Global_Domination/).
