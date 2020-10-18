@@ -5,7 +5,7 @@
  */
 public enum commandEnum {
     REINFORCE("reinforce"), ATTACK("attack"), FORTIFY("fortify"),
-    RESTART("restart"), UNKNOWN("unknown command");
+    RESTART("restart"), UNKNOWN("unknown command"), SKIP("skip"), MAP("map");
 
     private String commandString;
 
