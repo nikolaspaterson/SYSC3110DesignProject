@@ -3,6 +3,13 @@ package src;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * The Dice class's main responsibility is to generate rolls for the attacker and defender and
+ * to assist the GameEvent class with handling the outcome of an attack.
+ *
+ * @author aelsammak
+ * @version 1.0
+ */
 public class Dice {
 
     private final Random random;
@@ -21,6 +28,9 @@ public class Dice {
         }
     }
 
+    /**
+     * Class constructor for the Dice class. It is used to generate a random hashcode based on today's date
+     */
     public Dice() {
         random = new Random(new Date().hashCode());
     }
@@ -43,8 +53,8 @@ public class Dice {
         if(troops <= 1 ) {
             System.out.println("You need at least two troops to attack.");
         }
-        if(numDice == 0) {
-            System.out.println("You cannot roll with zero dice");
+        if(numDice <= 0) {
+            System.out.println("You cannot roll with " + (numDice) + " dice!");
         }
         // MAKE SURE TO HANDLE NULL RETURNED FROM THIS METHOD
         return null;

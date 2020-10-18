@@ -1,11 +1,22 @@
+package src;
+
 import java.util.HashMap;
 
 public class Player {
-    private HashMap<String, Territory> territoriesOccupied;
 
+    private int deployableTroops;
+    private HashMap<String, Territory> territoriesOccupied;
 
     public Player() {
         this.territoriesOccupied = new HashMap<String, Territory>();
+    }
+
+    public void setDeployableTroops(int deployableTroops) {
+        this.deployableTroops = deployableTroops;
+    }
+
+    public int getDeployableTroops() {
+        return deployableTroops;
     }
 
     public void incrementTroops(Territory territory, int numTroops) {
@@ -19,6 +30,7 @@ public class Player {
     public void addTerritory(String territoryName, Territory territory) {
         territoriesOccupied.put(territoryName, territory);
     }
+
     public void removeTerritory(String territory) {
         territoriesOccupied.remove(territory);
     }
