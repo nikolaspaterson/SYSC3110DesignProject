@@ -14,21 +14,31 @@
  */
 public class command {
 
-    private commandEnum commandAction;
+    private String commandAction;
     private String commandOrigin;
     private String commandTarget;
     private String commandNumber;
 
+    /**
+     * null constructor
+     * @param str
+     */
+    public command(String str){
+        this.commandAction = null;
+        this. commandOrigin = null;
+        this.commandTarget = null;
+        this. commandNumber = null;
+    }
     /**
      * command with only 1 territory
      * @param command
      * @param origin
      * @param number
      */
-    command(commandEnum command, String origin, String number){
+    public command(String command, String origin, String number){
         this.commandAction = command;
         this.commandOrigin = origin;
-        this.commandTarget = origin;
+        this.commandTarget = origin; //Maybe change to null? could avoid attacking self? need to null check somewhere
         this.commandNumber = number;
     }
 
@@ -39,7 +49,7 @@ public class command {
      * @param target
      * @param number
      */
-    command(commandEnum command, String origin, String target, String number){
+    public command(String command, String origin, String target, String number){
         this.commandAction = command;
         this.commandOrigin = origin;
         this.commandTarget = target;
@@ -50,7 +60,7 @@ public class command {
     /**
      * @return command action
      */
-    public commandEnum getCommandAction() {
+    public String getCommandAction() {
         return commandAction;
     }
 
@@ -76,9 +86,10 @@ public class command {
     }
 
     /**
+     * returns true if command is unknown
      * @return boolean based on if command is a known command
      */
     public boolean isUnknown(){
-        return (commandAction == commandEnum.UNKNOWN); //return true if command is UNKNOWN
+        return commandAction == null;
     }
 }
