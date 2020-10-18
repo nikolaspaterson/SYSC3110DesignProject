@@ -151,4 +151,68 @@ public class GameEvent {
         }
     }
 
+    /**
+     * This method is used to calculate the number of troops the player will receive based on how many territories and continents they own.
+     * @param player the player which will receive the bonus troops.
+     */
+    private void troopsReceived(Player player) {
+        int result = 0;
+
+        if ((player.getTerritoriesOccupied().size()) <= 9) {
+            result = 3;
+        } else {
+            result = ((player.getTerritoriesOccupied().size()) / 3);
+        }
+
+        result += troopContinentBonus(player);
+        player.setDeployableTroops(result);
+    }
+
+    /**
+     * This method is used to calculate the amount of extra bonus troops the player gets if they control one or more continent(s).
+     * @param player the player which is receiving the bonus troops.
+     * @return the number of bonus troops.
+     */
+    private int troopContinentBonus(Player player) {
+        int[] continents = new int[6];
+
+        if (player.getTerritoriesOccupied().size() > 0) {
+            for (Territory territory : player.getTerritoriesOccupied().values()) {
+                String continentName = territory.getContinentName();
+
+                switch (continentName) {
+                    case "Asia":
+                        continents[0]++;
+                        break;
+                    case "Australia":
+                        continents[1]++;
+                        break;
+                    case "Europe":
+                        continents[2]++;
+                        break;
+                    case "Africa":
+                        continents[3]++;
+                        break;
+                    case "South America":
+                        continents[4]++;
+                        break;
+                    case "North America":
+                        continents[5]++;
+                        break;
+                }
+            }
+        }
+
+        int troops = 0;
+
+        if (continents[0] == 12) troops += 7; // Asia Bonus
+        if (continents[1] == 4) troops += 2; // Australia Bonus
+        if (continents[2] == 7) troops += 5; // Europe Bonus
+        if (continents[3] == 6) troops += 3; // Africa Bonus
+        if (continents[4] == 4) troops += 2; // South America Bonus
+        if (continents[5] == 9) troops += 5; // North America Bonus
+
+        return troops;
+    }
+
 }
