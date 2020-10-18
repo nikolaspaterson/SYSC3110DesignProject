@@ -6,7 +6,7 @@ import java.util.Random;
 public class Dice {
 
     private final Random random;
-    private final int[] rolls;
+    private int[] rolls;
 
     /**
      * Class constructor for Dice class.
@@ -19,6 +19,10 @@ public class Dice {
         for(int i = 0; i < rolls.length; i++) {
             rolls[i] = rollDie();
         }
+    }
+
+    public Dice() {
+        random = new Random(new Date().hashCode());
     }
 
     /**
@@ -85,7 +89,7 @@ public class Dice {
      *                 -1 - defender loses 1 troop
      *                 -2 - attacker loses 1 troop
      */
-    public int attack(int[] attackerRoll, int[] defenderRoll) {
+    public int attackResult(int[] attackerRoll, int[] defenderRoll) {
         int[] attacking = findMax(attackerRoll);
         int[] defending = findMax(defenderRoll);
 
