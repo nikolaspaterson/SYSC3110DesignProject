@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class GameEvent {
 
-    private Player player;
+    private final Player player;
 
     /**
      * Constructor for GameEvent class where a GameEvent should be initiated by a Player.
@@ -84,9 +84,6 @@ public class GameEvent {
                 System.out.println("Null pointer exception!");
             }
         }
-        else {
-            new Error();
-        }
     }
 
     /**
@@ -146,8 +143,6 @@ public class GameEvent {
                 System.out.println("You cannot move more than " + (territory1.getTroops() - 1));
             }
 
-        } else {
-            new Error();
         }
     }
 
