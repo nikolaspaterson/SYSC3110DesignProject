@@ -5,11 +5,15 @@ import java.util.HashMap;
 public class Player {
 
     private int deployableTroops;
+    private String name;
     private HashMap<String, Territory> territoriesOccupied;
 
-    public Player() {
-        this.territoriesOccupied = new HashMap<String, Territory>();
+    public Player(String name) {
+        this.name = name;
+        territoriesOccupied = new HashMap<String, Territory>();
     }
+
+    public HashMap<String, Territory> getTerritoriesOccupied() { return territoriesOccupied; }
 
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;

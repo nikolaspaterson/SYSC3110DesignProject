@@ -11,9 +11,11 @@ public class Territory {
     private String continentName;
 
 
-    public Territory(Player occupant) {
+    public Territory(Player occupant, String territoryName, String continentName) {
         this.occupant = occupant;
-        this.troops = 0;
+        this.territoryName = territoryName;
+        this.continentName = continentName;
+        troops = 0;
         neighbours = new HashMap<>();
     }
 
