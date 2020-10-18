@@ -2,24 +2,47 @@ package src;
 
 import java.util.Scanner;
 
+/**
+ * The GameEvent class is responsible for handling the events that are generated once a Player reinforces, attacks or fortifies.
+ *
+ * @author aelsammak
+ * @author dieuleparfait
+ * @version 1.0
+ */
 public class GameEvent {
 
     private Player player;
 
+    /**
+     * Constructor for GameEvent class where a GameEvent should be initiated by a Player.
+     * @param player Player that initiates the GameEvent
+     */
     public GameEvent(Player player) {
         this.player = player;
     }
 
+    /**
+     * This method is used to add troops to a territory specified by the Player.
+     * @param territory territory that troops will be added too.
+     * @param troops the number of troops to add.
+     */
     public void reinforce(Territory territory, int troops) {
-        if(territory.getOccupant() == player) {
+        if(territory.getOccupant() == player && troops <= player.getDeployableTroops()) {
             player.incrementTroops(territory, troops);
+            player.setDeployableTroops(player.getDeployableTroops() - troops);
         }
         else {
             new Error();
         }
     }
 
-
+    /**
+     * This method is used by the Player when he/she wants to attack a neighbouring territory that is owned by another player.
+     * This method will remove troops from either side (attacking/defending) based on the attack result.
+     * @param attacking the attacking territory.
+     * @param defending the defending territory.
+     * @param numDice the number of dice the attacker wants to roll with.
+     */
     public void attack(Territory attacking, Territory defending, int numDice) {
 
         if(attacking.getOccupant() == player && defending.getOccupant() != player && attacking.isNeighbour(defending)) {
@@ -66,18 +89,29 @@ public class GameEvent {
         }
     }
 
+    /**
+     * This method is used with combination of the attack() method above to decide if the attacker defeated the defending territory.
+     * IF the attacker won, he/she will be asked how many troops (1 to (attacking.getTroops - 1)) they want to move to their winning territory.
+     * @param attacking the attacking territory.
+     * @param defending the defending territory.
+     */
     public void winningMove(Territory attacking, Territory defending){
         // if attacker defeated defending territory then defender has no more troops.
         if(defending.getTroops() == 0) {
 
-            // Get User input for amount of troops to move to winning territory
+            // get user input for their desired amount of troops to move to the winning territory.
             System.out.println("How many troops do you want to move to the new territory?");
-            System.out.println("You have a choice of moving 1 to " + (attacking.getTroops() - 1));
+
+            if(attacking.getTroops() == 2) {
+                System.out.println("You can only move 1 troop!");
+            } else {
+                System.out.println("You have a choice of moving 1 to " + (attacking.getTroops() - 1));
+            }
 
             Scanner sc = new Scanner(System.in);
             int i = sc.nextInt();
 
-            //CHECK TO SEE IF USER INPUT IS VALID
+            // checking user input validity
             if (i > 0 && i < attacking.getTroops()) {
                 defending.setOccupant(attacking.getOccupant());
                 defending.setTroops(i);
@@ -93,13 +127,20 @@ public class GameEvent {
         }
     }
 
+    /**
+     * This method is used by the player to fortify by moving troops from one territory to another.
+     * A player can move 1 to (territory1.getTroops() - 1) from one (and only one) of their territories into one (and only one) of their adjacent territories.
+     * @param territory1 the territory to move troops FROM.
+     * @param territory2 the territory to move troops INTO.
+     * @param troops the number of troops to move from territory1 to territory2.
+     */
     public void fortify(Territory territory1, Territory territory2, int troops) {
-        if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant() == player) {
+        if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant() == player && territory1.isNeighbour(territory2)) {
 
             if(troops < territory1.getTroops() && troops > 0) {
                 player.decrementTroops(territory1, troops);
                 player.incrementTroops(territory2, troops);
-            } else if (troops == 0){
+            } else if (troops <= 0){
                 System.out.println("No troops will be moved.");
             } else {
                 System.out.println("You cannot move more than " + (territory1.getTroops() - 1));
