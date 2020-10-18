@@ -1,3 +1,5 @@
+package src;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class Territory {
     public void setNeighbour(Territory neighbour){
         neighbours.add(neighbour);
     }
+
     public List<Territory> getNeighbours() {
         return this.neighbours;
     }
@@ -30,9 +33,16 @@ public class Territory {
     public void setOccupant(Player player) {
         this.player = player;
     }
+
     public Player getOccupant() {
         return this.player;
     }
+
+    public boolean isNeighbour(Territory territoryToCheck) {
+        // NEED TO ADD IMPLEMENTATION
+        return true;
+    }
+
     public String toString() {
         return "";
     }
