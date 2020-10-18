@@ -1,6 +1,8 @@
 # SYSC3110DesignProject
 
-![RISK LOGO](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-www.bluestacks.com%2Fbs-images%2Flogo239.png&f=1&nofb=1)
+<p align="center">
+  <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-www.bluestacks.com%2Fbs-images%2Flogo239.png&f=1&nofb=1" />
+</p>
 
 The goal of this team project is to reproduce a simplified version of the classic strategy game RISK.
 
