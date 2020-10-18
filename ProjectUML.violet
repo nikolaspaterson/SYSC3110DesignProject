@@ -57,14 +57,14 @@
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ commandWords()
+      <string>+ commandEnum()
 + isCommand(cmd: String): Boolean
 + showCommands()</string>
      </void>
     </void>
     <void property="name">
      <void property="text">
-      <string>commandWords</string>
+      <string>commandEnum</string>
      </void>
     </void>
    </object>
