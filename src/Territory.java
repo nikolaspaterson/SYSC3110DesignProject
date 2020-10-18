@@ -1,45 +1,55 @@
 package src;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Territory {
-    private Player player;
-    private int troops;
-    private List<Territory> neighbours;
 
-    public Territory() {
-        this.player = new Player();
+    private Player occupant;
+    private int troops;
+    private HashMap<String, Territory> neighbours;
+    private String territoryName;
+    private String continentName;
+
+
+    public Territory(Player occupant) {
+        this.occupant = occupant;
         this.troops = 0;
-        neighbours = new ArrayList<>();
+        neighbours = new HashMap<>();
     }
 
-    public void setTroops(int n) {
-        this.troops = n;
+    public void setContinentName(String continentName) { this.continentName = continentName;}
+
+    public String getContinentName() { return continentName; }
+
+    public void setTerritoryName(String territoryName) { this.territoryName = territoryName; }
+
+    public String getTerritoryName() { return territoryName; }
+
+    public void setTroops(int troops) {
+        this.troops = troops;
     }
 
     public int getTroops() {
-        return this.troops;
+        return troops;
     }
 
-    public void setNeighbour(Territory neighbour){
-        neighbours.add(neighbour);
-    }
+    public void setNeighbour(Territory neighbour){ neighbours.put(neighbour.getTerritoryName() ,neighbour); }
 
-    public List<Territory> getNeighbours() {
+    public HashMap<String,Territory> getNeighbours() {
         return this.neighbours;
     }
 
-    public void setOccupant(Player player) {
-        this.player = player;
+    public void setOccupant(Player occupant) {
+        this.occupant = occupant;
     }
 
     public Player getOccupant() {
-        return this.player;
+        return occupant;
     }
 
     public boolean isNeighbour(Territory territoryToCheck) {
-        if(this.neighbours.contains(territoryToCheck)) {
+        String terrToCheck = territoryToCheck.getTerritoryName();
+        if(this.neighbours.containsKey(terrToCheck)) {
             return true;
         } else {
             return false;
