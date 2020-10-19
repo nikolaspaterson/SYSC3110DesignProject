@@ -108,11 +108,11 @@ public class Territory {
      * @return String combination of the information above.
      */
     public String toString() {
-        String output = "======Territory Name: " + this.territoryName + "======\n";
+        String output = "------>Territory Name: " + this.territoryName + "<------\n";
         output += "======Neighbouring Territories======\n";
 
         for(String str : neighbours.keySet()) {
-            output += "                 " + neighbours.get(str) + "\n";
+            output += "              " + neighbours.get(str) + "\n";
         }
 
         output += "==================";

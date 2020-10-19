@@ -15,20 +15,6 @@ public class Player {
     private String name;
     private HashMap<String, Territory> territoriesOccupied;
 
-    public static void main(String[] args) {
-        Player p1 = new Player("Adi");
-        Player p2 = new Player("Abas");
-
-        Territory Ontario = new Territory(p1, "Ontario", "North America");
-        Territory Quebec = new Territory(p2, "Quebec", "North America");
-
-        p1.addTerritory(Ontario.getTerritoryName(), Ontario);
-        p2.addTerritory(Quebec.getTerritoryName(), Quebec);
-
-        System.out.println(p1.toString());
-        System.out.println(p2.toString());
-    }
-
     /**
      * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
      * @param name the name of the player.
