@@ -3,7 +3,7 @@ package src;
 import java.util.HashMap;
 
 /**
- * The Player class is responsible for containing important attributes that every player should have.
+ * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
  *
  * @author aelsammak
  * @author dieuleparfait
@@ -81,7 +81,18 @@ public class Player {
         territoriesOccupied.remove(territory);
     }
 
+    /**
+     * Combines the Player's Name, all their Territory's owned and how many troops are in each Territory.
+     * @return String combination of information above.
+     */
     public String toString() {
-        return "";
+        String output = "======Player Name: " + this.name + "======\n";
+        for(String str : territoriesOccupied.keySet()) {
+            output += "======Territory Owned======\n";
+            output += "      " + str + "\n";
+            output += "======Troops Owned======\n";
+            output += "      " + territoriesOccupied.get(str).getTroops();
+        }
+        return output;
     }
 }
