@@ -112,7 +112,7 @@ public class Territory {
         output += "======Neighbouring Territories======\n";
 
         for(String str : neighbours.keySet()) {
-            output += "      " + neighbours.get(str) + "\n";
+            output += "                 " + neighbours.get(str) + "\n";
         }
 
         output += "==================";

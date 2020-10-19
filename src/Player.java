@@ -15,6 +15,20 @@ public class Player {
     private String name;
     private HashMap<String, Territory> territoriesOccupied;
 
+    public static void main(String[] args) {
+        Player p1 = new Player("Adi");
+        Player p2 = new Player("Abas");
+
+        Territory Ontario = new Territory(p1, "Ontario", "North America");
+        Territory Quebec = new Territory(p2, "Quebec", "North America");
+
+        p1.addTerritory(Ontario.getTerritoryName(), Ontario);
+        p2.addTerritory(Quebec.getTerritoryName(), Quebec);
+
+        System.out.println(p1.toString());
+        System.out.println(p2.toString());
+    }
+
     /**
      * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
      * @param name the name of the player.
@@ -86,13 +100,13 @@ public class Player {
      * @return String combination of information above.
      */
     public String toString() {
-        String output = "======Player Name: " + this.name + "======\n";
+        String output = "------>Player: " + this.name + "<------\n";
         for(String str : territoriesOccupied.keySet()) {
             output += "======Territory Owned======\n";
-            output += "      " + str + "\n";
+            output += "         " + str + "\n";
             output += "======Troops Owned======\n";
-            output += "      " + territoriesOccupied.get(str).getTroops();
+            output += "            " + territoriesOccupied.get(str).getTroops();
         }
-        return output;
+        return output + "\n";
     }
 }
