@@ -110,12 +110,9 @@ public class Territory {
     public String toString() {
         String output = "------>Territory Name: " + this.territoryName + "<------\n";
         output += "======Neighbouring Territories======\n";
-
         for(String str : neighbours.keySet()) {
             output += "              " + neighbours.get(str) + "\n";
         }
-
-        output += "==================";
         return output;
     }
 }
