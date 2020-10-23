@@ -12,13 +12,13 @@ South America,Argentina,Peru,Brazil,,,,
 South America,Brazil,Peru,Argentina,Venezuela,North Africa,,
 South America,Peru,Brazil,Venezuela,Argentina,,,
 South America,Venezuela,Central America,Brazil,Peru,,,
-Europe,Great Britan,Iceland,Scandinavia,Northern Europe,Western Europe,,
-Europe,Iceland,Greenland,Scandinavia,Great Britan,,,
-Europe,Northern Europe,Great Britan,Scandinavia,Western Europe,Southern Europe,Ukraine,
-Europe,Scandinavia,Ukraine,Northern Europe,Great Britan,Iceland,,
+Europe,Great Britain,Iceland,Scandinavia,Northern Europe,Western Europe,,
+Europe,Iceland,Greenland,Scandinavia,Great Britain,,,
+Europe,Northern Europe,Great Britain,Scandinavia,Western Europe,Southern Europe,Ukraine,
+Europe,Scandinavia,Ukraine,Northern Europe,Great Britain,Iceland,,
 Europe,Southern Europe,Northern Europe,Western Europe,Ukraine,Middle East,Egypt,North Africa
 Europe,Ukraine,Scandinavia,Northern Europe,Southern Europe,Middle East,Afghanistan,Ural
-Europe,Western Europe,Great Britan,Northern Europe,Southern Europe,North Africa,,
+Europe,Western Europe,Great Britain,Northern Europe,Southern Europe,North Africa,,
 Africa,Congo,East Africa,North Africa,South Africa,,,
 Africa,East Africa,Egypt,Congo,Madagascar,South Africa,North Africa,Middle East
 Africa,Egypt,North Africa,East Africa,Middle East,Southern Europe,,
