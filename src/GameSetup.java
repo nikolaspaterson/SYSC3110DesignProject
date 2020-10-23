@@ -25,17 +25,27 @@ public class GameSetup {
         }
 
     /**
-     * By the rules of risk you can have 3-6 players, when there are 3 players
+     * By the rules of risk you can have 2-6 players, when there are 3 players
      * each player starts with 35 troops, this value lowers by five for each
-     * player new player.
+     * player new player. 2 players is a special case and will be assigned 50 per person
      * @param players an array list of players
      */
     private void provide_troops(ArrayList<Player> players) {
-        int distribute_val = 100 - 5 * (players.size() - 3);
+        int distribute_val;
+        if(players.size() == 2){distribute_val = 50;}
+        else{distribute_val = 35 - 5 * (players.size() - 3);}
         for (Player x : players) {
             x.setDeployableTroops(distribute_val);
         }
     }
+
+    /**
+     * This method is in charge of iterating through the ArrayList of players and placing one troop on the unclaimed
+     * territories. After claiming all territories each player begins to randomly distribute troops on their
+     * own territories. The random placement is done by placing one troop at a time for a relatively even distributed
+     * troop count.
+     * @param players ArrayList of players
+     */
     private void distribute_troops(ArrayList<Player> players){
         provide_troops(players);
         Random number_generator = new Random();
@@ -63,6 +73,12 @@ public class GameSetup {
         }
         printWorldInfo();
     }
+
+    /**
+     * This method is used for randomly selecting a territory from a list.
+     * @param list_of_territories a list of territories
+     * @return return the randomly selected territory
+     */
     private Territory select_random_territory(ArrayList<Territory> list_of_territories){
         Random number_generator = new Random();
         int territory_num;
@@ -94,7 +110,8 @@ public class GameSetup {
     }
 
     /**
-     * Read the CSV file and obtain the Neighbours
+     * Read the CSV file and obtain the Neighbours, it does this by reading file TerritoryNeighbour.csv and sorting it
+     * into a String[].
      * @return list of territories
      */
     private ArrayList<String[]> read_csv(){
@@ -117,11 +134,21 @@ public class GameSetup {
         return territory_list;
 
     }
+
+    /**
+     * Iterates through the world map territories and prints the current state of the world at the start of the game.
+     */
     public void printWorldInfo(){
         for(Territory x : world_map.values()){
             x.print_info();
         }
     }
+
+    /**
+     * After gameSetup ends it's final method is used for returning the world map. The gameSetup method could be used again
+     * later if players would like to restart the game.
+     * @return Hashmap of Territories
+     */
     public HashMap<String,Territory> returnWorldMap(){
         return world_map;
     }
