@@ -7,7 +7,7 @@
  * Example commands,
  * reinforce australia 7 -> player will draft 7 troops to australia
  * attack germany poland 12 -> player will attack poland with 12 german troops
- * fortify ontario yukon 5 -> player will fortify ontario with 5 troops from the yukon
+ * fortify ontario yukon 5 -> player will fortify the yukon with 5 troops from ontario
  *
  * @author nikolaspaterson
  * @version 1.0

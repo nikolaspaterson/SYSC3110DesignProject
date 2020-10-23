@@ -11,15 +11,16 @@ public class Game {
     private CommandParser commandParser;
     private Map<String, Territory> worldMap;
     private GameSetup gameSetup;
+    private boolean wantsToQuit;
 
     public Game(){
         printWelcome();
         gameInProgress = true;
+        wantsToQuit = false;
         gameSetup = new GameSetup(playerList);
         worldMap = new HashMap<>();
         gameSetup.returnWorldMap();
-
-
+        playGame();
     }
 
     public Player getPlayerTurn(){
@@ -38,6 +39,12 @@ public class Game {
         }
     }
 
+    public void removePlayer(){
+        for (Player player : playerList){
+            if(player.getTerritoriesOccupied())
+        }
+    }
+
     public Player findWinner(){
         if(playerList.size() == 1){
             gameInProgress = false;
@@ -49,7 +56,7 @@ public class Game {
 
     public void playGame(){
         boolean wantsToQuit = false;
-        while(gameInProgress || wantsToQuit){
+        while(gameInProgress || !wantsToQuit){
             command cmd = commandParser.getCommand();
             wantsToQuit = commandProcessor(cmd);
         }
@@ -61,7 +68,7 @@ public class Game {
 
         switch(command){
             case UNKNOWN:
-                System.out.println("Unknow command, you can type 'help' to see all commands");
+                System.out.println("Unknown command, you can type 'help' to see all commands");
                 break;
 
             case HELP:
@@ -69,10 +76,65 @@ public class Game {
                 break;
 
             case QUIT:
-                wantsToQuit = true;
+                quit(cmd);
                 break;
+
+            case REINFORCE:
+                reinforce(cmd);
+                break;
+
+            case ATTACK:
+                attack(cmd);
+                break;
+
+            case FORTIFY:
+                fortify(cmd);
+                break;
+
+            /*case SKIP:
+                break;
+
+            case MAP:
+                break;*/
         }
         return wantsToQuit;
+    }
+
+    public void skipTurn(){
+
+    }
+
+    public void showMap(){
+
+    }
+
+    public void reinforce(command cmd){
+        if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null){
+            GameEvent gameevent = new GameEvent(getPlayerTurn());
+            Player player = getPlayerTurn();
+            Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
+            gameevent.reinforce(territory, Integer.parseInt(cmd.getCommandNumber()));
+        }
+    }
+
+    public void attack(command cmd){
+        if(cmd.getCommandTarget() != null && cmd.getCommandOrigin() != null){
+            GameEvent gameevent = new GameEvent(getPlayerTurn());
+            Player player = getPlayerTurn();
+            Territory attackingTerritory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
+            Territory defendingTerritory = attackingTerritory.getNeighbours().get(cmd.getCommandTarget());
+            gameevent.attack(attackingTerritory, defendingTerritory, Integer.parseInt(cmd.getCommandNumber()));
+        }
+    }
+
+    public void fortify(command cmd){
+        if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null){
+            GameEvent gameevent = new GameEvent(getPlayerTurn());
+            Player player = getPlayerTurn();
+            Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandTarget());
+            Territory territory2 = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
+            gameevent.fortify(territory,territory2, Integer.parseInt(cmd.getCommandNumber()));
+        }
     }
 
     /**
@@ -104,7 +166,6 @@ public class Game {
             System.out.println("Please enter a number between 2 and 6");
             playerSetUp();
         }
-
     }
 
     /**
@@ -127,14 +188,17 @@ public class Game {
         }
     }
 
+    private boolean quit(command command)
+    {
+        if(command.getCommandOrigin() == null){
+            System.out.println("Quit what?");
+            return false;
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
-        /*ArrayList<Player> player_list = new ArrayList<>();
-        player_list.add(new Player("Franky"));
-        player_list.add(new Player("Freddy"));
-        player_list.add(new Player("Fawney"));
-        player_list.add(new Player("Obama"));
-        GameSetup setup = new GameSetup(player_list);*/
         Game g = new Game();
     }
 
