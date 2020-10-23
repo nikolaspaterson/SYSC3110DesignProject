@@ -17,7 +17,7 @@ Group 3 in currently in the process of stucturing the game and making sure our c
 There are currently a lot of know issues as we are still trying to make the game playable.
 We are all eager to work on this project and cant wait to get a working demo!
 
-This project was created by [@aelsammak](https://github.com/aelsammak), [@dieuleparfait](https://github.com/dieuleparfait), [@Erik-Iuhas](https://github.com/Erik-Iuhas) and [@nikolaspaterson](https://github.com/nikolaspaterson), with feedback from Carletons best TA [@MikeVezina](https://github.com/MikeVezina).
+This project was created by [@aelsammak](https://github.com/aelsammak), [@Erik-Iuhas](https://github.com/Erik-Iuhas) and [@nikolaspaterson](https://github.com/nikolaspaterson), with feedback from Carletons best TA [@MikeVezina](https://github.com/MikeVezina).
 
 ### Copyright matters
 If you are interested in our game please check out its original insperation, [Risk: Global Domination](https://store.steampowered.com/app/1128810/RISK_Global_Domination/).
