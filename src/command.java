@@ -60,8 +60,8 @@ public class command {
     /**
      * @return command action
      */
-    public String getCommandAction() {
-        return commandAction;
+    public commandEnum getCommandAction() {
+        return commandEnum.valueOf(commandAction);
     }
 
     /**
