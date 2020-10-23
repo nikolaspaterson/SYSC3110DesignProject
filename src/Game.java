@@ -7,17 +7,19 @@ import java.util.Scanner;
 public class Game {
     private int currentPlayerTurn;
     private boolean gameInProgress;
-    private List<Player> playerList;
+    private ArrayList<Player> playerList;
     private CommandParser commandParser;
     private Map<String, Territory> worldMap;
     private GameSetup gameSetup;
 
     public Game(){
         printWelcome();
-
         gameInProgress = true;
-        gameSetup.returnWorldMap();
+        gameSetup = new GameSetup(playerList);
         worldMap = new HashMap<>();
+        gameSetup.returnWorldMap();
+
+
     }
 
     public Player getPlayerTurn(){
@@ -80,7 +82,7 @@ public class Game {
     public void setPlayers(int nPlayers){
         playerList = new ArrayList<>();
         for(int i = 1; i <= nPlayers; i++){
-            playerList.add(new Player("Player" + i));
+            playerList.add(new Player("Player " + i));
         }
         currentPlayerTurn = 1;
     }
@@ -93,13 +95,13 @@ public class Game {
         System.out.println("Please type the number of players you want: ");
         String playerNumber = inScanner.nextLine();
         try{
-            if(Integer.parseInt(playerNumber) > 8 || Integer.parseInt(playerNumber) < 2 ){
+            if(Integer.parseInt(playerNumber) > 6 || Integer.parseInt(playerNumber) < 2 ){
                 throw new NumberFormatException();
             }else{
                 setPlayers(Integer.parseInt(playerNumber));
             }
         }catch(NumberFormatException e){
-            System.out.println("Please enter a number between 2 and 8");
+            System.out.println("Please enter a number between 2 and 6");
             playerSetUp();
         }
 
