@@ -1,5 +1,3 @@
-package src;
-
 import java.util.HashMap;
 
 /**
@@ -19,12 +17,11 @@ public class Territory {
 
     /**
      * Class constructor for the Territory class. Sets the player who occupies the territory
-     * @param occupant the player who occupies the territory.
+
      * @param territoryName the name of the territory.
      * @param continentName the continent that the territory is in.
      */
-    public Territory(Player occupant, String territoryName, String continentName) {
-        this.occupant = occupant;
+    public Territory(String territoryName, String continentName) {
         this.territoryName = territoryName;
         this.continentName = continentName;
         troops = 0;
@@ -107,6 +104,14 @@ public class Territory {
      * Combines the name of the Territory and lists all the neighbouring Territories.
      * @return String combination of the information above.
      */
+    public void print_info(){
+        System.out.println("Territory Name: " + territoryName );
+        System.out.println("Continent Name: " + continentName);
+        System.out.println("Neighbours: " + neighbours.keySet().toString());
+        System.out.println("Owner: " + occupant.getName());
+        System.out.println("Troop Count: " + troops);
+        System.out.println("================================================");
+    }
     public String toString() {
         String output = "------>Territory Name: " + this.territoryName + "<------\n";
         output += "======Neighbouring Territories======\n";

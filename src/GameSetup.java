@@ -33,7 +33,7 @@ public class GameSetup {
     private void provide_troops(ArrayList<Player> players) {
         int distribute_val = 100 - 5 * (players.size() - 3);
         for (Player x : players) {
-            x.add_troops(distribute_val);
+            x.setDeployableTroops(distribute_val);
         }
     }
     private void distribute_troops(ArrayList<Player> players){
@@ -45,23 +45,20 @@ public class GameSetup {
         for(int i = 0; unclaimed_territory.size() != 0;i++){
             current_player = players.get(i%players.size());
             current_territory =select_random_territory(unclaimed_territory);
-            current_territory.setPlayer(current_player,current_player.place_troop(1));
-            current_player.add_territory(current_territory);
+            current_territory.setOccupant(current_player);
+            current_territory.setTroops(current_player.placeDeployableTroops(1));
+            current_player.addTerritory(current_territory.getTerritoryName(),current_territory);
             unclaimed_territory.remove(current_territory);
         }
         Territory random_territory;
         ArrayList<Territory> territory_list;
         int spread_factor = 4;
         for(Player curr_player : players){
-            territory_list = new ArrayList<Territory>(curr_player.getTerritories_occupied().values());
-            while(curr_player.getTroop_count_dist() != 0){
+            territory_list = new ArrayList<>(curr_player.getTerritoriesOccupied().values());
+            while(curr_player.getDeployableTroops() != 0){
                 troop_num = 1;
                 random_territory = select_random_territory(territory_list);
-                System.out.println("Terri: " + random_territory.getName());
-                System.out.println("Player: " + random_territory.getPlayerString());
-                System.out.println("Troop Count: " + troop_num);
-                System.out.println("=============================================");
-                random_territory.setTroops(curr_player.place_troop(troop_num));
+                random_territory.setTroops(random_territory.getTroops()+curr_player.placeDeployableTroops(troop_num));
             }
         }
         printWorldInfo();
@@ -78,18 +75,18 @@ public class GameSetup {
      * @param territories ArrayList generated from TerritoryNeighbours.csv
      */
     private void set_neighbours(ArrayList<String[]> territories){
-        String continent_name = "";
-        String territory_name = "";
+        String continent_name;
+        String territory_name;
         for(String[] temp_territory : territories){
             continent_name = temp_territory[0];
             territory_name = temp_territory[1];
-            world_map.put(territory_name,new Territory(continent_name,territory_name));
+            world_map.put(territory_name,new Territory(territory_name,continent_name));
         }
         for(String[] temp_territory : territories){
             territory_name = temp_territory[1];
-            ArrayList<String> temp_sub = new ArrayList<String>(Arrays.asList(temp_territory));
+            ArrayList<String> temp_sub = new ArrayList<>(Arrays.asList(temp_territory));
             for(String temp_neighbours : temp_sub.subList(2,temp_sub.size())){
-                world_map.get(territory_name).set_neighbour(temp_neighbours, world_map.get(temp_neighbours));
+                world_map.get(territory_name).addNeighbour(world_map.get(temp_neighbours));
             }
         }
         unclaimed_territory.addAll(world_map.values());
@@ -98,10 +95,10 @@ public class GameSetup {
 
     /**
      * Read the CSV file and obtain the Neighbours
-     * @return
+     * @return list of territories
      */
     private ArrayList<String[]> read_csv(){
-        String row = "";
+        String row;
         ArrayList<String[]> territory_list = new ArrayList<>();
 
         try {

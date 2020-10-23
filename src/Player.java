@@ -1,4 +1,3 @@
-package src;
 
 import java.util.HashMap;
 
@@ -21,7 +20,10 @@ public class Player {
      */
     public Player(String name) {
         this.name = name;
-        territoriesOccupied = new HashMap<String, Territory>();
+        territoriesOccupied = new HashMap<>();
+    }
+    public String getName(){
+        return name;
     }
 
     /**
@@ -46,6 +48,17 @@ public class Player {
         return deployableTroops;
     }
 
+
+    public int placeDeployableTroops(int troop_count) {
+        if (deployableTroops - troop_count >= 0) {
+            deployableTroops -= troop_count;
+            return troop_count;
+        } else {
+            int temp = deployableTroops;
+            deployableTroops = 0;
+            return temp;
+        }
+    }
     /**
      * Increments the number of troops in a specified territory.
      * @param territory the territory where troops will be added.
@@ -63,6 +76,7 @@ public class Player {
     public void decrementTroops(Territory territory, int numTroops) {
         territory.setTroops(territory.getTroops() - numTroops);
     }
+
 
     /**
      * Adds a territory to the HashMap of territories occupied by the player.
