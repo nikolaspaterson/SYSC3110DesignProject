@@ -1,3 +1,4 @@
+import java.sql.Array;
 import java.util.*;
 
 public class Game {
@@ -89,7 +90,20 @@ public class Game {
     }
 
     public void reinforce(Command cmd){
-        if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null){
+
+        try{
+            GameEvent gameevent = new GameEvent(getPlayerTurn());
+            Player player = getPlayerTurn();
+            Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
+            gameevent.reinforce(territory, Integer.parseInt(cmd.getCommandNumber()));
+        }catch(NullPointerException  | ArrayIndexOutOfBoundsException e){
+            System.out.println("You can only reinforce a territory you own");
+            System.out.println("An example reinforce command looks like the following,");
+            System.out.println("reinforce Canada 5");
+        }
+
+
+        /*if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null){
             GameEvent gameevent = new GameEvent(getPlayerTurn());
             Player player = getPlayerTurn();
             Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
@@ -97,7 +111,7 @@ public class Game {
         }
         else{
             System.out.println("Null value entered, command REINFORCE format is: reinforce your_territory_name troop_count");
-        }
+        }*/
     }
 
     public void attack(Command cmd){
