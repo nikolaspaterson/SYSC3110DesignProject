@@ -79,6 +79,17 @@ We assumed that each player will,
 2. Attack, players can attack several times each turn
 3. Players should only fortify ONCE.
 
+### Text Based User Input Commands
+The user will play the game by typing these commands into the interface.
+1. **help** - prints availiable list of commands
+2. **fortify** - fortify is for moving troops from one owned territory to another. Example: **fortify Ontario Quebec 4**
+3. **worldmap** - prints out the entire state of the map and each players territories
+4. **reinforce** - reinforce is used to place deployableTroops on owned territoreis at the start of each turn. Example: **reinforce Ontario 3**
+5. **attack** - attack is used for attacking an enemy territory, you can only use 1-3 as dice rolls and you provide your territory first then the one you would like to attack next. Example: **attack Ontario EasternUnitedStates 3**
+6. **mymap** - prints out the current player's 
+7. **quit** - closes the game
+8. **skip** - skips the current player turn to go to the next one
+
 
 ### Project Roadmap
 Milestone 2! In the second milestone we are required to convert the game from text based to GUI based and implement Unit Testing. We are looking forward to 
