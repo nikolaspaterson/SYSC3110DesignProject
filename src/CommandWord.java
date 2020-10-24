@@ -2,9 +2,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Stores all the valid commands the players can use
+ * Stores all the valid commands that the players can use.
  */
 public class CommandWord {
+
     private Map<String, CommandEnum> validCommands;
 
     /**
@@ -27,15 +28,6 @@ public class CommandWord {
     public CommandEnum getCommandAction(String cmd){
         CommandEnum isValidActionCommand = validCommands.get(cmd);
         return (isValidActionCommand == null) ? CommandEnum.UNKNOWN : isValidActionCommand;
-    }
-
-    /**
-     * Checks if command is valid
-     * @param cmd A command to be validated
-     * @return boolean based on if command is valid
-     */
-    public boolean isValidCommand(String cmd){
-        return validCommands.containsKey(cmd); //if key exists return true, else false
     }
 
     /**

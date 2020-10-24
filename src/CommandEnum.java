@@ -2,6 +2,7 @@
  * Enum of all commands the player can use
  */
 public enum CommandEnum {
+
     REINFORCE("reinforce"), ATTACK("attack"), FORTIFY("fortify"),
     QUIT("quit"), UNKNOWN("unknown command"), SKIP("skip"),
     WORLDMAP("worldmap"), HELP("help"), MYMAP("mymap");

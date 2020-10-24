@@ -1,9 +1,7 @@
-
 import java.util.HashMap;
 
 /**
  * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
- *
  */
 public class Player {
 
@@ -19,6 +17,11 @@ public class Player {
         this.name = name;
         territoriesOccupied = new HashMap<>();
     }
+
+    /**
+     * Gets the player's name.
+     * @return String - Players name
+     */
     public String getName(){
         return name;
     }
@@ -37,6 +40,11 @@ public class Player {
         this.deployableTroops = deployableTroops;
     }
 
+    /**
+     * Adds the deployableTroops on top of the existing deployableTroops.
+     * This accounts for bonus troops awarded to the player at the beginning of a round.
+     * @param deployableTroops number of deployable troops.
+     */
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
     }
@@ -49,7 +57,11 @@ public class Player {
         return deployableTroops;
     }
 
-
+    /**
+     * Decrements the troops that are available to deploy and returns the value that it was decremented by.
+     * @param troop_count number of troops
+     * @return int - The amount of deployable troops.
+     */
     public int placeDeployableTroops(int troop_count) {
         if (deployableTroops - troop_count >= 0) {
             deployableTroops -= troop_count;
@@ -60,6 +72,7 @@ public class Player {
             return temp;
         }
     }
+
     /**
      * Increments the number of troops in a specified territory.
      * @param territory the territory where troops will be added.
@@ -77,7 +90,6 @@ public class Player {
     public void decrementTroops(Territory territory, int numTroops) {
         territory.setTroops(territory.getTroops() - numTroops);
     }
-
 
     /**
      * Adds a territory to the HashMap of territories occupied by the player.
@@ -124,37 +136,22 @@ public class Player {
                 String continentName = territory.getContinentName();
 
                 switch (continentName) {
-                    case "Asia":
-                        continents[0]++;
-                        break;
-                    case "Australia":
-                        continents[1]++;
-                        break;
-                    case "Europe":
-                        continents[2]++;
-                        break;
-                    case "Africa":
-                        continents[3]++;
-                        break;
-                    case "South America":
-                        continents[4]++;
-                        break;
-                    case "North America":
-                        continents[5]++;
-                        break;
+                    case "Asia" -> continents[0]++;
+                    case "Australia" -> continents[1]++;
+                    case "Europe" -> continents[2]++;
+                    case "Africa" -> continents[3]++;
+                    case "South America" -> continents[4]++;
+                    case "North America" -> continents[5]++;
                 }
             }
         }
-
         int troops = 0;
-
         if (continents[0] == 12) troops += 7; // Asia Bonus
         if (continents[1] == 4) troops += 2; // Australia Bonus
         if (continents[2] == 7) troops += 5; // Europe Bonus
         if (continents[3] == 6) troops += 3; // Africa Bonus
         if (continents[4] == 4) troops += 2; // South America Bonus
         if (continents[5] == 9) troops += 5; // North America Bonus
-
         return troops;
     }
 

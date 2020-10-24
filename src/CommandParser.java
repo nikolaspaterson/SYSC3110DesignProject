@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * This class parses the players console input into valid commands
+ * This class parses the players console input into valid commands.
  */
 public class CommandParser {
 
@@ -9,7 +9,7 @@ public class CommandParser {
     private Scanner inputReader;
 
     /**
-     * Default constructor, creates scanner to read in user input
+     * Default constructor for the CommandParser class, creates scanner to read in user input.
      */
     public CommandParser(){
         validCommands = new CommandWord();

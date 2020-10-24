@@ -54,7 +54,6 @@ public class Dice {
         if(numDice <= 0 || numDice > 3) {
             System.out.println("You cannot roll with " + (numDice) + " dice!");
         }
-        // MAKE SURE TO HANDLE NULL RETURNED FROM THIS METHOD
         return null;
     }
 
@@ -73,7 +72,6 @@ public class Dice {
             }
         }
         System.out.println("You cannot defend with zero troops");
-        // MAKE SURE TO HANDLE NULL RETURNED FROM THIS METHOD
         return null;
     }
 

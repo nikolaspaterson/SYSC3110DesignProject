@@ -37,7 +37,7 @@ public class Command {
     public Command(String command, String origin, String number){
         this.commandAction = command;
         this.commandOrigin = origin;
-        this.commandTarget = ""; //Maybe change to null? could avoid attacking self? need to null check somewhere
+        this.commandTarget = "";
         this.commandNumber = number;
     }
 

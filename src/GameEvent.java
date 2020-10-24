@@ -108,7 +108,6 @@ public class GameEvent {
             Scanner sc = new Scanner(System.in);
             int i = sc.nextInt();
 
-            // checking user input validity
             if (i > 0 && i < attacking.getTroops()) {
                 (attacking.getOccupant()).addTerritory(defending.getTerritoryName(), defending);
                 (defending.getOccupant()).removeTerritory(defending.getTerritoryName());

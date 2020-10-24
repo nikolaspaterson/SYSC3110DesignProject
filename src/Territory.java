@@ -2,7 +2,6 @@ import java.util.HashMap;
 
 /**
  * The Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
- *
  */
 public class Territory {
 
@@ -14,7 +13,6 @@ public class Territory {
 
     /**
      * Class constructor for the Territory class. Sets the player who occupies the territory
-
      * @param territoryName the name of the territory.
      * @param continentName the continent that the territory is in.
      */
@@ -109,6 +107,11 @@ public class Territory {
         System.out.println("Troop Count: " + troops);
         System.out.println("================================================");
     }
+
+    /**
+     * Creates a String that displays the territory name as well as its neighbouring territories
+     * @return String - The string in the description
+     */
     public String toString() {
         String output = "------>Territory Name: " + this.territoryName + "<------\n";
         output += "======Neighbouring Territories======\n";
@@ -116,7 +119,6 @@ public class Territory {
         for(String str : neighbours.keySet()) {
             output += "              " + neighbours.get(str) + "\n";
         }
-
         output += "==================";
         return output;
     }

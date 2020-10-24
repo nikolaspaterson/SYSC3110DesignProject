@@ -1,9 +1,11 @@
 import java.util.*;
 
 /**
- * This is the games main class, this class is used to initialize all other classes
+ * The Game class's main responsibility is to act as the brain
+ *  of the RISK game. This class is used to initialize all other classes.
  */
 public class Game {
+
     private int currentPlayerTurn;
     private ArrayList<Player> playerList;
     private CommandParser commandParser;
@@ -21,7 +23,7 @@ public class Game {
     }
 
     /**
-     * @return the current players turn
+     * @return Player - the current players turn
      */
     public Player getPlayerTurn(){
         return playerList.get(currentPlayerTurn-1);
@@ -78,6 +80,7 @@ public class Game {
 
     /**
      * Allows players to skip their turn
+     * @param command - command passed to skip method
      */
     public void skip(Command command){
         if(command.getLength() == 1){
@@ -89,6 +92,7 @@ public class Game {
 
     /**
      * Processes user commands and calls the corresponding methods
+     * @param cmd - The user input command
      * @return boolean based on if player wants to quit
      */
     private boolean commandProcessor(Command cmd){
@@ -131,7 +135,7 @@ public class Game {
 
     /**
      * Does some command checking and calls GaveEvent's reinforce method
-     * @param cmd
+     * @param cmd - The user input command
      */
     public void reinforce(Command cmd){
         if(!(cmd.getCommandOrigin().isEmpty()) && !(cmd.getCommandNumber().isEmpty())) {
@@ -152,7 +156,7 @@ public class Game {
 
     /**
      * Checks command format and calls GameEvent's attack method
-     * @param cmd
+     * @param cmd - The user input command
      */
     public void attack(Command cmd){
         if(!(cmd.getCommandTarget().isEmpty()) && !(cmd.getCommandOrigin().isEmpty()) && !(cmd.getCommandNumber().isEmpty())){
@@ -177,7 +181,7 @@ public class Game {
 
     /**
      * Checks command format and calls GameEvent's fortify method
-     * @param cmd
+     * @param cmd - The user input command
      */
     public void fortify(Command cmd){
         if(!(cmd.getCommandTarget().isEmpty()) && !(cmd.getCommandOrigin().isEmpty()) && !(cmd.getCommandNumber().isEmpty())){
@@ -202,7 +206,7 @@ public class Game {
 
     /**
      * initializes playerList
-     * @param nPlayers
+     * @param nPlayers - The number of players playing the game
      */
     public void setPlayers(int nPlayers){
         for(int i = 1; i <= nPlayers; i++){
@@ -249,7 +253,7 @@ public class Game {
 
     /**
      * prints help message to console
-     * @param command
+     * @param command - The user input command
      */
     public void printHelp(Command command){
         if(command.getLength() == 1){
@@ -263,8 +267,8 @@ public class Game {
 
     /**
      * checks if the player really wants to quit
-     * @param command
-     * @return
+     * @param command - The user input command
+     * @return boolean - True if player types only 'quit', else false
      */
     private boolean quit(Command command)
     {
@@ -275,9 +279,7 @@ public class Game {
         return true;
     }
 
-
     public static void main(String[] args) {
         Game g = new Game();
     }
-
 }
