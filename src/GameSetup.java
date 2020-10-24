@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class GameSetup {
@@ -117,7 +114,8 @@ public class GameSetup {
         ArrayList<String[]> territory_list = new ArrayList<>();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(this.territory_CSV));
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(this.territory_CSV)));
             reader.readLine(); //Skip first line
             while((row = reader.readLine()) != null){
                 String[] territories = row.split(",");
