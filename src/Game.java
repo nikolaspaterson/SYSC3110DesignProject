@@ -98,9 +98,13 @@ public class Game {
                 showMyMap();
                 break;
         }
-        System.out.println(getPlayerTurn().getName() + "'s turn : ");
-        System.out.println("you have " + getPlayerTurn().getDeployableTroops() + " to START deploying");
-        return wantsToQuit;
+        if(wantsToQuit){
+            return wantsToQuit;
+        }else{
+            System.out.println(getPlayerTurn().getName() + "'s turn : ");
+            System.out.println("you have " + getPlayerTurn().getDeployableTroops() + " to START deploying");
+            return wantsToQuit;
+        }
     }
 
     public void showWorldMap(){

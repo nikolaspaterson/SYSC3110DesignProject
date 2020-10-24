@@ -6,7 +6,6 @@ import java.util.Random;
  * to assist the GameEvent class with handling the outcome of an attack.
  *
  * @author aelsammak
- * @author dieuleparfait
  * @version 1.0
  */
 public class Dice {
