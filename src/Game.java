@@ -28,8 +28,8 @@ public class Game {
             currentPlayerTurn++;
         }
         checkPlayerStanding();
-        GameEvent gameevent = new GameEvent(playerList.get(currentPlayerTurn-1));
-        gameevent.troopsReceived(gameevent.getPlayer());
+        (playerList.get(currentPlayerTurn-1)).troopsReceived();
+        findWinner();
     }
 
     public void checkPlayerStanding(){
@@ -98,6 +98,8 @@ public class Game {
                 showMyMap();
                 break;
         }
+        System.out.println(getPlayerTurn().getName() + "'s turn : ");
+        System.out.println("you have " + getPlayerTurn().getDeployableTroops() + " to START deploying");
         return wantsToQuit;
     }
 
@@ -159,8 +161,9 @@ public class Game {
         }
         GameSetup gameSetup = new GameSetup(playerList);
         currentPlayerTurn = 1;
-        GameEvent gameevent = new GameEvent(playerList.get(currentPlayerTurn-1));
-        gameevent.troopsReceived(gameevent.getPlayer());
+        (playerList.get(currentPlayerTurn-1)).troopsReceived();
+        System.out.println(getPlayerTurn().getName() + "'s turn : ");
+        System.out.println("you have " + getPlayerTurn().getDeployableTroops() + " to START deploying");
     }
 
     /**

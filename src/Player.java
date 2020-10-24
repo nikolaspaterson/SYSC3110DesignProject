@@ -40,6 +40,10 @@ public class Player {
         this.deployableTroops = deployableTroops;
     }
 
+    public void addDeployableTroops(int deployableTroops) {
+        this.deployableTroops += deployableTroops;
+    }
+
     /**
      * Gets the amount of deployable troops the player can use during their reinforcement.
      * @return int number of deployable troops.
@@ -93,6 +97,68 @@ public class Player {
      */
     public void removeTerritory(String territory) {
         territoriesOccupied.remove(territory);
+    }
+
+    /**
+     * This method is used to calculate the number of troops the player will receive based on how many territories and continents they own.
+     */
+    public void troopsReceived() {
+        int result = 0;
+
+        if ((this.getTerritoriesOccupied().size()) <= 9) {
+            result = 3;
+        } else {
+            result = ((this.getTerritoriesOccupied().size()) / 3);
+        }
+
+        result += troopContinentBonus();
+        this.addDeployableTroops(result);
+    }
+
+    /**
+     * This method is used to calculate the amount of extra bonus troops the player gets if they control one or more continent(s).
+     * @return the number of bonus troops.
+     */
+    public int troopContinentBonus() {
+        int[] continents = new int[6];
+
+        if (this.getTerritoriesOccupied().size() > 0) {
+            for (Territory territory : this.getTerritoriesOccupied().values()) {
+                String continentName = territory.getContinentName();
+
+                switch (continentName) {
+                    case "Asia":
+                        continents[0]++;
+                        break;
+                    case "Australia":
+                        continents[1]++;
+                        break;
+                    case "Europe":
+                        continents[2]++;
+                        break;
+                    case "Africa":
+                        continents[3]++;
+                        break;
+                    case "South America":
+                        continents[4]++;
+                        break;
+                    case "North America":
+                        continents[5]++;
+                        break;
+                }
+            }
+        }
+
+        int troops = 0;
+
+        if (continents[0] == 12) troops += 7; // Asia Bonus
+        if (continents[1] == 4) troops += 2; // Australia Bonus
+        if (continents[2] == 7) troops += 5; // Europe Bonus
+        if (continents[3] == 6) troops += 3; // Africa Bonus
+        if (continents[4] == 4) troops += 2; // South America Bonus
+        if (continents[5] == 9) troops += 5; // North America Bonus
+
+        return troops;
     }
 
     /**

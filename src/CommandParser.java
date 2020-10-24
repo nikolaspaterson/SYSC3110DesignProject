@@ -26,8 +26,6 @@ public class CommandParser {
         String inputCommand;
         String[] inputCommands;
 
-        System.out.println("player1 its is your turn:");
-
         inputCommand = inputReader.nextLine();//read in from console
         inputCommands = inputCommand.trim().split("\\s+"); //trim leading and trailing spaces and split at remaining spaces
 
