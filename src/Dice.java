@@ -1,4 +1,3 @@
-import java.util.Date;
 import java.util.Random;
 
 /**
@@ -6,7 +5,6 @@ import java.util.Random;
  * to assist the GameEvent class with handling the outcome of an attack.
  *
  * @author aelsammak
- * @author dieuleparfait
  * @version 1.0
  */
 public class Dice {
@@ -20,7 +18,7 @@ public class Dice {
      * @param numDice the number of dice to roll
      */
     public Dice(int numDice) {
-        random = new Random(new Date().hashCode());
+        random = new Random();
         rolls = new int[numDice];
         for(int i = 0; i < rolls.length; i++) {
             rolls[i] = rollDie();
@@ -28,10 +26,10 @@ public class Dice {
     }
 
     /**
-     * Class constructor for the Dice class. It is used to generate a random hashcode based on today's date
+     * Class constructor for the Dice class. It is used to generate a random hashcode
      */
     public Dice() {
-        random = new Random(new Date().hashCode());
+        random = new Random();
     }
 
     /**
@@ -44,7 +42,7 @@ public class Dice {
      * @return Dice (attacker's rolls)
      */
     public Dice setUpAttackingDice(int troops, int numDice) {
-        if(troops > 1 || numDice > 0) {
+        if((troops > 1 && troops != numDice) && (numDice > 0 && numDice <= 3)) {
             if (numDice < (troops + 1)) {
                 return new Dice(numDice);
             }
@@ -52,7 +50,10 @@ public class Dice {
         if(troops <= 1 ) {
             System.out.println("You need at least two troops to attack.");
         }
-        if(numDice <= 0) {
+        if(numDice >= troops){
+            System.out.println("You cannot roll with " + numDice + " because you have " + troops +" troops!");
+        }
+        if(numDice <= 0 || numDice > 3) {
             System.out.println("You cannot roll with " + (numDice) + " dice!");
         }
         // MAKE SURE TO HANDLE NULL RETURNED FROM THIS METHOD
@@ -99,10 +100,20 @@ public class Dice {
      *                 -2 - attacker loses 1 troop
      */
     public int attackResult(int[] attackerRoll, int[] defenderRoll) {
+        System.out.print("Attacker Rolls: ");
+        for(int x : attackerRoll){
+            System.out.print(" || " + x + " || ");
+        }
+        System.out.print("Defender Rolls: ");
+        for(int x : defenderRoll){
+            System.out.print(" || " + x + " || ");
+        }
+        System.out.println();
         int[] attacking = findMax(attackerRoll);
         int[] defending = findMax(defenderRoll);
 
-        if(attacking.length >= 2 && defending.length == 2) {
+        if(attacking.length == 2 && defending.length == 2) {
+            System.out.println("Attacker Max Roll: " + " || " + attacking[0] +", " +attacking[1] + " || "  + "Defender Max Roll: "+" || " + defending[0] +", " +defending[1] +" || ");
             if((attacking[0] > defending[0]) && (attacking[1] > defending[1])) {
                 //defender loses 2 troops
                 return 2;
@@ -114,6 +125,7 @@ public class Dice {
                 return 0;
             }
         } else {
+            System.out.println("Attacker Max Roll: " + " || " + attacking[0] + " || "  + "Defender Max Roll: "+" || " + defending[0] +" || ");
             if(attacking[0] > defending[0]) {
                 //defender loses 1 troop
                 return -1;

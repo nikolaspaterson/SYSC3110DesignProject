@@ -4,7 +4,7 @@ public class Game {
     private int currentPlayerTurn;
     private ArrayList<Player> playerList;
     private CommandParser commandParser;
-
+    private HashMap<String,Territory> worldMap;
     public Game(){
         playerList = new ArrayList<>();
         printWelcome();
@@ -98,6 +98,7 @@ public class Game {
                 showMyMap();
                 break;
         }
+        System.out.println("=======================================");
         System.out.println(getPlayerTurn().getName() + "'s turn : ");
         System.out.println("you have " + getPlayerTurn().getDeployableTroops() + " to START deploying");
         return wantsToQuit;
@@ -120,20 +121,30 @@ public class Game {
             Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
             gameevent.reinforce(territory, Integer.parseInt(cmd.getCommandNumber()));
         }
+        else{
+            System.out.println("Null value entered, command REINFORCE format is: reinforce your_territory_name troop_count");
+        }
     }
 
     public void attack(Command cmd){
-
         if(cmd.getCommandTarget() != null && cmd.getCommandOrigin() != null && cmd.getCommandNumber() != null){
-            try{
-                GameEvent gameevent = new GameEvent(getPlayerTurn());
-                Player player = getPlayerTurn();
-                Territory attackingTerritory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
-                Territory defendingTerritory = attackingTerritory.getNeighbours().get(cmd.getCommandTarget());
-                gameevent.attack(attackingTerritory, defendingTerritory, Integer.parseInt(cmd.getCommandNumber()));
-            }catch(NullPointerException e){
-                System.out.println("Please enter a neighbouring territory that is owned by a different player");
+            if(worldMap.get(cmd.getCommandTarget()) == null || worldMap.get(cmd.getCommandOrigin()) == null){
+                System.out.println("That territory doesn't exist, make sure you type territory names with proper capitalization!");
+
+            } else {
+                try {
+                    GameEvent gameevent = new GameEvent(getPlayerTurn());
+                    Player player = getPlayerTurn();
+                    Territory attackingTerritory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
+                    Territory defendingTerritory = attackingTerritory.getNeighbours().get(cmd.getCommandTarget());
+                    gameevent.attack(attackingTerritory, defendingTerritory, Integer.parseInt(cmd.getCommandNumber()));
+                } catch (NullPointerException e) {
+                    System.out.println("Please enter a neighbouring territory that is owned by a different player");
+                }
             }
+        }
+        else{
+            System.out.println("Null value entered, command ATTACK format is: attack your_territory_name enemy_territory_name troop_count");
         }
     }
 
@@ -160,6 +171,7 @@ public class Game {
             playerList.add(new Player("Player " + i));
         }
         GameSetup gameSetup = new GameSetup(playerList);
+        worldMap = gameSetup.returnWorldMap();
         currentPlayerTurn = 1;
         (playerList.get(currentPlayerTurn-1)).troopsReceived();
         System.out.println(getPlayerTurn().getName() + "'s turn : ");

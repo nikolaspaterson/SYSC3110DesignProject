@@ -4,7 +4,6 @@ import java.util.Scanner;
  * The GameEvent class is responsible for handling the events that are generated once a Player reinforces, attacks or fortifies.
  *
  * @author aelsammak
- * @author dieuleparfait
  * @version 1.0
  */
 public class GameEvent {
@@ -25,12 +24,13 @@ public class GameEvent {
      * @param troops the number of troops to add.
      */
     public void reinforce(Territory territory, int troops) {
-        if(territory.getOccupant() == player && troops <= player.getDeployableTroops()) {
+        if(territory.getOccupant().equals(player) && troops <= player.getDeployableTroops() && troops > 0) {
             player.incrementTroops(territory, troops);
             player.setDeployableTroops(player.getDeployableTroops() - troops);
             System.out.println("you have " + player.getDeployableTroops() + " LEFT to deploy");
-        }
-        else {
+        }else if(troops < 0){
+            System.out.println("Nice try! No negative troops!");
+        }else {
             System.out.println("Ensure that the territory that you are trying to reinforce belongs to you");
             System.out.println("and you have a valid number of troops to deploy");
             System.out.println("you have " + player.getDeployableTroops() + " to deploy");
@@ -46,7 +46,7 @@ public class GameEvent {
      */
     public void attack(Territory attacking, Territory defending, int numDice) {
 
-        if(attacking.getOccupant() == player && defending.getOccupant() != player) {
+        if(attacking.getOccupant().equals(player) &&  !defending.getOccupant().equals(player)) {
             try {
                 Dice temp = new Dice();
                 Dice attackingDice = temp.setUpAttackingDice(attacking.getTroops(), numDice);
@@ -83,6 +83,8 @@ public class GameEvent {
             } catch (NullPointerException e) {
                 System.out.println("Null pointer exception!");
             }
+        }else{
+            System.out.println("You cannot attack your own territory!");
         }
     }
 
@@ -133,11 +135,12 @@ public class GameEvent {
      * @param troops the number of troops to move from territory1 to territory2.
      */
     public void fortify(Territory territory1, Territory territory2, int troops) {
-        if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant() == player && territory1.isNeighbour(territory2)) {
+        if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant().equals(player) && territory1.isNeighbour(territory2)) {
 
             if(troops < territory1.getTroops() && troops > 0) {
                 player.decrementTroops(territory1, troops);
                 player.incrementTroops(territory2, troops);
+                System.out.println("You have moved " + troops + " from " + territory1.getTerritoryName() + " to " + territory2.getTerritoryName());
             } else if (troops <= 0){
                 System.out.println("No troops will be moved.");
             } else {
@@ -150,5 +153,4 @@ public class GameEvent {
     public Player getPlayer(){
         return this.player;
     }
-
 }

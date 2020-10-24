@@ -5,7 +5,6 @@ import java.util.HashMap;
  * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
  *
  * @author aelsammak
- * @author dieuleparfait
  * @version 1.0
  */
 public class Player {
@@ -167,9 +166,24 @@ public class Player {
      */
     public String toString() {
         String output = "------>Player: " + this.name + "<------\n";
-        for(String str : territoriesOccupied.keySet()) {
+        String enemy;
+        String ally;
+        for(Territory temp_territory : territoriesOccupied.values()) {
             output += "\n======TerritoryOwned:Troops======\n";
-            output += "         " + str + " : " + territoriesOccupied.get(str).getTroops() + "\n";
+            output += "         " + temp_territory.getTerritoryName() + " : " + temp_territory.getTroops() + "\n";
+            enemy = "Neighbouring Enemy Territories: ";
+            ally = "Neighbouring Ally Territories: ";
+            for(Territory owners : temp_territory.getNeighbours().values()){
+                if(owners.getOccupant().equals(this)) {
+                    ally += owners.getTerritoryName() + ": " + owners.getTroops() + ", ";
+                }else{
+                    enemy += owners.getTerritoryName() + " : " + owners.getTroops() + ", ";
+                }
+
+            }
+            ally = ally.substring(0,ally.length() -2) + "\n";
+            enemy = enemy.substring(0,enemy.length() -2) + "\n";
+            output += ally + enemy;
         }
         return output;
     }
