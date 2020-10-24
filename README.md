@@ -6,10 +6,6 @@
 
 The goal of this team project is to reproduce a simplified version of the classic strategy game RISK.
 
-Group 3 is currently in the process of stucturing the game and making sure our classes work together. 
-There are currently a lot of know issues as we are still trying to make the game playable.
-We are all eager to work on this project and cant wait to get a working demo!
-
 
 ### Group 3
 
@@ -29,6 +25,7 @@ Authors
 </p>
 
 TA(Carleton's Best)
+
 [@MikeVezina](https://github.com/MikeVezina)
 
 
@@ -76,8 +73,11 @@ We documented all of our code and provided a Word Document describing our choice
 There were many changes made to this iteration of the progejct. Our UML was revised several times, classes were created, deleted and refactored and many bugs were squashed. Our group also changed, we unfortuantely had a member drop the course resulting in the remaining members to absorb a little extra work. We were able to fix many bugs and after long hours in voice calls we created a playable textbased version of RISK. 
 
 ### Known Issues
-There is 1 known issue, we are assuming that the player will use all their avaliable troops in the reinforce stage.
-Reinforce -1 gives player an extra troop
+There arent any know issues in our code BUT we did make a couple assumptions about how the players will play the game.
+We assumed that each player will,
+1. Deploy all available troops(can be in many territories)
+2. Attack, players can attack several times each turn
+3. Players should only fortify ONCE.
 
 
 ### Project Roadmap
