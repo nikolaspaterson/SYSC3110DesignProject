@@ -90,18 +90,23 @@ public class Game {
     }
 
     public void reinforce(Command cmd){
-
-        try{
-            GameEvent gameevent = new GameEvent(getPlayerTurn());
-            Player player = getPlayerTurn();
-            Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
-            gameevent.reinforce(territory, Integer.parseInt(cmd.getCommandNumber()));
-        }catch(NullPointerException  | ArrayIndexOutOfBoundsException e){
-            System.out.println("You can only reinforce a territory you own");
-            System.out.println("An example reinforce command looks like the following,");
-            System.out.println("reinforce Canada 5");
+        if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null) {
+            try {
+                System.out.println(cmd.getCommandNumber());
+                GameEvent gameevent = new GameEvent(getPlayerTurn());
+                Player player = getPlayerTurn();
+                Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
+                gameevent.reinforce(territory, Integer.parseInt(cmd.getCommandNumber()));
+            } catch (NullPointerException e) {
+                System.out.println("You can only reinforce a territory you own");
+                System.out.println("An example reinforce command looks like the following,");
+                System.out.println("reinforce Ontario 5");
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e){
+                System.out.println("You must enter a valid number!");
+            }
+        }else{
+            System.out.println("Null value entered, command REINFORCE format is: reinforce your_territory_name troop_count");
         }
-
 
         /*if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null){
             GameEvent gameevent = new GameEvent(getPlayerTurn());
