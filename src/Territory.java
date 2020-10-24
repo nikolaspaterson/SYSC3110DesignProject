@@ -88,16 +88,12 @@ public class Territory {
      */
     public boolean isNeighbour(Territory territoryToCheck) {
         String terrToCheck = territoryToCheck.getTerritoryName();
-        if(this.neighbours.containsKey(terrToCheck)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.neighbours.containsKey(terrToCheck);
     }
 
     /**
      * Combines the name of the Territory and lists all the neighbouring Territories.
-     * @return String combination of the information above.
+     * Prints String combination of the information above.
      */
     public void print_info(){
         System.out.println("Territory Name: " + territoryName );

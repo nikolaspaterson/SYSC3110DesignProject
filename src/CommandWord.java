@@ -22,7 +22,7 @@ public class CommandWord {
 
     /**
      * Find correct commandEnum from command
-     * @param cmd
+     * @param cmd - Command
      * @return commandEnum linked to command
      */
     public CommandEnum getCommandAction(String cmd){

@@ -11,7 +11,7 @@ public enum CommandEnum {
 
     /**
      * Initializes each enum command with its corresponding String
-     * @param s
+     * @param s String
      */
     CommandEnum(String s){
         this.commandString = s;

@@ -20,7 +20,7 @@ public class Command {
 
     /**
      * Constructor from quit, skip and showMap
-     * @param str
+     * @param str String
      */
     public Command(String str){
         this.commandAction = str;
@@ -30,9 +30,9 @@ public class Command {
     }
     /**
      * command with only 1 territory
-     * @param command
-     * @param origin
-     * @param number
+     * @param command String
+     * @param origin String
+     * @param number String
      */
     public Command(String command, String origin, String number){
         this.commandAction = command;
@@ -43,10 +43,10 @@ public class Command {
 
     /**
      * command with 2 territories
-     * @param command
-     * @param origin
-     * @param target
-     * @param number
+     * @param command String
+     * @param origin String
+     * @param target String
+     * @param number String
      */
     public Command(String command, String origin, String target, String number){
         this.commandAction = command;
