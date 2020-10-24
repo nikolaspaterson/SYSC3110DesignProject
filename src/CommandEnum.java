@@ -3,9 +3,10 @@
  * @author nikolaspaterson
  * @version 1.0
  */
-public enum commandEnum {
+public enum CommandEnum {
     REINFORCE("reinforce"), ATTACK("attack"), FORTIFY("fortify"),
-    QUIT("quit"), UNKNOWN("unknown command"), SKIP("skip"), MAP("map"), HELP("help");
+    QUIT("quit"), UNKNOWN("unknown command"), SKIP("skip"),
+    WORLDMAP("worldmap"), HELP("help"), MYMAP("mymap");
 
     private String commandString;
 
@@ -13,7 +14,7 @@ public enum commandEnum {
      * Initializes each enum command with its corresponding String
      * @param s
      */
-    commandEnum(String s){
+    CommandEnum(String s){
         this.commandString = s;
     }
 

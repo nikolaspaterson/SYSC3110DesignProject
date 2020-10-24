@@ -12,22 +12,23 @@
  * @author nikolaspaterson
  * @version 1.0
  */
-public class command {
+public class Command {
 
     private String commandAction;
     private String commandOrigin;
     private String commandTarget;
     private String commandNumber;
+    public CommandEnum commandEnum;
 
     /**
-     * null constructor
+     * Constructor from quit, skip and showMap
      * @param str
      */
-    public command(String str){
-        this.commandAction = null;
-        this. commandOrigin = null;
+    public Command(String str){
+        this.commandAction = str;
+        this.commandOrigin = null;
         this.commandTarget = null;
-        this. commandNumber = null;
+        this.commandNumber = null;
     }
     /**
      * command with only 1 territory
@@ -35,7 +36,7 @@ public class command {
      * @param origin
      * @param number
      */
-    public command(String command, String origin, String number){
+    public Command(String command, String origin, String number){
         this.commandAction = command;
         this.commandOrigin = origin;
         this.commandTarget = origin; //Maybe change to null? could avoid attacking self? need to null check somewhere
@@ -49,7 +50,7 @@ public class command {
      * @param target
      * @param number
      */
-    public command(String command, String origin, String target, String number){
+    public Command(String command, String origin, String target, String number){
         this.commandAction = command;
         this.commandOrigin = origin;
         this.commandTarget = target;
@@ -60,8 +61,8 @@ public class command {
     /**
      * @return command action
      */
-    public commandEnum getCommandAction() {
-        return commandEnum.valueOf(commandAction);
+    public String getCommandAction() {
+        return commandAction;
     }
 
     /**

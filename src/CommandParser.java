@@ -7,14 +7,14 @@ import java.util.Scanner;
  */
 public class CommandParser {
 
-    private commandWord validCommands;
+    private CommandWord validCommands;
     private Scanner inputReader;
 
     /**
      * Default constructor, creates scanner to read in user input
      */
     public CommandParser(){
-        validCommands = new commandWord();
+        validCommands = new CommandWord();
         inputReader = new Scanner(System.in);
     }
 
@@ -22,24 +22,25 @@ public class CommandParser {
      * converts input to command and checks command format
      * @return the console input as a command
      */
-    public command getCommand(){
+    public Command getCommand(){
         String inputCommand;
         String[] inputCommands;
 
-        System.out.println("+++++++ this should say 'Player# :' +++++++++");
+        System.out.println("player1 its is your turn:");
 
         inputCommand = inputReader.nextLine();//read in from console
         inputCommands = inputCommand.trim().split("\\s+"); //trim leading and trailing spaces and split at remaining spaces
 
-        if(inputCommands.length == 0 || ! validCommands.isValidCommand(inputCommands[0])){ //if no command is given or command isnt valid
-            return new command(null);
-        }else if (inputCommands.length == 2 || inputCommands.length > 4){ //Not valid command format
-            return new command(null);
-        }else if(inputCommands.length == 3){
-            return new command(inputCommands[0], inputCommands[1], inputCommands[2]);
-        }else{
-            return new command(inputCommands[0], inputCommands[1], inputCommands[2], inputCommands[3]);
+        if((inputCommands.length != 0 || inputCommands.length != 2 || inputCommands.length <= 4) && validCommands.isValidCommand(inputCommands[0])){
+            if(inputCommands.length == 1){
+                return new Command(inputCommands[0]);
+            }else if(inputCommands.length == 3){
+                return new Command(inputCommands[0], inputCommands[1], inputCommands[2]);
+            }else{
+                return new Command(inputCommands[0], inputCommands[1], inputCommands[2], inputCommands[3]);
+            }
         }
+        return new Command("");
     }
 
     /**

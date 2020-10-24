@@ -102,11 +102,9 @@ public class Player {
     public String toString() {
         String output = "------>Player: " + this.name + "<------\n";
         for(String str : territoriesOccupied.keySet()) {
-            output += "======Territory Owned======\n";
-            output += "         " + str + "\n";
-            output += "======Troops Owned======\n";
-            output += "            " + territoriesOccupied.get(str).getTroops();
+            output += "\n======TerritoryOwned:Troops======\n";
+            output += "         " + str + " : " + territoriesOccupied.get(str).getTroops() + "\n";
         }
-        return output + "\n";
+        return output;
     }
 }

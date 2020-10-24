@@ -1,25 +1,15 @@
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
     private int currentPlayerTurn;
-    private boolean gameInProgress;
     private ArrayList<Player> playerList;
     private CommandParser commandParser;
-    private Map<String, Territory> worldMap;
-    private GameSetup gameSetup;
-    private boolean wantsToQuit;
 
     public Game(){
+        playerList = new ArrayList<>();
         printWelcome();
-        gameInProgress = true;
-        wantsToQuit = false;
-        gameSetup = new GameSetup(playerList);
-        worldMap = new HashMap<>();
-        gameSetup.returnWorldMap();
+        playerSetUp();
+        commandParser = new CommandParser();
         playGame();
     }
 
@@ -31,40 +21,43 @@ public class Game {
      * Turns are done in a sequence, when last player
      * takes their turn the sequence restarts from the beginning
      */
-    public void takeTurn(){
+    public void nextTurn(){
         if(currentPlayerTurn == playerList.size()){
             currentPlayerTurn = 1;
         }else{
             currentPlayerTurn++;
         }
+        checkPlayerStanding();
     }
 
-    public void removePlayer(){
+    public void checkPlayerStanding(){
         for (Player player : playerList){
-            if(player.getTerritoriesOccupied())
+            if(player.getTerritoriesOccupied().isEmpty()){
+                playerList.remove(player);
+            }
         }
     }
 
-    public Player findWinner(){
-        if(playerList.size() == 1){
-            gameInProgress = false;
-            return playerList.get(0);
+    public void findWinner(){
+        if(playerList.size() == 1) {
+            System.out.println(playerList.get(0) + " won the game!");
+            commandProcessor(new Command("quit"));
         }
-        gameInProgress = true;
-        return null;
     }
 
     public void playGame(){
-        boolean wantsToQuit = false;
-        while(gameInProgress || !wantsToQuit){
-            command cmd = commandParser.getCommand();
-            wantsToQuit = commandProcessor(cmd);
+        boolean gameInProgress = false;
+        while(!gameInProgress){
+            Command cmd = commandParser.getCommand();
+            gameInProgress = commandProcessor(cmd);
         }
+        System.out.println("Game is over");
     }
 
-    private boolean commandProcessor(command cmd){
+    private boolean commandProcessor(Command cmd){
+        CommandWord commandWord = new CommandWord();
         boolean wantsToQuit = false;
-        commandEnum command = cmd.getCommandAction();
+        CommandEnum command = commandWord.getCommandAction(cmd.getCommandAction());
 
         switch(command){
             case UNKNOWN:
@@ -76,7 +69,7 @@ public class Game {
                 break;
 
             case QUIT:
-                quit(cmd);
+                wantsToQuit = quit(cmd);
                 break;
 
             case REINFORCE:
@@ -91,24 +84,32 @@ public class Game {
                 fortify(cmd);
                 break;
 
-            /*case SKIP:
+            case SKIP:
+                nextTurn();
                 break;
 
-            case MAP:
-                break;*/
+            case WORLDMAP:
+                showWorldMap();
+                break;
+
+            case MYMAP:
+                showMyMap();
+                break;
         }
         return wantsToQuit;
     }
 
-    public void skipTurn(){
-
+    public void showWorldMap(){
+        for(Player pl: playerList){
+            System.out.print(pl.toString());
+        }
     }
 
-    public void showMap(){
-
+    public void showMyMap(){
+        System.out.print(getPlayerTurn().toString());
     }
 
-    public void reinforce(command cmd){
+    public void reinforce(Command cmd){
         if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null){
             GameEvent gameevent = new GameEvent(getPlayerTurn());
             Player player = getPlayerTurn();
@@ -117,17 +118,22 @@ public class Game {
         }
     }
 
-    public void attack(command cmd){
+    public void attack(Command cmd){
+
         if(cmd.getCommandTarget() != null && cmd.getCommandOrigin() != null){
-            GameEvent gameevent = new GameEvent(getPlayerTurn());
-            Player player = getPlayerTurn();
-            Territory attackingTerritory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
-            Territory defendingTerritory = attackingTerritory.getNeighbours().get(cmd.getCommandTarget());
-            gameevent.attack(attackingTerritory, defendingTerritory, Integer.parseInt(cmd.getCommandNumber()));
+            try{
+                GameEvent gameevent = new GameEvent(getPlayerTurn());
+                Player player = getPlayerTurn();
+                Territory attackingTerritory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
+                Territory defendingTerritory = attackingTerritory.getNeighbours().get(cmd.getCommandTarget());
+                gameevent.attack(attackingTerritory, defendingTerritory, Integer.parseInt(cmd.getCommandNumber()));
+            }catch(NullPointerException e){
+                System.out.println("Please enter a neighbouring territory that is owned by a different player");
+            }
         }
     }
 
-    public void fortify(command cmd){
+    public void fortify(Command cmd){
         if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null){
             GameEvent gameevent = new GameEvent(getPlayerTurn());
             Player player = getPlayerTurn();
@@ -142,10 +148,10 @@ public class Game {
      * @param nPlayers
      */
     public void setPlayers(int nPlayers){
-        playerList = new ArrayList<>();
         for(int i = 1; i <= nPlayers; i++){
             playerList.add(new Player("Player " + i));
         }
+        GameSetup gameSetup = new GameSetup(playerList);
         currentPlayerTurn = 1;
     }
 
@@ -153,14 +159,16 @@ public class Game {
      * asks for number of players, must be less than 8.
      */
     public void playerSetUp(){
-        Scanner inScanner = new Scanner(System.in);
-        System.out.println("Please type the number of players you want: ");
-        String playerNumber = inScanner.nextLine();
+
         try{
-            if(Integer.parseInt(playerNumber) > 6 || Integer.parseInt(playerNumber) < 2 ){
+            Scanner inScanner = new Scanner(System.in);
+            System.out.println("Please type the number of players you want: ");
+            String playerNumber = inScanner.nextLine();
+            int pn = Integer.parseInt(playerNumber);
+            if(pn > 6 || pn < 2 ){
                 throw new NumberFormatException();
             }else{
-                setPlayers(Integer.parseInt(playerNumber));
+                setPlayers(pn);
             }
         }catch(NumberFormatException e){
             System.out.println("Please enter a number between 2 and 6");
@@ -176,21 +184,22 @@ public class Game {
         System.out.println("Your goal is to battle your friends and conquer the world.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        playerSetUp();
     }
 
     public void printHelp(){
         System.out.println();
-        System.out.println("It is currently " + getPlayerTurn() +"'s turn");
         System.out.println("Here are your available commands, ");
-        for(commandEnum command: commandEnum.values()){
-            System.out.println(command);
+        for(CommandEnum command: CommandEnum.values()){
+            if(!command.equals(CommandEnum.UNKNOWN)){
+                System.out.println(command);
+            }
         }
+        System.out.println();
     }
 
-    private boolean quit(command command)
+    private boolean quit(Command command)
     {
-        if(command.getCommandOrigin() == null){
+        if(command.getCommandOrigin() != null){
             System.out.println("Quit what?");
             return false;
         }

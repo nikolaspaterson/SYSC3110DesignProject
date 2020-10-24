@@ -30,7 +30,9 @@ public class GameEvent {
             player.setDeployableTroops(player.getDeployableTroops() - troops);
         }
         else {
-            new Error();
+            System.out.println("Ensure that the territory that you are trying to reinforce belongs to you");
+            System.out.println("and you have a valid number of troops to deploy");
+            System.out.println("you have " + player.getDeployableTroops() + " to deploy");
         }
     }
 
@@ -43,8 +45,7 @@ public class GameEvent {
      */
     public void attack(Territory attacking, Territory defending, int numDice) {
 
-        if(attacking.getOccupant() == player && defending.getOccupant() != player && attacking.isNeighbour(defending)) {
-
+        if(attacking.getOccupant() == player && defending.getOccupant() != player) {
             try {
                 Dice temp = new Dice();
                 Dice attackingDice = temp.setUpAttackingDice(attacking.getTroops(), numDice);
