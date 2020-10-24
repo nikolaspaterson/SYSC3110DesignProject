@@ -9,8 +9,6 @@
  * attack germany poland 12 -> player will attack poland with 12 german troops
  * fortify ontario yukon 5 -> player will fortify the yukon with 5 troops from ontario
  *
- * @author nikolaspaterson
- * @version 1.0
  */
 public class Command {
 
@@ -86,6 +84,10 @@ public class Command {
         return commandNumber;
     }
 
+    /**
+     *
+     * @return the length of the command
+     */
     public int getLength(){
         int counter = 0;
         if(!(this.getCommandAction()).isEmpty()){
@@ -101,13 +103,5 @@ public class Command {
             counter++;
         }
         return counter;
-    }
-
-    /**
-     * returns true if command is unknown
-     * @return boolean based on if command is a known command
-     */
-    public boolean isUnknown(){
-        return commandAction == null;
     }
 }

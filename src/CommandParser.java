@@ -2,8 +2,6 @@ import java.util.Scanner;
 
 /**
  * This class parses the players console input into valid commands
- * @author nikolaspaterson
- * @version 1.0
  */
 public class CommandParser {
 

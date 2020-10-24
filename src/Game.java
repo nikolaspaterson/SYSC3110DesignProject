@@ -1,11 +1,17 @@
-import java.sql.Array;
 import java.util.*;
 
+/**
+ * This is the games main class, this class is used to initialize all other classes
+ */
 public class Game {
     private int currentPlayerTurn;
     private ArrayList<Player> playerList;
     private CommandParser commandParser;
     private HashMap<String,Territory> worldMap;
+
+    /**
+     * Create game object and begins the game
+     */
     public Game(){
         playerList = new ArrayList<>();
         printWelcome();
@@ -14,6 +20,9 @@ public class Game {
         playGame();
     }
 
+    /**
+     * @return the current players turn
+     */
     public Player getPlayerTurn(){
         return playerList.get(currentPlayerTurn-1);
     }
@@ -33,6 +42,9 @@ public class Game {
         findWinner();
     }
 
+    /**
+     * Checks if a player is still in the game based on if they own any territories
+     */
     public void checkPlayerStanding(){
         for (Player player : playerList){
             if(player.getTerritoriesOccupied().isEmpty()){
@@ -41,6 +53,10 @@ public class Game {
         }
     }
 
+    /**
+     * Checks if there is a game winner. There is a winner when there is
+     * only 1 active player.
+     */
     public void findWinner(){
         if(playerList.size() == 1) {
             System.out.println(playerList.get(0) + " won the game!");
@@ -48,6 +64,9 @@ public class Game {
         }
     }
 
+    /**
+     * Games infinite loop, keeps going until game is won or players quit
+     */
     public void playGame(){
         boolean gameInProgress = false;
         while(!gameInProgress){
@@ -57,6 +76,9 @@ public class Game {
         System.out.println("Game is over");
     }
 
+    /**
+     * Allows players to skip their turn
+     */
     public void skip(Command command){
         if(command.getLength() == 1){
             nextTurn();
@@ -65,6 +87,10 @@ public class Game {
         }
     }
 
+    /**
+     * Processes user commands and calls the corresponding methods
+     * @return boolean based on if player wants to quit
+     */
     private boolean commandProcessor(Command cmd){
         CommandWord commandWord = new CommandWord();
         boolean wantsToQuit = false;
@@ -72,7 +98,7 @@ public class Game {
 
         switch (command) {
             case UNKNOWN -> System.out.println("Unknown command, you can type 'help' to see all commands");
-            case HELP -> printHelp();
+            case HELP -> printHelp(cmd);
             case QUIT -> wantsToQuit = quit(cmd);
             case REINFORCE -> reinforce(cmd);
             case ATTACK -> attack(cmd);
@@ -87,16 +113,26 @@ public class Game {
         return wantsToQuit;
     }
 
+    /**
+     * displays the entire map
+     */
     public void showWorldMap(){
         for(Player pl: playerList){
             System.out.print(pl.toString());
         }
     }
 
+    /**
+     * displays the players territories
+     */
     public void showMyMap(){
         System.out.print(getPlayerTurn().toString());
     }
 
+    /**
+     * Does some command checking and calls GaveEvent's reinforce method
+     * @param cmd
+     */
     public void reinforce(Command cmd){
         if(!(cmd.getCommandOrigin().isEmpty()) && !(cmd.getCommandNumber().isEmpty())) {
             try {
@@ -114,6 +150,10 @@ public class Game {
         }
     }
 
+    /**
+     * Checks command format and calls GameEvent's attack method
+     * @param cmd
+     */
     public void attack(Command cmd){
         if(!(cmd.getCommandTarget().isEmpty()) && !(cmd.getCommandOrigin().isEmpty()) && !(cmd.getCommandNumber().isEmpty())){
             if(worldMap.get(cmd.getCommandTarget()) == null || worldMap.get(cmd.getCommandOrigin()) == null){
@@ -135,6 +175,10 @@ public class Game {
         }
     }
 
+    /**
+     * Checks command format and calls GameEvent's fortify method
+     * @param cmd
+     */
     public void fortify(Command cmd){
         if(!(cmd.getCommandTarget().isEmpty()) && !(cmd.getCommandOrigin().isEmpty()) && !(cmd.getCommandNumber().isEmpty())){
             if(worldMap.get(cmd.getCommandTarget()) == null || worldMap.get(cmd.getCommandOrigin()) == null) {
@@ -203,17 +247,25 @@ public class Game {
         System.out.println();
     }
 
-    public void printHelp(){
-        System.out.println();
-        System.out.println("Here are your available commands, ");
-        for(CommandEnum command: CommandEnum.values()){
-            if(!command.equals(CommandEnum.UNKNOWN)){
-                System.out.println(command);
-            }
+    /**
+     * prints help message to console
+     * @param command
+     */
+    public void printHelp(Command command){
+        if(command.getLength() == 1){
+            System.out.println();
+            System.out.println("Here are your available commands, ");
+            commandParser.printAllCommands();
+            System.out.println();
         }
-        System.out.println();
+        System.out.println("help what?");
     }
 
+    /**
+     * checks if the player really wants to quit
+     * @param command
+     * @return
+     */
     private boolean quit(Command command)
     {
         if(command.getLength() > 1){

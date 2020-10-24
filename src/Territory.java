@@ -3,8 +3,6 @@ import java.util.HashMap;
 /**
  * The Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
  *
- * @author aelsammak
- * @version 1.0
  */
 public class Territory {
 

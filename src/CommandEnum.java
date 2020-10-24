@@ -1,7 +1,5 @@
 /**
  * Enum of all commands the player can use
- * @author nikolaspaterson
- * @version 1.0
  */
 public enum CommandEnum {
     REINFORCE("reinforce"), ATTACK("attack"), FORTIFY("fortify"),

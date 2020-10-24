@@ -1,6 +1,9 @@
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Stores all the valid commands the players can use
+ */
 public class CommandWord {
     private Map<String, CommandEnum> validCommands;
 
