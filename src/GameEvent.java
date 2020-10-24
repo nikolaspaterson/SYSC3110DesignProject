@@ -28,6 +28,7 @@ public class GameEvent {
         if(territory.getOccupant() == player && troops <= player.getDeployableTroops()) {
             player.incrementTroops(territory, troops);
             player.setDeployableTroops(player.getDeployableTroops() - troops);
+            System.out.println("you have " + player.getDeployableTroops() + " to deploy");
         }
         else {
             System.out.println("Ensure that the territory that you are trying to reinforce belongs to you");
@@ -149,7 +150,7 @@ public class GameEvent {
      * This method is used to calculate the number of troops the player will receive based on how many territories and continents they own.
      * @param player the player which will receive the bonus troops.
      */
-    private void troopsReceived(Player player) {
+    public void troopsReceived(Player player) {
         int result = 0;
 
         if ((player.getTerritoriesOccupied().size()) <= 9) {
@@ -167,7 +168,7 @@ public class GameEvent {
      * @param player the player which is receiving the bonus troops.
      * @return the number of bonus troops.
      */
-    private int troopContinentBonus(Player player) {
+    public int troopContinentBonus(Player player) {
         int[] continents = new int[6];
 
         if (player.getTerritoriesOccupied().size() > 0) {
@@ -207,6 +208,10 @@ public class GameEvent {
         if (continents[5] == 9) troops += 5; // North America Bonus
 
         return troops;
+    }
+
+    public Player getPlayer(){
+        return this.player;
     }
 
 }

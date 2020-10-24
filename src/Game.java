@@ -28,6 +28,8 @@ public class Game {
             currentPlayerTurn++;
         }
         checkPlayerStanding();
+        GameEvent gameevent = new GameEvent(playerList.get(currentPlayerTurn-1));
+        gameevent.troopsReceived(gameevent.getPlayer());
     }
 
     public void checkPlayerStanding(){
@@ -153,6 +155,8 @@ public class Game {
         }
         GameSetup gameSetup = new GameSetup(playerList);
         currentPlayerTurn = 1;
+        GameEvent gameevent = new GameEvent(playerList.get(currentPlayerTurn-1));
+        gameevent.troopsReceived(gameevent.getPlayer());
     }
 
     /**
