@@ -6,10 +6,6 @@
 
 The goal of this team project is to reproduce a simplified version of the classic strategy game RISK.
 
-Group 3 is currently in the process of stucturing the game and making sure our classes work together. 
-There are currently a lot of know issues as we are still trying to make the game playable.
-We are all eager to work on this project and cant wait to get a working demo!
-
 
 ### Group 3
 
@@ -29,6 +25,7 @@ Authors
 </p>
 
 TA(Carleton's Best)
+
 [@MikeVezina](https://github.com/MikeVezina)
 
 
@@ -76,8 +73,22 @@ We documented all of our code and provided a Word Document describing our choice
 There were many changes made to this iteration of the progejct. Our UML was revised several times, classes were created, deleted and refactored and many bugs were squashed. Our group also changed, we unfortuantely had a member drop the course resulting in the remaining members to absorb a little extra work. We were able to fix many bugs and after long hours in voice calls we created a playable textbased version of RISK. 
 
 ### Known Issues
-There is 1 known issue, we are assuming that the player will use all their avaliable troops in the reinforce stage.
-Reinforce -1 gives player an extra troop
+There arent any know issues in our code BUT we did make a couple assumptions about how the players will play the game.
+We assumed that each player will,
+1. Deploy all available troops(can be in many territories)
+2. Attack, players can attack several times each turn
+3. Players should only fortify ONCE.
+
+### Text Based User Input Commands
+The user will play the game by typing these commands into the interface.
+1. **help** - prints availiable list of commands
+2. **fortify** - fortify is for moving troops from one owned territory to another. Example: **fortify Ontario Quebec 4**
+3. **worldmap** - prints out the entire state of the map and each players territories
+4. **reinforce** - reinforce is used to place deployableTroops on owned territoreis at the start of each turn. Example: **reinforce Ontario 3**
+5. **attack** - attack is used for attacking an enemy territory, you can only use 1-3 as dice rolls and you provide your territory first then the one you would like to attack next. Example: **attack Ontario EasternUnitedStates 3**
+6. **mymap** - prints out the current player's 
+7. **quit** - closes the game
+8. **skip** - skips the current player turn to go to the next one
 
 
 ### Project Roadmap
