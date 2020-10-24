@@ -122,7 +122,7 @@ public class Game {
 
     public void attack(Command cmd){
 
-        if(cmd.getCommandTarget() != null && cmd.getCommandOrigin() != null){
+        if(cmd.getCommandTarget() != null && cmd.getCommandOrigin() != null && cmd.getCommandNumber() != null){
             try{
                 GameEvent gameevent = new GameEvent(getPlayerTurn());
                 Player player = getPlayerTurn();
@@ -136,12 +136,16 @@ public class Game {
     }
 
     public void fortify(Command cmd){
-        if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null){
-            GameEvent gameevent = new GameEvent(getPlayerTurn());
-            Player player = getPlayerTurn();
-            Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandTarget());
-            Territory territory2 = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
-            gameevent.fortify(territory,territory2, Integer.parseInt(cmd.getCommandNumber()));
+        if(cmd.getCommandTarget() != null && cmd.getCommandOrigin() != null && cmd.getCommandNumber() != null){
+            try{
+                GameEvent gameevent = new GameEvent(getPlayerTurn());
+                Player player = getPlayerTurn();
+                Territory territory1 = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
+                Territory territory2 = player.getTerritoriesOccupied().get(cmd.getCommandTarget());
+                gameevent.fortify(territory1,territory2, Integer.parseInt(cmd.getCommandNumber()));
+            }catch(NullPointerException e){
+                System.out.println("Please enter a neighbouring territory that is owned by you");
+            }
         }
     }
 
