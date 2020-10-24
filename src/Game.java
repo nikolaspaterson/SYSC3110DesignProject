@@ -96,7 +96,7 @@ public class Game {
             Player player = getPlayerTurn();
             Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
             gameevent.reinforce(territory, Integer.parseInt(cmd.getCommandNumber()));
-        }catch(NullPointerException  | ArrayIndexOutOfBoundsException e){
+        }catch(NullPointerException e){
             System.out.println("You can only reinforce a territory you own");
             System.out.println("An example reinforce command looks like the following,");
             System.out.println("reinforce Canada 5");
