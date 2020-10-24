@@ -57,6 +57,14 @@ public class Game {
         System.out.println("Game is over");
     }
 
+    public void skip(Command command){
+        if(command.getLength() == 1){
+            nextTurn();
+        }else {
+            System.out.println("skip what?");
+        }
+    }
+
     private boolean commandProcessor(Command cmd){
         CommandWord commandWord = new CommandWord();
         boolean wantsToQuit = false;
@@ -69,7 +77,7 @@ public class Game {
             case REINFORCE -> reinforce(cmd);
             case ATTACK -> attack(cmd);
             case FORTIFY -> fortify(cmd);
-            case SKIP -> nextTurn();
+            case SKIP -> skip(cmd);
             case WORLDMAP -> showWorldMap();
             case MYMAP -> showMyMap();
         }
@@ -90,9 +98,8 @@ public class Game {
     }
 
     public void reinforce(Command cmd){
-        if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null) {
+        if(!(cmd.getCommandOrigin().isEmpty()) && !(cmd.getCommandNumber().isEmpty())) {
             try {
-                System.out.println(cmd.getCommandNumber());
                 GameEvent gameevent = new GameEvent(getPlayerTurn());
                 Player player = getPlayerTurn();
                 Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
@@ -101,29 +108,16 @@ public class Game {
                 System.out.println("You can only reinforce a territory you own");
                 System.out.println("An example reinforce command looks like the following,");
                 System.out.println("reinforce Ontario 5");
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e){
-                System.out.println("You must enter a valid number!");
             }
         }else{
-            System.out.println("Null value entered, command REINFORCE format is: reinforce your_territory_name troop_count");
+            System.out.println("Incorrect format, REINFORCE COMMAND: reinforce (Territory_Name) (Troops_To_Deploy)");
         }
-
-        /*if(cmd.getCommandTarget() != null && cmd.getCommandNumber() != null){
-            GameEvent gameevent = new GameEvent(getPlayerTurn());
-            Player player = getPlayerTurn();
-            Territory territory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
-            gameevent.reinforce(territory, Integer.parseInt(cmd.getCommandNumber()));
-        }
-        else{
-            System.out.println("Null value entered, command REINFORCE format is: reinforce your_territory_name troop_count");
-        }*/
     }
 
     public void attack(Command cmd){
-        if(cmd.getCommandTarget() != null && cmd.getCommandOrigin() != null && cmd.getCommandNumber() != null){
+        if(!(cmd.getCommandTarget().isEmpty()) && !(cmd.getCommandOrigin().isEmpty()) && !(cmd.getCommandNumber().isEmpty())){
             if(worldMap.get(cmd.getCommandTarget()) == null || worldMap.get(cmd.getCommandOrigin()) == null){
                 System.out.println("That territory doesn't exist, make sure you type territory names with proper capitalization!");
-
             } else {
                 try {
                     GameEvent gameevent = new GameEvent(getPlayerTurn());
@@ -137,24 +131,28 @@ public class Game {
             }
         }
         else{
-            System.out.println("Null value entered, command ATTACK format is: attack your_territory_name enemy_territory_name troop_count");
+            System.out.println("Incorrect format, ATTACK COMMAND: attack (Attacking_Territory) (Defending_Territory) (Num_Attacking_Dice)");
         }
     }
 
     public void fortify(Command cmd){
-        if(cmd.getCommandTarget() != null && cmd.getCommandOrigin() != null && cmd.getCommandNumber() != null){
-            try{
-                GameEvent gameevent = new GameEvent(getPlayerTurn());
-                Player player = getPlayerTurn();
-                Territory territory1 = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
-                Territory territory2 = player.getTerritoriesOccupied().get(cmd.getCommandTarget());
-                gameevent.fortify(territory1,territory2, Integer.parseInt(cmd.getCommandNumber()));
-            }catch(NullPointerException e){
-                System.out.println("Please enter a neighbouring territory that is owned by you");
-            }
-        }else{
-            System.out.println("Null value entered, command FORTIFY format is: fortify your_territory_name your_second_territory_name troop_count");
+        if(!(cmd.getCommandTarget().isEmpty()) && !(cmd.getCommandOrigin().isEmpty()) && !(cmd.getCommandNumber().isEmpty())){
+            if(worldMap.get(cmd.getCommandTarget()) == null || worldMap.get(cmd.getCommandOrigin()) == null) {
+                System.out.println("That territory doesn't exist, make sure you type territory names with proper capitalization!");
 
+            } else {
+                try {
+                    GameEvent gameevent = new GameEvent(getPlayerTurn());
+                    Player player = getPlayerTurn();
+                    Territory territory1 = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
+                    Territory territory2 = player.getTerritoriesOccupied().get(cmd.getCommandTarget());
+                    gameevent.fortify(territory1, territory2, Integer.parseInt(cmd.getCommandNumber()));
+                } catch (NullPointerException e) {
+                    System.out.println("Please enter a neighbouring territory that is owned by you");
+                }
+            }
+        } else {
+            System.out.println("Incorrect format, FORTIFY COMMAND: fortify (Territory_1) (Territory_2) (Num_Of_Troops_Moved_FROM_T1_TO_T2");
         }
     }
 
@@ -218,7 +216,7 @@ public class Game {
 
     private boolean quit(Command command)
     {
-        if(command.getCommandOrigin() != null){
+        if(command.getLength() > 1){
             System.out.println("Quit what?");
             return false;
         }

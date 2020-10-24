@@ -26,9 +26,9 @@ public class Command {
      */
     public Command(String str){
         this.commandAction = str;
-        this.commandOrigin = null;
-        this.commandTarget = null;
-        this.commandNumber = null;
+        this.commandOrigin = "";
+        this.commandTarget = "";
+        this.commandNumber = "";
     }
     /**
      * command with only 1 territory
@@ -39,7 +39,7 @@ public class Command {
     public Command(String command, String origin, String number){
         this.commandAction = command;
         this.commandOrigin = origin;
-        this.commandTarget = origin; //Maybe change to null? could avoid attacking self? need to null check somewhere
+        this.commandTarget = ""; //Maybe change to null? could avoid attacking self? need to null check somewhere
         this.commandNumber = number;
     }
 
@@ -84,6 +84,23 @@ public class Command {
      */
     public String getCommandNumber() {
         return commandNumber;
+    }
+
+    public int getLength(){
+        int counter = 0;
+        if(!(this.getCommandAction()).isEmpty()){
+            counter++;
+        }
+        if(!(this.getCommandOrigin()).isEmpty()){
+            counter++;
+        }
+        if(!(this.getCommandTarget()).isEmpty()){
+            counter++;
+        }
+        if(!(this.getCommandNumber()).isEmpty()){
+            counter++;
+        }
+        return counter;
     }
 
     /**

@@ -29,16 +29,30 @@ public class CommandParser {
         inputCommand = inputReader.nextLine();//read in from console
         inputCommands = inputCommand.trim().split("\\s+"); //trim leading and trailing spaces and split at remaining spaces
 
-        if((inputCommands.length != 0 || inputCommands.length != 2 || inputCommands.length <= 4) && validCommands.isValidCommand(inputCommands[0])){
+
+        if(inputCommands.length == 1 || inputCommands.length == 3 || inputCommands.length == 4){
             if(inputCommands.length == 1){
                 return new Command(inputCommands[0]);
             }else if(inputCommands.length == 3){
-                return new Command(inputCommands[0], inputCommands[1], inputCommands[2]);
+                try{
+                    Integer.parseInt(inputCommands[2]);
+                    return new Command(inputCommands[0], inputCommands[1], inputCommands[2]);
+                }catch(NumberFormatException e){
+                    System.out.println("Please enter a valid number!");
+                    return new Command("");
+                }
             }else{
-                return new Command(inputCommands[0], inputCommands[1], inputCommands[2], inputCommands[3]);
+                try{
+                    Integer.parseInt(inputCommands[3]);
+                    return new Command(inputCommands[0], inputCommands[1], inputCommands[2], inputCommands[3]);
+                }catch(NumberFormatException e){
+                    System.out.println("Please enter a valid number!");
+                    return new Command("");
+                }
             }
+        }else{
+            return new Command("");
         }
-        return new Command("");
     }
 
     /**
