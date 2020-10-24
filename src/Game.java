@@ -61,42 +61,16 @@ public class Game {
         boolean wantsToQuit = false;
         CommandEnum command = commandWord.getCommandAction(cmd.getCommandAction());
 
-        switch(command){
-            case UNKNOWN:
-                System.out.println("Unknown command, you can type 'help' to see all commands");
-                break;
-
-            case HELP:
-                printHelp();
-                break;
-
-            case QUIT:
-                wantsToQuit = quit(cmd);
-                break;
-
-            case REINFORCE:
-                reinforce(cmd);
-                break;
-
-            case ATTACK:
-                attack(cmd);
-                break;
-
-            case FORTIFY:
-                fortify(cmd);
-                break;
-
-            case SKIP:
-                nextTurn();
-                break;
-
-            case WORLDMAP:
-                showWorldMap();
-                break;
-
-            case MYMAP:
-                showMyMap();
-                break;
+        switch (command) {
+            case UNKNOWN -> System.out.println("Unknown command, you can type 'help' to see all commands");
+            case HELP -> printHelp();
+            case QUIT -> wantsToQuit = quit(cmd);
+            case REINFORCE -> reinforce(cmd);
+            case ATTACK -> attack(cmd);
+            case FORTIFY -> fortify(cmd);
+            case SKIP -> nextTurn();
+            case WORLDMAP -> showWorldMap();
+            case MYMAP -> showMyMap();
         }
         System.out.println("=======================================");
         System.out.println(getPlayerTurn().getName() + "'s turn : ");
@@ -159,6 +133,9 @@ public class Game {
             }catch(NullPointerException e){
                 System.out.println("Please enter a neighbouring territory that is owned by you");
             }
+        }else{
+            System.out.println("Null value entered, command FORTIFY format is: fortify your_territory_name your_second_territory_name troop_count");
+
         }
     }
 
