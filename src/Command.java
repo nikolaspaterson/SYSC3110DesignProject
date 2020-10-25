@@ -14,11 +14,10 @@
  */
 public class Command {
 
-    private String commandAction;
-    private String commandOrigin;
-    private String commandTarget;
-    private String commandNumber;
-    public CommandEnum commandEnum;
+    private final String commandAction;
+    private final String commandOrigin;
+    private final String commandTarget;
+    private final String commandNumber;
 
     /**
      * Constructor from quit, skip and showMap

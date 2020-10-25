@@ -2,16 +2,16 @@ import java.util.HashMap;
 
 /**
  * The Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
- * @Author Ahmad El-Sammak
- * @Author Erik Iuhas
+ * @author Ahmad El-Sammak
+ * @author Erik Iuhas
  */
 public class Territory {
 
     private Player occupant;
     private int troops;
-    private HashMap<String, Territory> neighbours;
-    private String territoryName;
-    private String continentName;
+    private final HashMap<String, Territory> neighbours;
+    private final String territoryName;
+    private final String continentName;
 
     /**
      * Class constructor for the Territory class. Sets the player who occupies the territory

@@ -8,7 +8,7 @@ public enum CommandEnum {
     QUIT("quit"), UNKNOWN("unknown command"), SKIP("skip"),
     WORLDMAP("worldmap"), HELP("help"), MYMAP("mymap");
 
-    private String commandString;
+    private final String commandString;
 
     /**
      * Initializes each enum command with its corresponding String

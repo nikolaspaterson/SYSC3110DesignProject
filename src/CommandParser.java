@@ -6,8 +6,8 @@ import java.util.Scanner;
  */
 public class CommandParser {
 
-    private CommandWord validCommands;
-    private Scanner inputReader;
+    private final CommandWord validCommands;
+    private final Scanner inputReader;
 
     /**
      * Default constructor for the CommandParser class, creates scanner to read in user input.

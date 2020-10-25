@@ -2,13 +2,13 @@ import java.util.HashMap;
 
 /**
  * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
- * @Author Ahmad El-Sammak
+ * @author Ahmad El-Sammak
  */
 public class Player {
 
     private int deployableTroops;
-    private String name;
-    private HashMap<String, Territory> territoriesOccupied;
+    private final String name;
+    private final HashMap<String, Territory> territoriesOccupied;
 
     /**
      * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.

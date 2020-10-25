@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 /**
  * The GameEvent class is responsible for handling the events that are generated once a Player reinforces, attacks or fortifies.
- * @Author Ahmad El-Sammak
+ * @author Ahmad El-Sammak
  */
 public class GameEvent {
 
@@ -145,9 +145,5 @@ public class GameEvent {
             }
 
         }
-    }
-
-    public Player getPlayer(){
-        return this.player;
     }
 }

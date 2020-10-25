@@ -9,8 +9,8 @@ import java.util.*;
 public class Game {
 
     private int currentPlayerTurn;
-    private ArrayList<Player> playerList;
-    private CommandParser commandParser;
+    private final ArrayList<Player> playerList;
+    private final CommandParser commandParser;
     private Map<String,Territory> worldMap;
 
     /**

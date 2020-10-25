@@ -6,9 +6,9 @@ import java.util.*;
  */
 public class GameSetup {
 
-    private HashMap<String,Territory> world_map;
-    private String territory_CSV;
-    private ArrayList<Territory> unclaimed_territory;
+    private final HashMap<String,Territory> world_map;
+    private final String territory_CSV;
+    private final ArrayList<Territory> unclaimed_territory;
 
     /**
      * GameSetup is in charge of calling private methods which

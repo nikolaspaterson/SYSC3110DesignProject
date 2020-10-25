@@ -7,7 +7,7 @@ import java.util.Map;
  */
 public class CommandWord {
 
-    private Map<String, CommandEnum> validCommands;
+    private final Map<String, CommandEnum> validCommands;
 
     /**
      * Populates HashMap with all valid commands a String and commandEnum
