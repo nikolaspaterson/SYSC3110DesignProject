@@ -263,8 +263,9 @@ public class Game {
             System.out.println("Here are your available commands, ");
             commandParser.printAllCommands();
             System.out.println();
+        }else{
+            System.out.println("help what?");
         }
-        System.out.println("help what?");
     }
 
     /**
