@@ -108,7 +108,7 @@ public class GameEvent {
             Scanner sc = new Scanner(System.in);
             int i = sc.nextInt();
 
-            if (i < 0){
+            if (i <= 0){
                 i = 1;
                 System.out.println("You must at least move one troop to the new territory!");
                 System.out.println( i +" troop has been moved because of you're lack of knowledge...");
