@@ -9,14 +9,16 @@ import java.util.*;
 public class Game {
 
     private int currentPlayerTurn;
-    private ArrayList<Player> playerList;
+    private ArrayList<Player> playerList = new ArrayList<>();
     private CommandParser commandParser;
     private HashMap<String,Territory> worldMap;
+    boolean wantsToQuit;
 
     /**
      * Create game object and begins the game
      */
     public Game(){
+        wantsToQuit = false;
         playerList = new ArrayList<>();
         printWelcome();
         playerSetUp();
@@ -42,19 +44,26 @@ public class Game {
             currentPlayerTurn++;
         }
         checkPlayerStanding();
-        (playerList.get(currentPlayerTurn-1)).troopsReceived();
-        findWinner();
+        if(playerList.size() != 1) {
+            (playerList.get(currentPlayerTurn - 1)).troopsReceived();
+        }
+
     }
 
     /**
      * Checks if a player is still in the game based on if they own any territories
      */
     public void checkPlayerStanding(){
+        Player p_to_delete = null;
         for (Player player : playerList){
             if(player.getTerritoriesOccupied().isEmpty()){
-                playerList.remove(player);
+                p_to_delete = player;
             }
         }
+        if(p_to_delete != null){
+            playerList.remove(p_to_delete);
+        }
+
     }
 
     /**
@@ -62,9 +71,10 @@ public class Game {
      * only 1 active player.
      */
     public void findWinner(){
+        checkPlayerStanding();
         if(playerList.size() == 1) {
-            System.out.println(playerList.get(0) + " won the game!");
-            commandProcessor(new Command("quit"));
+            System.out.println(playerList.get(0).getName() + " won the game!");
+            wantsToQuit = true;
         }
     }
 
@@ -99,7 +109,6 @@ public class Game {
      */
     private boolean commandProcessor(Command cmd){
         CommandWord commandWord = new CommandWord();
-        boolean wantsToQuit = false;
         CommandEnum command = commandWord.getCommandAction(cmd.getCommandAction());
 
         switch (command) {
@@ -113,9 +122,11 @@ public class Game {
             case WORLDMAP -> showWorldMap();
             case MYMAP -> showMyMap();
         }
-        System.out.println("=======================================");
-        System.out.println(getPlayerTurn().getName() + "'s turn : ");
-        System.out.println("you have " + getPlayerTurn().getDeployableTroops() + " to START deploying");
+        if(wantsToQuit == false){
+            System.out.println("=======================================");
+            System.out.println(getPlayerTurn().getName() + "'s turn : ");
+            System.out.println("you have " + getPlayerTurn().getDeployableTroops() + " to START deploying");
+        }
         return wantsToQuit;
     }
 
@@ -171,6 +182,7 @@ public class Game {
                     Territory attackingTerritory = player.getTerritoriesOccupied().get(cmd.getCommandOrigin());
                     Territory defendingTerritory = attackingTerritory.getNeighbours().get(cmd.getCommandTarget());
                     gameevent.attack(attackingTerritory, defendingTerritory, Integer.parseInt(cmd.getCommandNumber()));
+                    findWinner();
                 } catch (NullPointerException e) {
                     System.out.println("Please enter a neighbouring territory that is owned by a different player");
                 }
@@ -283,5 +295,6 @@ public class Game {
 
     public static void main(String[] args) {
         Game g = new Game();
+
     }
 }
