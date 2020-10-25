@@ -90,6 +90,26 @@ The user will play the game by typing these commands into the interface.
 7. **quit** - closes the game
 8. **skip** - skips the current player turn to go to the next one
 
+### Deliverables
+
+**Scripts:**<br>
+Command - Nikolas Paterson<br>
+CommandEnum - Nikolas Paterson<br>
+CommandParser - Nikolas Paterson<br>
+CommandWord - Nikolas Paterson<br>
+Dice - Ahmad El-Sammak<br>
+Game - Nikolas Paterson, Erik Iuhas<br>
+GameEvent - Ahmad El-Sammak<br>
+GameSetup - Erik Iuhas<br>
+Player - Ahmad El-Sammak<br>
+Territory - Ahmad El-Sammak<br>
+**Files:**<br>
+TerritoryNeighbours.csv - Erik Iuhas<br>
+**Documents:**<br>
+UML Diagram - Ahmad El-SammakAhmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
+Sequence Diagrams - Ahmad El-SammakAhmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
+Documentation - Ahmad El-SammakAhmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
+
 
 ### Project Roadmap
 Milestone 2! In the second milestone we are required to convert the game from text based to GUI based and implement Unit Testing. We are looking forward to 
