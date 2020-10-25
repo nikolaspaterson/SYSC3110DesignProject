@@ -102,7 +102,7 @@ Game - Nikolas Paterson, Erik Iuhas<br>
 GameEvent - Ahmad El-Sammak<br>
 GameSetup - Erik Iuhas<br>
 Player - Ahmad El-Sammak<br>
-Territory - Ahmad El-Sammak<br>
+Territory - Ahmad El-Sammak, Erik Iuhas<br>
 **Files:**<br>
 TerritoryNeighbours.csv - Erik Iuhas<br>
 **Documents:**<br>
