@@ -37,25 +37,25 @@ TA(Carleton's Best)
 - [ ] Milestone 4: Save/load game and custom maps
 
 ### Milestone 1 Deliverables
-1. Read.me :white_check_mark:
+1. Readme :white_check_mark:
 2. Source code + jar executable :white_check_mark:
 3. UML Diagram :white_check_mark:
 4. Documentaion :white_check_mark:
 
-The read.me file is used to describe our project and the roadmap ahead.
+The readme file is used to describe our project and the roadmap ahead.
 The source code consists of classes that work work together to make our text based game playable.
 The UML diagram displays how our classes interact with one another.
 We documented all of our code and provided a Word Document describing our choice in data structures.
 
 ### Milesstone 2 Deliverables
-1. Read.me :x:
+1. Readme :x:
 2. Design file :x:
 3. Unit tests :x:
 4. Source code :x:
 5. Documentation :x:
 
 ### Milestone 3 Deliverables
-1. Read.me :x:
+1. Readme :x:
 2. Source code :x:
 3. Unit tests :x:
 4. Refined design :x:
@@ -63,7 +63,7 @@ We documented all of our code and provided a Word Document describing our choice
 
 
 ### Milestone 4 Deliverables
-1. Read.me :x:
+1. Readme :x:
 2. Source code :x:
 3. Unit tests :x:
 4. Documentation :x:
