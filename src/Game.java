@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * The Game class's main responsibility is to act as the brain
@@ -9,9 +11,9 @@ import java.util.*;
 public class Game {
 
     private int currentPlayerTurn;
-    private ArrayList<Player> playerList = new ArrayList<>();
-    private CommandParser commandParser;
-    private HashMap<String,Territory> worldMap;
+    private final ArrayList<Player> playerList;
+    private final CommandParser commandParser;
+    private Map<String,Territory> worldMap;
     boolean wantsToQuit;
 
     /**
@@ -63,7 +65,6 @@ public class Game {
         if(p_to_delete != null){
             playerList.remove(p_to_delete);
         }
-
     }
 
     /**
@@ -122,7 +123,7 @@ public class Game {
             case WORLDMAP -> showWorldMap();
             case MYMAP -> showMyMap();
         }
-        if(wantsToQuit == false){
+        if(!wantsToQuit){
             System.out.println("=======================================");
             System.out.println(getPlayerTurn().getName() + "'s turn : ");
             System.out.println("you have " + getPlayerTurn().getDeployableTroops() + " to START deploying");
@@ -294,7 +295,6 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game g = new Game();
-
+        new Game();
     }
 }
