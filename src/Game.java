@@ -3,6 +3,8 @@ import java.util.*;
 /**
  * The Game class's main responsibility is to act as the brain
  *  of the RISK game. This class is used to initialize all other classes.
+ * @author Nikolas Paterson
+ * @author Erik Iuhas
  */
 public class Game {
 

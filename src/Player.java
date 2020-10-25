@@ -2,6 +2,7 @@ import java.util.HashMap;
 
 /**
  * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
+ * @Author Ahmad El-Sammak
  */
 public class Player {
 

@@ -1,5 +1,6 @@
 /**
  * Enum of all commands the player can use
+ * @author Nikolas Paterson
  */
 public enum CommandEnum {
 

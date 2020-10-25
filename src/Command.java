@@ -9,6 +9,8 @@
  * attack germany poland 12 -> player will attack poland with 12 german troops
  * fortify ontario yukon 5 -> player will fortify the yukon with 5 troops from ontario
  *
+ * @author Nikolas Paterson
+ *
  */
 public class Command {
 

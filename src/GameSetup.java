@@ -1,6 +1,9 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * @author Erik Iuhas
+ */
 public class GameSetup {
 
     private HashMap<String,Territory> world_map;
@@ -114,7 +117,6 @@ public class GameSetup {
         ArrayList<String[]> territory_list = new ArrayList<>();
 
         try {
-
             BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(this.territory_CSV)));
             reader.readLine(); //Skip first line
             while((row = reader.readLine()) != null){

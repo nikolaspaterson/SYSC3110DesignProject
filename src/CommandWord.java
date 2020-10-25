@@ -3,6 +3,7 @@ import java.util.Map;
 
 /**
  * Stores all the valid commands that the players can use.
+ * @author Nikolas Paterson
  */
 public class CommandWord {
 
