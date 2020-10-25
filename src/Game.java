@@ -11,7 +11,7 @@ public class Game {
     private int currentPlayerTurn;
     private ArrayList<Player> playerList;
     private CommandParser commandParser;
-    private HashMap<String,Territory> worldMap;
+    private Map<String,Territory> worldMap;
 
     /**
      * Create game object and begins the game
@@ -282,6 +282,6 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game g = new Game();
+        new Game();
     }
 }
