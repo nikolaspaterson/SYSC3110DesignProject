@@ -9,6 +9,7 @@ public class GameSetup {
     private final HashMap<String,Territory> world_map;
     private final String territory_CSV;
     private final ArrayList<Territory> unclaimed_territory;
+    private final HashMap<String, Continent> continentMap;
 
     /**
      * GameSetup is in charge of calling private methods which
@@ -19,6 +20,7 @@ public class GameSetup {
     public GameSetup(ArrayList<Player> players){
         this.territory_CSV = "TerritoryNeighbours.csv";
         this.world_map = new HashMap<>();
+        this.continentMap = new HashMap<>();
         this.unclaimed_territory = new ArrayList<>();
         set_neighbours(read_csv());
         distribute_troops(players);
@@ -53,7 +55,7 @@ public class GameSetup {
         int troop_num;
         for(int i = 0; unclaimed_territory.size() != 0;i++){
             current_player = players.get(i%players.size());
-            current_territory =select_random_territory(unclaimed_territory);
+            current_territory = select_random_territory(unclaimed_territory);
             current_territory.setOccupant(current_player);
             current_territory.setTroops(current_player.placeDeployableTroops(1));
             current_player.addTerritory(current_territory.getTerritoryName(),current_territory);
@@ -95,7 +97,12 @@ public class GameSetup {
         for(String[] temp_territory : territories){
             continent_name = temp_territory[0];
             territory_name = temp_territory[1];
-            world_map.put(territory_name,new Territory(territory_name,continent_name));
+            Territory added_territory = new Territory(territory_name);
+            world_map.put(territory_name,added_territory);
+            if (continentMap.get(continent_name) == null){
+                continentMap.put(continent_name,new Continent(continent_name));
+            }
+            continentMap.get(continent_name).addContinentTerritory(added_territory.getTerritoryName(),added_territory);
         }
         for(String[] temp_territory : territories){
             territory_name = temp_territory[1];
@@ -148,6 +155,10 @@ public class GameSetup {
      */
     public HashMap<String,Territory> returnWorldMap(){
         return world_map;
+    }
+
+    public HashMap<String,Continent> returnContinentMap() {
+        return continentMap;
     }
 }
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,6 +15,7 @@ public class Game {
     private final ArrayList<Player> playerList;
     private final CommandParser commandParser;
     private Map<String,Territory> worldMap;
+    private HashMap<String,Continent> continentMap;
     boolean wantsToQuit;
 
     /**
@@ -42,16 +44,37 @@ public class Game {
     public void nextTurn(){
         if(currentPlayerTurn == playerList.size()){
             currentPlayerTurn = 1;
+
         }else{
             currentPlayerTurn++;
         }
         checkPlayerStanding();
         if(playerList.size() != 1) {
-            (playerList.get(currentPlayerTurn - 1)).troopsReceived();
+            playerBonus();
         }
 
     }
 
+    /**
+     * This method is used to calculate the number of troops the player will receive based on how many territories and continents they own.
+     */
+    public void playerBonus(){
+
+        int troops = 0;
+        if (continentMap.get("Asia").checkContinentOccupant(getPlayerTurn())) troops += 7; // Asia Bonus
+        if (continentMap.get("Australia").checkContinentOccupant(getPlayerTurn())) troops += 2; // Australia Bonus
+        if (continentMap.get("Europe").checkContinentOccupant(getPlayerTurn())) troops += 5; // Europe Bonus
+        if (continentMap.get("Africa").checkContinentOccupant(getPlayerTurn())) troops += 3; // Africa Bonus
+        if (continentMap.get("SouthAmerica").checkContinentOccupant(getPlayerTurn())) troops += 2; // South America Bonus
+        if (continentMap.get("NorthAmerica").checkContinentOccupant(getPlayerTurn())) troops += 5; // North America Bonus
+
+        if ((getPlayerTurn().getTerritoriesOccupied().size()) <= 9) {
+            troops += 3;
+        } else {
+            troops += ((getPlayerTurn().getTerritoriesOccupied().size()) / 3);
+        }
+        getPlayerTurn().addDeployableTroops(troops);
+    }
     /**
      * Checks if a player is still in the game based on if they own any territories
      */
@@ -229,8 +252,9 @@ public class Game {
         }
         GameSetup gameSetup = new GameSetup(playerList);
         worldMap = gameSetup.returnWorldMap();
+        continentMap = gameSetup.returnContinentMap();
         currentPlayerTurn = 1;
-        (playerList.get(currentPlayerTurn-1)).troopsReceived();
+        playerBonus();
         System.out.println(getPlayerTurn().getName() + "'s turn : ");
         System.out.println("you have " + getPlayerTurn().getDeployableTroops() + " to START deploying");
     }

@@ -111,11 +111,11 @@ public class GameEvent {
             if (i <= 0){
                 i = 1;
                 System.out.println("You must at least move one troop to the new territory!");
-                System.out.println( i +" troop has been moved because of you're lack of knowledge...");
+                System.out.println( i +" troop has been moved because of your lack of knowledge...");
             } else if(i > attacking.getTroops() - 1){
                 i = attacking.getTroops() - 1;
                 System.out.println("You cannot move more than " + (attacking.getTroops() - 1));
-                System.out.println( i +" troops have been moved because of you're lack of knowledge...");
+                System.out.println( i +" troops have been moved because of your lack of knowledge...");
             }
             if (i > 0 && i < attacking.getTroops()) {
                 (attacking.getOccupant()).addTerritory(defending.getTerritoryName(), defending);

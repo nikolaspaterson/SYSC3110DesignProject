@@ -11,25 +11,17 @@ public class Territory {
     private int troops;
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
-    private final String continentName;
 
     /**
      * Class constructor for the Territory class. Sets the player who occupies the territory
      * @param territoryName the name of the territory.
-     * @param continentName the continent that the territory is in.
      */
-    public Territory(String territoryName, String continentName) {
+    public Territory(String territoryName) {
         this.territoryName = territoryName;
-        this.continentName = continentName;
         troops = 0;
         neighbours = new HashMap<>();
     }
 
-    /**
-     * Gets the continent name that this Territory is in.
-     * @return String the continent name.
-     */
-    public String getContinentName() { return continentName; }
 
     /**
      * Gets the name of this Territory.
@@ -99,7 +91,6 @@ public class Territory {
      */
     public void print_info(){
         System.out.println("Territory Name: " + territoryName );
-        System.out.println("Continent Name: " + continentName);
         System.out.println("Neighbours: " + neighbours.keySet().toString());
         System.out.println("Owner: " + occupant.getName());
         System.out.println("Troop Count: " + troops);

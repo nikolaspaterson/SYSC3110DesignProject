@@ -110,53 +110,6 @@ public class Player {
     }
 
     /**
-     * This method is used to calculate the number of troops the player will receive based on how many territories and continents they own.
-     */
-    public void troopsReceived() {
-        int result = 0;
-
-        if ((this.getTerritoriesOccupied().size()) <= 9) {
-            result = 3;
-        } else {
-            result = ((this.getTerritoriesOccupied().size()) / 3);
-        }
-
-        result += troopContinentBonus();
-        this.addDeployableTroops(result);
-    }
-
-    /**
-     * This method is used to calculate the amount of extra bonus troops the player gets if they control one or more continent(s).
-     * @return the number of bonus troops.
-     */
-    public int troopContinentBonus() {
-        int[] continents = new int[6];
-
-        if (this.getTerritoriesOccupied().size() > 0) {
-            for (Territory territory : this.getTerritoriesOccupied().values()) {
-                String continentName = territory.getContinentName();
-
-                switch (continentName) {
-                    case "Asia" -> continents[0]++;
-                    case "Australia" -> continents[1]++;
-                    case "Europe" -> continents[2]++;
-                    case "Africa" -> continents[3]++;
-                    case "South America" -> continents[4]++;
-                    case "North America" -> continents[5]++;
-                }
-            }
-        }
-        int troops = 0;
-        if (continents[0] == 12) troops += 7; // Asia Bonus
-        if (continents[1] == 4) troops += 2; // Australia Bonus
-        if (continents[2] == 7) troops += 5; // Europe Bonus
-        if (continents[3] == 6) troops += 3; // Africa Bonus
-        if (continents[4] == 4) troops += 2; // South America Bonus
-        if (continents[5] == 9) troops += 5; // North America Bonus
-        return troops;
-    }
-
-    /**
      * Combines the Player's Name, all their Territory's owned and how many troops are in each Territory.
      * @return String combination of information above.
      */
