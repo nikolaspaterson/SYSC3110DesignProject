@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -248,9 +250,9 @@ public class Game {
      */
     public void setPlayers(int nPlayers){
         for(int i = 1; i <= nPlayers; i++){
-            playerList.add(new Player("Player " + i));
+            playerList.add(new Player("Player " + i, Color.red));
         }
-        GameSetup gameSetup = new GameSetup(playerList);
+        GameSetup gameSetup = new GameSetup(playerList, new JPanel());
         worldMap = gameSetup.returnWorldMap();
         continentMap = gameSetup.returnContinentMap();
         currentPlayerTurn = 1;
@@ -318,7 +320,7 @@ public class Game {
         return true;
     }
 
-    public static void main(String[] args) {
+    /**public static void main(String[] args) {
         new Game();
-    }
+    }*/
 }

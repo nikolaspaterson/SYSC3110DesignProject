@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.util.*;
 
@@ -17,12 +18,12 @@ public class GameSetup {
      * the troops randomly on the world_map
      * @param players a list of the players, provided by Game object
      */
-    public GameSetup(ArrayList<Player> players){
+    public GameSetup(ArrayList<Player> players, Component parent){
         this.territory_CSV = "TerritoryNeighbours.csv";
         this.world_map = new HashMap<>();
         this.continentMap = new HashMap<>();
         this.unclaimed_territory = new ArrayList<>();
-        set_neighbours(read_csv());
+        set_neighbours(read_csv(),parent);
         distribute_troops(players);
         }
 
@@ -91,13 +92,21 @@ public class GameSetup {
      * territories.
      * @param territories ArrayList generated from TerritoryNeighbours.csv
      */
-    private void set_neighbours(ArrayList<String[]> territories){
+    private void set_neighbours(ArrayList<String[]> territories, Component parent){
         String continent_name;
         String territory_name;
+        int x;
+        int width;
+        int y;
+        int height;
         for(String[] temp_territory : territories){
             continent_name = temp_territory[0];
-            territory_name = temp_territory[1];
-            Territory added_territory = new Territory(territory_name);
+            territory_name = temp_territory[5];
+            x = Integer.parseInt(temp_territory[1]);
+            y = Integer.parseInt(temp_territory[2]);
+            width = Integer.parseInt(temp_territory[3]) - x;
+            height = Integer.parseInt(temp_territory[4]) - y;
+            Territory added_territory = new Territory(territory_name,x,y,width,height,parent);
             world_map.put(territory_name,added_territory);
             if (continentMap.get(continent_name) == null){
                 continentMap.put(continent_name,new Continent(continent_name));
@@ -105,9 +114,9 @@ public class GameSetup {
             continentMap.get(continent_name).addContinentTerritory(added_territory.getTerritoryName(),added_territory);
         }
         for(String[] temp_territory : territories){
-            territory_name = temp_territory[1];
+            territory_name = temp_territory[5];
             ArrayList<String> temp_sub = new ArrayList<>(Arrays.asList(temp_territory));
-            for(String temp_neighbours : temp_sub.subList(2,temp_sub.size())){
+            for(String temp_neighbours : temp_sub.subList(6,temp_sub.size())){
                 world_map.get(territory_name).addNeighbour(world_map.get(temp_neighbours));
             }
         }

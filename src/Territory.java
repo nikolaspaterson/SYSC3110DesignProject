@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
 /**
@@ -5,21 +9,54 @@ import java.util.HashMap;
  * @author Ahmad El-Sammak
  * @author Erik Iuhas
  */
-public class Territory {
+public class Territory extends JButton {
 
     private Player occupant;
     private int troops;
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
+    private final Component parent_canvas;
 
+    private JPanel popup_info;
+    private JLabel troop_count_label;
+    private JLabel territory_name_label;
+    private JLabel occupant_name_label;
     /**
      * Class constructor for the Territory class. Sets the player who occupies the territory
      * @param territoryName the name of the territory.
      */
-    public Territory(String territoryName) {
+    public Territory(String territoryName,int x, int y, int width, int height,Component parent) {
         this.territoryName = territoryName;
+        this.parent_canvas = parent;
+        this.setBounds(x,y,width,height);
         troops = 0;
         neighbours = new HashMap<>();
+
+        popup_info = new JPanel();
+        popup_info.setLayout(new BoxLayout(popup_info,BoxLayout.Y_AXIS));
+        popup_info.setBounds(x+width,y,100,50);
+        popup_info.setMaximumSize(new Dimension(100,50));
+        territory_name_label = new JLabel(territoryName);
+        territory_name_label.setFont(new Font("Arial",Font.BOLD,12));
+        troop_count_label = new JLabel("Troops: " + troops);
+        occupant_name_label = new JLabel("");
+
+        popup_info.add(territory_name_label);
+        popup_info.add(troop_count_label);
+        popup_info.add(occupant_name_label);
+
+        this.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent me) {
+                parent.getParent().add(popup_info);
+                parent.getParent().revalidate();
+                parent.getParent().repaint();
+            }
+            public void mouseExited(MouseEvent me) {
+                parent.getParent().remove(popup_info);
+                parent.getParent().revalidate();
+                parent.getParent().repaint();
+            }
+        });
     }
 
 
@@ -35,6 +72,8 @@ public class Territory {
      */
     public void setTroops(int troops) {
         this.troops = troops;
+        troop_count_label.setText("Troops: " + String.valueOf(troops));
+        this.setText(String.valueOf(troops));
     }
 
     /**
@@ -65,6 +104,8 @@ public class Territory {
      */
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
+        occupant_name_label.setText("Occupant: "+occupant.getName());
+        this.setBackground(occupant.getPlayer_color());
     }
 
     /**

@@ -1,21 +1,28 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 
 /**
  * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
  * @author Ahmad El-Sammak
  */
-public class Player {
+public class Player extends JPanel {
 
     private int deployableTroops;
     private final String name;
     private final HashMap<String, Territory> territoriesOccupied;
+    private final Color player_color;
+
+    private ImageIcon player_icon;
+    private JLabel player_name_label;
 
     /**
      * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
      * @param name the name of the player.
      */
-    public Player(String name) {
+    public Player(String name,Color player_color) {
         this.name = name;
+        this.player_color = player_color;
         territoriesOccupied = new HashMap<>();
     }
 
@@ -33,6 +40,7 @@ public class Player {
      */
     public HashMap<String, Territory> getTerritoriesOccupied() { return territoriesOccupied; }
 
+    public Color getPlayer_color(){ return player_color;}
     /**
      * Sets the amount of deployable troops the player can use during their reinforcement.
      * @param deployableTroops number of deployable troops.
