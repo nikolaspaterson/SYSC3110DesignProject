@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class StartUpView extends JFrame {
 
@@ -14,6 +16,9 @@ public class StartUpView extends JFrame {
     JButton howToPlayButton = new JButton("How to Play");
     JPanel panel = new JPanel();
     GroupLayout gLayout = new GroupLayout(panel);
+    JPopupMenu popup = new JPopupMenu();
+    JMenuItem temp = new JMenuItem("Temp");
+    JMenuItem temp2 = new JMenuItem("Tempppppp");
 
     public StartUpView(){
         super("Welcome");//Sets title of window
@@ -59,6 +64,19 @@ public class StartUpView extends JFrame {
                             .addComponent(playButton)
                             .addComponent(howToPlayButton))
         );
+
+
+        popup.add(temp);
+        popup.add(temp2);
+
+        howToPlayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Component c = (Component) e.getSource();
+                panel.add(popup);
+                popup.show(c,panel.getX(),panel.getY());
+            }
+        });
 
         setContentPane(panel);
         setSize(WIDTH,HEIGHT); //set window size
