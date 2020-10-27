@@ -4,20 +4,27 @@ import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class StartUpView extends JFrame {
 
     public StartUpView() {
         super("Player Setup!");
         setSize(new Dimension(1280,814));
+        setMinimumSize(new Dimension(1280,814));
+        setMaximumSize(new Dimension(1280,814));
+        setLayout(new GridLayout(3,1));
 
-        JPanel p1 = new JPanel();
+
+
+        JPanel p1 = new JPanel(new GridLayout(2,1, 0, 0));
+        p1.setMaximumSize(new Dimension(1280, 150));
         JPanel p2 = new JPanel();
 
         // JLabel (
         JLabel jLabel = new JLabel("SELECT PLAYERS");
         jLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
-        jLabel.setForeground(Color.blue);
+        jLabel.setForeground(new Color(19, 0, 255));
         jLabel.setHorizontalAlignment(jLabel.CENTER);
         jLabel.setVerticalAlignment(jLabel.TOP);
         p1.add(jLabel);
@@ -77,93 +84,28 @@ public class StartUpView extends JFrame {
 
         // JPanel (for characters)
         JPanel playerList = new JPanel();
-        playerList.setLayout(new GridLayout(4, 2, 5, 10));
+        playerList.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        ArrayList<String> file = new ArrayList<>();
+        file.add("C:\\Users\\adisa\\Desktop\\Chizzy.png");
+        file.add("C:\\Users\\adisa\\Desktop\\TA.png");
+        ArrayList<PlayerSelectPanel> players = new ArrayList<>();
+        PlayerSelectPanel adi = new PlayerSelectPanel(file.get(0));
+        PlayerSelectPanel TA = new PlayerSelectPanel(file.get(1));
+        PlayerSelectPanel adi2 = new PlayerSelectPanel(file.get(0));
+        PlayerSelectPanel TA2 = new PlayerSelectPanel(file.get(1));
+        PlayerSelectPanel TA3 = new PlayerSelectPanel(file.get(1));
 
 
-        // JPanel (for player)
-        GridBagConstraints gbl = new GridBagConstraints();
-        JPanel player = new JPanel(new GridBagLayout());
-        Border blackLine = BorderFactory.createLineBorder(Color.black);
-        player.setBorder(blackLine);
+        playerList.add(adi);
+        playerList.add(TA);
+        playerList.add(adi2);
+        playerList.add(TA2);
+        playerList.add(TA3);
 
-        JLabel pn = new JLabel("Player Name:");
-        pn.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JTextField playerName = new JTextField(15);
-        JButton submit = new JButton("SUBMIT");
-        submit.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JLabel empty = new JLabel("          ");
-        JLabel empty1 = new JLabel("          ");
-
-        // Creating another JLabel for pics of players
-        JLabel personalPhoto = new JLabel();
-        ImageIcon chizzy = new ImageIcon("C:\\Users\\adisa\\Desktop\\Chizzy.png");
-        Image i = chizzy.getImage();
-        Image newI = i.getScaledInstance( 75, 75,  java.awt.Image.SCALE_SMOOTH ) ;
-        chizzy = new ImageIcon(newI);
-
-        personalPhoto.setIcon(chizzy);
-        gbl.gridx = 0;
-        gbl.gridy = 0;
-        player.add(personalPhoto, gbl);
-        gbl.gridx = 10;
-        gbl.gridy = 0;
-        player.add(empty, gbl);
-        gbl.gridx = 20;
-        gbl.gridy = 0;
-        player.add(pn, gbl);
-        gbl.gridx = 30;
-        gbl.gridy = 0;
-        player.add(playerName, gbl);
-        gbl.gridx = 40;
-        gbl.gridy = 0;
-        player.add(empty1, gbl);
-        gbl.gridx = 50;
-        gbl.gridy = 0;
-        player.add(submit, gbl);
-
-        playerList.add(player);
-
-
-        // JPanel (for player)
-        JPanel player2 = new JPanel(new GridBagLayout());
-        player2.setBorder(blackLine);
-
-        JLabel pn1 = new JLabel("Player Name:");
-        pn1.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JTextField playerName1 = new JTextField(15);
-        JButton submit1 = new JButton("SUBMIT");
-        submit1.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JLabel e = new JLabel("          ");
-        JLabel e1 = new JLabel("          ");
-
-        // Creating another JLabel for pics of players
-        JLabel personalPhoto1 = new JLabel();
-
-        personalPhoto1.setIcon(chizzy);
-        gbl.gridx = 0;
-        gbl.gridy = 0;
-        player2.add(personalPhoto1, gbl);
-        gbl.gridx = 10;
-        gbl.gridy = 0;
-        player2.add(e, gbl);
-        gbl.gridx = 20;
-        gbl.gridy = 0;
-        player2.add(pn1, gbl);
-        gbl.gridx = 30;
-        gbl.gridy = 0;
-        player2.add(playerName1, gbl);
-        gbl.gridx = 40;
-        gbl.gridy = 0;
-        player2.add(e1, gbl);
-        gbl.gridx = 50;
-        gbl.gridy = 0;
-        player2.add(submit1, gbl);
-
-        playerList.add(player2);
-
+        p1.add(p2);
         add(p1, BorderLayout.NORTH);
-        add(p2, BorderLayout.CENTER);
-        add(playerList, BorderLayout.SOUTH);
+        add(playerList);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
