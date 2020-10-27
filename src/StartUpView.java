@@ -21,42 +21,44 @@ public class StartUpView extends JFrame {
 
         panel.setLayout(gLayout); //Set panel layout to GroupLayout
 
-
-        welcomeLabel.setFont(new Font("Impact", Font.BOLD,50));
-        welcomeTextLabel.setFont(new Font("Comic Sans MS", Font.BOLD,35));
-
-        playButton.setFont(new Font("Impact", Font.PLAIN,60));
-        playButton.setPreferredSize(new Dimension(150, 50));
+        //Set font
+        welcomeLabel.setFont(new Font("Impact", Font.PLAIN,50));
+        welcomeTextLabel.setFont(new Font("Impact", Font.PLAIN,35));
         howToPlayButton.setFont(new Font("Impact", Font.PLAIN,60));
+        playButton.setFont(new Font("Impact", Font.PLAIN,60));
+
+        //Set button colors
         howToPlayButton.setBackground(new Color(206, 93, 93));
         playButton.setBackground(new Color(123, 220, 73));
 
+        //set horizontal layout, align components by center point
+        gLayout.setHorizontalGroup(gLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
 
+                .addGroup(gLayout.createSequentialGroup() //create sub group for buttons, drawing in sequence
+                        .addGap(WIDTH / 3) //left most gap
+                        .addComponent(playButton)
+                        .addGap(WIDTH / 6) //gap between buttons
+                        .addComponent(howToPlayButton)
+                        .addGap(2 * WIDTH / 7) //adds space after buttons, shifts text to right
+                )
 
-
-        gLayout.setHorizontalGroup(gLayout.createSequentialGroup() //Horizontal alignment, giving in sequence
-                .addGap(WIDTH / 9) //leftmost gap
-                .addComponent(playButton)
-                .addGap(WIDTH / 7) //gap between playButton and text above
-                .addGroup(gLayout.createParallelGroup(GroupLayout.Alignment.CENTER) //Subgroup that will be centered with eachother
+                .addGroup(gLayout.createParallelGroup(GroupLayout.Alignment.CENTER) //sub group from text, aligned by center point
                         .addComponent(welcomeLabel)
-                        .addComponent(welcomeTextLabel))
-                .addGap(WIDTH / 7) //gap between text and howToPlayButton
-                .addComponent(howToPlayButton)
+                        .addComponent(welcomeTextLabel)
+                )
         );
 
+        //set vertical layout
         gLayout.setVerticalGroup(gLayout.createSequentialGroup()
-                .addGap(HEIGHT / 6)
+                .addGap(HEIGHT / 6) //top gap
                 .addComponent(welcomeLabel)
-                .addGap(HEIGHT / 20)
+                .addGap(HEIGHT / 20) //gap between text
                 .addComponent(welcomeTextLabel)
                 .addGap(HEIGHT / 6)
-                    .addGroup(gLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addGroup(gLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //subgroup, vertically aligns 2 buttons
                             .addComponent(playButton)
                             .addComponent(howToPlayButton))
         );
-
-
 
         setContentPane(panel);
         setSize(WIDTH,HEIGHT); //set window size
