@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class StartUpView extends JFrame {
 
@@ -23,8 +21,17 @@ public class StartUpView extends JFrame {
 
         panel.setLayout(gLayout); //Set panel layout to GroupLayout
 
+
+        welcomeLabel.setFont(new Font("Impact", Font.BOLD,50));
+        welcomeTextLabel.setFont(new Font("Comic Sans MS", Font.BOLD,35));
+
+        playButton.setFont(new Font("Impact", Font.BOLD,20));
+        playButton.setPreferredSize(new Dimension(150, 50));
+        howToPlayButton.setFont(new Font("Comic Sans MS", Font.BOLD,20));
+
+
         gLayout.setHorizontalGroup(gLayout.createSequentialGroup() //Horizontal alignment, giving in sequence
-                .addGap(WIDTH / 5) //leftmost gap
+                .addGap(WIDTH / 9) //leftmost gap
                 .addComponent(playButton)
                 .addGap(WIDTH / 7) //gap between playButton and text above
                 .addGroup(gLayout.createParallelGroup(GroupLayout.Alignment.CENTER) //Subgroup that will be centered with eachother
@@ -35,7 +42,7 @@ public class StartUpView extends JFrame {
         );
 
         gLayout.setVerticalGroup(gLayout.createSequentialGroup()
-                .addGap(HEIGHT / 3)
+                .addGap(HEIGHT / 6)
                 .addComponent(welcomeLabel)
                 .addGap(HEIGHT / 20)
                 .addComponent(welcomeTextLabel)
@@ -44,6 +51,8 @@ public class StartUpView extends JFrame {
                             .addComponent(playButton)
                             .addComponent(howToPlayButton))
         );
+
+
 
         setContentPane(panel);
         setSize(WIDTH,HEIGHT); //set window size
