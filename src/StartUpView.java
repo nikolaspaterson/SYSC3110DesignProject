@@ -25,9 +25,13 @@ public class StartUpView extends JFrame {
         welcomeLabel.setFont(new Font("Impact", Font.BOLD,50));
         welcomeTextLabel.setFont(new Font("Comic Sans MS", Font.BOLD,35));
 
-        playButton.setFont(new Font("Impact", Font.BOLD,20));
+        playButton.setFont(new Font("Impact", Font.PLAIN,60));
         playButton.setPreferredSize(new Dimension(150, 50));
-        howToPlayButton.setFont(new Font("Comic Sans MS", Font.BOLD,20));
+        howToPlayButton.setFont(new Font("Impact", Font.PLAIN,60));
+        howToPlayButton.setBackground(new Color(206, 93, 93));
+        playButton.setBackground(new Color(123, 220, 73));
+
+
 
 
         gLayout.setHorizontalGroup(gLayout.createSequentialGroup() //Horizontal alignment, giving in sequence
