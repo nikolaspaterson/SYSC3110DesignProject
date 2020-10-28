@@ -106,6 +106,14 @@ public class StartUpView extends JFrame {
                 });
             }
         });
+
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                PlayerSelectView playerSelect = new PlayerSelectView();
+            }
+        });
     }
 
     public static void main(String[] args) {
