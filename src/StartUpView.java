@@ -1,9 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 public class StartUpView extends JFrame {
 
@@ -22,6 +18,8 @@ public class StartUpView extends JFrame {
     public StartUpView(){
         super("Welcome");//Sets title of window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //close and stop the program when x is clicked
+
+        StartUpController controller = new StartUpController(this);
 
         panel.setLayout(gLayout); //Set panel layout to GroupLayout
 
@@ -64,56 +62,13 @@ public class StartUpView extends JFrame {
                             .addComponent(howToPlayButton))
         );
 
-
         setContentPane(panel);
         setSize(WIDTH,HEIGHT); //set window size
         setVisible(true); //make window visible
 
-
-        //Add action to button
-        howToPlayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                //Create frame and panel
-                JFrame popUpFrame = new JFrame();
-                JPanel howtoPanel = new JPanel();
-                howtoPanel.setBorder(BorderFactory.createEmptyBorder(100,100,300,300));
-                howtoPanel.setLayout(new BoxLayout(howtoPanel, BoxLayout.Y_AXIS));
-                popUpFrame.add(howtoPanel, BorderLayout.CENTER);
-
-                //add labels to panel
-                JLabel temp = new JLabel("TEST");
-                JLabel temp2 = new JLabel("Turn steps");
-                howtoPanel.add(temp);
-                howtoPanel.add(temp2);
-
-                popUpFrame.setTitle("Tutorial");
-                popUpFrame.pack();
-                popUpFrame.setVisible(true);
-
-                //hide panel if not in focus
-                popUpFrame.addFocusListener(new FocusListener() {
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                        popUpFrame.setVisible(true);
-                    }
-
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        popUpFrame.dispose();
-                    }
-                });
-            }
-        });
-
-        playButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                PlayerSelectView playerSelect = new PlayerSelectView();
-            }
-        });
+        //Add controller to buttonListeners
+        howToPlayButton.addActionListener(controller);
+        playButton.addActionListener(controller);
     }
 
     public static void main(String[] args) {
