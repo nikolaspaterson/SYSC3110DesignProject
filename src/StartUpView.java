@@ -4,16 +4,16 @@ import java.awt.*;
 public class StartUpView extends JFrame {
 
     //window size constants
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 814;
+    private static final int WIDTH = 1280;
+    private static final int HEIGHT = 814;
 
     //declaring buttons, labels, panels and layouts
-    JLabel welcomeLabel = new JLabel("Welcome to RISK!");
-    JLabel welcomeTextLabel = new JLabel("Are you ready to conquer the world?");
-    JButton playButton = new JButton("Play");
-    JButton howToPlayButton = new JButton("How to Play");
-    JPanel panel = new JPanel();
-    GroupLayout gLayout = new GroupLayout(panel);
+    private final JLabel welcomeLabel = new JLabel("Welcome to RISK!");
+    private final JLabel welcomeTextLabel = new JLabel("Are you ready to conquer the world?");
+    private final JButton playButton = new JButton("Play");
+    private final JButton howToPlayButton = new JButton("How to Play");
+    private final JPanel panel = new JPanel();
+    private final GroupLayout gLayout = new GroupLayout(panel);
 
     public StartUpView(){
         super("Welcome");//Sets title of window
