@@ -1,174 +1,114 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class StartUpView extends JFrame {
 
-    public StartUpView() {
-        super("Player Setup!");
-        setSize(new Dimension(1280,814));
+    //window size constants
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 814;
 
-        JPanel p1 = new JPanel();
-        JPanel p2 = new JPanel();
+    //declaring buttons, labels, panels and layouts
+    JLabel welcomeLabel = new JLabel("Welcome to RISK!");
+    JLabel welcomeTextLabel = new JLabel("Are you ready to conquer the world?");
+    JButton playButton = new JButton("Play");
+    JButton howToPlayButton = new JButton("How to Play");
+    JPanel panel = new JPanel();
+    GroupLayout gLayout = new GroupLayout(panel);
 
-        // JLabel (
-        JLabel jLabel = new JLabel("SELECT PLAYERS");
-        jLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
-        jLabel.setForeground(Color.blue);
-        jLabel.setHorizontalAlignment(jLabel.CENTER);
-        jLabel.setVerticalAlignment(jLabel.TOP);
-        p1.add(jLabel);
+    public StartUpView(){
+        super("Welcome");//Sets title of window
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //close and stop the program when x is clicked
 
-        // JButton (left arrow)
-        JButton jButton1 = new JButton();
-        ImageIcon icon = new ImageIcon("C:\\Users\\adisa\\Desktop\\leftarrow.png");
-        Image img = icon.getImage();
-        Image newImg = img.getScaledInstance( 25, 25,  java.awt.Image.SCALE_SMOOTH ) ;
-        icon = new ImageIcon(newImg);
-        jButton1.setIcon(icon);
-        //jButton1.setHorizontalAlignment(jButton1.LEFT);
-        p2.add(jButton1);
+        panel.setLayout(gLayout); //Set panel layout to GroupLayout
 
-        // JLabel (for # of players)
-        JLabel jLabel1 = new JLabel("2");
-        jLabel1.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
-        jLabel1.setHorizontalAlignment(jLabel.CENTER);
-        jLabel1.setVerticalAlignment(jLabel.CENTER);
-        p2.add(jLabel1);
+        //Set font
+        welcomeLabel.setFont(new Font("Impact", Font.PLAIN,50));
+        welcomeTextLabel.setFont(new Font("Impact", Font.PLAIN,35));
+        howToPlayButton.setFont(new Font("Impact", Font.PLAIN,60));
+        playButton.setFont(new Font("Impact", Font.PLAIN,60));
 
-        // JButton (right arrow)
-        JButton jButton2 = new JButton();
-        ImageIcon icon2 = new ImageIcon("C:\\Users\\adisa\\Desktop\\rightarrow.png");
-        Image img2 = icon2.getImage();
-        Image scaledImage = img2.getScaledInstance( 25, 25,  java.awt.Image.SCALE_SMOOTH ) ;
-        icon2 = new ImageIcon(scaledImage);
-        jButton2.setIcon(icon2);
-        //jButton2.setHorizontalAlignment(jButton2.RIGHT);
-        p2.add(jButton2);
+        //Set button colors
+        howToPlayButton.setBackground(new Color(206, 93, 93));
+        playButton.setBackground(new Color(123, 220, 73));
 
-        jButton1.addActionListener(new ActionListener() {
+        //set horizontal layout, align components by center point
+        gLayout.setHorizontalGroup(gLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+
+                .addGroup(gLayout.createSequentialGroup() //create sub group for buttons, drawing in sequence
+                        .addGap(WIDTH / 3) //left most gap
+                        .addComponent(playButton)
+                        .addGap(WIDTH / 6) //gap between buttons
+                        .addComponent(howToPlayButton)
+                        .addGap(2 * WIDTH / 7) //adds space after buttons, shifts text to right
+                )
+
+                .addGroup(gLayout.createParallelGroup(GroupLayout.Alignment.CENTER) //sub group from text, aligned by center point
+                        .addComponent(welcomeLabel)
+                        .addComponent(welcomeTextLabel)
+                )
+        );
+
+        //set vertical layout
+        gLayout.setVerticalGroup(gLayout.createSequentialGroup()
+                .addGap(HEIGHT / 6) //top gap
+                .addComponent(welcomeLabel)
+                .addGap(HEIGHT / 20) //gap between text
+                .addComponent(welcomeTextLabel)
+                .addGap(HEIGHT / 6)
+                    .addGroup(gLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //subgroup, vertically aligns 2 buttons
+                            .addComponent(playButton)
+                            .addComponent(howToPlayButton))
+        );
+
+
+        setContentPane(panel);
+        setSize(WIDTH,HEIGHT); //set window size
+        setVisible(true); //make window visible
+
+
+        //Add action to button
+        howToPlayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int x = (Integer.parseInt(jLabel1.getText()));
-                if (x == 2) {
-                    x = 6;
-                } else {
-                    x--;
-                }
-                jLabel1.setText("" + x);
+
+                //Create frame and panel
+                JFrame popUpFrame = new JFrame();
+                JPanel howtoPanel = new JPanel();
+                howtoPanel.setBorder(BorderFactory.createEmptyBorder(100,100,300,300));
+                howtoPanel.setLayout(new BoxLayout(howtoPanel, BoxLayout.Y_AXIS));
+                popUpFrame.add(howtoPanel, BorderLayout.CENTER);
+
+                //add labels to panel
+                JLabel temp = new JLabel("TEST");
+                JLabel temp2 = new JLabel("Turn steps");
+                howtoPanel.add(temp);
+                howtoPanel.add(temp2);
+
+                popUpFrame.setTitle("Tutorial");
+                popUpFrame.pack();
+                popUpFrame.setVisible(true);
+
+                //hide panel if not in focus
+                popUpFrame.addFocusListener(new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        popUpFrame.setVisible(true);
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        popUpFrame.dispose();
+                    }
+                });
             }
         });
-
-        jButton2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int x = (Integer.parseInt(jLabel1.getText()));
-                if (x == 6) {
-                    x = 2;
-                } else {
-                    x++;
-                }
-                jLabel1.setText("" + x);
-            }
-        });
-
-        // JPanel (for characters)
-        JPanel playerList = new JPanel();
-        playerList.setLayout(new GridLayout(4, 2, 5, 10));
-
-
-        // JPanel (for player)
-        GridBagConstraints gbl = new GridBagConstraints();
-        JPanel player = new JPanel(new GridBagLayout());
-        Border blackLine = BorderFactory.createLineBorder(Color.black);
-        player.setBorder(blackLine);
-
-        JLabel pn = new JLabel("Player Name:");
-        pn.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JTextField playerName = new JTextField(15);
-        JButton submit = new JButton("SUBMIT");
-        submit.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JLabel empty = new JLabel("          ");
-        JLabel empty1 = new JLabel("          ");
-
-        // Creating another JLabel for pics of players
-        JLabel personalPhoto = new JLabel();
-        ImageIcon chizzy = new ImageIcon("C:\\Users\\adisa\\Desktop\\Chizzy.png");
-        Image i = chizzy.getImage();
-        Image newI = i.getScaledInstance( 75, 75,  java.awt.Image.SCALE_SMOOTH ) ;
-        chizzy = new ImageIcon(newI);
-
-        personalPhoto.setIcon(chizzy);
-        gbl.gridx = 0;
-        gbl.gridy = 0;
-        player.add(personalPhoto, gbl);
-        gbl.gridx = 10;
-        gbl.gridy = 0;
-        player.add(empty, gbl);
-        gbl.gridx = 20;
-        gbl.gridy = 0;
-        player.add(pn, gbl);
-        gbl.gridx = 30;
-        gbl.gridy = 0;
-        player.add(playerName, gbl);
-        gbl.gridx = 40;
-        gbl.gridy = 0;
-        player.add(empty1, gbl);
-        gbl.gridx = 50;
-        gbl.gridy = 0;
-        player.add(submit, gbl);
-
-        playerList.add(player);
-
-
-        // JPanel (for player)
-        JPanel player2 = new JPanel(new GridBagLayout());
-        player2.setBorder(blackLine);
-
-        JLabel pn1 = new JLabel("Player Name:");
-        pn1.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JTextField playerName1 = new JTextField(15);
-        JButton submit1 = new JButton("SUBMIT");
-        submit1.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JLabel e = new JLabel("          ");
-        JLabel e1 = new JLabel("          ");
-
-        // Creating another JLabel for pics of players
-        JLabel personalPhoto1 = new JLabel();
-
-        personalPhoto1.setIcon(chizzy);
-        gbl.gridx = 0;
-        gbl.gridy = 0;
-        player2.add(personalPhoto1, gbl);
-        gbl.gridx = 10;
-        gbl.gridy = 0;
-        player2.add(e, gbl);
-        gbl.gridx = 20;
-        gbl.gridy = 0;
-        player2.add(pn1, gbl);
-        gbl.gridx = 30;
-        gbl.gridy = 0;
-        player2.add(playerName1, gbl);
-        gbl.gridx = 40;
-        gbl.gridy = 0;
-        player2.add(e1, gbl);
-        gbl.gridx = 50;
-        gbl.gridy = 0;
-        player2.add(submit1, gbl);
-
-        playerList.add(player2);
-
-        add(p1, BorderLayout.NORTH);
-        add(p2, BorderLayout.CENTER);
-        add(playerList, BorderLayout.SOUTH);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
     }
 
     public static void main(String[] args) {
-        StartUpView s = new StartUpView();
+        new StartUpView();
     }
 }
