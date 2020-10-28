@@ -19,7 +19,7 @@ public class GameSetup {
      * @param players a list of the players, provided by Game object
      */
     public GameSetup(ArrayList<Player> players, Component parent){
-        this.territory_CSV = "TerritoryNeighbours.csv";
+        this.territory_CSV = "/resources/TerritoryNeighbours.csv";
         this.world_map = new HashMap<>();
         this.continentMap = new HashMap<>();
         this.unclaimed_territory = new ArrayList<>();

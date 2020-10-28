@@ -250,7 +250,7 @@ public class Game {
      */
     public void setPlayers(int nPlayers){
         for(int i = 1; i <= nPlayers; i++){
-            playerList.add(new Player("Player " + i, Color.red));
+            playerList.add(new Player("Player " + i, Color.red,new ImageIcon(getClass().getResource("/resources/Chizzy.png"))));
         }
         GameSetup gameSetup = new GameSetup(playerList, new JPanel());
         worldMap = gameSetup.returnWorldMap();

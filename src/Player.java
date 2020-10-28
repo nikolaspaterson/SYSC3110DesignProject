@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -12,20 +13,42 @@ public class Player extends JPanel {
     private final String name;
     private final HashMap<String, Territory> territoriesOccupied;
     private final Color player_color;
+    private final int total_troops;
 
-    private ImageIcon player_icon;
+    private JLabel player_icon;
     private JLabel player_name_label;
+    private JLabel total_troops_label;
 
     /**
      * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
      * @param name the name of the player.
      */
-    public Player(String name,Color player_color) {
+    public Player(String name,Color player_color,ImageIcon player_icon) {
         this.name = name;
+        this.total_troops = 0;
         this.player_color = player_color;
+
+        Border darkline = BorderFactory.createLineBorder(player_color.darker());
+        this.setBackground(player_color);
+        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        this.player_icon = new JLabel();
+        this.player_name_label = new JLabel();
+        this.total_troops_label = new JLabel();
+        this.player_icon.setIcon(new ImageIcon(player_icon.getImage().getScaledInstance( 75, 75,  java.awt.Image.SCALE_SMOOTH )));
+        this.player_name_label.setText(name);
+        this.player_name_label.setFont(new Font("Impact",Font.PLAIN,15));
+        this.total_troops_label.setText("Troop#: " + total_troops);
+
+        this.add(this.player_icon);
+        this.add(this.player_name_label);
+        this.add(this.total_troops_label);
+        this.setBorder(darkline);
+
         territoriesOccupied = new HashMap<>();
     }
-
+    public Icon getplayer_icon(){
+        return player_icon.getIcon();
+    }
     /**
      * Gets the player's name.
      * @return String - Players name
