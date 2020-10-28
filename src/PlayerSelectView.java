@@ -10,6 +10,10 @@ public class PlayerSelectView extends JFrame {
     private JLabel numPlayers;
     private JPanel playerList;
     private ArrayList<PlayerSelectPanel> players;
+    private JButton startButton;
+    private ArrayList<PlayerSelectPanel> playerArrayList;
+
+
 
     public PlayerSelectView() {
         // Main Frame
@@ -34,7 +38,7 @@ public class PlayerSelectView extends JFrame {
 
         // JButton (left arrow)
         leftArrow = new JButton();
-        ImageIcon icon = scaleImage("C:\\Users\\adisa\\Desktop\\leftarrow.png");
+        ImageIcon icon = scaleImage("/resources/leftarrow.png");
         leftArrow.setIcon(icon);
         p2.add(leftArrow);
 
@@ -47,15 +51,17 @@ public class PlayerSelectView extends JFrame {
 
         // JButton (right arrow)
         rightArrow = new JButton();
-        ImageIcon icon2 = scaleImage("C:\\Users\\adisa\\Desktop\\rightarrow.png");
+        ImageIcon icon2 = scaleImage("/resources/rightarrow.png");
         rightArrow.setIcon(icon2);
         p2.add(rightArrow);
 
         // Panel 3 (PLAY GAME Button)
         JPanel p3 = new JPanel();
-        JButton startButton = new JButton("PLAY GAME");
+        startButton = new JButton("PLAY GAME");
         startButton.setFont(new Font("Impact", Font.PLAIN, 40));
         startButton.setBackground(new Color(77, 220, 70));
+
+
         p3.add(startButton, BorderLayout.CENTER);
 
         // Panel 4 (to hold player panels)
@@ -77,6 +83,9 @@ public class PlayerSelectView extends JFrame {
         players.add(player5);
         players.add(player6);
 
+        playerArrayList = new ArrayList<>();
+        playerArrayList.add(player1);
+        playerArrayList.add(player2);
         playerList.add(player1);
         playerList.add(player2);
 
@@ -88,6 +97,9 @@ public class PlayerSelectView extends JFrame {
         // If right arrow
         rightArrow.addActionListener(playerSelectController);
 
+        // if start button
+        startButton.addActionListener(playerSelectController);
+
         p1.add(p2);
         add(p1, BorderLayout.NORTH);
         add(playerList, BorderLayout.CENTER);
@@ -97,13 +109,19 @@ public class PlayerSelectView extends JFrame {
     }
 
     private ImageIcon scaleImage(String filename) {
-        ImageIcon scaledImg = new ImageIcon(filename);
+        ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
         Image img = scaledImg.getImage().getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH );
         scaledImg = new ImageIcon(img);
         return scaledImg;
     }
+    public ArrayList<PlayerSelectPanel> getPlayerArrayList() {
+        return playerArrayList;
+    }
+    public JButton getStartButton(){ return startButton;}
 
     public JButton getLeftArrow() { return leftArrow; }
+
+    public JButton getRightArrow() { return rightArrow; }
 
     public JLabel getNumPlayers () { return numPlayers; }
 
