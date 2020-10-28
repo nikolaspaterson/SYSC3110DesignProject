@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class StartUpView extends JFrame {
 
@@ -16,9 +18,6 @@ public class StartUpView extends JFrame {
     JButton howToPlayButton = new JButton("How to Play");
     JPanel panel = new JPanel();
     GroupLayout gLayout = new GroupLayout(panel);
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem temp = new JMenuItem("Temp");
-    JMenuItem temp2 = new JMenuItem("Tempppppp");
 
     public StartUpView(){
         super("Welcome");//Sets title of window
@@ -66,21 +65,47 @@ public class StartUpView extends JFrame {
         );
 
 
-        popup.add(temp);
-        popup.add(temp2);
-
-        howToPlayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Component c = (Component) e.getSource();
-                panel.add(popup);
-                popup.show(c,panel.getX(),panel.getY());
-            }
-        });
-
         setContentPane(panel);
         setSize(WIDTH,HEIGHT); //set window size
         setVisible(true); //make window visible
+
+
+        //Add action to button
+        howToPlayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //Create frame and panel
+                JFrame popUpFrame = new JFrame();
+                JPanel howtoPanel = new JPanel();
+                howtoPanel.setBorder(BorderFactory.createEmptyBorder(100,100,300,300));
+                howtoPanel.setLayout(new BoxLayout(howtoPanel, BoxLayout.Y_AXIS));
+                popUpFrame.add(howtoPanel, BorderLayout.CENTER);
+
+                //add labels to panel
+                JLabel temp = new JLabel("TEST");
+                JLabel temp2 = new JLabel("Turn steps");
+                howtoPanel.add(temp);
+                howtoPanel.add(temp2);
+
+                popUpFrame.setTitle("Tutorial");
+                popUpFrame.pack();
+                popUpFrame.setVisible(true);
+
+                //hide panel if not in focus
+                popUpFrame.addFocusListener(new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        popUpFrame.setVisible(true);
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        popUpFrame.dispose();
+                    }
+                });
+            }
+        });
     }
 
     public static void main(String[] args) {
