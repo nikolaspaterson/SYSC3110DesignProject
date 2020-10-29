@@ -8,61 +8,44 @@ public class StartUpView extends JFrame {
     public static final int HEIGHT = 814;
 
     //declaring buttons, labels, panels and layouts
-    JLabel welcomeLabel = new JLabel("Welcome to RISK!");
-    JLabel welcomeTextLabel = new JLabel("Are you ready to conquer the world?");
+    JLabel welcomeLabel = new JLabel("<html><div style='text-align: center;'>Welcome to RISK!</div></html>");
+    JLabel welcomeTextLabel = new JLabel("<html><div style='text-align: center;'>Are you ready to conquer the world?</div></html>");
     JButton playButton = new JButton("Play");
     JButton howToPlayButton = new JButton("How to Play");
-    JPanel panel = new JPanel();
-    GroupLayout gLayout = new GroupLayout(panel);
+    JPanel panel = new JPanel(new BorderLayout(0, 30));
 
     public StartUpView(){
         super("Welcome");//Sets title of window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //close and stop the program when x is clicked
-
+        setLayout(new BorderLayout(0, 250));
         StartUpController controller = new StartUpController(this);
 
-        panel.setLayout(gLayout); //Set panel layout to GroupLayout
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 150, 0));
 
         //Set font
         welcomeLabel.setFont(new Font("Impact", Font.PLAIN,50));
-        welcomeTextLabel.setFont(new Font("Impact", Font.PLAIN,35));
+        welcomeTextLabel.setFont(new Font("Impact", Font.PLAIN,40));
         howToPlayButton.setFont(new Font("Impact", Font.PLAIN,60));
         playButton.setFont(new Font("Impact", Font.PLAIN,60));
+
+        welcomeLabel.setHorizontalAlignment(welcomeLabel.CENTER);
+        welcomeLabel.setVerticalAlignment(welcomeLabel.CENTER);
+
+        welcomeTextLabel.setHorizontalAlignment(welcomeTextLabel.CENTER);
+        welcomeTextLabel.setVerticalAlignment(welcomeTextLabel.CENTER);
+
+        panel.add(welcomeLabel, BorderLayout.NORTH);
+        panel.add(welcomeTextLabel, BorderLayout.SOUTH);
 
         //Set button colors
         howToPlayButton.setBackground(new Color(206, 93, 93));
         playButton.setBackground(new Color(123, 220, 73));
 
-        //set horizontal layout, align components by center point
-        gLayout.setHorizontalGroup(gLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+        buttonPanel.add(playButton);
+        buttonPanel.add(howToPlayButton);
 
-                .addGroup(gLayout.createSequentialGroup() //create sub group for buttons, drawing in sequence
-                        .addGap(WIDTH / 3) //left most gap
-                        .addComponent(playButton)
-                        .addGap(WIDTH / 6) //gap between buttons
-                        .addComponent(howToPlayButton)
-                        .addGap(2 * WIDTH / 7) //adds space after buttons, shifts text to right
-                )
-
-                .addGroup(gLayout.createParallelGroup(GroupLayout.Alignment.CENTER) //sub group from text, aligned by center point
-                        .addComponent(welcomeLabel)
-                        .addComponent(welcomeTextLabel)
-                )
-        );
-
-        //set vertical layout
-        gLayout.setVerticalGroup(gLayout.createSequentialGroup()
-                .addGap(HEIGHT / 6) //top gap
-                .addComponent(welcomeLabel)
-                .addGap(HEIGHT / 20) //gap between text
-                .addComponent(welcomeTextLabel)
-                .addGap(HEIGHT / 6)
-                    .addGroup(gLayout.createParallelGroup(GroupLayout.Alignment.BASELINE) //subgroup, vertically aligns 2 buttons
-                            .addComponent(playButton)
-                            .addComponent(howToPlayButton))
-        );
-
-        setContentPane(panel);
+        add(panel, BorderLayout.NORTH);
+        add(buttonPanel, BorderLayout.CENTER);
         setSize(WIDTH,HEIGHT); //set window size
         setVisible(true); //make window visible
 
