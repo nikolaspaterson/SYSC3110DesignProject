@@ -29,6 +29,8 @@ public class GameController implements ActionListener {
                 gameViewRef.addCommandTerritory(temp_territory);
             }else if(gameViewRef.getCommandTerritorySize()  == 1 && !temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCommandTerritory().get(0).isNeighbour(temp_territory)){
                 gameViewRef.addCommandTerritory(temp_territory);
+                AttackPopUp attackPopUp = new AttackPopUp(gameViewRef.getCommandTerritory().get(0), gameViewRef.getCommandTerritory().get(1));
+                attackPopUp.show(gameViewRef, 300, 350);
                 System.out.println("Attacker: " + gameViewRef.getCommandTerritory().get(0).toString() + "Defender: "  + gameViewRef.getCommandTerritory().get(1).toString());
             }else if(gameViewRef.getCommandTerritorySize() == 2 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && temp_territory.getTroops() > 1){
                 gameViewRef.clearCommandTerritory();

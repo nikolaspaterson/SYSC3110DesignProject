@@ -13,7 +13,7 @@ public class Player extends JPanel {
     private final String name;
     private final HashMap<String, Territory> territoriesOccupied;
     private final Color player_color;
-    private final int total_troops;
+    private int total_troops;
 
     private JLabel player_icon;
     private JLabel player_name_label;
@@ -64,12 +64,14 @@ public class Player extends JPanel {
     public HashMap<String, Territory> getTerritoriesOccupied() { return territoriesOccupied; }
 
     public Color getPlayer_color(){ return player_color;}
+
     /**
      * Sets the amount of deployable troops the player can use during their reinforcement.
      * @param deployableTroops number of deployable troops.
      */
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
+        addTotal(deployableTroops);
     }
 
     /**
@@ -79,6 +81,7 @@ public class Player extends JPanel {
      */
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
+        addTotal(deployableTroops);
     }
 
     /**
@@ -166,5 +169,10 @@ public class Player extends JPanel {
             output += ally + enemy;
         }
         return output;
+    }
+
+    public void addTotal(int troops) {
+        total_troops += troops;
+        total_troops_label.setText("Troop#: " + total_troops);
     }
 }

@@ -4,31 +4,29 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AttackPopUp extends JFrame {
+public class AttackPopUp extends JPopupMenu {
 
-    private Territory attackingTerritory, defendingTerritory;
+    private Territory attackingTerritory;
+    private Territory defendingTerritory;
+    private JButton minus;
+    private JLabel numTroops;
+    private JButton plus;
+    private JButton attackBOTTOM;
+    private JLabel attackerLabel;
+    private JLabel defenderLabel;
+    private JLabel outcome;
 
-    public AttackPopUp() {
+    public AttackPopUp(Territory attackingTerritory, Territory defendingTerritory) {
         super();
-        setSize(800, 250);
-        setMinimumSize(new Dimension(600,150));
-        setMaximumSize(new Dimension(600,150));
+        setLayout(new GridLayout(0, 1));
         Border darkLine = BorderFactory.createLineBorder(Color.black,3); // add this when the actual Game becomes the JFrame
+        setBorder(darkLine);
+
+        JPanel jPanel = new JPanel(new FlowLayout());
 
         ////////////////////////
-        Player attacker = new Player("Chizzy", Color.BLACK, new ImageIcon("/resources/Chizzy.png"));
-        Player defender = new Player("Nips", Color.BLACK, new ImageIcon("/resources/Chizzy.png"));
-
-        Territory attackingTerritory = new Territory("Jamaica", 0, 0, 0,0, null);
-        attackingTerritory.setOccupant(attacker);
-        attackingTerritory.setTroops(5);
-
-        Territory defendingTerritory = new Territory("Somalia", 0, 0, 0,0, null);
-        defendingTerritory.setOccupant(defender);
-        defendingTerritory.setTroops(4);
-
-        setAttackingTerritory(attackingTerritory);
-        setDefendingTerritory(defendingTerritory);
+        this.attackingTerritory = attackingTerritory;
+        this.defendingTerritory = defendingTerritory;
         ////////////////////////
 
         JPanel jp = new JPanel();
@@ -43,21 +41,21 @@ public class AttackPopUp extends JFrame {
 
         JPanel selectTroops = new JPanel(new BorderLayout(1, 0));
 
-        JButton minus = new JButton("-");
+        minus = new JButton("-");
         minus.setFont(new Font("Impact", Font.BOLD, 25));
         selectTroops.add(minus, BorderLayout.WEST);
 
-        JLabel numTroops = new JLabel("1");
+        numTroops = new JLabel("1");
         numTroops.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
         numTroops.setHorizontalAlignment(numTroops.CENTER);
         numTroops.setVerticalAlignment(numTroops.CENTER);
         selectTroops.add(numTroops, BorderLayout.CENTER);
 
-        JButton plus = new JButton("+");
+        plus = new JButton("+");
         plus.setFont(new Font("Impact", Font.BOLD, 25));
         selectTroops.add(plus, BorderLayout.EAST);
 
-        JButton attackBOTTOM = new JButton("ATTACK");
+        attackBOTTOM = new JButton("ATTACK");
         attackBOTTOM.setFont(new Font("Impact", Font.PLAIN, 40));
         attackBOTTOM.setBackground(new Color(217, 61, 62));
 
@@ -67,6 +65,37 @@ public class AttackPopUp extends JFrame {
 
         jp.add(middlePanel);
 
+
+        //////////////////////////////
+
+
+        JPanel result = new JPanel();
+        result.setLayout(new GridLayout(4, 1));
+
+        JLabel resultLabel = new JLabel("RESULT");
+        resultLabel.setFont(new Font("Impact", Font.BOLD, 35));
+        resultLabel.setHorizontalAlignment(resultLabel.CENTER);
+        resultLabel.setVerticalAlignment(resultLabel.CENTER);
+
+        attackerLabel = new JLabel(attackingTerritory.getOccupant().getName() + " ROLLED: (ROLLS)");
+        attackerLabel.setFont(new Font("Comic Sans MS", Font.ITALIC, 20));
+        attackerLabel.setHorizontalAlignment(attackerLabel.CENTER);
+        attackerLabel.setVerticalAlignment(attackerLabel.CENTER);
+
+        defenderLabel = new JLabel(defendingTerritory.getOccupant().getName() + " ROLLED: (ROLLS)");
+        defenderLabel.setFont(new Font("Comic Sans MS", Font.ITALIC, 20));
+        defenderLabel.setHorizontalAlignment(defenderLabel.CENTER);
+        defenderLabel.setVerticalAlignment(defenderLabel.CENTER);
+
+        outcome = new JLabel("RESULT OF ROLLS");
+        outcome.setFont(new Font("Comic Sans MS", Font.ITALIC, 20));
+        outcome.setHorizontalAlignment(outcome.CENTER);
+        outcome.setVerticalAlignment(outcome.CENTER);
+
+        result.add(resultLabel);
+        result.add(attackerLabel);
+        result.add(defenderLabel);
+        result.add(outcome);
 
         ///////////////////////////////
 
@@ -80,74 +109,20 @@ public class AttackPopUp extends JFrame {
         //////////////////////////////////////
 
 
-        attackBOTTOM.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame result = new JFrame();
-                result.setSize(400, 200);
-                result.setLayout(new GridLayout(4, 1));
+        AttackPopUpController attackPopUpController = new AttackPopUpController(this);
 
-                JLabel resultLabel = new JLabel("RESULT");
-                resultLabel.setFont(new Font("Impact", Font.BOLD, 35));
-                resultLabel.setHorizontalAlignment(resultLabel.CENTER);
-                resultLabel.setVerticalAlignment(resultLabel.CENTER);
+        attackBOTTOM.addActionListener(attackPopUpController);
+        minus.addActionListener(attackPopUpController);
+        plus.addActionListener(attackPopUpController);
 
-                JLabel attackerLabel = new JLabel(attackingTerritory.getOccupant().getName() + " ROLLED: (ROLLS)");
-                attackerLabel.setFont(new Font("Comic Sans MS", Font.ITALIC, 20));
-                attackerLabel.setHorizontalAlignment(attackerLabel.CENTER);
-                attackerLabel.setVerticalAlignment(attackerLabel.CENTER);
+        jPanel.add(leftPanel, BorderLayout.WEST);
+        jPanel.add(jp, BorderLayout.CENTER);
+        jPanel.add(rightPanel, BorderLayout.EAST);
 
-                JLabel defenderLabel = new JLabel(defendingTerritory.getOccupant().getName() + " ROLLED: (ROLLS)");
-                defenderLabel.setFont(new Font("Comic Sans MS", Font.ITALIC, 20));
-                defenderLabel.setHorizontalAlignment(defenderLabel.CENTER);
-                defenderLabel.setVerticalAlignment(defenderLabel.CENTER);
 
-                JLabel outcome = new JLabel("RESULT OF ROLLS");
-                outcome.setFont(new Font("Comic Sans MS", Font.ITALIC, 20));
-                outcome.setHorizontalAlignment(outcome.CENTER);
-                outcome.setVerticalAlignment(outcome.CENTER);
+        add(jPanel);
+        add(result);
 
-                result.add(resultLabel);
-                result.add(attackerLabel);
-                result.add(defenderLabel);
-                result.add(outcome);
-
-                result.setDefaultCloseOperation(EXIT_ON_CLOSE);
-                result.setVisible(true);
-            }
-        });
-
-        minus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int x = Integer.parseInt(numTroops.getText());
-                if(x == 1) {
-                    x = 3;
-                } else {
-                    x--;
-                }
-                numTroops.setText(x + "");
-            }
-        });
-
-        plus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int x = Integer.parseInt(numTroops.getText());
-                if(x == 3) {
-                    x = 1;
-                } else {
-                    x++;
-                }
-                numTroops.setText(x + "");
-            }
-        });
-
-        add(leftPanel, BorderLayout.WEST);
-        add(jp, BorderLayout.CENTER);
-        add(rightPanel, BorderLayout.EAST);
-
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
 
@@ -157,11 +132,6 @@ public class AttackPopUp extends JFrame {
         scaledImg = new ImageIcon(img);
         return scaledImg;
     }
-
-    private void setAttackingTerritory(Territory attackingTerritory) { this.attackingTerritory = attackingTerritory; }
-
-    private void setDefendingTerritory(Territory defendingTerritory) { this.defendingTerritory = defendingTerritory; }
-
 
     private JPanel playerPanel(String filename, String side) {
         JPanel panel = new JPanel(new BorderLayout(5, 0));
@@ -187,7 +157,35 @@ public class AttackPopUp extends JFrame {
         return panel;
     }
 
-    public static void main(String[] args) {
-        AttackPopUp attackPopUp = new AttackPopUp();
+    public JButton getAttackBOTTOM() {
+        return attackBOTTOM;
     }
+
+    public JButton getMinus() {
+        return minus;
+    }
+
+    public JLabel getNumTroops() {
+        return numTroops;
+    }
+
+    public JButton getPlus() {
+        return plus;
+    }
+
+    public Territory getAttackingTerritory() {
+        return attackingTerritory;
+    }
+
+    public Territory getDefendingTerritory() {
+        return defendingTerritory;
+    }
+
+    public void refreshLabels() {
+        attackerLabel.setText(attackingTerritory.getOccupant().getName() + " ROLLED: I LOVE ASS");
+        defenderLabel.setText(defendingTerritory.getOccupant().getName() + " ROLLED: BABAK'S A BITCH");
+        //outcome.setText();
+    }
+
+
 }

@@ -56,24 +56,24 @@ public class GameEvent {
                 switch(outcome){
                     case 2:
                         result = "Defender loses two troops!";
-                        defending.setTroops(defending.getTroops() - 2);
+                        defending.addTroops(-2);
                         break;
                     case 1:
                         result = "Attacker loses two troops!";
-                        attacking.setTroops(attacking.getTroops() - 2);
+                        attacking.addTroops(-2);
                         break;
                     case 0:
                         result = "Attacker & Defender lose ONE troop!";
-                        attacking.setTroops(attacking.getTroops() - 1);
-                        defending.setTroops(defending.getTroops() - 1);
+                        attacking.addTroops(-1);
+                        defending.addTroops(-1);
                         break;
                     case -1:
                         result = "Defender loses one troop!";
-                        defending.setTroops(defending.getTroops() - 1);
+                        defending.addTroops(-1);
                         break;
                     case -2:
                         result = "Attacker loses one troop!";
-                        attacking.setTroops(attacking.getTroops() - 1);
+                        attacking.addTroops(-1);
                         break;
                 }
 

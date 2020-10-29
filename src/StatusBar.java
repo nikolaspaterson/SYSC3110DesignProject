@@ -13,18 +13,25 @@ public class StatusBar extends JPanel {
     private GameController nextButtonController;
 
     public StatusBar(){
-        this.setLayout(new FlowLayout());
+        this.setLayout(new GridLayout(1, 3, 3, 0));
 
         descriptionPanel = new JPanel();
+        descriptionPanel.setMinimumSize(new Dimension(200, 40));
         descriptionPanel.setLayout(new BoxLayout(descriptionPanel,BoxLayout.Y_AXIS));
         Border darkLine = BorderFactory.createLineBorder(Color.black,3);
+
         currentAction = new JLabel();
+
         currentName = new JLabel();
-        currentName.setFont(new Font("Impact",Font.PLAIN,15));
+        currentName.setFont(new Font("Impact",Font.PLAIN,20));
+
         descriptionPanel.add(currentName);
         descriptionPanel.add(currentAction);
 
         currentPlayerIcon = new JLabel();
+        currentPlayerIcon.setHorizontalAlignment(currentPlayerIcon.CENTER);
+        currentPlayerIcon.setVerticalAlignment(currentPlayerIcon.CENTER);
+
         nextStep = new JButton("Next");
         nextStep.setFont(new Font("Impact",Font.PLAIN,30));
         nextStep.setBackground(new Color(178, 236, 83));
@@ -49,7 +56,7 @@ public class StatusBar extends JPanel {
         nextStep.addActionListener(nextButtonController::nextState);
     }
     public void displayAttack(){
-        currentAction.setText("Time to FIGHT! Attack enemy Territories");
+        currentAction.setText("<html>Time to FIGHT!<br>Attack enemy Territories</html>");
 
     }
 
@@ -61,11 +68,11 @@ public class StatusBar extends JPanel {
             nextStep.setBackground(new Color(178, 236, 83));
         }
         nextStep.setText("Next"); //add to first if after implementation
-        currentAction.setText("Reinforce your land! \n You can deploy " + player.getDeployableTroops() + " troops!");
+        currentAction.setText("<html>Reinforce your land!<br>You can deploy " + player.getDeployableTroops() + " troops!</html>");
 
     }
     public void displayFortify(){
-        currentAction.setText("Fortify! <br> Move troops from your territories");
+        currentAction.setText("<html>Fortify!<br>Move troops from<br>Your territories</html>");
         nextStep.setBackground(new Color(0xF16262));
         nextStep.setText("End Turn");
     }
