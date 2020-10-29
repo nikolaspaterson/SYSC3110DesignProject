@@ -21,6 +21,8 @@ public class Territory extends JButton {
     private JLabel troop_count_label;
     private JLabel territory_name_label;
     private JLabel occupant_name_label;
+
+    private Color default_color;
     /**
      * Class constructor for the Territory class. Sets the player who occupies the territory
      * @param territoryName the name of the territory.
@@ -58,7 +60,7 @@ public class Territory extends JButton {
             }
         });
     }
-
+    public Color getDefault_color(){ return default_color;}
 
     /**
      * Gets the name of this Territory.
@@ -104,8 +106,9 @@ public class Territory extends JButton {
      */
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
-        occupant_name_label.setText("Occupant: "+occupant.getName());
+        occupant_name_label.setText("Occ: "+occupant.getName());
         this.setBackground(occupant.getPlayer_color());
+        default_color = occupant.getPlayer_color();
     }
 
     /**
@@ -147,7 +150,7 @@ public class Territory extends JButton {
         output += "======Neighbouring Territories======\n";
 
         for(String str : neighbours.keySet()) {
-            output += "              " + neighbours.get(str) + "\n";
+            output += "              " + neighbours.get(str).getTerritoryName() + "\n";
         }
         output += "==================";
         return output;
