@@ -74,9 +74,15 @@ public class ReinforcePopUp extends JPopupMenu {
 
         middlePanel.add(troopPanel);
 
+        JPanel rightPanel = new JPanel();
+        GridLayout rightGrid = new GridLayout(3,1);
+        rightPanel.setLayout(rightGrid);
+        rightPanel.add(new JLabel());
+        rightPanel.add(deployButton);
+        rightPanel.add(new JLabel());
 
         add(middlePanel, BorderLayout.CENTER);
-        add(deployButton, BorderLayout.EAST);
+        add(rightPanel, BorderLayout.EAST);
         setVisible(true);
     }
 
