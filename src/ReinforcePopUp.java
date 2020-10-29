@@ -55,7 +55,7 @@ public class ReinforcePopUp extends JPopupMenu {
         deployButton.setBackground(new Color(178, 236, 83));
         deployButton.addActionListener(controller);
 
-        troops = new JLabel("1");
+        troops = new JLabel("0");
         troops.setFont(new Font("Impact", Font.PLAIN,20));
         troops.setHorizontalAlignment(troops.CENTER);
         troops.setVerticalAlignment(troops.CENTER);

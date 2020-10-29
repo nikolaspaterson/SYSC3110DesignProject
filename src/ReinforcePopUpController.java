@@ -27,8 +27,10 @@ public class ReinforcePopUpController implements ActionListener {
             }
             popup.setTroops(x);
         }else if(e.getSource().equals(popup.getDeployButton())){
-            ge.reinforce(popup.getTerritory(), Integer.parseInt(popup.getTroops().getText()));
-            popup.setVisible(false);
+            if(Integer.parseInt(popup.getTroops().getText()) > 0){
+                ge.reinforce(popup.getTerritory(), Integer.parseInt(popup.getTroops().getText()));
+                popup.setVisible(false);
+            }
         }
     }
 }

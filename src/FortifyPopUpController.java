@@ -21,7 +21,7 @@ public class FortifyPopUpController implements ActionListener {
             }
             popup.setTroops(x);
         }else if(e.getSource().equals(popup.getMinusButton())){
-            if(x > 0){
+            if(x > 1){
                 x--;
             }
             popup.setTroops(x);
