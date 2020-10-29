@@ -8,6 +8,8 @@ public class GameEvent {
 
     private final Player player;
     private String result;
+    private String attackingRolls;
+    private String defendingRolls;
 
     /**
      * Constructor for GameEvent class where a GameEvent should be initiated by a Player.
@@ -56,28 +58,36 @@ public class GameEvent {
                 switch(outcome){
                     case 2:
                         result = "Defender loses two troops!";
-                        defending.addTroops(-2);
+                        defending.setTroops(defending.getTroops() - 2);
                         break;
                     case 1:
                         result = "Attacker loses two troops!";
-                        attacking.addTroops(-2);
+                        attacking.setTroops(attacking.getTroops() - 2);
                         break;
                     case 0:
                         result = "Attacker & Defender lose ONE troop!";
-                        attacking.addTroops(-1);
-                        defending.addTroops(-1);
+                        attacking.setTroops(attacking.getTroops() - 1);
+                        defending.setTroops(defending.getTroops() - 1);
                         break;
                     case -1:
                         result = "Defender loses one troop!";
-                        defending.addTroops(-1);
+                        defending.setTroops(defending.getTroops() - 1);
                         break;
                     case -2:
                         result = "Attacker loses one troop!";
-                        attacking.addTroops(-1);
+                        attacking.setTroops(attacking.getTroops() - 1);
                         break;
                 }
 
-                winningMove(attacking, defending);
+                for(int x : attackingDice.getRoll()){
+                    attackingRolls += " || " + x + " || ";
+                }
+
+                for(int y : defendingDice.getRoll()){
+                    defendingRolls += " || " + y + " || ";
+                }
+
+                //winningMove(attacking, defending);
 
             } catch (NullPointerException e) {
                 System.out.println("Null pointer exception!");
@@ -88,6 +98,10 @@ public class GameEvent {
     }
 
     public String getResult() { return result; }
+
+    public String getAttackerRolls() { return attackingRolls; }
+
+    public String getDefendingRolls() { return defendingRolls; }
 
     /**
      * This method is used with combination of the attack() method above to decide if the attacker defeated the defending territory.

@@ -1,15 +1,13 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AttackPopUp extends JPopupMenu {
 
     private Territory attackingTerritory;
     private Territory defendingTerritory;
     private JButton minus;
-    private JLabel numTroops;
+    private JLabel numDice;
     private JButton plus;
     private JButton attackBOTTOM;
     private JLabel attackerLabel;
@@ -19,15 +17,13 @@ public class AttackPopUp extends JPopupMenu {
     public AttackPopUp(Territory attackingTerritory, Territory defendingTerritory) {
         super();
         setLayout(new GridLayout(0, 1));
-        Border darkLine = BorderFactory.createLineBorder(Color.black,3); // add this when the actual Game becomes the JFrame
+        Border darkLine = BorderFactory.createLineBorder(Color.black,3);
         setBorder(darkLine);
 
-        JPanel jPanel = new JPanel(new FlowLayout());
-
-        ////////////////////////
         this.attackingTerritory = attackingTerritory;
         this.defendingTerritory = defendingTerritory;
-        ////////////////////////
+
+        JPanel jPanel = new JPanel(new FlowLayout());
 
         JPanel jp = new JPanel();
 
@@ -45,11 +41,11 @@ public class AttackPopUp extends JPopupMenu {
         minus.setFont(new Font("Impact", Font.BOLD, 25));
         selectTroops.add(minus, BorderLayout.WEST);
 
-        numTroops = new JLabel("1");
-        numTroops.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
-        numTroops.setHorizontalAlignment(numTroops.CENTER);
-        numTroops.setVerticalAlignment(numTroops.CENTER);
-        selectTroops.add(numTroops, BorderLayout.CENTER);
+        numDice = new JLabel("1");
+        numDice.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
+        numDice.setHorizontalAlignment(numDice.CENTER);
+        numDice.setVerticalAlignment(numDice.CENTER);
+        selectTroops.add(numDice, BorderLayout.CENTER);
 
         plus = new JButton("+");
         plus.setFont(new Font("Impact", Font.BOLD, 25));
@@ -64,10 +60,6 @@ public class AttackPopUp extends JPopupMenu {
         middlePanel.add(attackBOTTOM, BorderLayout.SOUTH);
 
         jp.add(middlePanel);
-
-
-        //////////////////////////////
-
 
         JPanel result = new JPanel();
         result.setLayout(new GridLayout(4, 1));
@@ -97,17 +89,9 @@ public class AttackPopUp extends JPopupMenu {
         result.add(defenderLabel);
         result.add(outcome);
 
-        ///////////////////////////////
+        JPanel leftPanel = playerPanel(attackingTerritory.getOccupant().getplayer_icon(), "left");
 
-        JPanel leftPanel = playerPanel("/resources/Chizzy.png", "left");
-
-        ///////////////////////////////
-
-        JPanel rightPanel = playerPanel("/resources/Chizzy.png", "right");
-
-
-        //////////////////////////////////////
-
+        JPanel rightPanel = playerPanel(defendingTerritory.getOccupant().getplayer_icon(), "right");
 
         AttackPopUpController attackPopUpController = new AttackPopUpController(this);
 
@@ -119,25 +103,16 @@ public class AttackPopUp extends JPopupMenu {
         jPanel.add(jp, BorderLayout.CENTER);
         jPanel.add(rightPanel, BorderLayout.EAST);
 
-
         add(jPanel);
         add(result);
-
         setVisible(true);
     }
 
-    private ImageIcon scaleImage(String filename) {
-        ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
-        Image img = scaledImg.getImage().getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH );
-        scaledImg = new ImageIcon(img);
-        return scaledImg;
-    }
-
-    private JPanel playerPanel(String filename, String side) {
+    private JPanel playerPanel(Icon image, String side) {
         JPanel panel = new JPanel(new BorderLayout(5, 0));
 
         JLabel photo = new JLabel();
-        photo.setIcon(scaleImage(filename));
+        photo.setIcon(image);
 
         JLabel T;
 
@@ -165,8 +140,8 @@ public class AttackPopUp extends JPopupMenu {
         return minus;
     }
 
-    public JLabel getNumTroops() {
-        return numTroops;
+    public JLabel getNumDice() {
+        return numDice;
     }
 
     public JButton getPlus() {
@@ -181,10 +156,10 @@ public class AttackPopUp extends JPopupMenu {
         return defendingTerritory;
     }
 
-    public void refreshLabels() {
-        attackerLabel.setText(attackingTerritory.getOccupant().getName() + " ROLLED: (ROLLS)");
-        defenderLabel.setText(defendingTerritory.getOccupant().getName() + " ROLLED: (ROLLS)");
-        //outcome.setText();
+    public void refreshLabels(String attackerRolls, String defenderRolls, String outcome) {
+        attackerLabel.setText(attackingTerritory.getOccupant().getName() + " ROLLED: " + attackerRolls);
+        defenderLabel.setText(defendingTerritory.getOccupant().getName() + " ROLLED: " + defenderRolls);
+        this.outcome.setText(outcome);
     }
 
 
