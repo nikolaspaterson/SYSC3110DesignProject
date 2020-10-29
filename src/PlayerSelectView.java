@@ -13,8 +13,6 @@ public class PlayerSelectView extends JFrame {
     private JButton startButton;
     private ArrayList<PlayerSelectPanel> playerArrayList;
 
-
-
     public PlayerSelectView() {
         // Main Frame
         super("Player Setup!");
@@ -117,7 +115,8 @@ public class PlayerSelectView extends JFrame {
     public ArrayList<PlayerSelectPanel> getPlayerArrayList() {
         return playerArrayList;
     }
-    public JButton getStartButton(){ return startButton;}
+
+    public JButton getStartButton(){ return startButton; }
 
     public JButton getLeftArrow() { return leftArrow; }
 

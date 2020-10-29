@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class GameEvent {
 
     private final Player player;
+    private String result;
 
     /**
      * Constructor for GameEvent class where a GameEvent should be initiated by a Player.
@@ -54,24 +55,24 @@ public class GameEvent {
 
                 switch(outcome){
                     case 2:
-                        System.out.println("Defender loses two troops!");
+                        result = "Defender loses two troops!";
                         defending.setTroops(defending.getTroops() - 2);
                         break;
                     case 1:
-                        System.out.println("Attacker loses two troops!");
+                        result = "Attacker loses two troops!";
                         attacking.setTroops(attacking.getTroops() - 2);
                         break;
                     case 0:
-                        System.out.println("Attacker & Defender lose ONE troop!");
+                        result = "Attacker & Defender lose ONE troop!";
                         attacking.setTroops(attacking.getTroops() - 1);
                         defending.setTroops(defending.getTroops() - 1);
                         break;
                     case -1:
-                        System.out.println("Defender loses one troop!");
+                        result = "Defender loses one troop!";
                         defending.setTroops(defending.getTroops() - 1);
                         break;
                     case -2:
-                        System.out.println("Attacker loses one troop!");
+                        result = "Attacker loses one troop!";
                         attacking.setTroops(attacking.getTroops() - 1);
                         break;
                 }
@@ -85,6 +86,8 @@ public class GameEvent {
             System.out.println("You cannot attack your own territory!");
         }
     }
+
+    public String getResult() { return result; }
 
     /**
      * This method is used with combination of the attack() method above to decide if the attacker defeated the defending territory.
