@@ -23,77 +23,79 @@ public class FortifyPopUp extends JPopupMenu {
         FortifyPopUpController controller = new FortifyPopUpController(this);
 
         JPanel fortifyPanel = new JPanel();
-        setLayout(new GridLayout(0,1));
+        setLayout(new GridLayout(0,3));
 
         title = new JLabel("FORTIFY");
         title.setHorizontalAlignment(title.CENTER);
-        title.setFont(new Font("Impact", Font.PLAIN,35));
+        title.setFont(new Font("Comic Sans MS", Font.ITALIC,35));
 
         t1Name = new JLabel();
         t1Name.setHorizontalAlignment(t1.CENTER);
         t1Name.setText(t1.getTerritoryName());
-        t1Name.setFont(new Font("Impact", Font.PLAIN,20));
+        t1Name.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 
         t2Name = new JLabel();
         t2Name.setHorizontalAlignment(t2.CENTER);
         t2Name.setText(t2.getTerritoryName());
-        t2Name.setFont(new Font("Impact", Font.PLAIN,20));
+        t2Name.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 
         t1Troops = new JLabel();
         t1Troops.setHorizontalAlignment(t1Troops.CENTER);
-        t1Troops.setText(String.valueOf(t1.getTroops()));
-        t1Troops.setFont(new Font("Impact", Font.PLAIN,20));
+        t1Troops.setText(("Troops: ") + String.valueOf(t1.getTroops()));
+        t1Troops.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 
         t2Troops = new JLabel();
         t2Troops.setHorizontalAlignment(t2Troops.CENTER);
-        t2Troops.setText(String.valueOf(t2.getTroops()));
-        t2Troops.setFont(new Font("Impact", Font.PLAIN,20));
+        t2Troops.setText(("Troops: ") + String.valueOf(t2.getTroops()));
+        t2Troops.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 
         minusButton = new JButton("-");
-        minusButton.setFont(new Font("Impact", Font.PLAIN,12));
+        minusButton.setFont(new Font("Impact", Font.PLAIN,35));
         plusButton = new JButton("+");
-        plusButton.setFont(new Font("Impact", Font.PLAIN,12));
+        plusButton.setFont(new Font("Impact", Font.PLAIN,35));
 
         fortifyButton = new JButton("DEPLOY");
         fortifyButton.setFont(new Font("Impact", Font.PLAIN,35));
 
         troops = new JLabel("1");
         troops.setFont(new Font("Impact", Font.PLAIN,20));
+        troops.setHorizontalAlignment(troops.CENTER);
+        troops.setVerticalAlignment(troops.CENTER);
 
         minusButton.addActionListener(controller);
         plusButton.addActionListener(controller);
         fortifyButton.addActionListener(controller);
 
         JPanel leftPanel = new JPanel();
-        BorderLayout leftBorderLayout = new BorderLayout();
-        leftPanel.setLayout(leftBorderLayout);
-        leftPanel.add(t1Name, BorderLayout.NORTH);
-        leftPanel.add(t1Troops, BorderLayout.SOUTH);
+        GridLayout leftGrid = new GridLayout(2,1);
+        leftPanel.setLayout(leftGrid);
+        leftPanel.add(t1Name);
+        leftPanel.add(t1Troops);
 
         JPanel rightPanel = new JPanel();
-        BorderLayout RightBorderLayout = new BorderLayout();
-        rightPanel.setLayout(RightBorderLayout);
-        rightPanel.add(t2Name, BorderLayout.NORTH);
-        rightPanel.add(t2Troops, BorderLayout.SOUTH);
+        GridLayout rightGrid = new GridLayout(2,1);
+        rightPanel.setLayout(rightGrid);
+        rightPanel.add(t2Name);
+        rightPanel.add(t2Troops);
 
         JPanel middlePanel = new JPanel();
-        BorderLayout middleBorderLayout = new BorderLayout();
-        middlePanel.setLayout(middleBorderLayout);
-        middlePanel.add(title, BorderLayout.NORTH);
+        GridLayout middleGrid = new GridLayout(3,1);
+        middlePanel.setLayout(middleGrid);
+        middlePanel.add(title);
 
         JPanel middleButtonPanel = new JPanel();
-        BorderLayout middleButtonLayout = new BorderLayout();
-        middleButtonPanel.setLayout(middleButtonLayout);
-        middleButtonPanel.add(minusButton, BorderLayout.WEST);
-        middleButtonPanel.add(troops, BorderLayout.CENTER);
-        middleButtonPanel.add(plusButton, BorderLayout.EAST);
+        GridLayout middleButtonGrid = new GridLayout(1,3);
+        middleButtonPanel.setLayout(middleButtonGrid);
+        middleButtonPanel.add(minusButton);
+        middleButtonPanel.add(troops);
+        middleButtonPanel.add(plusButton);
 
-        middlePanel.add(middleButtonPanel, BorderLayout.CENTER);
-        middlePanel.add(fortifyButton, BorderLayout.SOUTH);
+        middlePanel.add(middleButtonPanel);
+        middlePanel.add(fortifyButton);
 
-        add(leftPanel, BorderLayout.WEST);
-        add(middlePanel, BorderLayout.CENTER);
-        add(rightPanel, BorderLayout.EAST);
+        add(leftPanel);
+        add(middlePanel);
+        add(rightPanel);
 
         setVisible(true);
 
@@ -113,6 +115,18 @@ public class FortifyPopUp extends JPopupMenu {
 
     public JButton getFortifyButton(){
         return fortifyButton;
+    }
+
+    public Player getPlayer(){
+        return t1.getOccupant();
+    }
+
+    public Territory getTerritoryToLoseTroops(){
+        return t1;
+    }
+
+    public Territory getTerritoryToGainTroops(){
+        return t2;
     }
 
     public void setTroops(int x){
