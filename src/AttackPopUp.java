@@ -15,13 +15,15 @@ public class AttackPopUp extends JPopupMenu {
     private JLabel outcome;
     private JLabel attackingLabel;
     private JLabel defendingLabel;
+    private JFrame gameViewRef;
 
-    public AttackPopUp(Territory attackingTerritory, Territory defendingTerritory) {
+    public AttackPopUp(Territory attackingTerritory, Territory defendingTerritory, JFrame gameViewRef) {
         super();
         setLayout(new GridLayout(0, 1));
         Border darkLine = BorderFactory.createLineBorder(Color.black,3);
         setBorder(darkLine);
 
+        this.gameViewRef = gameViewRef;
         this.attackingTerritory = attackingTerritory;
         this.defendingTerritory = defendingTerritory;
 
@@ -132,6 +134,8 @@ public class AttackPopUp extends JPopupMenu {
 
         return panel;
     }
+
+    public JFrame getGameViewRef() { return gameViewRef; }
 
     public JButton getAttackBOTTOM() {
         return attackBOTTOM;

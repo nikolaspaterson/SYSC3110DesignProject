@@ -42,7 +42,7 @@ public class GameController implements ActionListener {
                 Territory main_territory = gameViewRef.getCommandTerritory().get(0);
                 gameViewRef.addCommandTerritory(temp_territory);
                 main_territory.cancel_timer();
-                AttackPopUp attackPopUp = new AttackPopUp(gameViewRef.getCommandTerritory().get(0), gameViewRef.getCommandTerritory().get(1));
+                AttackPopUp attackPopUp = new AttackPopUp(gameViewRef.getCommandTerritory().get(0), gameViewRef.getCommandTerritory().get(1), gameViewRef);
                 attackPopUp.show(gameViewRef, 300, 350);
                 System.out.println("Attacker: " + gameViewRef.getCommandTerritory().get(0).toString() + "Defender: "  + gameViewRef.getCommandTerritory().get(1).toString());
                 gameViewRef.clearCommandTerritory();
