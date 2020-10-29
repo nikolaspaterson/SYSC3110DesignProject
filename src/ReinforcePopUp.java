@@ -1,6 +1,4 @@
-import javax.naming.TimeLimitExceededException;
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class ReinforcePopUp extends JPopupMenu {
@@ -11,18 +9,25 @@ public class ReinforcePopUp extends JPopupMenu {
     private JButton deployButton;
     private JLabel title;
     private JLabel territoryName;
-    private JPanel reinforcePanel;
     private JLabel photo;
     private JLabel troops;
 
     public ReinforcePopUp(Territory t){
         super();
         this.selectedTerritory = t;
-        ReinforcePopUpController controller = new ReinforcePopUpController(this);
+        initializeComponents();
 
-        reinforcePanel = new JPanel();
         setLayout(new GridLayout(1,3));
 
+        createLeftPanel();
+
+        add(createMiddlePanel());
+        add(createRightPanel());
+        setVisible(true);
+    }
+
+    private void initializeComponents(){
+        ReinforcePopUpController controller = new ReinforcePopUpController(this);
         title = new JLabel("REINFORCE");
         title.setHorizontalAlignment(title.CENTER);
         title.setFont(new Font("Comic Sans MS", Font.ITALIC,35));
@@ -54,9 +59,13 @@ public class ReinforcePopUp extends JPopupMenu {
         troops.setFont(new Font("Impact", Font.PLAIN,20));
         troops.setHorizontalAlignment(troops.CENTER);
         troops.setVerticalAlignment(troops.CENTER);
+    }
 
+    private void createLeftPanel(){
+        add(photo);
+    }
 
-        add(photo, BorderLayout.WEST);
+    private JPanel createMiddlePanel(){
 
         JPanel middlePanel = new JPanel();
 
@@ -73,17 +82,17 @@ public class ReinforcePopUp extends JPopupMenu {
         troopPanel.add(plusButton);
 
         middlePanel.add(troopPanel);
+        return middlePanel;
+    }
 
+    private JPanel createRightPanel(){
         JPanel rightPanel = new JPanel();
         GridLayout rightGrid = new GridLayout(3,1);
         rightPanel.setLayout(rightGrid);
         rightPanel.add(new JLabel());
         rightPanel.add(deployButton);
         rightPanel.add(new JLabel());
-
-        add(middlePanel, BorderLayout.CENTER);
-        add(rightPanel, BorderLayout.EAST);
-        setVisible(true);
+        return rightPanel;
     }
 
     public JLabel getTroops(){

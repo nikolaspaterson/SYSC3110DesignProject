@@ -3,8 +3,8 @@ import java.awt.event.ActionListener;
 
 public class ReinforcePopUpController implements ActionListener {
 
-    private ReinforcePopUp popup;
-    private GameEvent ge;
+    private final ReinforcePopUp popup;
+    private final GameEvent ge;
 
     public ReinforcePopUpController(ReinforcePopUp reinforcepopup){
         this.popup = reinforcepopup;
@@ -13,7 +13,7 @@ public class ReinforcePopUpController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int x = Integer.valueOf(popup.getTroops().getText());
+        int x = Integer.parseInt(popup.getTroops().getText());
         int deployableTroops = popup.getPlayer().getDeployableTroops();
 
         if(e.getSource().equals(popup.getPlus())){
