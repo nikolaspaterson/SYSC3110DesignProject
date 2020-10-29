@@ -17,6 +17,7 @@ public class PlayerSelectController implements ActionListener {
             int x = (Integer.parseInt(playerSelectView.getNumPlayers().getText()));
             if (x == 2) {
                 x = 6;
+                playerSelectView.getPlayerArrayList().clear();
                 for(int i = 0; i < 6; i++) {
                     playerSelectView.getPlayerList().add(playerSelectView.getPlayers().get(i));
                     playerSelectView.getPlayerArrayList().add(playerSelectView.getPlayers().get(i));
