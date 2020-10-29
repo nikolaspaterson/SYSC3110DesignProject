@@ -19,15 +19,13 @@ public class AttackPopUp extends JPopupMenu {
     public AttackPopUp(Territory attackingTerritory, Territory defendingTerritory) {
         super();
         setLayout(new GridLayout(0, 1));
-        Border darkLine = BorderFactory.createLineBorder(Color.black,3); // add this when the actual Game becomes the JFrame
+        Border darkLine = BorderFactory.createLineBorder(Color.black,3);
         setBorder(darkLine);
 
-        JPanel jPanel = new JPanel(new FlowLayout());
-
-        ////////////////////////
         this.attackingTerritory = attackingTerritory;
         this.defendingTerritory = defendingTerritory;
-        ////////////////////////
+
+        JPanel jPanel = new JPanel(new FlowLayout());
 
         JPanel jp = new JPanel();
 
@@ -65,10 +63,6 @@ public class AttackPopUp extends JPopupMenu {
 
         jp.add(middlePanel);
 
-
-        //////////////////////////////
-
-
         JPanel result = new JPanel();
         result.setLayout(new GridLayout(4, 1));
 
@@ -97,17 +91,9 @@ public class AttackPopUp extends JPopupMenu {
         result.add(defenderLabel);
         result.add(outcome);
 
-        ///////////////////////////////
+        JPanel leftPanel = playerPanel(attackingTerritory.getOccupant().getplayer_icon(), "left");
 
-        JPanel leftPanel = playerPanel("/resources/Chizzy.png", "left");
-
-        ///////////////////////////////
-
-        JPanel rightPanel = playerPanel("/resources/Chizzy.png", "right");
-
-
-        //////////////////////////////////////
-
+        JPanel rightPanel = playerPanel(defendingTerritory.getOccupant().getplayer_icon(), "right");
 
         AttackPopUpController attackPopUpController = new AttackPopUpController(this);
 
@@ -119,25 +105,16 @@ public class AttackPopUp extends JPopupMenu {
         jPanel.add(jp, BorderLayout.CENTER);
         jPanel.add(rightPanel, BorderLayout.EAST);
 
-
         add(jPanel);
         add(result);
-
         setVisible(true);
     }
 
-    private ImageIcon scaleImage(String filename) {
-        ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
-        Image img = scaledImg.getImage().getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH );
-        scaledImg = new ImageIcon(img);
-        return scaledImg;
-    }
-
-    private JPanel playerPanel(String filename, String side) {
+    private JPanel playerPanel(Icon image, String side) {
         JPanel panel = new JPanel(new BorderLayout(5, 0));
 
         JLabel photo = new JLabel();
-        photo.setIcon(scaleImage(filename));
+        photo.setIcon(image);
 
         JLabel T;
 
