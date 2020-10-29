@@ -182,8 +182,8 @@ public class AttackPopUp extends JPopupMenu {
     }
 
     public void refreshLabels() {
-        attackerLabel.setText(attackingTerritory.getOccupant().getName() + " ROLLED: (ROLLS)");
-        defenderLabel.setText(defendingTerritory.getOccupant().getName() + " ROLLED: (ROLLS)");
+        attackerLabel.setText(attackingTerritory.getOccupant().getName() + " ROLLED: (ROLL OUTCOME)");
+        defenderLabel.setText(defendingTerritory.getOccupant().getName() + " ROLLED: (ROLL OUTCOME)");
         //outcome.setText();
     }
 
