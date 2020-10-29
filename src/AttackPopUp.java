@@ -21,7 +21,7 @@ public class AttackPopUp extends JPopupMenu {
         setLayout(new GridLayout(0, 1));
         Border darkLine = BorderFactory.createLineBorder(Color.black,3); // add this when the actual Game becomes the JFrame
         setBorder(darkLine);
-
+        ////////////////////////
         JPanel jPanel = new JPanel(new FlowLayout());
 
         ////////////////////////
