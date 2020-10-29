@@ -76,7 +76,7 @@ public class PlayerSelectPanel extends JPanel {
     }
     private ImageIcon scaleImage(String filename) {
         ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
-        Image img = scaledImg.getImage().getScaledInstance( 75, 75,  java.awt.Image.SCALE_SMOOTH );
+        Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
         scaledImg = new ImageIcon(img);
         return scaledImg;
     }

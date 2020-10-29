@@ -11,6 +11,7 @@ public class AttackPopUpController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //
         if (e.getSource() == attackPopUp.getMinus()) {
             int x = Integer.parseInt(attackPopUp.getNumTroops().getText());
             if(x == 1) {
