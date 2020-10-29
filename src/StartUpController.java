@@ -6,7 +6,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 public class StartUpController implements ActionListener {
-    private StartUpView startUpView;
+    private final StartUpView startUpView;
 
     public StartUpController(StartUpView startUp){
         this.startUpView = startUp;
@@ -47,7 +47,7 @@ public class StartUpController implements ActionListener {
             });
         }else if(e.getActionCommand().equals("Play")){
             startUpView.dispose();
-            PlayerSelectView playerSelect = new PlayerSelectView();
+            new PlayerSelectView();
         }
     }
 }

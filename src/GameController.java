@@ -19,6 +19,8 @@ public class GameController implements ActionListener {
             if(temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())){
                 gameViewRef.clearCommandTerritory();
                 gameViewRef.addCommandTerritory(temp_territory);
+                ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
+                temp.show(gameViewRef,300,350);
                 System.out.println("Pop up Reinforce + \n" + temp_territory.toString());
             }
 
@@ -53,6 +55,8 @@ public class GameController implements ActionListener {
             }else if(gameViewRef.getCommandTerritorySize()  == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCommandTerritory().get(0).isNeighbour(temp_territory)){
                 gameViewRef.addCommandTerritory(temp_territory);
                 System.out.println("Ally1: " + gameViewRef.getCommandTerritory().get(0).toString() + "Ally2: "  + gameViewRef.getCommandTerritory().get(1).toString());
+                FortifyPopUp fortifyPopUp = new FortifyPopUp(gameViewRef.getCommandTerritory().get(0), gameViewRef.getCommandTerritory().get(1));
+                fortifyPopUp.show(gameViewRef, 300, 350);
             }else if(gameViewRef.getCommandTerritorySize() == 2 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())){
                 gameViewRef.clearCommandTerritory();
                 gameViewRef.addCommandTerritory(temp_territory);
