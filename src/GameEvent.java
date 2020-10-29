@@ -8,6 +8,8 @@ public class GameEvent {
 
     private final Player player;
     private String result;
+    private String attackingRolls;
+    private String defendingRolls;
 
     /**
      * Constructor for GameEvent class where a GameEvent should be initiated by a Player.
@@ -77,7 +79,15 @@ public class GameEvent {
                         break;
                 }
 
-                winningMove(attacking, defending);
+                for(int x : attackingDice.getRoll()){
+                    attackingRolls += " || " + x + " || ";
+                }
+
+                for(int y : defendingDice.getRoll()){
+                    defendingRolls += " || " + y + " || ";
+                }
+
+                //winningMove(attacking, defending);
 
             } catch (NullPointerException e) {
                 System.out.println("Null pointer exception!");
@@ -88,6 +98,10 @@ public class GameEvent {
     }
 
     public String getResult() { return result; }
+
+    public String getAttackerRolls() { return attackingRolls; }
+
+    public String getDefendingRolls() { return defendingRolls; }
 
     /**
      * This method is used with combination of the attack() method above to decide if the attacker defeated the defending territory.

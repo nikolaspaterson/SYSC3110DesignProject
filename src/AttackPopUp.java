@@ -1,15 +1,13 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AttackPopUp extends JPopupMenu {
 
     private Territory attackingTerritory;
     private Territory defendingTerritory;
     private JButton minus;
-    private JLabel numTroops;
+    private JLabel numDice;
     private JButton plus;
     private JButton attackBOTTOM;
     private JLabel attackerLabel;
@@ -43,11 +41,11 @@ public class AttackPopUp extends JPopupMenu {
         minus.setFont(new Font("Impact", Font.BOLD, 25));
         selectTroops.add(minus, BorderLayout.WEST);
 
-        numTroops = new JLabel("1");
-        numTroops.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
-        numTroops.setHorizontalAlignment(numTroops.CENTER);
-        numTroops.setVerticalAlignment(numTroops.CENTER);
-        selectTroops.add(numTroops, BorderLayout.CENTER);
+        numDice = new JLabel("1");
+        numDice.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
+        numDice.setHorizontalAlignment(numDice.CENTER);
+        numDice.setVerticalAlignment(numDice.CENTER);
+        selectTroops.add(numDice, BorderLayout.CENTER);
 
         plus = new JButton("+");
         plus.setFont(new Font("Impact", Font.BOLD, 25));
@@ -142,8 +140,8 @@ public class AttackPopUp extends JPopupMenu {
         return minus;
     }
 
-    public JLabel getNumTroops() {
-        return numTroops;
+    public JLabel getNumDice() {
+        return numDice;
     }
 
     public JButton getPlus() {
@@ -158,10 +156,10 @@ public class AttackPopUp extends JPopupMenu {
         return defendingTerritory;
     }
 
-    public void refreshLabels() {
-        attackerLabel.setText(attackingTerritory.getOccupant().getName() + " ROLLED: (ROLL OUTCOME)");
-        defenderLabel.setText(defendingTerritory.getOccupant().getName() + " ROLLED: (ROLL OUTCOME)");
-        //outcome.setText();
+    public void refreshLabels(String attackerRolls, String defenderRolls, String outcome) {
+        attackerLabel.setText(attackingTerritory.getOccupant().getName() + " ROLLED: " + attackerRolls);
+        defenderLabel.setText(defendingTerritory.getOccupant().getName() + " ROLLED: " + defenderRolls);
+        this.outcome.setText(outcome);
     }
 
 
