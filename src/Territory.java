@@ -85,13 +85,6 @@ public class Territory extends JButton {
         this.setText(String.valueOf(troops));
     }
 
-    public void addTroops(int value) {
-        troops += value;
-        occupant.addTotal(troops);
-        troop_count_label.setText("Troops: " + String.valueOf(troops));
-        this.setText(String.valueOf(troops));
-    }
-
     /**
      * Gets the number of troops in this Territory.
      * @return int the number of troops.
