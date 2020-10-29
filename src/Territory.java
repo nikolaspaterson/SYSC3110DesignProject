@@ -94,8 +94,8 @@ public class Territory extends JButton {
     }
 
     public void addTroops(int value) {
-        troops += value;
-        occupant.addTotal(troops);
+        troops += (value);
+        occupant.addTotal(value);
         troop_count_label.setText("Troops: " + String.valueOf(troops));
         this.setText(String.valueOf(troops));
     }
