@@ -13,6 +13,8 @@ public class AttackPopUp extends JPopupMenu {
     private JLabel attackerLabel;
     private JLabel defenderLabel;
     private JLabel outcome;
+    private JLabel attackingLabel;
+    private JLabel defendingLabel;
 
     public AttackPopUp(Territory attackingTerritory, Territory defendingTerritory) {
         super();
@@ -114,20 +116,19 @@ public class AttackPopUp extends JPopupMenu {
         JLabel photo = new JLabel();
         photo.setIcon(image);
 
-        JLabel T;
-
         if(side.equals("left")) {
-            T = new JLabel("<html>" + attackingTerritory.getTerritoryName() + "<br>Troops: " + attackingTerritory.getTroops() +"</html>");
+            attackingLabel = new JLabel("<html>" + attackingTerritory.getTerritoryName() + "<br>Troops: " + attackingTerritory.getTroops() +"</html>");
+            attackingLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+            attackingLabel.setForeground(new Color(0, 0, 0));
             panel.add(photo, BorderLayout.WEST);
-            panel.add(T, BorderLayout.EAST);
+            panel.add(attackingLabel, BorderLayout.EAST);
         } else {
-            T = new JLabel("<html>" + defendingTerritory.getTerritoryName() + "<br>Troops: " + defendingTerritory.getTroops() +"</html>");
+            defendingLabel = new JLabel("<html>" + defendingTerritory.getTerritoryName() + "<br>Troops: " + defendingTerritory.getTroops() +"</html>");
+            defendingLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+            defendingLabel.setForeground(new Color(0, 0, 0));
             panel.add(photo, BorderLayout.EAST);
-            panel.add(T, BorderLayout.WEST);
+            panel.add(defendingLabel, BorderLayout.WEST);
         }
-
-        T.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-        T.setForeground(new Color(0, 0, 0));
 
         return panel;
     }
@@ -160,7 +161,12 @@ public class AttackPopUp extends JPopupMenu {
         attackerLabel.setText(attackingTerritory.getOccupant().getName() + " ROLLED: " + attackerRolls);
         defenderLabel.setText(defendingTerritory.getOccupant().getName() + " ROLLED: " + defenderRolls);
         this.outcome.setText(outcome);
+        attackingLabel.setText("<html>" + attackingTerritory.getTerritoryName() + "<br>Troops: " + attackingTerritory.getTroops() +"</html>");
+        defendingLabel.setText("<html>" + defendingTerritory.getTerritoryName() + "<br>Troops: " + defendingTerritory.getTroops() +"</html>");
+        numDice.setText("1");
+        if (attackingTerritory.getTroops() == 1) {
+            numDice.setText("0");
+        }
     }
-
 
 }

@@ -13,37 +13,38 @@ public class AttackPopUpController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (Integer.parseInt(attackPopUp.getNumDice().getText()) != 0) {
+            int attackingTroops = attackPopUp.getAttackingTerritory().getTroops();
+            int max;
 
-        int attackingTroops = attackPopUp.getAttackingTerritory().getTroops();
-        int max;
-
-        if ((attackingTroops - 1) >= 3) {
-            max = 3;
-        } else if ((attackingTroops - 1) == 2) {
-            max = 2;
-        } else{
-            max = 1;
-        }
-
-        if (e.getSource() == attackPopUp.getMinus()) {
-            int x = Integer.parseInt(attackPopUp.getNumDice().getText());
-            if(x == 1) {
-                x = max;
+            if ((attackingTroops - 1) >= 3) {
+                max = 3;
+            } else if ((attackingTroops - 1) == 2) {
+                max = 2;
             } else {
-                x--;
+                max = 1;
             }
-            attackPopUp.getNumDice().setText(x + "");
-        } else if (e.getSource() == attackPopUp.getPlus()) {
-            int x = Integer.parseInt(attackPopUp.getNumDice().getText());
-            if(x == max) {
-                x = 1;
+
+            if (e.getSource() == attackPopUp.getMinus()) {
+                int x = Integer.parseInt(attackPopUp.getNumDice().getText());
+                if (x == 1) {
+                    x = max;
+                } else {
+                    x--;
+                }
+                attackPopUp.getNumDice().setText(x + "");
+            } else if (e.getSource() == attackPopUp.getPlus()) {
+                int x = Integer.parseInt(attackPopUp.getNumDice().getText());
+                if (x == max) {
+                    x = 1;
+                } else {
+                    x++;
+                }
+                attackPopUp.getNumDice().setText(x + "");
             } else {
-                x++;
+                gameEvent.attack(attackPopUp.getAttackingTerritory(), attackPopUp.getDefendingTerritory(), Integer.parseInt(attackPopUp.getNumDice().getText()));
+                attackPopUp.refreshLabels(gameEvent.getAttackerRolls(), gameEvent.getDefendingRolls(), gameEvent.getResult());
             }
-            attackPopUp.getNumDice().setText(x + "");
-        } else {
-            gameEvent.attack(attackPopUp.getAttackingTerritory(), attackPopUp.getDefendingTerritory(), Integer.parseInt(attackPopUp.getNumDice().getText()));
-            attackPopUp.refreshLabels(gameEvent.getAttackerRolls(), gameEvent.getDefendingRolls(), gameEvent.getResult());
         }
     }
 }
