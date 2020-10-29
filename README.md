@@ -101,10 +101,18 @@ Dice - Ahmad El-Sammak<br>
 Game - Nikolas Paterson, Erik Iuhas<br>
 GameEvent - Ahmad El-Sammak<br>
 GameSetup - Erik Iuhas<br>
-Player - Ahmad El-Sammak<br>
+Player - Ahmad El-Sammak, Erik Iuhas<br>
 Territory - Ahmad El-Sammak, Erik Iuhas<br>
-**Files:**<br>
+GameView - Erik Iuhas <br>
+StatusBar - Erik Iuhas <br>
+
+**Resources:**<br>
 TerritoryNeighbours.csv - Erik Iuhas<br>
+Map.png - ErikIuhas<br>
+Chizzy.png - ErikIuhas<br>
+TA.png - ErikIuhas<br>
+Captain.png - ErikIuhas<br>
+
 **Documents:**<br>
 README -Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
 UML Diagram - Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
