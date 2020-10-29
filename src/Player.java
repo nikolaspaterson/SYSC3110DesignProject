@@ -1,24 +1,54 @@
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.util.HashMap;
 
 /**
  * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
  * @author Ahmad El-Sammak
  */
-public class Player {
+public class Player extends JPanel {
 
     private int deployableTroops;
     private final String name;
     private final HashMap<String, Territory> territoriesOccupied;
+    private final Color player_color;
+    private int total_troops;
+
+    private JLabel player_icon;
+    private JLabel player_name_label;
+    private JLabel total_troops_label;
 
     /**
      * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
      * @param name the name of the player.
      */
-    public Player(String name) {
+    public Player(String name,Color player_color,ImageIcon player_icon) {
         this.name = name;
+        this.total_troops = 0;
+        this.player_color = player_color;
+
+        Border darkline = BorderFactory.createLineBorder(player_color.darker());
+        this.setBackground(player_color);
+        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        this.player_icon = new JLabel();
+        this.player_name_label = new JLabel();
+        this.total_troops_label = new JLabel();
+        this.player_icon.setIcon(new ImageIcon(player_icon.getImage().getScaledInstance( 75, 75,  java.awt.Image.SCALE_SMOOTH )));
+        this.player_name_label.setText(name);
+        this.player_name_label.setFont(new Font("Impact",Font.PLAIN,15));
+        this.total_troops_label.setText("Troop#: " + total_troops);
+
+        this.add(this.player_icon);
+        this.add(this.player_name_label);
+        this.add(this.total_troops_label);
+        this.setBorder(darkline);
+
         territoriesOccupied = new HashMap<>();
     }
-
+    public Icon getplayer_icon(){
+        return player_icon.getIcon();
+    }
     /**
      * Gets the player's name.
      * @return String - Players name
@@ -33,12 +63,15 @@ public class Player {
      */
     public HashMap<String, Territory> getTerritoriesOccupied() { return territoriesOccupied; }
 
+    public Color getPlayer_color(){ return player_color;}
+
     /**
      * Sets the amount of deployable troops the player can use during their reinforcement.
      * @param deployableTroops number of deployable troops.
      */
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
+        addTotal(deployableTroops);
     }
 
     /**
@@ -48,6 +81,7 @@ public class Player {
      */
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
+        addTotal(deployableTroops);
     }
 
     /**
@@ -135,5 +169,10 @@ public class Player {
             output += ally + enemy;
         }
         return output;
+    }
+
+    public void addTotal(int troops) {
+        total_troops += troops;
+        total_troops_label.setText("Troop#: " + total_troops);
     }
 }
