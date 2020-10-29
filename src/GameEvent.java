@@ -8,8 +8,8 @@ public class GameEvent {
 
     private final Player player;
     private String result;
-    private String attackingRolls;
-    private String defendingRolls;
+    private String attackingRolls = "";
+    private String defendingRolls = "";
 
     /**
      * Constructor for GameEvent class where a GameEvent should be initiated by a Player.
