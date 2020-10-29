@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * The Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
@@ -23,6 +25,9 @@ public class Territory extends JButton {
     private JLabel occupant_name_label;
 
     private Color default_color;
+    private Color flashing;
+    private Timer blinking_yours;
+    private Timer blinking_theirs;
     /**
      * Class constructor for the Territory class. Sets the player who occupies the territory
      * @param territoryName the name of the territory.
@@ -33,6 +38,8 @@ public class Territory extends JButton {
         this.setBounds(x,y,width,height);
         troops = 0;
         neighbours = new HashMap<>();
+        blinking_yours = new Timer("flash_yours");
+        blinking_theirs = new Timer("flash_theirs");
 
         popup_info = new JPanel();
         popup_info.setLayout(new BoxLayout(popup_info,BoxLayout.Y_AXIS));
@@ -148,6 +155,19 @@ public class Territory extends JButton {
         System.out.println("================================================");
     }
 
+    public void cancel_timer(){
+        blinking_yours.cancel();
+        blinking_theirs.cancel();
+        for(Territory temp : neighbours.values()){
+            temp.setBackground(temp.getDefault_color());
+        }
+    }
+    public void activateTimer(){
+        blinking_yours.scheduleAtFixedRate(new FlashTimerTask(getDefault_color(),getNeighbours(),1),0,1000);
+        blinking_theirs.scheduleAtFixedRate(new FlashTimerTask(getDefault_color(),getNeighbours(),0),500,1000);
+    }
+
+
     /**
      * Creates a String that displays the territory name as well as its neighbouring territories
      * @return String - The string in the description
@@ -162,4 +182,6 @@ public class Territory extends JButton {
         output += "==================";
         return output;
     }
+
+
 }

@@ -34,7 +34,7 @@ public class Player extends JPanel {
         this.player_icon = new JLabel();
         this.player_name_label = new JLabel();
         this.total_troops_label = new JLabel();
-        this.player_icon.setIcon(new ImageIcon(player_icon.getImage().getScaledInstance( 75, 75,  java.awt.Image.SCALE_SMOOTH )));
+        this.player_icon.setIcon(new ImageIcon(player_icon.getImage()));
         this.player_name_label.setText(name);
         this.player_name_label.setFont(new Font("Impact",Font.PLAIN,15));
         this.total_troops_label.setText("Troop#: " + total_troops);

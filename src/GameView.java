@@ -72,7 +72,7 @@ public class GameView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
-        this.setMinimumSize(new Dimension(1280,814));
+        this.setMinimumSize(new Dimension(1280,840));
         JPanel background;
         BufferedImage image = ImageIO.read(getClass().getResource("/resources/Map.png"));
         background = new JPanel(){
@@ -105,6 +105,7 @@ public class GameView extends JFrame {
         worldMap = gameSetup.returnWorldMap();
         add(user_status);
         background.add(players_overlay);
+        setResizable(false);
         this.setVisible(true);
     }
 
