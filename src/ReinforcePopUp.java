@@ -52,6 +52,8 @@ public class ReinforcePopUp extends JPopupMenu {
 
         troops = new JLabel("1");
         troops.setFont(new Font("Impact", Font.PLAIN,20));
+        troops.setHorizontalAlignment(troops.CENTER);
+        troops.setVerticalAlignment(troops.CENTER);
 
 
         add(photo, BorderLayout.WEST);
@@ -67,8 +69,6 @@ public class ReinforcePopUp extends JPopupMenu {
         GridLayout buttonGrid = new GridLayout(0,3);
         troopPanel.setLayout(buttonGrid);
         troopPanel.add(minusButton);
-        troops.setHorizontalAlignment(troops.CENTER);
-        troops.setVerticalAlignment(troops.CENTER);
         troopPanel.add(troops);
         troopPanel.add(plusButton);
 
