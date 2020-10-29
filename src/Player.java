@@ -13,7 +13,7 @@ public class Player extends JPanel {
     private final String name;
     private final HashMap<String, Territory> territoriesOccupied;
     private final Color player_color;
-    private final int total_troops;
+    private int total_troops;
 
     private JLabel player_icon;
     private JLabel player_name_label;
@@ -49,6 +49,7 @@ public class Player extends JPanel {
     public Icon getplayer_icon(){
         return player_icon.getIcon();
     }
+
     /**
      * Gets the player's name.
      * @return String - Players name
@@ -70,6 +71,7 @@ public class Player extends JPanel {
      */
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
+        addTotal(deployableTroops);
     }
 
     /**
@@ -79,6 +81,12 @@ public class Player extends JPanel {
      */
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
+        addTotal(deployableTroops);
+    }
+
+    public void addTotal(int troops) {
+        total_troops += troops;
+        total_troops_label.setText("Troop#: " + total_troops);
     }
 
     /**

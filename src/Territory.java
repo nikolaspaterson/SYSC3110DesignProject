@@ -93,6 +93,13 @@ public class Territory extends JButton {
         return troops;
     }
 
+    public void addTroops(int value) {
+        troops += value;
+        occupant.addTotal(troops);
+        troop_count_label.setText("Troops: " + String.valueOf(troops));
+        this.setText(String.valueOf(troops));
+    }
+
     /**
      * Adds a Territory as a neighbour of this Territory into a HashMap.
      * @param neighbour the neighbouring Territory.

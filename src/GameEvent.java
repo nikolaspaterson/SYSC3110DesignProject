@@ -8,8 +8,9 @@ public class GameEvent {
 
     private final Player player;
     private String result;
-    private String attackingRolls = "";
-    private String defendingRolls = "";
+    private String attackingRolls;
+    private String defendingRolls;
+    private boolean attackerWon;
 
     /**
      * Constructor for GameEvent class where a GameEvent should be initiated by a Player.
@@ -17,6 +18,9 @@ public class GameEvent {
      */
     public GameEvent(Player player) {
         this.player = player;
+        attackingRolls = "";
+        defendingRolls = "";
+        attackerWon = false;
     }
 
     /**
@@ -58,26 +62,29 @@ public class GameEvent {
                 switch(outcome){
                     case 2:
                         result = "Defender loses two troops!";
-                        defending.setTroops(defending.getTroops() - 2);
+                        defending.addTroops(-2);
                         break;
                     case 1:
                         result = "Attacker loses two troops!";
-                        attacking.setTroops(attacking.getTroops() - 2);
+                        attacking.addTroops(-2);
                         break;
                     case 0:
                         result = "Attacker & Defender lose ONE troop!";
-                        attacking.setTroops(attacking.getTroops() - 1);
-                        defending.setTroops(defending.getTroops() - 1);
+                        attacking.addTroops(-1);
+                        defending.addTroops(-1);
                         break;
                     case -1:
                         result = "Defender loses one troop!";
-                        defending.setTroops(defending.getTroops() - 1);
+                        defending.addTroops(-1);
                         break;
                     case -2:
                         result = "Attacker loses one troop!";
-                        attacking.setTroops(attacking.getTroops() - 1);
+                        attacking.addTroops(-1);
                         break;
                 }
+
+                attackingRolls = "";
+                defendingRolls = "";
 
                 for(int x : attackingDice.getRoll()){
                     attackingRolls += " || " + x + " || ";
@@ -87,7 +94,14 @@ public class GameEvent {
                     defendingRolls += " || " + y + " || ";
                 }
 
-                //winningMove(attacking, defending);
+                if (defending.getTroops() == 0) {
+                    attackerWon = true;
+                    (attacking.getOccupant()).addTerritory(defending.getTerritoryName(), defending);
+                    (defending.getOccupant()).removeTerritory(defending.getTerritoryName());
+                    defending.setOccupant(attacking.getOccupant());
+                    defending.setTroops(1);
+                    attacking.setTroops(attacking.getTroops() - 1);
+                }
 
             } catch (NullPointerException e) {
                 System.out.println("Null pointer exception!");
@@ -102,6 +116,8 @@ public class GameEvent {
     public String getAttackerRolls() { return attackingRolls; }
 
     public String getDefendingRolls() { return defendingRolls; }
+
+    public boolean getAttackerWon() { return attackerWon; }
 
     /**
      * This method is used with combination of the attack() method above to decide if the attacker defeated the defending territory.

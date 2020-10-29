@@ -44,6 +44,9 @@ public class AttackPopUpController implements ActionListener {
             } else {
                 gameEvent.attack(attackPopUp.getAttackingTerritory(), attackPopUp.getDefendingTerritory(), Integer.parseInt(attackPopUp.getNumDice().getText()));
                 attackPopUp.refreshLabels(gameEvent.getAttackerRolls(), gameEvent.getDefendingRolls(), gameEvent.getResult());
+                if(gameEvent.getAttackerWon()) {
+
+                }
             }
         }
     }
