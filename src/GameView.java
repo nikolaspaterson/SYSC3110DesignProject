@@ -156,6 +156,7 @@ public class GameView extends JFrame {
         new_territory.setBackground(new_color.darker());
         commandTerritory.add(new_territory);
     }
+
     public void clearCommandTerritory(){
         for(Territory x : commandTerritory){
             x.setBackground(x.getDefault_color());
@@ -171,4 +172,7 @@ public class GameView extends JFrame {
         return commandTerritory.size();
     }
 
+    public void updateStatusBar(){
+        user_status.updateDisplay(currentState);
+    }
 }

@@ -18,6 +18,7 @@ public class Player extends JPanel {
     private JLabel player_icon;
     private JLabel player_name_label;
     private JLabel total_troops_label;
+    private JLabel player_deploy;
 
     /**
      * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
@@ -34,6 +35,9 @@ public class Player extends JPanel {
         this.player_icon = new JLabel();
         this.player_name_label = new JLabel();
         this.total_troops_label = new JLabel();
+        this.player_deploy = new JLabel();
+        player_deploy.setFont(new Font("Impact",Font.PLAIN,20));
+        player_deploy.setForeground(new Color(0xE73A3A));
         this.player_icon.setIcon(new ImageIcon(player_icon.getImage()));
         this.player_name_label.setText(name);
         this.player_name_label.setFont(new Font("Impact",Font.PLAIN,15));
@@ -43,6 +47,8 @@ public class Player extends JPanel {
         this.add(this.player_name_label);
         this.add(this.total_troops_label);
         this.setBorder(darkline);
+
+
 
         territoriesOccupied = new HashMap<>();
     }
@@ -71,9 +77,13 @@ public class Player extends JPanel {
      */
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
+        player_deploy.setText(String.valueOf(this.deployableTroops));
         addTotal(deployableTroops);
     }
 
+    public JLabel getDeployLabel(){
+        return player_deploy;
+    }
     /**
      * Adds the deployableTroops on top of the existing deployableTroops.
      * This accounts for bonus troops awarded to the player at the beginning of a round.
@@ -81,6 +91,7 @@ public class Player extends JPanel {
      */
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
+        player_deploy.setText(String.valueOf(this.deployableTroops));
         addTotal(deployableTroops);
     }
 
