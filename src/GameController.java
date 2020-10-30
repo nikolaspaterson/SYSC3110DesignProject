@@ -16,7 +16,7 @@ public class GameController implements ActionListener {
         Territory temp_territory = (Territory) obj;
 
         if(state == "Reinforce"){
-            if(temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())){
+            if(temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCurrentPlayer().getDeployableTroops() != 0){
                 gameViewRef.clearCommandTerritory();
                 gameViewRef.addCommandTerritory(temp_territory);
                 ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
@@ -30,9 +30,7 @@ public class GameController implements ActionListener {
                 gameViewRef.clearCommandTerritory();
                 temp_territory.activateTimer();
                 gameViewRef.addCommandTerritory(temp_territory);
-            }else if(temp_territory.equals(gameViewRef.getCommandTerritory().get(0))) {
-
-            } else if(gameViewRef.getCommandTerritorySize()  == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())){
+            }else if(gameViewRef.getCommandTerritorySize()  == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())){
                 Territory main_territory = gameViewRef.getCommandTerritory().get(0);
                 main_territory.cancel_timer();
                 gameViewRef.clearCommandTerritory();
@@ -46,6 +44,9 @@ public class GameController implements ActionListener {
                 attackPopUp.show(gameViewRef, 300, 350);
                 System.out.println("Attacker: " + gameViewRef.getCommandTerritory().get(0).toString() + "Defender: "  + gameViewRef.getCommandTerritory().get(1).toString());
                 gameViewRef.clearCommandTerritory();
+            } else{
+                gameViewRef.clearCommandTerritory();
+
             }
 
         }else if(state == "Fortify"){
@@ -57,9 +58,10 @@ public class GameController implements ActionListener {
                 System.out.println("Ally1: " + gameViewRef.getCommandTerritory().get(0).toString() + "Ally2: "  + gameViewRef.getCommandTerritory().get(1).toString());
                 FortifyPopUp fortifyPopUp = new FortifyPopUp(gameViewRef.getCommandTerritory().get(0), gameViewRef.getCommandTerritory().get(1));
                 fortifyPopUp.show(gameViewRef, 300, 350);
-            }else if(gameViewRef.getCommandTerritorySize() == 2 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())){
                 gameViewRef.clearCommandTerritory();
-                gameViewRef.addCommandTerritory(temp_territory);
+            }else{
+                gameViewRef.clearCommandTerritory();
+
             }
         }
 

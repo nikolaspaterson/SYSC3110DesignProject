@@ -11,6 +11,7 @@ public class StatusBar extends JPanel {
     private final JLabel currentName;
     private Player player;
     private GameController nextButtonController;
+    private JLabel deployLabel;
 
     public StatusBar(){
         this.setLayout(new GridLayout(1, 3, 3, 0));
@@ -45,6 +46,7 @@ public class StatusBar extends JPanel {
     }
     public void setPlayer(Player player){
         this.player = player;
+        deployLabel = player.getDeployLabel();
         currentName.setText(player.getName());
         currentPlayerIcon.setIcon(player.getplayer_icon());
         descriptionPanel.setBackground(player.getBackground().brighter());
@@ -56,19 +58,21 @@ public class StatusBar extends JPanel {
         nextStep.addActionListener(nextButtonController::nextState);
     }
     public void displayAttack(){
+        descriptionPanel.remove(deployLabel);
+        this.revalidate();
+        this.repaint();
+
         currentAction.setText("<html>Time to FIGHT!<br>Attack enemy Territories</html>");
 
     }
 
     public void displayReinforce(){
-
-        if(player.getDeployableTroops() > 0){
-            nextStep.setBackground(new Color(0x6C6C6C));
-        }else{
-            nextStep.setBackground(new Color(178, 236, 83));
-        }
+        descriptionPanel.add(deployLabel);
+        this.revalidate();
+        this.repaint();
+        nextStep.setBackground(new Color(113, 220, 70));
         nextStep.setText("Next"); //add to first if after implementation
-        currentAction.setText("<html>Reinforce your land!<br>You can deploy " + player.getDeployableTroops() + " troops!</html>");
+        currentAction.setText("<html>Troops to deploy!");
 
     }
     public void displayFortify(){
@@ -78,6 +82,7 @@ public class StatusBar extends JPanel {
     }
     public void updateDisplay(String state){
         if(state == "Reinforce"){
+
             displayReinforce();
         } else if(state == "Attack"){
             displayAttack();

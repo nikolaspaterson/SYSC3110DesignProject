@@ -158,6 +158,8 @@ public class Territory extends JButton {
     public void cancel_timer(){
         blinking_yours.cancel();
         blinking_theirs.cancel();
+        blinking_yours = new Timer();
+        blinking_theirs = new Timer();
         for(Territory temp : neighbours.values()){
             temp.setBackground(temp.getDefault_color());
         }
