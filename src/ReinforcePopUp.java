@@ -5,6 +5,7 @@ import java.awt.*;
 /**
  * Creates popupmenu for player during the reinforce stage of
  * their turn.
+ * @author nikolaspaterson
  */
 public class ReinforcePopUp extends JPopupMenu {
 
