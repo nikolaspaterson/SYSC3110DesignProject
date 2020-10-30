@@ -2,6 +2,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+/**
+ * Object constructior for StatusBar Jpanel which stays at the bottom of the screen and displays
+ */
 public class StatusBar extends JPanel {
 
     private final JLabel currentPlayerIcon;
@@ -44,6 +47,12 @@ public class StatusBar extends JPanel {
         add(nextStep);
 
     }
+
+    /**
+     * Set current player in the object Status bar may reference variables from the player such as deployLabel which
+     * updates when the deployable troops value goes down
+     * @param player Player Object
+     */
     public void setPlayer(Player player){
         this.player = player;
         deployLabel = player.getDeployLabel();
@@ -53,10 +62,20 @@ public class StatusBar extends JPanel {
         setBackground(player.getBackground());
         displayReinforce();
     }
+
+    /**
+     * Set the action for nextStep button from nextButtonController
+     * @param control Game controller which contains action listener nextState
+     */
     public void setController(GameController control){
         nextButtonController = control;
         nextStep.addActionListener(nextButtonController::nextState);
     }
+
+    /**
+     * Displays to the user that it is currently the attacking phase, and removes the deployLabel and repaints the canvas
+     * The method is called by updateDisplay for when the player interacts with nextStep
+     */
     public void displayAttack(){
         descriptionPanel.remove(deployLabel);
         this.revalidate();
@@ -66,6 +85,10 @@ public class StatusBar extends JPanel {
 
     }
 
+    /**
+     * Displays to the user that it is currently the Reinforce phase, and adds the deployLabel and repaints the canvas
+     * The method is called by updateDisplay for when the player interacts with nextStep
+     */
     public void displayReinforce(){
         descriptionPanel.add(deployLabel);
         this.revalidate();
@@ -75,11 +98,21 @@ public class StatusBar extends JPanel {
         currentAction.setText("<html>Troops to deploy!");
 
     }
+
+    /**
+     * Displays to the user that it is currently the Fortify Phase
+     * The method is called by updateDisplay for when the player interacts with nextStep
+     */
     public void displayFortify(){
         currentAction.setText("<html>Fortify!<br>Move troops from<br>Your territories</html>");
         nextStep.setBackground(new Color(0xF16262));
         nextStep.setText("End Turn");
     }
+
+    /**
+     * Called in GameView and occurs everytime the player clicks nextStep Button.
+     * @param state State of the game can either be Reinforce,Attack, or Fortify.
+     */
     public void updateDisplay(String state){
         if(state == "Reinforce"){
 

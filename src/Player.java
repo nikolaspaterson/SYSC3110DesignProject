@@ -13,12 +13,14 @@ public class Player extends JPanel {
     private final String name;
     private final HashMap<String, Territory> territoriesOccupied;
     private final Color player_color;
+
     private int total_troops;
 
     private JLabel player_icon;
     private JLabel player_name_label;
     private JLabel total_troops_label;
     private JLabel player_deploy;
+    private Boolean in_game;
 
     /**
      * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
@@ -42,6 +44,8 @@ public class Player extends JPanel {
         this.player_name_label.setText(name);
         this.player_name_label.setFont(new Font("Impact",Font.PLAIN,15));
         this.total_troops_label.setText("Troop#: " + total_troops);
+
+        in_game = true;
 
         this.add(this.player_icon);
         this.add(this.player_name_label);
@@ -159,6 +163,27 @@ public class Player extends JPanel {
         territoriesOccupied.remove(territory);
     }
 
+    public boolean getIn_game(){ return in_game;}
+
+    public void xOutPlayer(){
+        setBackground(new Color(0x404040));
+        removeAll();
+        ImageIcon scaledImg = new ImageIcon(getClass().getResource("/resources/giphy.gif"));
+        Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
+        scaledImg = new ImageIcon(img);
+        JLabel x_mark = new JLabel();
+        x_mark.setIcon(scaledImg);
+        add(x_mark);
+        revalidate();
+        repaint();
+
+
+
+    }
+
+    public int getTotal_troops() {
+        return total_troops;
+    }
     /**
      * Combines the Player's Name, all their Territory's owned and how many troops are in each Territory.
      * @return String combination of information above.

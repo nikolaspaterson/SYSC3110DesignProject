@@ -24,6 +24,8 @@ public class GameView extends JFrame {
     private int gameStateIndex;
     private String currentState;
 
+    private int outOfGame;
+
     private ArrayList<Territory> commandTerritory;
 
     public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
@@ -36,7 +38,7 @@ public class GameView extends JFrame {
         user_status = new StatusBar();
         game_controller = new GameController(this);
         user_status.setController(game_controller);
-
+        outOfGame = 0;
         gameState = new ArrayList<>();
         gameState.add("Reinforce");
         gameState.add("Attack");
@@ -112,6 +114,15 @@ public class GameView extends JFrame {
     public void nextPlayer(){
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentPlayer = playerList.get(currentPlayerIndex);
+        if(currentPlayer.getTotal_troops() == 0){
+            currentPlayer.xOutPlayer();
+            outOfGame++;
+            nextPlayer();
+        }else if(outOfGame == playerList.size()-1){
+            System.out.println("Winner!");
+        }else{
+            outOfGame = 0;
+        }
         playerBonus();
     }
 
