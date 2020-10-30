@@ -39,7 +39,7 @@ public class ReinforcePopUp extends JPopupMenu {
         territoryName.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 
         photo = new JLabel();
-        photo.setIcon(scaleImage("resources/Captain.png"));
+        photo.setIcon(getPlayer().getplayer_icon());
         photo.setHorizontalAlignment(photo.CENTER);
         photo.setVerticalAlignment(photo.CENTER);
 
@@ -123,10 +123,4 @@ public class ReinforcePopUp extends JPopupMenu {
         return selectedTerritory.getOccupant();
     }
 
-    private ImageIcon scaleImage(String filename) {
-        ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
-        Image img = scaledImg.getImage().getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH );
-        scaledImg = new ImageIcon(img);
-        return scaledImg;
-    }
 }

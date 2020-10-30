@@ -66,6 +66,7 @@ public class FortifyPopUp extends JPopupMenu {
 
         fortifyButton = new JButton("DEPLOY");
         fortifyButton.setFont(new Font("Impact", Font.PLAIN,35));
+        fortifyButton.setBackground(new Color(178, 236, 83));
 
         troops = new JLabel("0");
         troops.setFont(new Font("Impact", Font.PLAIN,20));
