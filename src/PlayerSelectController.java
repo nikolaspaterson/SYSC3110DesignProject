@@ -21,7 +21,7 @@ public class PlayerSelectController implements ActionListener {
     }
 
     /**
-     * Checks to see which button is responsible for the ActionEvent performs the respected action
+     * Checks to see which button is responsible for the ActionEvent and performs the respected action based on which button was pressed.
      * @param e the ActionEvent
      */
     @Override

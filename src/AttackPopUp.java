@@ -2,6 +2,12 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+/**
+ * The AttackPopUp class is used for when a player has selected which territory they want to attack.
+ * It asks the user how many dice they want to roll with based on the number of troops in their territory.
+ *
+ * @author Ahmad El-Sammak
+ */
 public class AttackPopUp extends JPopupMenu {
 
     private Territory attackingTerritory;
@@ -9,7 +15,6 @@ public class AttackPopUp extends JPopupMenu {
     private JButton minus;
     private JLabel numDice;
     private JButton plus;
-    private JButton attackBOTTOM;
     private JLabel attackerLabel;
     private JLabel defenderLabel;
     private JLabel outcome;
@@ -17,6 +22,12 @@ public class AttackPopUp extends JPopupMenu {
     private JLabel defendingLabel;
     private JFrame gameViewRef;
 
+    /**
+     * Class constructor for AttackPopUp class.
+     * @param attackingTerritory the attacker's territory object.
+     * @param defendingTerritory the defender's territory object.
+     * @param gameViewRef a reference to the main game's frame.
+     */
     public AttackPopUp(Territory attackingTerritory, Territory defendingTerritory, JFrame gameViewRef) {
         super();
         setLayout(new GridLayout(0, 1));
@@ -28,7 +39,6 @@ public class AttackPopUp extends JPopupMenu {
         this.defendingTerritory = defendingTerritory;
 
         JPanel jPanel = new JPanel(new FlowLayout());
-
         JPanel jp = new JPanel();
 
         JPanel middlePanel = new JPanel();
@@ -55,7 +65,7 @@ public class AttackPopUp extends JPopupMenu {
         plus.setFont(new Font("Impact", Font.BOLD, 25));
         selectTroops.add(plus, BorderLayout.EAST);
 
-        attackBOTTOM = new JButton("ATTACK");
+        JButton attackBOTTOM = new JButton("ATTACK");
         attackBOTTOM.setFont(new Font("Impact", Font.PLAIN, 40));
         attackBOTTOM.setBackground(new Color(217, 61, 62));
 
@@ -94,7 +104,6 @@ public class AttackPopUp extends JPopupMenu {
         result.add(outcome);
 
         JPanel leftPanel = playerPanel(attackingTerritory.getOccupant().getplayer_icon(), "left");
-
         JPanel rightPanel = playerPanel(defendingTerritory.getOccupant().getplayer_icon(), "right");
 
         AttackPopUpController attackPopUpController = new AttackPopUpController(this);
@@ -112,9 +121,14 @@ public class AttackPopUp extends JPopupMenu {
         setVisible(true);
     }
 
+    /**
+     * This method is used to create the player panels for either the attacking player or defending player.
+     * @param image the player's image
+     * @param side the side, i.e. "left" is for the attacker, "right" is for defender.
+     * @return JPanel the new playerPanel.
+     */
     private JPanel playerPanel(Icon image, String side) {
         JPanel panel = new JPanel(new BorderLayout(5, 0));
-
         JLabel photo = new JLabel();
         photo.setIcon(image);
 
@@ -131,36 +145,61 @@ public class AttackPopUp extends JPopupMenu {
             panel.add(photo, BorderLayout.EAST);
             panel.add(defendingLabel, BorderLayout.WEST);
         }
-
         return panel;
     }
 
+    /**
+     * Gets the reference to the main game's JFrame.
+     * @return JFrame
+     */
     public JFrame getGameViewRef() { return gameViewRef; }
 
-    public JButton getAttackBOTTOM() {
-        return attackBOTTOM;
-    }
-
+    /**
+     * Gets the minus button.
+     * @return JButton
+     */
     public JButton getMinus() {
         return minus;
     }
 
+    /**
+     * Gets the JLabel which specified the number of dice to roll with.
+     * @return JLabel
+     */
     public JLabel getNumDice() {
         return numDice;
     }
 
+    /**
+     * Gets the plus button.
+     * @return JButton
+     */
     public JButton getPlus() {
         return plus;
     }
 
+    /**
+     * Gets the attacking territory.
+     * @return Territory attacking territory
+     */
     public Territory getAttackingTerritory() {
         return attackingTerritory;
     }
 
+    /**
+     * Gets the defending territory.
+     * @return Territory defending territory
+     */
     public Territory getDefendingTerritory() {
         return defendingTerritory;
     }
 
+    /**
+     * This method is used to refresh the JLabels after the outcome of an attack.
+     * @param attackerRolls the attacker's dice rolls
+     * @param defenderRolls the defender's dice rolls
+     * @param outcome the outcome of the attack.
+     */
     public void refreshLabels(String attackerRolls, String defenderRolls, String outcome) {
         attackerLabel.setText(attackingTerritory.getOccupant().getName() + " ROLLED: " + attackerRolls);
         defenderLabel.setText(defendingTerritory.getOccupant().getName() + " ROLLED: " + defenderRolls);
@@ -172,5 +211,4 @@ public class AttackPopUp extends JPopupMenu {
             numDice.setText("0");
         }
     }
-
 }

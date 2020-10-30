@@ -5,7 +5,9 @@ import java.util.HashMap;
 
 /**
  * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
+ *
  * @author Ahmad El-Sammak
+ * @author Erik Iuhas
  */
 public class Player extends JPanel {
 
@@ -19,7 +21,6 @@ public class Player extends JPanel {
     private JLabel player_name_label;
     private JLabel total_troops_label;
     private JLabel player_deploy;
-    private Boolean in_game;
 
     /**
      * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
@@ -44,17 +45,18 @@ public class Player extends JPanel {
         this.player_name_label.setFont(new Font("Impact",Font.PLAIN,15));
         this.total_troops_label.setText("Troop#: " + total_troops);
 
-        in_game = true;
-
         this.add(this.player_icon);
         this.add(this.player_name_label);
         this.add(this.total_troops_label);
         this.setBorder(darkline);
 
-
-
         territoriesOccupied = new HashMap<>();
     }
+
+    /**
+     * Gets the player's icon.
+     * @return Icon
+     */
     public Icon getplayer_icon(){
         return player_icon.getIcon();
     }
@@ -73,8 +75,16 @@ public class Player extends JPanel {
      */
     public HashMap<String, Territory> getTerritoriesOccupied() { return territoriesOccupied; }
 
+    /**
+     * Gets the player's color.
+     * @return Color
+     */
     public Color getPlayer_color(){ return player_color;}
 
+    /**
+     * Gets the deploy label.
+     * @return JLabel
+     */
     public JLabel getDeployLabel(){
         return player_deploy;
     }
@@ -90,6 +100,10 @@ public class Player extends JPanel {
         addTotal(deployableTroops);
     }
 
+    /**
+     * This method is used to add to the total troops that the player throughout all territories.
+     * @param troops the number of troops to add.
+     */
     public void addTotal(int troops) {
         total_troops += troops;
         total_troops_label.setText("Troop#: " + total_troops);
@@ -165,12 +179,11 @@ public class Player extends JPanel {
         if(territoriesOccupied.values().size() == 0){
             xOutPlayer();
         }
-
-
     }
 
-    public boolean getIn_game(){ return in_game;}
-
+    /**
+     * This method is used to add an "X" ontop of players who were eliminated out of the game.
+     */
     public void xOutPlayer(){
         setBackground(new Color(0x404040));
         removeAll();
@@ -182,14 +195,16 @@ public class Player extends JPanel {
         add(x_mark);
         revalidate();
         repaint();
-
-
-
     }
 
+    /**
+     * Gets the total number of troops a player has across all of their territories.
+     * @return int total troops
+     */
     public int getTotal_troops() {
         return total_troops;
     }
+
     /**
      * Combines the Player's Name, all their Territory's owned and how many troops are in each Territory.
      * @return String combination of information above.
@@ -209,7 +224,6 @@ public class Player extends JPanel {
                 }else{
                     enemy += owners.getTerritoryName() + " : " + owners.getTroops() + ", ";
                 }
-
             }
             ally = ally.substring(0,ally.length() -2) + "\n";
             enemy = enemy.substring(0,enemy.length() -2) + "\n";
