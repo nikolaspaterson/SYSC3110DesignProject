@@ -9,11 +9,10 @@ import java.util.HashMap;
  */
 public class Player extends JPanel {
 
-    private int deployableTroops;
     private final String name;
     private final HashMap<String, Territory> territoriesOccupied;
     private final Color player_color;
-
+    private int deployableTroops;
     private int total_troops;
 
     private JLabel player_icon;
@@ -75,19 +74,11 @@ public class Player extends JPanel {
     public HashMap<String, Territory> getTerritoriesOccupied() { return territoriesOccupied; }
 
     public Color getPlayer_color(){ return player_color;}
-    /**
-     * Sets the amount of deployable troops the player can use during their reinforcement.
-     * @param deployableTroops number of deployable troops.
-     */
-    public void setDeployableTroops(int deployableTroops) {
-        this.deployableTroops = deployableTroops;
-        player_deploy.setText(String.valueOf(this.deployableTroops));
-        addTotal(deployableTroops);
-    }
 
     public JLabel getDeployLabel(){
         return player_deploy;
     }
+
     /**
      * Adds the deployableTroops on top of the existing deployableTroops.
      * This accounts for bonus troops awarded to the player at the beginning of a round.
@@ -110,6 +101,16 @@ public class Player extends JPanel {
      */
     public int getDeployableTroops() {
         return deployableTroops;
+    }
+
+    /**
+     * Sets the amount of deployable troops the player can use during their reinforcement.
+     * @param deployableTroops number of deployable troops.
+     */
+    public void setDeployableTroops(int deployableTroops) {
+        this.deployableTroops = deployableTroops;
+        player_deploy.setText(String.valueOf(this.deployableTroops));
+        addTotal(deployableTroops);
     }
 
     /**
@@ -161,6 +162,11 @@ public class Player extends JPanel {
      */
     public void removeTerritory(String territory) {
         territoriesOccupied.remove(territory);
+        if(territoriesOccupied.values().size() == 0){
+            xOutPlayer();
+        }
+
+
     }
 
     public boolean getIn_game(){ return in_game;}

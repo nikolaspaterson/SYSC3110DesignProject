@@ -124,7 +124,6 @@ public class GameView extends JFrame {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentPlayer = playerList.get(currentPlayerIndex);
         if(currentPlayer.getTotal_troops() - currentPlayer.getDeployableTroops()== 0){
-            currentPlayer.xOutPlayer();
             outOfGame++;
             nextPlayer();
         }else if(outOfGame == playerList.size()-1){
@@ -154,6 +153,7 @@ public class GameView extends JFrame {
     }
 
     public void nextState(){
+        clearCommandTerritory();
         if(gameStateIndex + 1 == 3){
             nextPlayer();
             user_status.setPlayer(currentPlayer);
@@ -179,6 +179,7 @@ public class GameView extends JFrame {
 
     public void clearCommandTerritory(){
         for(Territory x : commandTerritory){
+            x.cancel_timer();
             x.setBackground(x.getDefault_color());
         }
         commandTerritory.clear();
