@@ -1,12 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Main menu for our game.
+ * @author nikolaspaterson
+ */
 public class StartUpView extends JFrame {
 
     //window size constants
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 814;
 
+    /**
+     * Creates a JFrame for our main menu.
+     */
     public StartUpView() {
         super("Welcome");//Sets title of window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //close and stop the program when x is clicked
@@ -56,5 +63,13 @@ public class StartUpView extends JFrame {
         //Add controller to buttonListeners
         howToPlayButton.addActionListener(controller);
         playButton.addActionListener(controller);
+    }
+
+    /**
+     * main method that starts the game
+     * @param args default
+     */
+    public static void main(String[] args) {
+        new StartUpView();
     }
 }
