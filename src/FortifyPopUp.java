@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class FortifyPopUp extends JPopupMenu {
 
-    private Territory t1;
-    private Territory t2;
+    private final Territory t1;
+    private final Territory t2;
     private JLabel t1Name;
     private JLabel t1Troops;
     private JLabel title;
@@ -20,10 +20,20 @@ public class FortifyPopUp extends JPopupMenu {
         this.t1=territory1;
         this.t2=territory2;
 
-        FortifyPopUpController controller = new FortifyPopUpController(this);
+        initializeComponents();
 
-        JPanel fortifyPanel = new JPanel();
         setLayout(new GridLayout(0,3));
+
+        add(createLeftPanel());
+        add(createMiddlePanel());
+        add(createRightPanel());
+
+        setVisible(true);
+    }
+
+    private void initializeComponents(){
+
+        FortifyPopUpController controller = new FortifyPopUpController(this);
 
         title = new JLabel("FORTIFY");
         title.setHorizontalAlignment(title.CENTER);
@@ -56,8 +66,9 @@ public class FortifyPopUp extends JPopupMenu {
 
         fortifyButton = new JButton("DEPLOY");
         fortifyButton.setFont(new Font("Impact", Font.PLAIN,35));
+        fortifyButton.setBackground(new Color(178, 236, 83));
 
-        troops = new JLabel("1");
+        troops = new JLabel("0");
         troops.setFont(new Font("Impact", Font.PLAIN,20));
         troops.setHorizontalAlignment(troops.CENTER);
         troops.setVerticalAlignment(troops.CENTER);
@@ -66,18 +77,27 @@ public class FortifyPopUp extends JPopupMenu {
         plusButton.addActionListener(controller);
         fortifyButton.addActionListener(controller);
 
+    }
+
+    private JPanel createLeftPanel(){
         JPanel leftPanel = new JPanel();
         GridLayout leftGrid = new GridLayout(2,1);
         leftPanel.setLayout(leftGrid);
         leftPanel.add(t1Name);
         leftPanel.add(t1Troops);
+        return leftPanel;
+    }
 
+    private JPanel createRightPanel(){
         JPanel rightPanel = new JPanel();
         GridLayout rightGrid = new GridLayout(2,1);
         rightPanel.setLayout(rightGrid);
         rightPanel.add(t2Name);
         rightPanel.add(t2Troops);
+        return rightPanel;
+    }
 
+    private JPanel createMiddlePanel(){
         JPanel middlePanel = new JPanel();
         GridLayout middleGrid = new GridLayout(3,1);
         middlePanel.setLayout(middleGrid);
@@ -92,13 +112,7 @@ public class FortifyPopUp extends JPopupMenu {
 
         middlePanel.add(middleButtonPanel);
         middlePanel.add(fortifyButton);
-
-        add(leftPanel);
-        add(middlePanel);
-        add(rightPanel);
-
-        setVisible(true);
-
+        return middlePanel;
     }
 
     public JButton getPlusButton() {

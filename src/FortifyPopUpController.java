@@ -3,8 +3,8 @@ import java.awt.event.ActionListener;
 
 public class FortifyPopUpController implements ActionListener {
 
-    private FortifyPopUp popup;
-    private GameEvent ge;
+    private final FortifyPopUp popup;
+    private final GameEvent ge;
 
     public FortifyPopUpController(FortifyPopUp fortifyPopUp){
         this.popup = fortifyPopUp;
@@ -13,7 +13,7 @@ public class FortifyPopUpController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int x = Integer.valueOf(popup.getTroops().getText());
+        int x = Integer.parseInt(popup.getTroops().getText());
 
         if(e.getSource().equals(popup.getPlusButton())){
             if(x < popup.getTerritoryToLoseTroops().getTroops() - 1){
@@ -21,7 +21,7 @@ public class FortifyPopUpController implements ActionListener {
             }
             popup.setTroops(x);
         }else if(e.getSource().equals(popup.getMinusButton())){
-            if(x > 0){
+            if(x > 1){
                 x--;
             }
             popup.setTroops(x);
