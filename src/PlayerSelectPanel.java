@@ -5,12 +5,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * The PlayerSelectPanel class is used to store the information of each player in a JPanel.
+ * A player has a Name, Icon and deciding if is an AI or Player.
+ *
+ * @author Ahmad El-Sammak
+ */
 public class PlayerSelectPanel extends JPanel {
 
     private ArrayList<String> file;
     private JTextField playerName;
     private JButton photo;
 
+    /**
+     * Class constructor for PlayerSelectPanel class.
+     */
     public PlayerSelectPanel() {
         super();
         setLayout(new FlowLayout(FlowLayout.CENTER, 15, 30));
@@ -68,12 +77,28 @@ public class PlayerSelectPanel extends JPanel {
         setSize(600, 600);
         setVisible(true);
     }
+
+    /**
+     * Gets the name of the player.
+     * @return String the player name.
+     */
     public String getPlayerName(){
         return playerName.getText();
     }
+
+    /**
+     * Gets the Icon for the player.
+     * @return Icon the player Icon
+     */
     public Icon getImageIcon(){
         return photo.getIcon();
     }
+
+    /**
+     * Scales the Image to properly fit the JPanel.
+     * @param filename the filepath
+     * @return ImageIcon the scaled Icon
+     */
     private ImageIcon scaleImage(String filename) {
         ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
         Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );

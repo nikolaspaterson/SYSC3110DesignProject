@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 /**
  * The Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
+ *
  * @author Ahmad El-Sammak
  * @author Erik Iuhas
  */
@@ -17,7 +18,6 @@ public class Territory extends JButton {
     private int troops;
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
-    private final Component parent_canvas;
 
     private JPanel popup_info;
     private JLabel troop_count_label;
@@ -25,16 +25,15 @@ public class Territory extends JButton {
     private JLabel occupant_name_label;
 
     private Color default_color;
-    private Color flashing;
     private Timer blinking_yours;
     private Timer blinking_theirs;
+
     /**
      * Class constructor for the Territory class. Sets the player who occupies the territory
      * @param territoryName the name of the territory.
      */
     public Territory(String territoryName,int x, int y, int width, int height,Component parent) {
         this.territoryName = territoryName;
-        this.parent_canvas = parent;
         this.setBounds(x,y,width,height);
         troops = 0;
         neighbours = new HashMap<>();
@@ -67,6 +66,11 @@ public class Territory extends JButton {
             }
         });
     }
+
+    /**
+     * Gets the Occupant's color.
+     * @return
+     */
     public Color getDefault_color(){ return default_color;}
 
     /**
@@ -93,7 +97,11 @@ public class Territory extends JButton {
         return troops;
     }
 
-    public void addTroops(int value) {
+    /**
+     * This method is used to remove troops and update the JLabel on the Territory object as a result of an attack.
+     * @param value the value to remove
+     */
+    public void removeTroops(int value) {
         troops += (value);
         occupant.addTotal(value);
         troop_count_label.setText("Troops: " + String.valueOf(troops));
@@ -155,6 +163,9 @@ public class Territory extends JButton {
         System.out.println("================================================");
     }
 
+    /**
+     * This method is used to stop the timer and stop the flashing of the valid territories that the player can attack.
+     */
     public void cancel_timer(){
         blinking_yours.cancel();
         blinking_theirs.cancel();
@@ -164,11 +175,14 @@ public class Territory extends JButton {
             temp.setBackground(temp.getDefault_color());
         }
     }
+
+    /**
+     * This method creates a timer object which is used to flash the valid territory that the player can attack.
+     */
     public void activateTimer(){
         blinking_yours.scheduleAtFixedRate(new FlashTimerTask(getDefault_color(),getNeighbours(),1),0,1000);
         blinking_theirs.scheduleAtFixedRate(new FlashTimerTask(getDefault_color(),getNeighbours(),0),500,1000);
     }
-
 
     /**
      * Creates a String that displays the territory name as well as its neighbouring territories
@@ -184,6 +198,4 @@ public class Territory extends JButton {
         output += "==================";
         return output;
     }
-
-
 }

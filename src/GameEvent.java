@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 /**
  * The GameEvent class is responsible for handling the events that are generated once a Player reinforces, attacks or fortifies.
  * @author Ahmad El-Sammak
@@ -62,24 +60,24 @@ public class GameEvent {
                 switch(outcome){
                     case 2:
                         result = "Defender loses two troops!";
-                        defending.addTroops((-2));
+                        defending.removeTroops((-2));
                         break;
                     case 1:
                         result = "Attacker loses two troops!";
-                        attacking.addTroops((-2));
+                        attacking.removeTroops((-2));
                         break;
                     case 0:
                         result = "Attacker & Defender lose ONE troop!";
-                        attacking.addTroops((-1));
-                        defending.addTroops((-1));
+                        attacking.removeTroops((-1));
+                        defending.removeTroops((-1));
                         break;
                     case -1:
                         result = "Defender loses one troop!";
-                        defending.addTroops((-1));
+                        defending.removeTroops((-1));
                         break;
                     case -2:
                         result = "Attacker loses one troop!";
-                        attacking.addTroops((-1));
+                        attacking.removeTroops((-1));
                         break;
                 }
 
@@ -111,56 +109,29 @@ public class GameEvent {
         }
     }
 
+    /**
+     * Gets the result of an attack.
+     * @return String
+     */
     public String getResult() { return result; }
 
+    /**
+     * Gets the rolls of the attacker.
+     * @return String
+     */
     public String getAttackerRolls() { return attackingRolls; }
 
+    /**
+     * Gets the rolls of the defender.
+     * @return String
+     */
     public String getDefendingRolls() { return defendingRolls; }
 
-    public boolean getAttackerWon() { return attackerWon; }
-
     /**
-     * This method is used with combination of the attack() method above to decide if the attacker defeated the defending territory.
-     * IF the attacker won, he/she will be asked how many troops (1 to (attacking.getTroops - 1)) they want to move to their winning territory.
-     * @param attacking the attacking territory.
-     * @param defending the defending territory.
+     * Gets if the attacker defeated the defending territory or not.
+     * @return boolean true if the attacker won, else false.
      */
-    public void winningMove(Territory attacking, Territory defending){
-        // if attacker defeated defending territory then defender has no more troops.
-        if(defending.getTroops() == 0) {
-
-            // get user input for their desired amount of troops to move to the winning territory.
-            System.out.println("How many troops do you want to move to the new territory?");
-
-            if(attacking.getTroops() == 2) {
-                System.out.println("You can only move 1 troop!");
-            } else {
-                System.out.println("You have a choice of moving 1 to " + (attacking.getTroops() - 1));
-            }
-
-            Scanner sc = new Scanner(System.in);
-            int i = sc.nextInt();
-
-            if (i <= 0){
-                i = 1;
-                System.out.println("You must at least move one troop to the new territory!");
-                System.out.println( i +" troop has been moved because of your lack of knowledge...");
-            } else if(i > attacking.getTroops() - 1){
-                i = attacking.getTroops() - 1;
-                System.out.println("You cannot move more than " + (attacking.getTroops() - 1));
-                System.out.println( i +" troops have been moved because of your lack of knowledge...");
-            }
-            if (i > 0 && i < attacking.getTroops()) {
-                (attacking.getOccupant()).addTerritory(defending.getTerritoryName(), defending);
-                (defending.getOccupant()).removeTerritory(defending.getTerritoryName());
-                defending.setOccupant(attacking.getOccupant());
-                defending.setTroops(i);
-                attacking.setTroops(attacking.getTroops() - i);
-            }
-        } else  {
-            System.out.println("The defending territory still has " + defending.getTroops());
-        }
-    }
+    public boolean getAttackerWon() { return attackerWon; }
 
     /**
      * This method is used by the player to fortify by moving troops from one territory to another.

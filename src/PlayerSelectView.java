@@ -4,6 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * PlayerSelectView which is the actual frame that is displayed to the user when selecting the number of players he/she wants to play with.
+ *
+ * @author Ahmad El-Sammak
+ */
 public class PlayerSelectView extends JFrame {
 
     private JButton leftArrow, rightArrow;
@@ -13,6 +18,9 @@ public class PlayerSelectView extends JFrame {
     private JButton startButton;
     private ArrayList<PlayerSelectPanel> playerArrayList;
 
+    /**
+     * Class constructor for PlayerSelectView class.
+     */
     public PlayerSelectView() {
         // Main Frame
         super("Player Setup!");
@@ -58,7 +66,6 @@ public class PlayerSelectView extends JFrame {
         startButton = new JButton("PLAY GAME");
         startButton.setFont(new Font("Impact", Font.PLAIN, 40));
         startButton.setBackground(new Color(77, 220, 70));
-
 
         p3.add(startButton, BorderLayout.CENTER);
 
@@ -106,29 +113,60 @@ public class PlayerSelectView extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * This method is used to scale the image to properly fit.
+     * @param filename the filepath of the image
+     * @return ImageIcon the scaled image
+     */
     private ImageIcon scaleImage(String filename) {
         ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
         Image img = scaledImg.getImage().getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH );
         scaledImg = new ImageIcon(img);
         return scaledImg;
     }
+
+    /**
+     * Gets the list of all 6 player panels.
+     * @return ArrayList<PlayerSelectPanel>
+     */
     public ArrayList<PlayerSelectPanel> getPlayerArrayList() {
         return playerArrayList;
     }
 
+    /**
+     * Gets the start button.
+     * @return JButton
+     */
     public JButton getStartButton(){ return startButton; }
 
+    /**
+     * Gets the left arrow button.
+     * @return JButton
+     */
     public JButton getLeftArrow() { return leftArrow; }
 
+    /**
+     * Gets the right arrow button.
+     * @return JButton
+     */
     public JButton getRightArrow() { return rightArrow; }
 
+    /**
+     * Gets the JLabel that displays the number of players.
+     * @return JLabel
+     */
     public JLabel getNumPlayers () { return numPlayers; }
 
+    /**
+     * Gets the JPanel with all the current players on it.
+     * @return JPanel
+     */
     public JPanel getPlayerList () { return playerList; }
 
+    /**
+     * Gets the list of player panels which we will use to remove from.
+     * @return ArrayList<PlayerSelectPanel>
+     */
     public ArrayList<PlayerSelectPanel> getPlayers() { return players; }
 
-    public static void main(String[] args) {
-        PlayerSelectView s = new PlayerSelectView();
-    }
 }
