@@ -9,6 +9,7 @@ import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
@@ -116,7 +117,7 @@ public class GameView extends JFrame {
         background.add(players_overlay);
         setResizable(false);
         this.setVisible(true);
-        playMusic("C:\\Users\\adisa\\Desktop\\beat.wav");
+        playMusic("/resources/beat.wav");
     }
 
     public void nextPlayer(){
@@ -195,11 +196,12 @@ public class GameView extends JFrame {
         user_status.updateDisplay(currentState);
     }
 
-    public static void playMusic(String filepath) {
+    public void playMusic(String filepath) {
         {
             try
             {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filepath).getAbsoluteFile( ));
+                URL url = getClass().getResource(filepath);
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
                 Clip clip = AudioSystem.getClip( );
                 clip.open(audioInputStream);
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
