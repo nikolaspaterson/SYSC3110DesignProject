@@ -1,12 +1,18 @@
 import javax.imageio.ImageIO;
+import javax.print.attribute.standard.Media;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
+
 
 public class GameView extends JFrame {
     private final ArrayList<Player> playerList;
@@ -104,11 +110,13 @@ public class GameView extends JFrame {
             background.add(x);
             x.addActionListener(game_controller::territoryAction);
         }
+
         worldMap = gameSetup.returnWorldMap();
         add(user_status);
         background.add(players_overlay);
         setResizable(false);
         this.setVisible(true);
+        playMusic("C:\\Users\\adisa\\Desktop\\beat.wav");
     }
 
     public void nextPlayer(){
@@ -185,5 +193,23 @@ public class GameView extends JFrame {
 
     public void updateStatusBar(){
         user_status.updateDisplay(currentState);
+    }
+
+    public static void playMusic(String filepath) {
+        {
+            try
+            {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filepath).getAbsoluteFile( ));
+                Clip clip = AudioSystem.getClip( );
+                clip.open(audioInputStream);
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Error with playing sound.");
+                ex.printStackTrace( );
+            }
+        }
+
     }
 }
