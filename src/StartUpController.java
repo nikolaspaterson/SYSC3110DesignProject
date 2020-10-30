@@ -24,10 +24,16 @@ public class StartUpController implements ActionListener {
             popUpFrame.add(howtoPanel, BorderLayout.CENTER);
 
             //add labels to panel
-            JLabel temp = new JLabel("TEST");
-            JLabel temp2 = new JLabel("Turn steps");
+            JLabel temp = new JLabel("<html>" +
+                    "<div style='text-align: center;'><h3>Are you ready to conquer the world?</h3></div>" +
+                    "<div style='text-align: left;'><p>RISK can be played with 2 to 6 players</p>" +
+                    "<p>Each players turn is composed of 3 steps,</p>" +
+                    "<ul><li>Reinforce - Click on a territory you own and draft more troops to join your army. You can reinforce several different territories per turn.</li>" +
+                    "<li>Attack - Click on a territory you own then click on a neighbouring enemy territory. You can only attack if you have at least 2 troops." +
+                    " You can attack several times per turn.</li>" +
+                    "<li>Fortify - Click on a territory you own and click on another territory you own to relocate troops from the first territory to the second.This can only be done ONCE per turn!</li></ul>" +
+                    "</div></html>");
             howtoPanel.add(temp);
-            howtoPanel.add(temp2);
 
             popUpFrame.setTitle("Tutorial");
             popUpFrame.pack();

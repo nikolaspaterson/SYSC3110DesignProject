@@ -1,9 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Creates popupmenu for player during the reinforce stage of
+ * their turn.
+ */
 public class ReinforcePopUp extends JPopupMenu {
 
-    private Territory selectedTerritory;
+    private final Territory selectedTerritory;
     private JButton minusButton;
     private JButton plusButton;
     private JButton deployButton;
@@ -12,22 +16,35 @@ public class ReinforcePopUp extends JPopupMenu {
     private JLabel photo;
     private JLabel troops;
 
+    /**
+     * popup constructor.
+     * @param t - Territory
+     */
     public ReinforcePopUp(Territory t){
         super();
         this.selectedTerritory = t;
+        //Helper function to initialize all panel components
         initializeComponents();
 
+        //sets layout of the panel to a gridlayout
         setLayout(new GridLayout(1,3));
 
-        createLeftPanel();
-
+        //adds panels after calling their respective constructors
+        add(createLeftPanel());
         add(createMiddlePanel());
         add(createRightPanel());
+
+        //makes panel visible
         setVisible(true);
     }
 
+    /**
+     * Initializes all components in the panel.
+     */
     private void initializeComponents(){
+        //Create controller for button actions
         ReinforcePopUpController controller = new ReinforcePopUpController(this);
+
         title = new JLabel("REINFORCE");
         title.setHorizontalAlignment(title.CENTER);
         title.setFont(new Font("Comic Sans MS", Font.ITALIC,35));
@@ -61,12 +78,19 @@ public class ReinforcePopUp extends JPopupMenu {
         troops.setVerticalAlignment(troops.CENTER);
     }
 
-    private void createLeftPanel(){
-        add(photo);
+    /**
+     * Creates the leftmost label of the reinforce popup.
+     * @return JLabel
+     */
+    private JLabel createLeftPanel(){
+        return photo;
     }
 
+    /**
+     * Creates the middle panel of the reinforce popup.
+     * @return JPanel
+     */
     private JPanel createMiddlePanel(){
-
         JPanel middlePanel = new JPanel();
 
         GridLayout middleLayout = new GridLayout(3,1);
@@ -74,6 +98,7 @@ public class ReinforcePopUp extends JPopupMenu {
         middlePanel.add(title);
         middlePanel.add(territoryName);
 
+        //Separate panel for buttons and troop number
         JPanel troopPanel = new JPanel();
         GridLayout buttonGrid = new GridLayout(0,3);
         troopPanel.setLayout(buttonGrid);
@@ -85,6 +110,10 @@ public class ReinforcePopUp extends JPopupMenu {
         return middlePanel;
     }
 
+    /**
+     * Creates the rightmost panel of the reinforce popup.
+     * @return JPanel
+     */
     private JPanel createRightPanel(){
         JPanel rightPanel = new JPanel();
         GridLayout rightGrid = new GridLayout(3,1);
@@ -95,32 +124,59 @@ public class ReinforcePopUp extends JPopupMenu {
         return rightPanel;
     }
 
+    /**
+     * Returns the number of troops the player want to deploy.
+     * @return JLabel
+     */
     public JLabel getTroops(){
         return troops;
     }
 
+    /**
+     * Updates the number of troops that the player wants to move.
+     * @param x int - number of troops we want to set it to.
+     */
     public void setTroops(int x){
         troops.setText(String.valueOf(x));
     }
 
+    /**
+     * Returns the plusButton.
+     * @return JButton
+     */
     public JButton getPlus(){
         return plusButton;
     }
 
+    /**
+     * Return the minusButton.
+     * @return JButton
+     */
     public JButton getMinus(){
         return minusButton;
     }
 
+    /**
+     * Return the deployButton.
+     * @return JButton
+     */
     public JButton getDeployButton(){
         return deployButton;
     }
 
+    /**
+     * Returns the territory the player wants to reinforce.
+     * @return Territory
+     */
     public Territory getTerritory(){
         return selectedTerritory;
     }
 
+    /**
+     * Returns the player of the territory.
+     * @return Player
+     */
     public Player getPlayer(){
         return selectedTerritory.getOccupant();
     }
-
 }

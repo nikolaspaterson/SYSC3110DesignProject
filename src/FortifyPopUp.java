@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Creates popupmenu for player during the fortify stage of
+ * their turn.
+ */
 public class FortifyPopUp extends JPopupMenu {
 
     private final Territory t1;
@@ -15,24 +19,35 @@ public class FortifyPopUp extends JPopupMenu {
     private JLabel t2Name;
     private JLabel t2Troops;
 
+    /**
+     * Popup constructor.
+     * @param territory1 - Territory to lose troops
+     * @param territory2 - Territory to gain troops
+     */
     public FortifyPopUp(Territory territory1, Territory territory2){
         super();
         this.t1=territory1;
         this.t2=territory2;
-
+        //Helper function to initialize all panel components
         initializeComponents();
 
+        //sets panel layout to a gridlayout
         setLayout(new GridLayout(0,3));
 
+        //adds panels after calling their respective constructors
         add(createLeftPanel());
         add(createMiddlePanel());
         add(createRightPanel());
 
+        //makes the panel visible
         setVisible(true);
     }
 
+    /**
+     * Initializes all components in the panel.
+     */
     private void initializeComponents(){
-
+        //Create controller for button actions
         FortifyPopUpController controller = new FortifyPopUpController(this);
 
         title = new JLabel("FORTIFY");
@@ -51,12 +66,12 @@ public class FortifyPopUp extends JPopupMenu {
 
         t1Troops = new JLabel();
         t1Troops.setHorizontalAlignment(t1Troops.CENTER);
-        t1Troops.setText(("Troops: ") + String.valueOf(t1.getTroops()));
+        t1Troops.setText(("Troops: ") + t1.getTroops());
         t1Troops.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 
         t2Troops = new JLabel();
         t2Troops.setHorizontalAlignment(t2Troops.CENTER);
-        t2Troops.setText(("Troops: ") + String.valueOf(t2.getTroops()));
+        t2Troops.setText(("Troops: ") + t2.getTroops());
         t2Troops.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 
         minusButton = new JButton("-");
@@ -79,6 +94,10 @@ public class FortifyPopUp extends JPopupMenu {
 
     }
 
+    /**
+     * Creates the leftmost label of the fortify popup.
+     * @return JLabel
+     */
     private JPanel createLeftPanel(){
         JPanel leftPanel = new JPanel();
         GridLayout leftGrid = new GridLayout(2,1);
@@ -88,6 +107,10 @@ public class FortifyPopUp extends JPopupMenu {
         return leftPanel;
     }
 
+    /**
+     * Creates the rightmost panel of the fortify popup.
+     * @return JPanel
+     */
     private JPanel createRightPanel(){
         JPanel rightPanel = new JPanel();
         GridLayout rightGrid = new GridLayout(2,1);
@@ -97,12 +120,17 @@ public class FortifyPopUp extends JPopupMenu {
         return rightPanel;
     }
 
+    /**
+     * Creates the middle panel of the fortify popup.
+     * @return JPanel
+     */
     private JPanel createMiddlePanel(){
         JPanel middlePanel = new JPanel();
         GridLayout middleGrid = new GridLayout(3,1);
         middlePanel.setLayout(middleGrid);
         middlePanel.add(title);
 
+        //Separate panel for buttons and troop number
         JPanel middleButtonPanel = new JPanel();
         GridLayout middleButtonGrid = new GridLayout(1,3);
         middleButtonPanel.setLayout(middleButtonGrid);
@@ -115,38 +143,67 @@ public class FortifyPopUp extends JPopupMenu {
         return middlePanel;
     }
 
+    /**
+     * Returns the plusButton.
+     * @return JButton
+     */
     public JButton getPlusButton() {
         return plusButton;
     }
 
+    /**
+     * Returns the minusButton.
+     * @return JButton
+     */
     public JButton getMinusButton() {
         return minusButton;
     }
 
+    /**
+     * Returns the number of troops the player want to deploy.
+     * @return JLabel
+     */
     public JLabel getTroops(){
         return troops;
     }
 
+    /**
+     * Returns the fortifyButton.
+     * @return JButton
+     */
     public JButton getFortifyButton(){
         return fortifyButton;
     }
 
+    /**
+     * Returns the player of the territory.
+     * @return Player
+     */
     public Player getPlayer(){
         return t1.getOccupant();
     }
 
+    /**
+     * Returns the territory the player wants to use to reinforce the other territory.
+     * @return Territory to lose troops
+     */
     public Territory getTerritoryToLoseTroops(){
         return t1;
     }
 
+    /**
+     * Returns the territory that will be reinforced.
+     * @return Territory to gain troops
+     */
     public Territory getTerritoryToGainTroops(){
         return t2;
     }
 
+    /**
+     * Updates the number of troops that the player wants to move.
+     * @param x int
+     */
     public void setTroops(int x){
         troops.setText(String.valueOf(x));
     }
-
-
-
 }
