@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 /**
@@ -33,6 +34,10 @@ public class FortifyPopUp extends JPopupMenu {
 
         //sets panel layout to a gridlayout
         setLayout(new GridLayout(0,3));
+
+        //Sets a blackborder
+        Border darkline = BorderFactory.createLineBorder(Color.black, 3);
+        setBorder(darkline);
 
         //adds panels after calling their respective constructors
         add(createLeftPanel());
