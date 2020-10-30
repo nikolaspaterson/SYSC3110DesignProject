@@ -168,7 +168,7 @@ public class Player extends JPanel {
     public void xOutPlayer(){
         setBackground(new Color(0x404040));
         removeAll();
-        ImageIcon scaledImg = new ImageIcon(getClass().getResource("/resources/giphy.gif"));
+        ImageIcon scaledImg = new ImageIcon(getClass().getResource("/resources/redx.png"));
         Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
         scaledImg = new ImageIcon(img);
         JLabel x_mark = new JLabel();

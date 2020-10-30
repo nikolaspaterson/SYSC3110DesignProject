@@ -114,7 +114,7 @@ public class GameView extends JFrame {
     public void nextPlayer(){
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentPlayer = playerList.get(currentPlayerIndex);
-        if(currentPlayer.getTotal_troops() == 0){
+        if(currentPlayer.getTotal_troops() - currentPlayer.getDeployableTroops()== 0){
             currentPlayer.xOutPlayer();
             outOfGame++;
             nextPlayer();
