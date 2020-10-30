@@ -5,13 +5,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+/**
+ * Controller for the start screen.
+ * @author nikolaspaterson
+ */
 public class StartUpController implements ActionListener {
     private final StartUpView startUpView;
 
+    /**
+     * controller constructor.
+     * @param startUp
+     */
     public StartUpController(StartUpView startUp){
         this.startUpView = startUp;
     }
 
+    /**
+     * Performs an action based on which button triggered the event
+     * @param e - ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("How to Play")){
