@@ -127,7 +127,6 @@ public class GameView extends JFrame {
      * The game will only end after the player ends their last turn.
      */
     public void nextPlayer(){
-        winnerScreen();
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentPlayer = playerList.get(currentPlayerIndex);
         if(currentPlayer.getTotal_troops() - currentPlayer.getDeployableTroops()== 0){
@@ -135,8 +134,6 @@ public class GameView extends JFrame {
             nextPlayer();
         }else if(outOfGame == playerList.size()-1){
             winnerScreen();
-
-
             System.out.println("Winner!");
         }else{
             outOfGame = 0;
