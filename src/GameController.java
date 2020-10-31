@@ -1,9 +1,8 @@
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameController implements ActionListener {
+
     private GameView gameViewRef;
 
     public GameController(GameView game_ref){
@@ -30,13 +29,11 @@ public class GameController implements ActionListener {
                 gameViewRef.clearCommandTerritory();
                 temp_territory.activateTimer();
                 gameViewRef.addCommandTerritory(temp_territory);
-            }else if(gameViewRef.getCommandTerritorySize()  == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())){
-                Territory main_territory = gameViewRef.getCommandTerritory().get(0);
+            }else if(gameViewRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())){
                 gameViewRef.clearCommandTerritory();
                 temp_territory.activateTimer();
                 gameViewRef.addCommandTerritory(temp_territory);
             }else if(gameViewRef.getCommandTerritorySize()  == 1 && !temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCommandTerritory().get(0).isNeighbour(temp_territory)){
-                Territory main_territory = gameViewRef.getCommandTerritory().get(0);
                 gameViewRef.addCommandTerritory(temp_territory);
                 AttackPopUp attackPopUp = new AttackPopUp(gameViewRef.getCommandTerritory().get(0), gameViewRef.getCommandTerritory().get(1), gameViewRef);
                 attackPopUp.show(gameViewRef, 300, 350);
@@ -69,6 +66,7 @@ public class GameController implements ActionListener {
         gameViewRef.nextState();
         gameViewRef.clearCommandTerritory();
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 

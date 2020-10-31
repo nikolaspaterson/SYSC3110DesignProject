@@ -142,7 +142,6 @@ public class GameEvent {
      */
     public void fortify(Territory territory1, Territory territory2, int troops) {
         if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant().equals(player) && territory1.isNeighbour(territory2)) {
-
             if(troops < territory1.getTroops() && troops > 0) {
                 player.decrementTroops(territory1, troops);
                 player.incrementTroops(territory2, troops);
@@ -152,7 +151,6 @@ public class GameEvent {
             } else {
                 System.out.println("You cannot move more than " + (territory1.getTroops() - 1));
             }
-
         }
     }
 }
