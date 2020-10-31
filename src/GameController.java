@@ -10,6 +10,11 @@ public class GameController implements ActionListener {
         gameViewRef = game_ref;
     }
 
+    /**
+     *  Using this ActionEvent we atatch it to all Territories in the set up phase of the GameView.
+     *  Its purpose is to check the current player clicking, the state of the game, and the territory button
+     * @param e This action event is a button Territory
+     */
     public void territoryAction(ActionEvent e){
         String state = gameViewRef.getCurrentState();
         Object obj = e.getSource();
@@ -65,10 +70,20 @@ public class GameController implements ActionListener {
 
     }
 
+    /**
+     * This ActionEvent is added to the button in StatusBar which is in charge of changing the state of the game
+     * and if at the end of gameStates to load the next player.
+     * @param e The button from StatusBar
+     */
     public void nextState(ActionEvent e){
         gameViewRef.nextState();
         gameViewRef.clearCommandTerritory();
     }
+
+    /**
+     * This overide function is not being used due to the buttons referencing the ActionListeners from GameController Methods
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
