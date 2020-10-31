@@ -21,7 +21,6 @@ public class GameView extends JFrame {
     private int currentPlayerIndex;
 
     private final StatusBar user_status;
-    private HashMap<String,Territory> worldMap;
     private HashMap<String,Continent> continentMap;
     private GameController game_controller;
 
@@ -34,13 +33,17 @@ public class GameView extends JFrame {
 
     private ArrayList<Territory> commandTerritory;
 
+    /**
+     * Constructor of the Gameview, it is called in PlayerSelectController and the game begins after the construction of the class.
+     * @param players ArrayList of PlayerSelectPanel object which contains the Icon and player name of all players
+     * @throws IOException
+     */
     public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
         super("Risk!");
         UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
         playerList = new ArrayList<>();
         color_list = new Stack<>();
         currentPlayer = null;
-        worldMap = new HashMap<>();
         user_status = new StatusBar();
         game_controller = new GameController(this);
         user_status.setController(game_controller);
@@ -111,7 +114,6 @@ public class GameView extends JFrame {
             x.addActionListener(game_controller::territoryAction);
         }
 
-        worldMap = gameSetup.returnWorldMap();
         add(user_status);
         background.add(players_overlay);
         setResizable(false);
@@ -119,6 +121,11 @@ public class GameView extends JFrame {
         playMusic("/resources/beat.wav");
     }
 
+    /**
+     * This method is for switching the characters and occurs when the game reaches the end of the game state arrayList
+     * A method there counts out of game to see if there is one person remaining to declare a winner.
+     * The game will only end after the player ends their last turn.
+     */
     public void nextPlayer(){
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentPlayer = playerList.get(currentPlayerIndex);
@@ -193,6 +200,10 @@ public class GameView extends JFrame {
         playerBonus();
     }
 
+    /**
+     * PlayerBonus calculates how many troops each player will get at the start of their turn by checking how many territories
+     * they own and weather or not they occupy an entire continent
+     */
     public void playerBonus(){
 
         int troops = 0;
@@ -211,6 +222,11 @@ public class GameView extends JFrame {
         currentPlayer.addDeployableTroops(troops);
     }
 
+    /**
+     * This method is in charge of handling the switching of states and is called everytime the StatusBar nextButton
+     * is pressed.
+     * When reaching the end of state list it calls nextPlayer to load the next player and continue the game.
+     */
     public void nextState(){
         clearCommandTerritory();
         if(gameStateIndex + 1 == 3){
@@ -222,20 +238,36 @@ public class GameView extends JFrame {
         user_status.updateDisplay(currentState);
     }
 
+    /**
+     * Method returns String, to check what the current state of the game
+     * @return returns either Reinforce, Attack, or Fortify
+     */
     public String getCurrentState(){
         return currentState;
     }
 
+    /**
+     * It returns the player object of the player who's turn it currently is
+     * @return The player that is currently in use
+     */
     public Player getCurrentPlayer(){
         return currentPlayer;
     }
 
+    /**
+     * This method is in charge of adding territories to the commandTerritory ArrayList and also setting the background
+     * of that colour to be darker to indicate to the player that they have selected that territory
+     * @param new_territory
+     */
     public void addCommandTerritory(Territory new_territory){
         Color new_color = new_territory.getBackground();
         new_territory.setBackground(new_color.darker());
         commandTerritory.add(new_territory);
     }
 
+    /**
+     * This method is in charge of resetting the colour and timer of the Territories in commandTerritory ArrayList
+     */
     public void clearCommandTerritory(){
         for(Territory x : commandTerritory){
             x.cancel_timer();
@@ -244,18 +276,28 @@ public class GameView extends JFrame {
         commandTerritory.clear();
     }
 
+    /**
+     * Returns the ArrayList for currently selected territories which are then loaded into the PopUp methods for
+     * Attack, Reinforce and Fortify.
+     * @return list of the currently selected territories
+     */
     public ArrayList<Territory> getCommandTerritory(){
         return commandTerritory;
 
     }
+
+    /**
+     * Returns the size of the commandTerritory ArrayList
+     * @return commandTerritory
+     */
     public int getCommandTerritorySize(){
         return commandTerritory.size();
     }
 
-    public void updateStatusBar(){
-        user_status.updateDisplay(currentState);
-    }
-
+    /**
+     * This is to play the most jamming beat as you take over the world. No further explanation required.
+     * @param filepath
+     */
     public void playMusic(String filepath) {
         {
             try
