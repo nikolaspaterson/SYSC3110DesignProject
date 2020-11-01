@@ -53,6 +53,15 @@ public class Player extends JPanel {
         territoriesOccupied = new HashMap<>();
     }
 
+    public Player(String name) {
+        this.name = name;
+        player_color = Color.BLACK;
+        territoriesOccupied = new HashMap<>();
+        player_name_label = new JLabel();
+        total_troops_label = new JLabel();
+        player_deploy = new JLabel();
+    }
+
     /**
      * Gets the player's icon.
      * @return Icon

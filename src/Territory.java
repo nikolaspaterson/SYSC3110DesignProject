@@ -67,6 +67,14 @@ public class Territory extends JButton {
         });
     }
 
+    public Territory(String territoryName){
+        this.territoryName = territoryName;
+        neighbours = new HashMap<>();
+        occupant_name_label = new JLabel();
+        territory_name_label = new JLabel();
+        troop_count_label = new JLabel();
+    }
+
     /**
      * Gets the Occupant's color.
      * @return

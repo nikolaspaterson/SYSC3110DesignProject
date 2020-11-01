@@ -49,7 +49,7 @@ public class GameEvent {
      */
     public void attack(Territory attacking, Territory defending, int numDice) {
 
-        if(attacking.getOccupant().equals(player) &&  !defending.getOccupant().equals(player)) {
+        if(attacking.getOccupant().equals(player) && !defending.getOccupant().equals(player) && attacking.isNeighbour(defending)) {
             try {
                 Dice temp = new Dice();
                 Dice attackingDice = temp.setUpAttackingDice(attacking.getTroops(), numDice);
