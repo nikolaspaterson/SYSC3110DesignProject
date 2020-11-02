@@ -40,6 +40,11 @@ public class GameEvent {
         }
     }
 
+    protected Dice createTempDice()
+    {
+        return new Dice();
+    }
+
     /**
      * This method is used by the Player when he/she wants to attack a neighbouring territory that is owned by another player.
      * This method will remove troops from either side (attacking/defending) based on the attack result.
@@ -51,7 +56,7 @@ public class GameEvent {
 
         if(attacking.getOccupant().equals(player) && !defending.getOccupant().equals(player) && attacking.isNeighbour(defending)) {
             try {
-                Dice temp = new Dice();
+                Dice temp = createTempDice();
                 Dice attackingDice = temp.setUpAttackingDice(attacking.getTroops(), numDice);
                 Dice defendingDice = temp.setUpDefendingDice(defending.getTroops());
 

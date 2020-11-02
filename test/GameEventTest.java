@@ -72,17 +72,19 @@ class GameEventTest {
         t3.setOccupant(p2);
 
         ////////////////////////////////////////////
-        GameEvent gameEvent = new GameEvent(p1);
+        MockGameEvent gameEvent = new MockGameEvent(p1);
+        MockDice fakeDice = gameEvent.getMockDice();
 
         System.out.println("Successful Attack");
         // Successful Attack
         t1.setTroops(2);
         t2.setTroops(1);
+
+        // Set mocked outcome
+        fakeDice.setNextAttackOutcome(0);
+
+        // Need to add assertion here... this method will always return the above outcome
         gameEvent.attack(t1, t2, 1);
-
-
-
-
 
     }
 
