@@ -1,6 +1,7 @@
 package View;
 
 import Controller.AttackPopUpController;
+import Model.Player;
 import Model.Territory;
 
 import javax.swing.*;
@@ -108,8 +109,14 @@ public class AttackPopUp extends JPopupMenu {
         result.add(defenderLabel);
         result.add(outcome);
 
-        JPanel leftPanel = playerPanel(attackingTerritory.getOccupant().getplayer_icon(), "left");
-        JPanel rightPanel = playerPanel(defendingTerritory.getOccupant().getplayer_icon(), "right");
+        Player attacker = attackingTerritory.getOccupant();
+        Player defender = defendingTerritory.getOccupant();
+
+        PlayerView attackingView = attacker.getPlayerView();
+        PlayerView defendingView = defender.getPlayerView();
+
+        JPanel leftPanel = playerPanel(attackingView.getplayer_icon(), "left");
+        JPanel rightPanel = playerPanel(defendingView.getplayer_icon(), "right");
 
         AttackPopUpController attackPopUpController = new AttackPopUpController(this);
 

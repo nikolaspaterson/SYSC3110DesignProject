@@ -1,9 +1,8 @@
 package Model;
 
-import javax.swing.*;
+import View.PlayerView;
+import View.TerritoryView;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Timer;
 
@@ -13,18 +12,14 @@ import java.util.Timer;
  * @author Ahmad El-Sammak
  * @author Erik Iuhas
  */
-public class Territory extends JButton {
+public class Territory {
 
     private Player occupant;
     private int troops;
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
 
-    private JPanel popup_info;
-    private final JLabel troop_count_label;
-    private final JLabel territory_name_label;
-    private final JLabel occupant_name_label;
-
+    private final TerritoryView territoryView;
     private Color default_color;
     private Timer blinking_yours;
     private Timer blinking_theirs;
@@ -35,45 +30,15 @@ public class Territory extends JButton {
      */
     public Territory(String territoryName,int x, int y, int width, int height,Component parent) {
         this.territoryName = territoryName;
-        this.setBounds(x,y,width,height);
         troops = 0;
         neighbours = new HashMap<>();
         blinking_yours = new Timer("flash_yours");
         blinking_theirs = new Timer("flash_theirs");
-
-        popup_info = new JPanel();
-        popup_info.setLayout(new BoxLayout(popup_info,BoxLayout.Y_AXIS));
-        popup_info.setBounds(x+width,y,100,50);
-        popup_info.setMaximumSize(new Dimension(100,50));
-        territory_name_label = new JLabel(territoryName);
-        territory_name_label.setFont(new Font("Arial",Font.BOLD,12));
-        troop_count_label = new JLabel("Troops: " + troops);
-        occupant_name_label = new JLabel("");
-
-        popup_info.add(territory_name_label);
-        popup_info.add(troop_count_label);
-        popup_info.add(occupant_name_label);
-
-        this.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent me) {
-                parent.getParent().add(popup_info);
-                parent.getParent().revalidate();
-                parent.getParent().repaint();
-            }
-            public void mouseExited(MouseEvent me) {
-                parent.getParent().remove(popup_info);
-                parent.getParent().revalidate();
-                parent.getParent().repaint();
-            }
-        });
+        territoryView = new TerritoryView(territoryName, x, y, width, height, parent, troops, this);
     }
 
-    public Territory(String territoryName){
-        this.territoryName = territoryName;
-        neighbours = new HashMap<>();
-        occupant_name_label = new JLabel();
-        territory_name_label = new JLabel();
-        troop_count_label = new JLabel();
+    public TerritoryView getTerritoryView() {
+        return territoryView;
     }
 
     /**
@@ -94,8 +59,8 @@ public class Territory extends JButton {
      */
     public void setTroops(int troops) {
         this.troops = troops;
-        troop_count_label.setText("Troops: " + troops);
-        this.setText(String.valueOf(troops));
+        territoryView.setTroopsLabel(troops);
+        territoryView.setText(String.valueOf(troops));
     }
 
     /**
@@ -113,8 +78,8 @@ public class Territory extends JButton {
     public void removeTroops(int value) {
         troops += (value);
         occupant.addTotal(value);
-        troop_count_label.setText("Troops: " + troops);
-        this.setText(String.valueOf(troops));
+        territoryView.setTroopsLabel(troops);
+        territoryView.setText(String.valueOf(troops));
     }
 
     /**
@@ -137,9 +102,10 @@ public class Territory extends JButton {
      */
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
-        occupant_name_label.setText("Occ: "+occupant.getName());
-        this.setBackground(occupant.getPlayer_color());
-        default_color = occupant.getPlayer_color();
+        PlayerView player = occupant.getPlayerView();
+        territoryView.setOccupantLabel(occupant);
+        territoryView.setBackground(player.getPlayer_color());
+        default_color = player.getPlayer_color();
     }
 
     /**
@@ -157,7 +123,7 @@ public class Territory extends JButton {
      */
     public boolean isNeighbour(Territory territoryToCheck) {
         String terrToCheck = territoryToCheck.getTerritoryName();
-        return this.neighbours.containsKey(terrToCheck);
+        return neighbours.containsKey(terrToCheck);
     }
 
     /**
@@ -181,7 +147,8 @@ public class Territory extends JButton {
         blinking_yours = new Timer();
         blinking_theirs = new Timer();
         for(Territory temp : neighbours.values()){
-            temp.setBackground(temp.getDefault_color());
+            TerritoryView tempView = temp.getTerritoryView();
+            tempView.setBackground(temp.getDefault_color());
         }
     }
 

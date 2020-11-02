@@ -35,6 +35,7 @@ public class FortifyPopUp extends JPopupMenu {
         super();
         this.t1=territory1;
         this.t2=territory2;
+
         //Helper function to initialize all panel components
         initializeComponents();
 
@@ -66,12 +67,12 @@ public class FortifyPopUp extends JPopupMenu {
         title.setFont(new Font("Comic Sans MS", Font.ITALIC,35));
 
         t1Name = new JLabel();
-        t1Name.setHorizontalAlignment(t1.CENTER);
+        t1Name.setHorizontalAlignment(t1Name.CENTER);
         t1Name.setText(t1.getTerritoryName());
         t1Name.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 
         t2Name = new JLabel();
-        t2Name.setHorizontalAlignment(t2.CENTER);
+        t2Name.setHorizontalAlignment(t2Name.CENTER);
         t2Name.setText(t2.getTerritoryName());
         t2Name.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 

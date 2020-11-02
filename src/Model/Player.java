@@ -1,7 +1,8 @@
 package Model;
 
+import View.PlayerView;
+
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -11,65 +12,32 @@ import java.util.HashMap;
  * @author Ahmad El-Sammak
  * @author Erik Iuhas
  */
-public class Player extends JPanel {
+public class Player {
 
     private final String name;
     private final HashMap<String, Territory> territoriesOccupied;
-    private final Color player_color;
     private int deployableTroops;
     private int total_troops;
-
-    private JLabel player_icon;
-    private final JLabel player_name_label;
-    private final JLabel total_troops_label;
-    private final JLabel player_deploy;
+    private PlayerView playerView;
 
     /**
      * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
      * @param name the name of the player.
      */
-    public Player(String name,Color player_color,ImageIcon player_icon) {
+    public Player(String name, Color player_color, ImageIcon player_icon) {
         this.name = name;
         this.total_troops = 0;
-        this.player_color = player_color;
-
-        Border darkline = BorderFactory.createLineBorder(player_color.darker());
-        this.setBackground(player_color);
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        this.player_icon = new JLabel();
-        this.player_name_label = new JLabel();
-        this.total_troops_label = new JLabel();
-        this.player_deploy = new JLabel();
-        player_deploy.setFont(new Font("Impact",Font.PLAIN,20));
-        player_deploy.setForeground(new Color(0xE73A3A));
-        this.player_icon.setIcon(new ImageIcon(player_icon.getImage()));
-        this.player_name_label.setText(name);
-        this.player_name_label.setFont(new Font("Impact",Font.PLAIN,15));
-        this.total_troops_label.setText("Troop#: " + total_troops);
-
-        this.add(this.player_icon);
-        this.add(this.player_name_label);
-        this.add(this.total_troops_label);
-        this.setBorder(darkline);
-
         territoriesOccupied = new HashMap<>();
+        playerView = new PlayerView(name, player_color, player_icon, total_troops);
     }
 
     public Player(String name) {
         this.name = name;
-        player_color = Color.BLACK;
         territoriesOccupied = new HashMap<>();
-        player_name_label = new JLabel();
-        total_troops_label = new JLabel();
-        player_deploy = new JLabel();
     }
 
-    /**
-     * Gets the player's icon.
-     * @return Icon
-     */
-    public Icon getplayer_icon(){
-        return player_icon.getIcon();
+    public PlayerView getPlayerView() {
+        return playerView;
     }
 
     /**
@@ -87,27 +55,13 @@ public class Player extends JPanel {
     public HashMap<String, Territory> getTerritoriesOccupied() { return territoriesOccupied; }
 
     /**
-     * Gets the player's color.
-     * @return Color
-     */
-    public Color getPlayer_color(){ return player_color;}
-
-    /**
-     * Gets the deploy label.
-     * @return JLabel
-     */
-    public JLabel getDeployLabel(){
-        return player_deploy;
-    }
-
-    /**
      * Adds the deployableTroops on top of the existing deployableTroops.
      * This accounts for bonus troops awarded to the player at the beginning of a round.
      * @param deployableTroops number of deployable troops.
      */
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
-        player_deploy.setText(String.valueOf(this.deployableTroops));
+        playerView.setDeployLabel(this.deployableTroops);
         addTotal(deployableTroops);
     }
 
@@ -117,7 +71,7 @@ public class Player extends JPanel {
      */
     public void addTotal(int troops) {
         total_troops += troops;
-        total_troops_label.setText("Troop#: " + total_troops);
+        playerView.setTotalTroopsLabel(total_troops);
     }
 
     /**
@@ -134,7 +88,7 @@ public class Player extends JPanel {
      */
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
-        player_deploy.setText(String.valueOf(this.deployableTroops));
+        playerView.setDeployLabel(this.deployableTroops);
         addTotal(deployableTroops);
     }
 
@@ -188,24 +142,8 @@ public class Player extends JPanel {
     public void removeTerritory(String territory) {
         territoriesOccupied.remove(territory);
         if(territoriesOccupied.values().size() == 0){
-            xOutPlayer();
+            playerView.xOutPlayer();
         }
-    }
-
-    /**
-     * This method is used to add an "X" ontop of players who were eliminated out of the game.
-     */
-    public void xOutPlayer(){
-        setBackground(new Color(0x404040));
-        removeAll();
-        ImageIcon scaledImg = new ImageIcon(getClass().getResource("/resources/redx.png"));
-        Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
-        scaledImg = new ImageIcon(img);
-        JLabel x_mark = new JLabel();
-        x_mark.setIcon(scaledImg);
-        add(x_mark);
-        revalidate();
-        repaint();
     }
 
     /**

@@ -1,10 +1,7 @@
 package Controller;
 
 import Model.Territory;
-import View.AttackPopUp;
-import View.FortifyPopUp;
-import View.GameView;
-import View.ReinforcePopUp;
+import View.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,14 +15,16 @@ public class GameController implements ActionListener {
     }
 
     /**
-     *  Using this ActionEvent we atatch it to all Territories in the set up phase of the View.GameView.
+     *  Using this ActionEvent we attach it to all Territories in the set up phase of the View.GameView.
      *  Its purpose is to check the current player clicking, the state of the game, and the territory button
      * @param e This action event is a button Model.Territory
      */
     public void territoryAction(ActionEvent e){
         String state = gameViewRef.getCurrentState();
         Object obj = e.getSource();
-        Territory temp_territory = (Territory) obj;
+        TerritoryView territoryView = (TerritoryView) obj;
+        Territory temp_territory = territoryView.getTerritory();
+
 
         switch (state) {
             case "Reinforce":

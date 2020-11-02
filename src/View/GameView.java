@@ -75,7 +75,8 @@ public class GameView extends JFrame {
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());
         for (Player x: playerList){
-            players_overlay.add(x);
+            PlayerView playerView = x.getPlayerView();
+            players_overlay.add(playerView);
         }
 
         players_overlay.setBounds(1160,0,100,814);
@@ -111,8 +112,8 @@ public class GameView extends JFrame {
         user_status.setPlayer(currentPlayer);
 
         for(Territory x : gameSetup.returnWorldMap().values()){
-            background.add(x);
-            x.addActionListener(game_controller::territoryAction);
+            background.add(x.getTerritoryView());
+            x.getTerritoryView().addActionListener(game_controller::territoryAction);
         }
 
         add(user_status);
@@ -141,6 +142,7 @@ public class GameView extends JFrame {
         }
         playerBonus();
     }
+
     public void winnerScreen(){
         this.dispose();
         clip.stop();
@@ -159,7 +161,8 @@ public class GameView extends JFrame {
         name.setVerticalAlignment(name.CENTER);
 
         JLabel playerIcon = new JLabel();
-        ImageIcon a = (ImageIcon) currentPlayer.getplayer_icon();
+        PlayerView currentPlayerView = currentPlayer.getPlayerView();
+        ImageIcon a = (ImageIcon) currentPlayerView.getplayer_icon();
         Image i = a.getImage().getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH );
         a = new ImageIcon(i);
         playerIcon.setIcon(a);
@@ -203,6 +206,7 @@ public class GameView extends JFrame {
         winnerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         winnerFrame.setVisible(true);
     }
+
     /**
      * PlayerBonus calculates how many troops each player will get at the start of their turn by checking how many territories
      * they own and weather or not they occupy an entire continent
@@ -263,8 +267,9 @@ public class GameView extends JFrame {
      * @param new_territory the new territory to add
      */
     public void addCommandTerritory(Territory new_territory){
-        Color new_color = new_territory.getBackground();
-        new_territory.setBackground(new_color.darker());
+        TerritoryView territoryView = new_territory.getTerritoryView();
+        Color new_color = territoryView.getBackground();
+        territoryView.setBackground(new_color.darker());
         commandTerritory.add(new_territory);
     }
 
@@ -274,7 +279,8 @@ public class GameView extends JFrame {
     public void clearCommandTerritory(){
         for(Territory x : commandTerritory){
             x.cancel_timer();
-            x.setBackground(x.getDefault_color());
+            TerritoryView territoryView = x.getTerritoryView();
+            territoryView.setBackground(x.getDefault_color());
         }
         commandTerritory.clear();
     }
@@ -286,7 +292,6 @@ public class GameView extends JFrame {
      */
     public ArrayList<Territory> getCommandTerritory(){
         return commandTerritory;
-
     }
 
     /**

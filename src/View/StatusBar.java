@@ -8,7 +8,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 /**
- * Object constructior for View.StatusBar Jpanel which stays at the bottom of the screen and displays
+ * Object constructor for View.StatusBar JPanel which stays at the bottom of the screen and displays
  */
 public class StatusBar extends JPanel {
 
@@ -57,11 +57,12 @@ public class StatusBar extends JPanel {
      * @param player Model.Player Object
      */
     public void setPlayer(Player player){
-        deployLabel = player.getDeployLabel();
+        PlayerView playerView = player.getPlayerView();
+        deployLabel = playerView.getDeployLabel();
         currentName.setText(player.getName());
-        currentPlayerIcon.setIcon(player.getplayer_icon());
-        descriptionPanel.setBackground(player.getBackground().brighter());
-        setBackground(player.getBackground());
+        currentPlayerIcon.setIcon(playerView.getplayer_icon());
+        descriptionPanel.setBackground(playerView.getBackground().brighter());
+        setBackground(playerView.getBackground());
         displayReinforce();
     }
 
@@ -81,9 +82,7 @@ public class StatusBar extends JPanel {
         descriptionPanel.remove(deployLabel);
         this.revalidate();
         this.repaint();
-
         currentAction.setText("<html>Time to FIGHT!<br>Attack enemy Territories</html>");
-
     }
 
     /**
