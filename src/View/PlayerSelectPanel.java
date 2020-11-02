@@ -1,3 +1,5 @@
+package View;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -6,8 +8,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * The PlayerSelectPanel class is used to store the information of each player in a JPanel.
- * A player has a Name, Icon and deciding if is an AI or Player.
+ * The View.PlayerSelectPanel class is used to store the information of each player in a JPanel.
+ * A player has a Name, Icon and deciding if is an AI or Model.Player.
  *
  * @author Ahmad El-Sammak
  */
@@ -18,14 +20,14 @@ public class PlayerSelectPanel extends JPanel {
     private JButton photo;
 
     /**
-     * Class constructor for PlayerSelectPanel class.
+     * Class constructor for View.PlayerSelectPanel class.
      */
     public PlayerSelectPanel() {
         super();
         setLayout(new FlowLayout(FlowLayout.CENTER, 15, 30));
         Border blackLine = BorderFactory.createLineBorder(Color.black);
         setBorder(blackLine);
-        JLabel pn = new JLabel("Player Name:");
+        JLabel pn = new JLabel("Model.Player Name:");
         pn.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         playerName = new JTextField(8);
         JButton option = new JButton("PLAYER");

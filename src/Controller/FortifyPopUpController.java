@@ -1,8 +1,13 @@
+package Controller;
+
+import Model.GameEvent;
+import View.FortifyPopUp;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class that responds to actions performed in FortifyPopUp.
+ * Class that responds to actions performed in View.FortifyPopUp.
  */
 public class FortifyPopUpController implements ActionListener {
 
@@ -11,7 +16,7 @@ public class FortifyPopUpController implements ActionListener {
 
     /**
      * Controller constructor.
-     * @param fortifyPopUp - instance of FortifyPopUp
+     * @param fortifyPopUp - instance of View.FortifyPopUp
      */
     public FortifyPopUpController(FortifyPopUp fortifyPopUp){
         this.popup = fortifyPopUp;

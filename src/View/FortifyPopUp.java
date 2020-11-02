@@ -1,3 +1,9 @@
+package View;
+
+import Controller.FortifyPopUpController;
+import Model.Player;
+import Model.Territory;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -22,8 +28,8 @@ public class FortifyPopUp extends JPopupMenu {
 
     /**
      * Popup constructor.
-     * @param territory1 - Territory to lose troops
-     * @param territory2 - Territory to gain troops
+     * @param territory1 - Model.Territory to lose troops
+     * @param territory2 - Model.Territory to gain troops
      */
     public FortifyPopUp(Territory territory1, Territory territory2){
         super();
@@ -35,7 +41,7 @@ public class FortifyPopUp extends JPopupMenu {
         //sets panel layout to a gridlayout
         setLayout(new GridLayout(0,3));
 
-        //Sets a blackborder
+        //Sets a black border
         Border darkline = BorderFactory.createLineBorder(Color.black, 3);
         setBorder(darkline);
 
@@ -182,7 +188,7 @@ public class FortifyPopUp extends JPopupMenu {
 
     /**
      * Returns the player of the territory.
-     * @return Player
+     * @return Model.Player
      */
     public Player getPlayer(){
         return t1.getOccupant();
@@ -190,7 +196,7 @@ public class FortifyPopUp extends JPopupMenu {
 
     /**
      * Returns the territory the player wants to use to reinforce the other territory.
-     * @return Territory to lose troops
+     * @return Model.Territory to lose troops
      */
     public Territory getTerritoryToLoseTroops(){
         return t1;
@@ -198,7 +204,7 @@ public class FortifyPopUp extends JPopupMenu {
 
     /**
      * Returns the territory that will be reinforced.
-     * @return Territory to gain troops
+     * @return Model.Territory to gain troops
      */
     public Territory getTerritoryToGainTroops(){
         return t2;

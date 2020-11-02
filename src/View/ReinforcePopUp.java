@@ -1,3 +1,9 @@
+package View;
+
+import Controller.ReinforcePopUpController;
+import Model.Player;
+import Model.Territory;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -20,7 +26,7 @@ public class ReinforcePopUp extends JPopupMenu {
 
     /**
      * popup constructor.
-     * @param t - Territory
+     * @param t - Model.Territory
      */
     public ReinforcePopUp(Territory t){
         super();
@@ -31,7 +37,7 @@ public class ReinforcePopUp extends JPopupMenu {
         //sets layout of the panel to a gridlayout
         setLayout(new GridLayout(1,3));
 
-        //Sets a blackborder
+        //Sets a black border
         Border darkline = BorderFactory.createLineBorder(Color.black, 3);
         setBorder(darkline);
 
@@ -172,7 +178,7 @@ public class ReinforcePopUp extends JPopupMenu {
 
     /**
      * Returns the territory the player wants to reinforce.
-     * @return Territory
+     * @return Model.Territory
      */
     public Territory getTerritory(){
         return selectedTerritory;
@@ -180,7 +186,7 @@ public class ReinforcePopUp extends JPopupMenu {
 
     /**
      * Returns the player of the territory.
-     * @return Player
+     * @return Model.Player
      */
     public Player getPlayer(){
         return selectedTerritory.getOccupant();

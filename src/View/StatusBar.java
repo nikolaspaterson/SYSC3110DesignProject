@@ -1,9 +1,14 @@
+package View;
+
+import Controller.GameController;
+import Model.Player;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
 /**
- * Object constructior for StatusBar Jpanel which stays at the bottom of the screen and displays
+ * Object constructior for View.StatusBar Jpanel which stays at the bottom of the screen and displays
  */
 public class StatusBar extends JPanel {
 
@@ -51,7 +56,7 @@ public class StatusBar extends JPanel {
     /**
      * Set current player in the object Status bar may reference variables from the player such as deployLabel which
      * updates when the deployable troops value goes down
-     * @param player Player Object
+     * @param player Model.Player Object
      */
     public void setPlayer(Player player){
         this.player = player;
@@ -110,7 +115,7 @@ public class StatusBar extends JPanel {
     }
 
     /**
-     * Called in GameView and occurs everytime the player clicks nextStep Button.
+     * Called in View.GameView and occurs everytime the player clicks nextStep Button.
      * @param state State of the game can either be Reinforce,Attack, or Fortify.
      */
     public void updateDisplay(String state){

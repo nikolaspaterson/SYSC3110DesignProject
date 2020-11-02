@@ -1,3 +1,12 @@
+package View;
+
+import Controller.GameController;
+import Model.Continent;
+import Model.GameSetup;
+import Model.Player;
+import Model.Territory;
+import View.StatusBar;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -19,7 +28,7 @@ public class GameView extends JFrame {
     private int currentPlayerIndex;
 
     private final StatusBar user_status;
-    private HashMap<String,Continent> continentMap;
+    private HashMap<String, Continent> continentMap;
     private GameController game_controller;
 
     private ArrayList<String> gameState;
@@ -32,8 +41,8 @@ public class GameView extends JFrame {
     private ArrayList<Territory> commandTerritory;
 
     /**
-     * Constructor of the Gameview, it is called in PlayerSelectController and the game begins after the construction of the class.
-     * @param players ArrayList of PlayerSelectPanel object which contains the Icon and player name of all players
+     * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
+     * @param players ArrayList of View.PlayerSelectPanel object which contains the Icon and player name of all players
      * @throws IOException
      */
     public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
@@ -56,7 +65,7 @@ public class GameView extends JFrame {
         currentPlayerIndex = 0;
         commandTerritory = new ArrayList<>();
 
-        //Player colours
+        //Model.Player colours
         color_list.add(new Color(239, 150, 75));
         color_list.add(new Color(153, 221, 255));
         color_list.add(new Color(252, 115, 99));
@@ -223,7 +232,7 @@ public class GameView extends JFrame {
     }
 
     /**
-     * This method is in charge of handling the switching of states and is called everytime the StatusBar nextButton
+     * This method is in charge of handling the switching of states and is called everytime the View.StatusBar nextButton
      * is pressed.
      * When reaching the end of state list it calls nextPlayer to load the next player and continue the game.
      */

@@ -1,3 +1,7 @@
+package Model;
+
+import Model.Continent;
+
 import java.awt.*;
 import java.io.*;
 import java.util.*;
@@ -7,13 +11,13 @@ import java.util.*;
  */
 public class GameSetup {
 
-    private final HashMap<String,Territory> world_map;
+    private final HashMap<String, Territory> world_map;
     private final String territory_CSV;
     private final ArrayList<Territory> unclaimed_territory;
     private final HashMap<String, Continent> continentMap;
 
     /**
-     * GameSetup is in charge of calling private methods which
+     * Model.GameSetup is in charge of calling private methods which
      * distribute the troops to players and then begins to place
      * the troops randomly on the world_map
      * @param players a list of the players, provided by Game object
@@ -162,7 +166,7 @@ public class GameSetup {
      * later if players would like to restart the game.
      * @return Hashmap of Territories
      */
-    public HashMap<String,Territory> returnWorldMap(){
+    public HashMap<String, Territory> returnWorldMap(){
         return world_map;
     }
 

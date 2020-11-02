@@ -11,9 +11,9 @@
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ Dice(numDice: int)
-+ setUpAttackingDice(troops: int, numDice: int):Dice
-+ setUpDefendingDice(troops: int): Dice
+      <string>+ Model.Dice(numDice: int)
++ setUpAttackingDice(troops: int, numDice: int):Model.Dice
++ setUpDefendingDice(troops: int): Model.Dice
 - rollDie(): int
 + attack(attackerRoll: int[], defenderRoll: int[]): int
 - findMax(arr:int[]): int[]
@@ -23,7 +23,7 @@
     </void>
     <void property="name">
      <void property="text">
-      <string>Dice</string>
+      <string>Model.Dice</string>
      </void>
     </void>
    </object>
@@ -131,7 +131,7 @@
    <object class="com.horstmann.violet.ClassNode" id="ClassNode3">
     <void property="attributes">
      <void property="text">
-      <string>- territoriesOccupied: HashMap &lt;String, Territory&gt;
+      <string>- territoriesOccupied: HashMap &lt;String, Model.Territory&gt;
 - name: String
 - deployableTroops: int
 </string>
@@ -139,20 +139,20 @@
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ Player(s: String)
+      <string>+ Model.Player(s: String)
 + getPlayerName(): String
 + setDeplyableTroops(int)
 + getDeployableTroops(): int
 + incrementTroops(i: int)
 + decrementTroops(i: int)
-+ addTerritory(Territory)
-+ removeTerritory(Territory)
++ addTerritory(Model.Territory)
++ removeTerritory(Model.Territory)
 + toString(): String</string>
      </void>
     </void>
     <void property="name">
      <void property="text">
-      <string>Player</string>
+      <string>Model.Player</string>
      </void>
     </void>
    </object>
@@ -181,9 +181,9 @@
    <object class="com.horstmann.violet.ClassNode" id="ClassNode4">
     <void property="attributes">
      <void property="text">
-      <string>- occupant: Player
+      <string>- occupant: Model.Player
 - troops: int
-- neighbours: HashMap&lt;String, Territory&gt;
+- neighbours: HashMap&lt;String, Model.Territory&gt;
 - territoryName: String
 - continentName: String
 </string>
@@ -191,7 +191,7 @@
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ Territory()
+      <string>+ Model.Territory()
 + setTroops(n: int)
 + getTroops()
 + setNeighbour(neighbour: territory)
@@ -204,7 +204,7 @@
     </void>
     <void property="name">
      <void property="text">
-      <string>Territory</string>
+      <string>Model.Territory</string>
      </void>
     </void>
    </object>
@@ -236,16 +236,16 @@
       <string>- turn: String
 - gameState: String
 - gameListeners: List&lt;GameListener&gt;
-- activePlayers: List&lt;Player&gt;</string>
+- activePlayers: List&lt;Model.Player&gt;</string>
      </void>
     </void>
     <void property="methods">
      <void property="text">
       <string>+ newGame(int)
-+ getTurn(): Player
++ getTurn(): Model.Player
 + getGameState(): String
 + takeTurn(cmd: Command)
-+ findWinner(): Player
++ findWinner(): Model.Player
 + toString(): String
 + main(args: String[])</string>
      </void>
@@ -281,21 +281,21 @@
    <object class="com.horstmann.violet.ClassNode" id="ClassNode6">
     <void property="attributes">
      <void property="text">
-      <string>- player: Player</string>
+      <string>- player: Model.Player</string>
      </void>
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ GameEvent(player: Player)
-+ reinforce(t: Territory, n: int)
-+ attack(t1: Territory, t2: Territory, n: int)
-+ fortify(t1: Territory, t2: Territory, n: int)
+      <string>+ Model.GameEvent(player: Model.Player)
++ reinforce(t: Model.Territory, n: int)
++ attack(t1: Model.Territory, t2: Model.Territory, n: int)
++ fortify(t1: Model.Territory, t2: Model.Territory, n: int)
 + playerTurn()</string>
      </void>
     </void>
     <void property="name">
      <void property="text">
-      <string>GameEvent</string>
+      <string>Model.GameEvent</string>
      </void>
     </void>
    </object>
@@ -324,27 +324,27 @@
    <object class="com.horstmann.violet.ClassNode" id="ClassNode7">
     <void property="attributes">
      <void property="text">
-      <string>- worldMap: HashMap&lt;String, Territory&gt;
+      <string>- worldMap: HashMap&lt;String, Model.Territory&gt;
 - territoryCSV: String
 </string>
      </void>
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ GameSetup(players: ArrayList&lt;Player&gt;)
-- provideTroops(players: ArrayList&lt;Player&gt;)
+      <string>+ Model.GameSetup(players: ArrayList&lt;Model.Player&gt;)
+- provideTroops(players: ArrayList&lt;Model.Player&gt;)
 - setNeighbours(ArrayList&lt;String[]&gt;)
 + distributeTroops()
 + distributeTerritories()
 + setUpBoard()
 - readCSV(): ArrayList&lt;String[]&gt;
-+ returnWorldMap(): HashMap&lt;String, Territory&gt;
++ returnWorldMap(): HashMap&lt;String, Model.Territory&gt;
 </string>
      </void>
     </void>
     <void property="name">
      <void property="text">
-      <string>GameSetup</string>
+      <string>Model.GameSetup</string>
      </void>
     </void>
    </object>

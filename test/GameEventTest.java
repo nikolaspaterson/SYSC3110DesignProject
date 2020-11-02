@@ -1,3 +1,7 @@
+import Model.GameEvent;
+import Model.Player;
+import Model.Territory;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameEventTest {
@@ -45,8 +49,8 @@ class GameEventTest {
         gameEvent.reinforce(t1, -2);
         assertEquals(t1.getTroops(), 5);
 
-        System.out.println("\nFailed Reinforce - Player does NOT occupy the Territory");
-        // Failed Reinforce - Player does NOT occupy the Territory
+        System.out.println("\nFailed Reinforce - Model.Player does NOT occupy the Model.Territory");
+        // Failed Reinforce - Model.Player does NOT occupy the Model.Territory
         gameEvent.reinforce(t2, 2);
         assertEquals(t2.getTroops(), 1);
     }

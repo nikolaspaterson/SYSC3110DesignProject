@@ -1,5 +1,11 @@
-import javax.swing.*;
-import java.awt.*;
+package Controller;
+
+import Model.Territory;
+import View.AttackPopUp;
+import View.FortifyPopUp;
+import View.GameView;
+import View.ReinforcePopUp;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,9 +17,9 @@ public class GameController implements ActionListener {
     }
 
     /**
-     *  Using this ActionEvent we atatch it to all Territories in the set up phase of the GameView.
+     *  Using this ActionEvent we atatch it to all Territories in the set up phase of the View.GameView.
      *  Its purpose is to check the current player clicking, the state of the game, and the territory button
-     * @param e This action event is a button Territory
+     * @param e This action event is a button Model.Territory
      */
     public void territoryAction(ActionEvent e){
         String state = gameViewRef.getCurrentState();
@@ -71,9 +77,9 @@ public class GameController implements ActionListener {
     }
 
     /**
-     * This ActionEvent is added to the button in StatusBar which is in charge of changing the state of the game
+     * This ActionEvent is added to the button in View.StatusBar which is in charge of changing the state of the game
      * and if at the end of gameStates to load the next player.
-     * @param e The button from StatusBar
+     * @param e The button from View.StatusBar
      */
     public void nextState(ActionEvent e){
         gameViewRef.nextState();
@@ -81,7 +87,7 @@ public class GameController implements ActionListener {
     }
 
     /**
-     * This overide function is not being used due to the buttons referencing the ActionListeners from GameController Methods
+     * This overide function is not being used due to the buttons referencing the ActionListeners from Controller.GameController Methods
      * @param e
      */
     @Override

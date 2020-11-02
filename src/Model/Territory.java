@@ -1,13 +1,14 @@
+package Model;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
- * The Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
+ * The Model.Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
  *
  * @author Ahmad El-Sammak
  * @author Erik Iuhas
@@ -29,7 +30,7 @@ public class Territory extends JButton {
     private Timer blinking_theirs;
 
     /**
-     * Class constructor for the Territory class. Sets the player who occupies the territory
+     * Class constructor for the Model.Territory class. Sets the player who occupies the territory
      * @param territoryName the name of the territory.
      */
     public Territory(String territoryName,int x, int y, int width, int height,Component parent) {
@@ -82,13 +83,13 @@ public class Territory extends JButton {
     public Color getDefault_color(){ return default_color;}
 
     /**
-     * Gets the name of this Territory.
-     * @return String the Territory name.
+     * Gets the name of this Model.Territory.
+     * @return String the Model.Territory name.
      */
     public String getTerritoryName() { return territoryName; }
 
     /**
-     * Sets the number of troops in this Territory.
+     * Sets the number of troops in this Model.Territory.
      * @param troops the number of troops.
      */
     public void setTroops(int troops) {
@@ -98,7 +99,7 @@ public class Territory extends JButton {
     }
 
     /**
-     * Gets the number of troops in this Territory.
+     * Gets the number of troops in this Model.Territory.
      * @return int the number of troops.
      */
     public int getTroops() {
@@ -106,7 +107,7 @@ public class Territory extends JButton {
     }
 
     /**
-     * This method is used to remove troops and update the JLabel on the Territory object as a result of an attack.
+     * This method is used to remove troops and update the JLabel on the Model.Territory object as a result of an attack.
      * @param value the value to remove
      */
     public void removeTroops(int value) {
@@ -117,22 +118,22 @@ public class Territory extends JButton {
     }
 
     /**
-     * Adds a Territory as a neighbour of this Territory into a HashMap.
-     * @param neighbour the neighbouring Territory.
+     * Adds a Model.Territory as a neighbour of this Model.Territory into a HashMap.
+     * @param neighbour the neighbouring Model.Territory.
      */
     public void addNeighbour(Territory neighbour){ neighbours.put(neighbour.getTerritoryName() ,neighbour); }
 
     /**
-     * Gets the HashMap of neighbouring Territories for this Territory.
-     * @return HashMap<String,Territory> the HashMap of neighbours.
+     * Gets the HashMap of neighbouring Territories for this Model.Territory.
+     * @return HashMap<String,Model.Territory> the HashMap of neighbours.
      */
     public HashMap<String,Territory> getNeighbours() {
         return this.neighbours;
     }
 
     /**
-     * Sets a new Player to occupy this Territory.
-     * @param occupant the new Player to Occupy.
+     * Sets a new Model.Player to occupy this Model.Territory.
+     * @param occupant the new Model.Player to Occupy.
      */
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
@@ -142,15 +143,15 @@ public class Territory extends JButton {
     }
 
     /**
-     * Gets the Player that occupies this Territory.
-     * @return Player the occupant.
+     * Gets the Model.Player that occupies this Model.Territory.
+     * @return Model.Player the occupant.
      */
     public Player getOccupant() {
         return occupant;
     }
 
     /**
-     * This method is used to check if this Territory is neighbours with the @param territoryToCheck.
+     * This method is used to check if this Model.Territory is neighbours with the @param territoryToCheck.
      * @param territoryToCheck the territory to check.
      * @return boolean true if it is a neighbour, false if not.
      */
@@ -160,11 +161,11 @@ public class Territory extends JButton {
     }
 
     /**
-     * Combines the name of the Territory and lists all the neighbouring Territories.
+     * Combines the name of the Model.Territory and lists all the neighbouring Territories.
      * Prints String combination of the information above.
      */
     public void print_info(){
-        System.out.println("Territory Name: " + territoryName );
+        System.out.println("Model.Territory Name: " + territoryName );
         System.out.println("Neighbours: " + neighbours.keySet().toString());
         System.out.println("Owner: " + occupant.getName());
         System.out.println("Troop Count: " + troops);
@@ -197,7 +198,7 @@ public class Territory extends JButton {
      * @return String - The string in the description
      */
     public String toString() {
-        String output = "------>Territory Name: " + this.territoryName + "<------\n";
+        String output = "------>Model.Territory Name: " + this.territoryName + "<------\n";
         output += "======Neighbouring Territories======\n";
 
         for(String str : neighbours.keySet()) {

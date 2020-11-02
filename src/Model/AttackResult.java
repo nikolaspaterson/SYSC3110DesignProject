@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * This class is used to represent the outcomes of results.
  * D2 - defender loses 2 troops

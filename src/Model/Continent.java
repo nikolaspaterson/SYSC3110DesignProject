@@ -1,3 +1,5 @@
+package Model;
+
 import java.awt.*;
 import java.util.HashMap;
 
@@ -10,8 +12,8 @@ public class Continent {
     private String continentName;
 
     /**
-     * Continent object stores all the territories withing that continent. This is used for calculation of the troop
-     * bonus in GameView which is called at the start of everyone's turn
+     * Model.Continent object stores all the territories withing that continent. This is used for calculation of the troop
+     * bonus in View.GameView which is called at the start of everyone's turn
      * @param continentName
      */
     public Continent(String continentName){
@@ -22,22 +24,22 @@ public class Continent {
     /**
      * Adds territory to continentTerritory HashMap
      * @param territory_name Name of territory
-     * @param territory Territory Object
+     * @param territory Model.Territory Object
      */
     public void addContinentTerritory(String territory_name, Territory territory){
         continentTerritory.put(territory_name,territory);
     }
 
     /**
-     * Get the HashMap of Territories that are in the Continent
-     * @return The map of territories in Continent
+     * Get the HashMap of Territories that are in the Model.Continent
+     * @return The map of territories in Model.Continent
      */
     public HashMap<String, Territory> getContinentTerritory() {
         return continentTerritory;
     }
 
     /**
-     * Returns the name of the Continent
+     * Returns the name of the Model.Continent
      * @return String of continent name
      */
     public String getContinentName() {

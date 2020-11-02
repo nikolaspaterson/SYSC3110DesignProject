@@ -1,9 +1,14 @@
+package View;
+
+import Controller.AttackPopUpController;
+import Model.Territory;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
 /**
- * The AttackPopUp class is used for when a player has selected which territory they want to attack.
+ * The View.AttackPopUp class is used for when a player has selected which territory they want to attack.
  * It asks the user how many dice they want to roll with based on the number of troops in their territory.
  *
  * @author Ahmad El-Sammak
@@ -23,7 +28,7 @@ public class AttackPopUp extends JPopupMenu {
     private JFrame gameViewRef;
 
     /**
-     * Class constructor for AttackPopUp class.
+     * Class constructor for View.AttackPopUp class.
      * @param attackingTerritory the attacker's territory object.
      * @param defendingTerritory the defender's territory object.
      * @param gameViewRef a reference to the main game's frame.
@@ -180,7 +185,7 @@ public class AttackPopUp extends JPopupMenu {
 
     /**
      * Gets the attacking territory.
-     * @return Territory attacking territory
+     * @return Model.Territory attacking territory
      */
     public Territory getAttackingTerritory() {
         return attackingTerritory;
@@ -188,7 +193,7 @@ public class AttackPopUp extends JPopupMenu {
 
     /**
      * Gets the defending territory.
-     * @return Territory defending territory
+     * @return Model.Territory defending territory
      */
     public Territory getDefendingTerritory() {
         return defendingTerritory;

@@ -1,10 +1,12 @@
+package Model;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.util.HashMap;
 
 /**
- * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
+ * The Model.Player class is responsible for containing important attributes that every player should have in the game of Risk.
  *
  * @author Ahmad El-Sammak
  * @author Erik Iuhas
@@ -23,7 +25,7 @@ public class Player extends JPanel {
     private JLabel player_deploy;
 
     /**
-     * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
+     * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
      * @param name the name of the player.
      */
     public Player(String name,Color player_color,ImageIcon player_icon) {
@@ -80,7 +82,7 @@ public class Player extends JPanel {
 
     /**
      * Getter for the hashmap containing all the territories that the player occupies.
-     * @return HashMap<String,Territory> The territories Occupied.
+     * @return HashMap<String,Model.Territory> The territories Occupied.
      */
     public HashMap<String, Territory> getTerritoriesOccupied() { return territoriesOccupied; }
 
@@ -215,11 +217,11 @@ public class Player extends JPanel {
     }
 
     /**
-     * Combines the Player's Name, all their Territory's owned and how many troops are in each Territory.
+     * Combines the Model.Player's Name, all their Model.Territory's owned and how many troops are in each Model.Territory.
      * @return String combination of information above.
      */
     public String toString() {
-        String output = "------>Player: " + this.name + "<------\n";
+        String output = "------>Model.Player: " + this.name + "<------\n";
         String enemy;
         String ally;
         for(Territory temp_territory : territoriesOccupied.values()) {

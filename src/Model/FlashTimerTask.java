@@ -1,13 +1,15 @@
+package Model;
+
 import java.awt.*;
 import java.util.HashMap;
 import java.util.TimerTask;
 
 public class FlashTimerTask extends TimerTask {
     private int i;
-    private HashMap<String,Territory> neighbours;
+    private HashMap<String, Territory> neighbours;
     private Color main_color;
 
-    public FlashTimerTask(Color main_color,HashMap<String,Territory> neighbours,int i){
+    public FlashTimerTask(Color main_color, HashMap<String, Territory> neighbours, int i){
         this.i = i;
         this.neighbours = neighbours;
         this.main_color = main_color;
