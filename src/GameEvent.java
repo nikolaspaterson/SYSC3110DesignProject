@@ -55,30 +55,30 @@ public class GameEvent {
                 Dice attackingDice = temp.setUpAttackingDice(attacking.getTroops(), numDice);
                 Dice defendingDice = temp.setUpDefendingDice(defending.getTroops());
 
-                int outcome = temp.attackResult(attackingDice.getRoll(), defendingDice.getRoll());
+                AttackResult outcome = temp.attackResult(attackingDice.getRoll(), defendingDice.getRoll());
 
-                switch(outcome){
-                    case 2:
+                switch (outcome) {
+                    case D2 -> {
                         result = "Defender loses two troops!";
                         defending.removeTroops((-2));
-                        break;
-                    case 1:
+                    }
+                    case A2 -> {
                         result = "Attacker loses two troops!";
                         attacking.removeTroops((-2));
-                        break;
-                    case 0:
+                    }
+                    case A1D1 -> {
                         result = "Attacker & Defender lose ONE troop!";
                         attacking.removeTroops((-1));
                         defending.removeTroops((-1));
-                        break;
-                    case -1:
+                    }
+                    case D1 -> {
                         result = "Defender loses one troop!";
                         defending.removeTroops((-1));
-                        break;
-                    case -2:
+                    }
+                    case A1 -> {
                         result = "Attacker loses one troop!";
                         attacking.removeTroops((-1));
-                        break;
+                    }
                 }
 
                 attackingRolls = "";

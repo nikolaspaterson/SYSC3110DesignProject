@@ -89,21 +89,24 @@ public class Dice {
      * OR the highest die (if the attacker and defender rolled with ONLY one die) of both the attacker and defender.
      * @param attackerRoll an array of integers storing all the attacker's rolls.
      * @param defenderRoll an array of integers storing all the defender's rolls.
-     * @return int      2 - defender loses 2 troops
-     *                  1 - attacker loses 2 troops
-     *                  0 - attacker loses 1 troop and defender loses 1 troop
-     *                 -1 - defender loses 1 troop
-     *                 -2 - attacker loses 1 troop
+     * @return AttackResult      D2 - defender loses 2 troops
+     *                           A2 - attacker loses 2 troops
+     *                         A1D1 - attacker loses 1 troop and defender loses 1 troop
+     *                           D1 - defender loses 1 troop
+     *                           A1 - attacker loses 1 troop
      */
-    public int attackResult(int[] attackerRoll, int[] defenderRoll) {
+    public AttackResult attackResult(int[] attackerRoll, int[] defenderRoll) {
         System.out.print("Attacker Rolls: ");
+
         for(int x : attackerRoll){
             System.out.print(" || " + x + " || ");
         }
+
         System.out.print("Defender Rolls: ");
         for(int x : defenderRoll){
             System.out.print(" || " + x + " || ");
         }
+
         System.out.println();
         int[] attacking = findMax(attackerRoll);
         int[] defending = findMax(defenderRoll);
@@ -112,22 +115,22 @@ public class Dice {
             System.out.println("Attacker Max Roll: " + " || " + attacking[0] +", " +attacking[1] + " || "  + "Defender Max Roll: "+" || " + defending[0] +", " +defending[1] +" || ");
             if((attacking[0] > defending[0]) && (attacking[1] > defending[1])) {
                 //defender loses 2 troops
-                return 2;
+                return AttackResult.D2;
             } else if((defending[0] >= attacking[0]) && (defending[1] >= attacking[1])) {
                 //attacker loses 2 troops
-                return 1;
+                return AttackResult.A2;
             } else {
                 //attacker loses 1 troop and the defender loses 1 troop
-                return 0;
+                return AttackResult.A1D1;
             }
         } else {
             System.out.println("Attacker Max Roll: " + " || " + attacking[0] + " || "  + "Defender Max Roll: "+" || " + defending[0] +" || ");
             if(attacking[0] > defending[0]) {
                 //defender loses 1 troop
-                return -1;
+                return AttackResult.D1;
             } else {
                 //attacked loses 1 troop
-                return -2;
+                return AttackResult.A1;
             }
         }
     }
