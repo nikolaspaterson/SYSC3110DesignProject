@@ -15,17 +15,17 @@ import java.awt.*;
  */
 public class AttackPopUp extends JPopupMenu {
 
-    private Territory attackingTerritory;
-    private Territory defendingTerritory;
-    private JButton minus;
-    private JLabel numDice;
-    private JButton plus;
-    private JLabel attackerLabel;
-    private JLabel defenderLabel;
-    private JLabel outcome;
+    private final Territory attackingTerritory;
+    private final Territory defendingTerritory;
+    private final JButton minus;
+    private final JLabel numDice;
+    private final JButton plus;
+    private final JLabel attackerLabel;
+    private final JLabel defenderLabel;
+    private final JLabel outcome;
     private JLabel attackingLabel;
     private JLabel defendingLabel;
-    private JFrame gameViewRef;
+    private final JFrame gameViewRef;
 
     /**
      * Class constructor for View.AttackPopUp class.

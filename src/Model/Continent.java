@@ -1,6 +1,5 @@
 package Model;
 
-import java.awt.*;
 import java.util.HashMap;
 
 /**
@@ -8,13 +7,13 @@ import java.util.HashMap;
  */
 public class Continent {
 
-    private HashMap<String, Territory> continentTerritory;
-    private String continentName;
+    private final HashMap<String, Territory> continentTerritory;
+    private final String continentName;
 
     /**
      * Model.Continent object stores all the territories withing that continent. This is used for calculation of the troop
      * bonus in View.GameView which is called at the start of everyone's turn
-     * @param continentName
+     * @param continentName the name of the continent
      */
     public Continent(String continentName){
         this.continentName = continentName;
@@ -52,9 +51,8 @@ public class Continent {
      * @return Checks if the player owns all the territories in the continent and returns True if they do
      */
     public Boolean checkContinentOccupant(Player player){
-        Player current_player = player;
         for(Territory temp_territory : continentTerritory.values()){
-            if (!current_player.equals(temp_territory.getOccupant())){
+            if (!player.equals(temp_territory.getOccupant())){
                 return false;
             }
         }

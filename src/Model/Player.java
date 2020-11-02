@@ -20,9 +20,9 @@ public class Player extends JPanel {
     private int total_troops;
 
     private JLabel player_icon;
-    private JLabel player_name_label;
-    private JLabel total_troops_label;
-    private JLabel player_deploy;
+    private final JLabel player_name_label;
+    private final JLabel total_troops_label;
+    private final JLabel player_deploy;
 
     /**
      * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.

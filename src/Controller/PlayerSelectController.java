@@ -2,8 +2,6 @@ package Controller;
 
 import View.GameView;
 import View.PlayerSelectView;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -15,7 +13,7 @@ import java.io.IOException;
  */
 public class PlayerSelectController implements ActionListener {
 
-    private PlayerSelectView playerSelectView;
+    private final PlayerSelectView playerSelectView;
 
     /**
      * Class constructor for Controller.PlayerSelectController class.

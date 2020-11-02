@@ -19,7 +19,7 @@ public class StartUpController implements ActionListener {
 
     /**
      * controller constructor.
-     * @param startUp
+     * @param startUp the view
      */
     public StartUpController(StartUpView startUp){
         this.startUpView = startUp;

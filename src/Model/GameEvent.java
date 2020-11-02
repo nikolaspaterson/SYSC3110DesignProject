@@ -1,8 +1,5 @@
 package Model;
 
-import Model.AttackResult;
-import Model.Dice;
-
 /**
  * The Model.GameEvent class is responsible for handling the events that are generated once a Model.Player reinforces, attacks or fortifies.
  * @author Ahmad El-Sammak

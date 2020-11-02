@@ -3,8 +3,6 @@ package View;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -15,9 +13,8 @@ import java.util.ArrayList;
  */
 public class PlayerSelectPanel extends JPanel {
 
-    private ArrayList<String> file;
-    private JTextField playerName;
-    private JButton photo;
+    private final JTextField playerName;
+    private final JButton photo;
 
     /**
      * Class constructor for View.PlayerSelectPanel class.
@@ -27,25 +24,22 @@ public class PlayerSelectPanel extends JPanel {
         setLayout(new FlowLayout(FlowLayout.CENTER, 15, 30));
         Border blackLine = BorderFactory.createLineBorder(Color.black);
         setBorder(blackLine);
-        JLabel pn = new JLabel("Model.Player Name:");
+        JLabel pn = new JLabel("Player Name:");
         pn.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         playerName = new JTextField(8);
         JButton option = new JButton("PLAYER");
         option.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         option.setBounds(new Rectangle(50,50));
 
-        option.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (option.getText().equals("PLAYER")) {
-                    option.setText("AI");
-                } else{
-                    option.setText("PLAYER");
-                }
+        option.addActionListener(e -> {
+            if (option.getText().equals("PLAYER")) {
+                option.setText("AI");
+            } else{
+                option.setText("PLAYER");
             }
         });
 
-        file = new ArrayList<>();
+        ArrayList<String> file = new ArrayList<>();
         file.add("/resources/Chizzy.png");
         file.add("/resources/TA.png");
         file.add("/resources/Captain.png");
@@ -57,17 +51,13 @@ public class PlayerSelectPanel extends JPanel {
         photo = new JButton();
         photo.setIcon(chizzy);
 
-
-        photo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(photo.getIcon().equals(chizzy)) {
-                    photo.setIcon(TA);
-                } else if (photo.getIcon().equals(TA)) {
-                    photo.setIcon(chip);
-                } else{
-                    photo.setIcon(chizzy);
-                }
+        photo.addActionListener(e -> {
+            if(photo.getIcon().equals(chizzy)) {
+                photo.setIcon(TA);
+            } else if (photo.getIcon().equals(TA)) {
+                photo.setIcon(chip);
+            } else{
+                photo.setIcon(chizzy);
             }
         });
 

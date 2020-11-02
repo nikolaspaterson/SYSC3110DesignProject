@@ -13,19 +13,20 @@ import java.util.ArrayList;
  */
 public class PlayerSelectView extends JFrame {
 
-    private JButton leftArrow, rightArrow;
-    private JLabel numPlayers;
-    private JPanel playerList;
-    private ArrayList<PlayerSelectPanel> players;
-    private JButton startButton;
-    private ArrayList<PlayerSelectPanel> playerArrayList;
+    private final JButton leftArrow;
+    private final JButton rightArrow;
+    private final JLabel numPlayers;
+    private final JPanel playerList;
+    private final ArrayList<PlayerSelectPanel> players;
+    private final JButton startButton;
+    private final ArrayList<PlayerSelectPanel> playerArrayList;
 
     /**
      * Class constructor for View.PlayerSelectView class.
      */
     public PlayerSelectView() {
         // Main Frame
-        super("Model.Player Setup!");
+        super("Player Setup!");
         setSize(new Dimension(1280,814));
         setMinimumSize(new Dimension(1280,814));
         setMaximumSize(new Dimension(1280,814));

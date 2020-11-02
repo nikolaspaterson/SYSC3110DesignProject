@@ -21,9 +21,9 @@ public class Territory extends JButton {
     private final String territoryName;
 
     private JPanel popup_info;
-    private JLabel troop_count_label;
-    private JLabel territory_name_label;
-    private JLabel occupant_name_label;
+    private final JLabel troop_count_label;
+    private final JLabel territory_name_label;
+    private final JLabel occupant_name_label;
 
     private Color default_color;
     private Timer blinking_yours;
@@ -78,7 +78,7 @@ public class Territory extends JButton {
 
     /**
      * Gets the Occupant's color.
-     * @return
+     * @return Color the color of the player
      */
     public Color getDefault_color(){ return default_color;}
 
@@ -94,7 +94,7 @@ public class Territory extends JButton {
      */
     public void setTroops(int troops) {
         this.troops = troops;
-        troop_count_label.setText("Troops: " + String.valueOf(troops));
+        troop_count_label.setText("Troops: " + troops);
         this.setText(String.valueOf(troops));
     }
 
@@ -113,7 +113,7 @@ public class Territory extends JButton {
     public void removeTroops(int value) {
         troops += (value);
         occupant.addTotal(value);
-        troop_count_label.setText("Troops: " + String.valueOf(troops));
+        troop_count_label.setText("Troops: " + troops);
         this.setText(String.valueOf(troops));
     }
 

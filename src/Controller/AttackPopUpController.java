@@ -1,11 +1,11 @@
 package Controller;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import Model.GameEvent;
 import View.AttackPopUp;
 import View.FortifyPopUp;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The Controller.AttackPopUpController class is used to change and update the View.AttackPopUp based which buttons are pressed.
@@ -14,8 +14,8 @@ import View.FortifyPopUp;
  */
 public class AttackPopUpController implements ActionListener {
 
-    private AttackPopUp attackPopUp;
-    private GameEvent gameEvent;
+    private final AttackPopUp attackPopUp;
+    private final GameEvent gameEvent;
 
     /**
      * Class constructor for Controller.AttackPopUpController class.

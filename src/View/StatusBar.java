@@ -17,8 +17,6 @@ public class StatusBar extends JPanel {
     private final JButton nextStep;
     private final JLabel currentAction;
     private final JLabel currentName;
-    private Player player;
-    private GameController nextButtonController;
     private JLabel deployLabel;
 
     public StatusBar(){
@@ -59,7 +57,6 @@ public class StatusBar extends JPanel {
      * @param player Model.Player Object
      */
     public void setPlayer(Player player){
-        this.player = player;
         deployLabel = player.getDeployLabel();
         currentName.setText(player.getName());
         currentPlayerIcon.setIcon(player.getplayer_icon());
@@ -73,8 +70,7 @@ public class StatusBar extends JPanel {
      * @param control Game controller which contains action listener nextState
      */
     public void setController(GameController control){
-        nextButtonController = control;
-        nextStep.addActionListener(nextButtonController::nextState);
+        nextStep.addActionListener(control::nextState);
     }
 
     /**
@@ -119,14 +115,10 @@ public class StatusBar extends JPanel {
      * @param state State of the game can either be Reinforce,Attack, or Fortify.
      */
     public void updateDisplay(String state){
-        if(state == "Reinforce"){
-
-            displayReinforce();
-        } else if(state == "Attack"){
-            displayAttack();
-        } else if(state == "Fortify"){
-            displayFortify();
+        switch (state) {
+            case "Reinforce" -> displayReinforce();
+            case "Attack" -> displayAttack();
+            case "Fortify" -> displayFortify();
         }
-
     }
 }
