@@ -97,14 +97,14 @@ Command - Nikolas Paterson<br>
 CommandEnum - Nikolas Paterson<br>
 CommandParser - Nikolas Paterson<br>
 CommandWord - Nikolas Paterson<br>
-Dice - Ahmad El-Sammak<br>
+Model.Dice - Ahmad El-Sammak<br>
 Game - Nikolas Paterson, Erik Iuhas<br>
-GameEvent - Ahmad El-Sammak<br>
-GameSetup - Erik Iuhas<br>
-Player - Ahmad El-Sammak, Erik Iuhas<br>
-Territory - Ahmad El-Sammak, Erik Iuhas<br>
-GameView - Erik Iuhas <br>
-StatusBar - Erik Iuhas <br>
+Model.GameEvent - Ahmad El-Sammak<br>
+Model.GameSetup - Erik Iuhas<br>
+Model.Player - Ahmad El-Sammak, Erik Iuhas<br>
+Model.Territory - Ahmad El-Sammak, Erik Iuhas<br>
+View.GameView - Erik Iuhas <br>
+View.StatusBar - Erik Iuhas <br>
 
 **Resources:**<br>
 TerritoryNeighbours.csv - Erik Iuhas<br>

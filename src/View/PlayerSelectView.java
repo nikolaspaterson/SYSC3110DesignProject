@@ -1,25 +1,28 @@
+package View;
+
+import Controller.PlayerSelectController;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * PlayerSelectView which is the actual frame that is displayed to the user when selecting the number of players he/she wants to play with.
+ * View.PlayerSelectView which is the actual frame that is displayed to the user when selecting the number of players he/she wants to play with.
  *
  * @author Ahmad El-Sammak
  */
 public class PlayerSelectView extends JFrame {
 
-    private JButton leftArrow, rightArrow;
-    private JLabel numPlayers;
-    private JPanel playerList;
-    private ArrayList<PlayerSelectPanel> players;
-    private JButton startButton;
-    private ArrayList<PlayerSelectPanel> playerArrayList;
+    private final JButton leftArrow;
+    private final JButton rightArrow;
+    private final JLabel numPlayers;
+    private final JPanel playerList;
+    private final ArrayList<PlayerSelectPanel> players;
+    private final JButton startButton;
+    private final ArrayList<PlayerSelectPanel> playerArrayList;
 
     /**
-     * Class constructor for PlayerSelectView class.
+     * Class constructor for View.PlayerSelectView class.
      */
     public PlayerSelectView() {
         // Main Frame
@@ -127,7 +130,7 @@ public class PlayerSelectView extends JFrame {
 
     /**
      * Gets the list of all 6 player panels.
-     * @return ArrayList<PlayerSelectPanel>
+     * @return ArrayList<View.PlayerSelectPanel>
      */
     public ArrayList<PlayerSelectPanel> getPlayerArrayList() {
         return playerArrayList;
@@ -165,7 +168,7 @@ public class PlayerSelectView extends JFrame {
 
     /**
      * Gets the list of player panels which we will use to remove from.
-     * @return ArrayList<PlayerSelectPanel>
+     * @return ArrayList<View.PlayerSelectPanel>
      */
     public ArrayList<PlayerSelectPanel> getPlayers() { return players; }
 

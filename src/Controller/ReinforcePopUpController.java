@@ -1,8 +1,13 @@
+package Controller;
+
+import Model.GameEvent;
+import View.ReinforcePopUp;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class that responds to actions performed in ReinforcePopUp.
+ * Class that responds to actions performed in View.ReinforcePopUp.
  */
 public class ReinforcePopUpController implements ActionListener {
 
@@ -11,7 +16,7 @@ public class ReinforcePopUpController implements ActionListener {
 
     /**
      * Controller constructor.
-     * @param reinforcepopup - instance of ReinforcePopUp
+     * @param reinforcepopup - instance of View.ReinforcePopUp
      */
     public ReinforcePopUpController(ReinforcePopUp reinforcepopup){
         this.popup = reinforcepopup;

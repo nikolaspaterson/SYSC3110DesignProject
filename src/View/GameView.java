@@ -1,12 +1,19 @@
+package View;
+
+import Controller.GameController;
+import Model.Continent;
+import Model.GameSetup;
+import Model.Player;
+import Model.Territory;
 import javax.imageio.ImageIO;
-import javax.print.attribute.standard.Media;
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
-import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,38 +21,32 @@ import java.util.Stack;
 
 
 public class GameView extends JFrame {
-    private final ArrayList<Player> playerList;
-    private final Stack<Color> color_list;
 
+    private final ArrayList<Player> playerList;
     private Player currentPlayer;
     private int currentPlayerIndex;
-
     private final StatusBar user_status;
-    private HashMap<String,Continent> continentMap;
-    private GameController game_controller;
-
-    private ArrayList<String> gameState;
+    private final HashMap<String, Continent> continentMap;
+    private final ArrayList<String> gameState;
     private int gameStateIndex;
     private String currentState;
     private Clip clip;
-
     private int outOfGame;
-
-    private ArrayList<Territory> commandTerritory;
+    private final ArrayList<Territory> commandTerritory;
 
     /**
-     * Constructor of the Gameview, it is called in PlayerSelectController and the game begins after the construction of the class.
-     * @param players ArrayList of PlayerSelectPanel object which contains the Icon and player name of all players
-     * @throws IOException
+     * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
+     * @param players ArrayList of View.PlayerSelectPanel object which contains the Icon and player name of all players
+     * @throws IOException handle a possible IOException
      */
     public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
         super("Risk!");
         UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
         playerList = new ArrayList<>();
-        color_list = new Stack<>();
+        Stack<Color> color_list = new Stack<>();
         currentPlayer = null;
         user_status = new StatusBar();
-        game_controller = new GameController(this);
+        GameController game_controller = new GameController(this);
         user_status.setController(game_controller);
         outOfGame = 0;
         gameState = new ArrayList<>();
@@ -58,7 +59,7 @@ public class GameView extends JFrame {
         currentPlayerIndex = 0;
         commandTerritory = new ArrayList<>();
 
-        //Player colours
+        //Model.Player colours
         color_list.add(new Color(239, 150, 75));
         color_list.add(new Color(153, 221, 255));
         color_list.add(new Color(252, 115, 99));
@@ -67,14 +68,15 @@ public class GameView extends JFrame {
         color_list.add(new Color(139, 224, 87));
 
         for( PlayerSelectPanel x : players){
-            playerList.add(new Player(x.getPlayerName(),color_list.pop(), (ImageIcon) x.getImageIcon()));
+            playerList.add(new Player(x.getPlayerName(), color_list.pop(), (ImageIcon) x.getImageIcon()));
         }
 
         JPanel players_overlay = new JPanel();
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());
         for (Player x: playerList){
-            players_overlay.add(x);
+            PlayerView playerView = x.getPlayerView();
+            players_overlay.add(playerView);
         }
 
         players_overlay.setBounds(1160,0,100,814);
@@ -110,8 +112,8 @@ public class GameView extends JFrame {
         user_status.setPlayer(currentPlayer);
 
         for(Territory x : gameSetup.returnWorldMap().values()){
-            background.add(x);
-            x.addActionListener(game_controller::territoryAction);
+            background.add(x.getTerritoryView());
+            x.getTerritoryView().addActionListener(game_controller::territoryAction);
         }
 
         add(user_status);
@@ -140,6 +142,7 @@ public class GameView extends JFrame {
         }
         playerBonus();
     }
+
     public void winnerScreen(){
         this.dispose();
         clip.stop();
@@ -158,7 +161,8 @@ public class GameView extends JFrame {
         name.setVerticalAlignment(name.CENTER);
 
         JLabel playerIcon = new JLabel();
-        ImageIcon a = (ImageIcon) currentPlayer.getplayer_icon();
+        PlayerView currentPlayerView = currentPlayer.getPlayerView();
+        ImageIcon a = (ImageIcon) currentPlayerView.getplayer_icon();
         Image i = a.getImage().getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH );
         a = new ImageIcon(i);
         playerIcon.setIcon(a);
@@ -202,6 +206,7 @@ public class GameView extends JFrame {
         winnerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         winnerFrame.setVisible(true);
     }
+
     /**
      * PlayerBonus calculates how many troops each player will get at the start of their turn by checking how many territories
      * they own and weather or not they occupy an entire continent
@@ -225,7 +230,7 @@ public class GameView extends JFrame {
     }
 
     /**
-     * This method is in charge of handling the switching of states and is called everytime the StatusBar nextButton
+     * This method is in charge of handling the switching of states and is called everytime the View.StatusBar nextButton
      * is pressed.
      * When reaching the end of state list it calls nextPlayer to load the next player and continue the game.
      */
@@ -259,11 +264,12 @@ public class GameView extends JFrame {
     /**
      * This method is in charge of adding territories to the commandTerritory ArrayList and also setting the background
      * of that colour to be darker to indicate to the player that they have selected that territory
-     * @param new_territory
+     * @param new_territory the new territory to add
      */
     public void addCommandTerritory(Territory new_territory){
-        Color new_color = new_territory.getBackground();
-        new_territory.setBackground(new_color.darker());
+        TerritoryView territoryView = new_territory.getTerritoryView();
+        Color new_color = territoryView.getBackground();
+        territoryView.setBackground(new_color.darker());
         commandTerritory.add(new_territory);
     }
 
@@ -273,7 +279,8 @@ public class GameView extends JFrame {
     public void clearCommandTerritory(){
         for(Territory x : commandTerritory){
             x.cancel_timer();
-            x.setBackground(x.getDefault_color());
+            TerritoryView territoryView = x.getTerritoryView();
+            territoryView.setBackground(x.getDefault_color());
         }
         commandTerritory.clear();
     }
@@ -285,7 +292,6 @@ public class GameView extends JFrame {
      */
     public ArrayList<Territory> getCommandTerritory(){
         return commandTerritory;
-
     }
 
     /**
@@ -298,7 +304,7 @@ public class GameView extends JFrame {
 
     /**
      * This is to play the most jamming beat as you take over the world. No further explanation required.
-     * @param filepath
+     * @param filepath the filepath of the music to play
      */
     public void playMusic(String filepath) {
         {

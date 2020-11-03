@@ -1,3 +1,8 @@
+package Controller;
+
+import View.PlayerSelectView;
+import View.StartUpView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +19,7 @@ public class StartUpController implements ActionListener {
 
     /**
      * controller constructor.
-     * @param startUp
+     * @param startUp the view
      */
     public StartUpController(StartUpView startUp){
         this.startUpView = startUp;

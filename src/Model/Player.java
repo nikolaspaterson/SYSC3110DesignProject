@@ -1,64 +1,43 @@
+package Model;
+
+import View.PlayerView;
+
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.util.HashMap;
 
 /**
- * The Player class is responsible for containing important attributes that every player should have in the game of Risk.
+ * The Model.Player class is responsible for containing important attributes that every player should have in the game of Risk.
  *
  * @author Ahmad El-Sammak
  * @author Erik Iuhas
  */
-public class Player extends JPanel {
+public class Player {
 
     private final String name;
     private final HashMap<String, Territory> territoriesOccupied;
-    private final Color player_color;
     private int deployableTroops;
     private int total_troops;
-
-    private JLabel player_icon;
-    private JLabel player_name_label;
-    private JLabel total_troops_label;
-    private JLabel player_deploy;
+    private PlayerView playerView;
 
     /**
-     * Class constructor for the Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
+     * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
      * @param name the name of the player.
      */
-    public Player(String name,Color player_color,ImageIcon player_icon) {
+    public Player(String name, Color player_color, ImageIcon player_icon) {
         this.name = name;
         this.total_troops = 0;
-        this.player_color = player_color;
+        territoriesOccupied = new HashMap<>();
+        playerView = new PlayerView(name, player_color, player_icon, total_troops);
+    }
 
-        Border darkline = BorderFactory.createLineBorder(player_color.darker());
-        this.setBackground(player_color);
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        this.player_icon = new JLabel();
-        this.player_name_label = new JLabel();
-        this.total_troops_label = new JLabel();
-        this.player_deploy = new JLabel();
-        player_deploy.setFont(new Font("Impact",Font.PLAIN,20));
-        player_deploy.setForeground(new Color(0xE73A3A));
-        this.player_icon.setIcon(new ImageIcon(player_icon.getImage()));
-        this.player_name_label.setText(name);
-        this.player_name_label.setFont(new Font("Impact",Font.PLAIN,15));
-        this.total_troops_label.setText("Troop#: " + total_troops);
-
-        this.add(this.player_icon);
-        this.add(this.player_name_label);
-        this.add(this.total_troops_label);
-        this.setBorder(darkline);
-
+    public Player(String name) {
+        this.name = name;
         territoriesOccupied = new HashMap<>();
     }
 
-    /**
-     * Gets the player's icon.
-     * @return Icon
-     */
-    public Icon getplayer_icon(){
-        return player_icon.getIcon();
+    public PlayerView getPlayerView() {
+        return playerView;
     }
 
     /**
@@ -71,23 +50,9 @@ public class Player extends JPanel {
 
     /**
      * Getter for the hashmap containing all the territories that the player occupies.
-     * @return HashMap<String,Territory> The territories Occupied.
+     * @return HashMap<String,Model.Territory> The territories Occupied.
      */
     public HashMap<String, Territory> getTerritoriesOccupied() { return territoriesOccupied; }
-
-    /**
-     * Gets the player's color.
-     * @return Color
-     */
-    public Color getPlayer_color(){ return player_color;}
-
-    /**
-     * Gets the deploy label.
-     * @return JLabel
-     */
-    public JLabel getDeployLabel(){
-        return player_deploy;
-    }
 
     /**
      * Adds the deployableTroops on top of the existing deployableTroops.
@@ -96,7 +61,7 @@ public class Player extends JPanel {
      */
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
-        player_deploy.setText(String.valueOf(this.deployableTroops));
+        playerView.setDeployLabel(this.deployableTroops);
         addTotal(deployableTroops);
     }
 
@@ -106,7 +71,7 @@ public class Player extends JPanel {
      */
     public void addTotal(int troops) {
         total_troops += troops;
-        total_troops_label.setText("Troop#: " + total_troops);
+        playerView.setTotalTroopsLabel(total_troops);
     }
 
     /**
@@ -123,7 +88,7 @@ public class Player extends JPanel {
      */
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
-        player_deploy.setText(String.valueOf(this.deployableTroops));
+        playerView.setDeployLabel(this.deployableTroops);
         addTotal(deployableTroops);
     }
 
@@ -177,24 +142,8 @@ public class Player extends JPanel {
     public void removeTerritory(String territory) {
         territoriesOccupied.remove(territory);
         if(territoriesOccupied.values().size() == 0){
-            xOutPlayer();
+            playerView.xOutPlayer();
         }
-    }
-
-    /**
-     * This method is used to add an "X" ontop of players who were eliminated out of the game.
-     */
-    public void xOutPlayer(){
-        setBackground(new Color(0x404040));
-        removeAll();
-        ImageIcon scaledImg = new ImageIcon(getClass().getResource("/resources/redx.png"));
-        Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
-        scaledImg = new ImageIcon(img);
-        JLabel x_mark = new JLabel();
-        x_mark.setIcon(scaledImg);
-        add(x_mark);
-        revalidate();
-        repaint();
     }
 
     /**
@@ -206,11 +155,11 @@ public class Player extends JPanel {
     }
 
     /**
-     * Combines the Player's Name, all their Territory's owned and how many troops are in each Territory.
+     * Combines the Model.Player's Name, all their Model.Territory's owned and how many troops are in each Model.Territory.
      * @return String combination of information above.
      */
     public String toString() {
-        String output = "------>Player: " + this.name + "<------\n";
+        String output = "------>Model.Player: " + this.name + "<------\n";
         String enemy;
         String ally;
         for(Territory temp_territory : territoriesOccupied.values()) {

@@ -1,29 +1,35 @@
+package View;
+
+import Controller.AttackPopUpController;
+import Model.Player;
+import Model.Territory;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
 /**
- * The AttackPopUp class is used for when a player has selected which territory they want to attack.
+ * The View.AttackPopUp class is used for when a player has selected which territory they want to attack.
  * It asks the user how many dice they want to roll with based on the number of troops in their territory.
  *
  * @author Ahmad El-Sammak
  */
 public class AttackPopUp extends JPopupMenu {
 
-    private Territory attackingTerritory;
-    private Territory defendingTerritory;
-    private JButton minus;
-    private JLabel numDice;
-    private JButton plus;
-    private JLabel attackerLabel;
-    private JLabel defenderLabel;
-    private JLabel outcome;
+    private final Territory attackingTerritory;
+    private final Territory defendingTerritory;
+    private final JButton minus;
+    private final JLabel numDice;
+    private final JButton plus;
+    private final JLabel attackerLabel;
+    private final JLabel defenderLabel;
+    private final JLabel outcome;
     private JLabel attackingLabel;
     private JLabel defendingLabel;
-    private JFrame gameViewRef;
+    private final JFrame gameViewRef;
 
     /**
-     * Class constructor for AttackPopUp class.
+     * Class constructor for View.AttackPopUp class.
      * @param attackingTerritory the attacker's territory object.
      * @param defendingTerritory the defender's territory object.
      * @param gameViewRef a reference to the main game's frame.
@@ -103,8 +109,14 @@ public class AttackPopUp extends JPopupMenu {
         result.add(defenderLabel);
         result.add(outcome);
 
-        JPanel leftPanel = playerPanel(attackingTerritory.getOccupant().getplayer_icon(), "left");
-        JPanel rightPanel = playerPanel(defendingTerritory.getOccupant().getplayer_icon(), "right");
+        Player attacker = attackingTerritory.getOccupant();
+        Player defender = defendingTerritory.getOccupant();
+
+        PlayerView attackingView = attacker.getPlayerView();
+        PlayerView defendingView = defender.getPlayerView();
+
+        JPanel leftPanel = playerPanel(attackingView.getplayer_icon(), "left");
+        JPanel rightPanel = playerPanel(defendingView.getplayer_icon(), "right");
 
         AttackPopUpController attackPopUpController = new AttackPopUpController(this);
 
@@ -180,7 +192,7 @@ public class AttackPopUp extends JPopupMenu {
 
     /**
      * Gets the attacking territory.
-     * @return Territory attacking territory
+     * @return Model.Territory attacking territory
      */
     public Territory getAttackingTerritory() {
         return attackingTerritory;
@@ -188,7 +200,7 @@ public class AttackPopUp extends JPopupMenu {
 
     /**
      * Gets the defending territory.
-     * @return Territory defending territory
+     * @return Model.Territory defending territory
      */
     public Territory getDefendingTerritory() {
         return defendingTerritory;

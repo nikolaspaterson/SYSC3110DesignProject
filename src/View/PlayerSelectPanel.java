@@ -1,24 +1,23 @@
+package View;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * The PlayerSelectPanel class is used to store the information of each player in a JPanel.
- * A player has a Name, Icon and deciding if is an AI or Player.
+ * The View.PlayerSelectPanel class is used to store the information of each player in a JPanel.
+ * A player has a Name, Icon and deciding if is an AI or Model.Player.
  *
  * @author Ahmad El-Sammak
  */
 public class PlayerSelectPanel extends JPanel {
 
-    private ArrayList<String> file;
-    private JTextField playerName;
-    private JButton photo;
+    private final JTextField playerName;
+    private final JButton photo;
 
     /**
-     * Class constructor for PlayerSelectPanel class.
+     * Class constructor for View.PlayerSelectPanel class.
      */
     public PlayerSelectPanel() {
         super();
@@ -32,18 +31,15 @@ public class PlayerSelectPanel extends JPanel {
         option.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         option.setBounds(new Rectangle(50,50));
 
-        option.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (option.getText().equals("PLAYER")) {
-                    option.setText("AI");
-                } else{
-                    option.setText("PLAYER");
-                }
+        option.addActionListener(e -> {
+            if (option.getText().equals("PLAYER")) {
+                option.setText("AI");
+            } else{
+                option.setText("PLAYER");
             }
         });
 
-        file = new ArrayList<>();
+        ArrayList<String> file = new ArrayList<>();
         file.add("/resources/Chizzy.png");
         file.add("/resources/TA.png");
         file.add("/resources/Captain.png");
@@ -55,17 +51,13 @@ public class PlayerSelectPanel extends JPanel {
         photo = new JButton();
         photo.setIcon(chizzy);
 
-
-        photo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(photo.getIcon().equals(chizzy)) {
-                    photo.setIcon(TA);
-                } else if (photo.getIcon().equals(TA)) {
-                    photo.setIcon(chip);
-                } else{
-                    photo.setIcon(chizzy);
-                }
+        photo.addActionListener(e -> {
+            if(photo.getIcon().equals(chizzy)) {
+                photo.setIcon(TA);
+            } else if (photo.getIcon().equals(TA)) {
+                photo.setIcon(chip);
+            } else{
+                photo.setIcon(chizzy);
             }
         });
 

@@ -1,19 +1,22 @@
-import javax.swing.*;
+package Controller;
+
+import View.GameView;
+import View.PlayerSelectView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
- * The PlayerSelectController class is used to change and update the PlayerSelectView based which buttons are pressed.
+ * The Controller.PlayerSelectController class is used to change and update the View.PlayerSelectView based which buttons are pressed.
  *
  * @author Ahmad El-Sammak
  */
 public class PlayerSelectController implements ActionListener {
 
-    private PlayerSelectView playerSelectView;
+    private final PlayerSelectView playerSelectView;
 
     /**
-     * Class constructor for PlayerSelectController class.
+     * Class constructor for Controller.PlayerSelectController class.
      * @param playerSelectView the view that needs to be changed.
      */
     public PlayerSelectController(PlayerSelectView playerSelectView) {

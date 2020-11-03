@@ -1,96 +1,70 @@
-import javax.swing.*;
+package Model;
+
+import View.PlayerView;
+import View.TerritoryView;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
- * The Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
+ * The Model.Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
  *
  * @author Ahmad El-Sammak
  * @author Erik Iuhas
  */
-public class Territory extends JButton {
+public class Territory {
 
     private Player occupant;
     private int troops;
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
 
-    private JPanel popup_info;
-    private JLabel troop_count_label;
-    private JLabel territory_name_label;
-    private JLabel occupant_name_label;
-
+    private final TerritoryView territoryView;
     private Color default_color;
     private Timer blinking_yours;
     private Timer blinking_theirs;
 
     /**
-     * Class constructor for the Territory class. Sets the player who occupies the territory
+     * Class constructor for the Model.Territory class. Sets the player who occupies the territory
      * @param territoryName the name of the territory.
      */
     public Territory(String territoryName,int x, int y, int width, int height,Component parent) {
         this.territoryName = territoryName;
-        this.setBounds(x,y,width,height);
         troops = 0;
         neighbours = new HashMap<>();
         blinking_yours = new Timer("flash_yours");
         blinking_theirs = new Timer("flash_theirs");
+        territoryView = new TerritoryView(territoryName, x, y, width, height, parent, troops, this);
+    }
 
-        popup_info = new JPanel();
-        popup_info.setLayout(new BoxLayout(popup_info,BoxLayout.Y_AXIS));
-        popup_info.setBounds(x+width,y,100,50);
-        popup_info.setMaximumSize(new Dimension(100,50));
-        territory_name_label = new JLabel(territoryName);
-        territory_name_label.setFont(new Font("Arial",Font.BOLD,12));
-        troop_count_label = new JLabel("Troops: " + troops);
-        occupant_name_label = new JLabel("");
-
-        popup_info.add(territory_name_label);
-        popup_info.add(troop_count_label);
-        popup_info.add(occupant_name_label);
-
-        this.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent me) {
-                parent.getParent().add(popup_info);
-                parent.getParent().revalidate();
-                parent.getParent().repaint();
-            }
-            public void mouseExited(MouseEvent me) {
-                parent.getParent().remove(popup_info);
-                parent.getParent().revalidate();
-                parent.getParent().repaint();
-            }
-        });
+    public TerritoryView getTerritoryView() {
+        return territoryView;
     }
 
     /**
      * Gets the Occupant's color.
-     * @return
+     * @return Color the color of the player
      */
     public Color getDefault_color(){ return default_color;}
 
     /**
-     * Gets the name of this Territory.
-     * @return String the Territory name.
+     * Gets the name of this Model.Territory.
+     * @return String the Model.Territory name.
      */
     public String getTerritoryName() { return territoryName; }
 
     /**
-     * Sets the number of troops in this Territory.
+     * Sets the number of troops in this Model.Territory.
      * @param troops the number of troops.
      */
     public void setTroops(int troops) {
         this.troops = troops;
-        troop_count_label.setText("Troops: " + String.valueOf(troops));
-        this.setText(String.valueOf(troops));
+        territoryView.setTroopsLabel(troops);
+        territoryView.setText(String.valueOf(troops));
     }
 
     /**
-     * Gets the number of troops in this Territory.
+     * Gets the number of troops in this Model.Territory.
      * @return int the number of troops.
      */
     public int getTroops() {
@@ -98,65 +72,66 @@ public class Territory extends JButton {
     }
 
     /**
-     * This method is used to remove troops and update the JLabel on the Territory object as a result of an attack.
+     * This method is used to remove troops and update the JLabel on the Model.Territory object as a result of an attack.
      * @param value the value to remove
      */
     public void removeTroops(int value) {
         troops += (value);
         occupant.addTotal(value);
-        troop_count_label.setText("Troops: " + String.valueOf(troops));
-        this.setText(String.valueOf(troops));
+        territoryView.setTroopsLabel(troops);
+        territoryView.setText(String.valueOf(troops));
     }
 
     /**
-     * Adds a Territory as a neighbour of this Territory into a HashMap.
-     * @param neighbour the neighbouring Territory.
+     * Adds a Model.Territory as a neighbour of this Model.Territory into a HashMap.
+     * @param neighbour the neighbouring Model.Territory.
      */
     public void addNeighbour(Territory neighbour){ neighbours.put(neighbour.getTerritoryName() ,neighbour); }
 
     /**
-     * Gets the HashMap of neighbouring Territories for this Territory.
-     * @return HashMap<String,Territory> the HashMap of neighbours.
+     * Gets the HashMap of neighbouring Territories for this Model.Territory.
+     * @return HashMap<String,Model.Territory> the HashMap of neighbours.
      */
     public HashMap<String,Territory> getNeighbours() {
         return this.neighbours;
     }
 
     /**
-     * Sets a new Player to occupy this Territory.
-     * @param occupant the new Player to Occupy.
+     * Sets a new Model.Player to occupy this Model.Territory.
+     * @param occupant the new Model.Player to Occupy.
      */
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
-        occupant_name_label.setText("Occ: "+occupant.getName());
-        this.setBackground(occupant.getPlayer_color());
-        default_color = occupant.getPlayer_color();
+        PlayerView player = occupant.getPlayerView();
+        territoryView.setOccupantLabel(occupant);
+        territoryView.setBackground(player.getPlayer_color());
+        default_color = player.getPlayer_color();
     }
 
     /**
-     * Gets the Player that occupies this Territory.
-     * @return Player the occupant.
+     * Gets the Model.Player that occupies this Model.Territory.
+     * @return Model.Player the occupant.
      */
     public Player getOccupant() {
         return occupant;
     }
 
     /**
-     * This method is used to check if this Territory is neighbours with the @param territoryToCheck.
+     * This method is used to check if this Model.Territory is neighbours with the @param territoryToCheck.
      * @param territoryToCheck the territory to check.
      * @return boolean true if it is a neighbour, false if not.
      */
     public boolean isNeighbour(Territory territoryToCheck) {
         String terrToCheck = territoryToCheck.getTerritoryName();
-        return this.neighbours.containsKey(terrToCheck);
+        return neighbours.containsKey(terrToCheck);
     }
 
     /**
-     * Combines the name of the Territory and lists all the neighbouring Territories.
+     * Combines the name of the Model.Territory and lists all the neighbouring Territories.
      * Prints String combination of the information above.
      */
     public void print_info(){
-        System.out.println("Territory Name: " + territoryName );
+        System.out.println("Model.Territory Name: " + territoryName );
         System.out.println("Neighbours: " + neighbours.keySet().toString());
         System.out.println("Owner: " + occupant.getName());
         System.out.println("Troop Count: " + troops);
@@ -172,7 +147,8 @@ public class Territory extends JButton {
         blinking_yours = new Timer();
         blinking_theirs = new Timer();
         for(Territory temp : neighbours.values()){
-            temp.setBackground(temp.getDefault_color());
+            TerritoryView tempView = temp.getTerritoryView();
+            tempView.setBackground(temp.getDefault_color());
         }
     }
 
@@ -189,7 +165,7 @@ public class Territory extends JButton {
      * @return String - The string in the description
      */
     public String toString() {
-        String output = "------>Territory Name: " + this.territoryName + "<------\n";
+        String output = "------>Model.Territory Name: " + this.territoryName + "<------\n";
         output += "======Neighbouring Territories======\n";
 
         for(String str : neighbours.keySet()) {

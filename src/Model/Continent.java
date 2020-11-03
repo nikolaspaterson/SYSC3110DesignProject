@@ -1,4 +1,5 @@
-import java.awt.*;
+package Model;
+
 import java.util.HashMap;
 
 /**
@@ -6,13 +7,13 @@ import java.util.HashMap;
  */
 public class Continent {
 
-    private HashMap<String, Territory> continentTerritory;
-    private String continentName;
+    private final HashMap<String, Territory> continentTerritory;
+    private final String continentName;
 
     /**
-     * Continent object stores all the territories withing that continent. This is used for calculation of the troop
-     * bonus in GameView which is called at the start of everyone's turn
-     * @param continentName
+     * Model.Continent object stores all the territories withing that continent. This is used for calculation of the troop
+     * bonus in View.GameView which is called at the start of everyone's turn
+     * @param continentName the name of the continent
      */
     public Continent(String continentName){
         this.continentName = continentName;
@@ -22,22 +23,22 @@ public class Continent {
     /**
      * Adds territory to continentTerritory HashMap
      * @param territory_name Name of territory
-     * @param territory Territory Object
+     * @param territory Model.Territory Object
      */
     public void addContinentTerritory(String territory_name, Territory territory){
         continentTerritory.put(territory_name,territory);
     }
 
     /**
-     * Get the HashMap of Territories that are in the Continent
-     * @return The map of territories in Continent
+     * Get the HashMap of Territories that are in the Model.Continent
+     * @return The map of territories in Model.Continent
      */
     public HashMap<String, Territory> getContinentTerritory() {
         return continentTerritory;
     }
 
     /**
-     * Returns the name of the Continent
+     * Returns the name of the Model.Continent
      * @return String of continent name
      */
     public String getContinentName() {
@@ -50,9 +51,8 @@ public class Continent {
      * @return Checks if the player owns all the territories in the continent and returns True if they do
      */
     public Boolean checkContinentOccupant(Player player){
-        Player current_player = player;
         for(Territory temp_territory : continentTerritory.values()){
-            if (!current_player.equals(temp_territory.getOccupant())){
+            if (!player.equals(temp_territory.getOccupant())){
                 return false;
             }
         }

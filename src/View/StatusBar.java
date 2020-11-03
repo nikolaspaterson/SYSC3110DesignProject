@@ -1,9 +1,14 @@
+package View;
+
+import Controller.GameController;
+import Model.Player;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
 /**
- * Object constructior for StatusBar Jpanel which stays at the bottom of the screen and displays
+ * Object constructor for View.StatusBar JPanel which stays at the bottom of the screen and displays
  */
 public class StatusBar extends JPanel {
 
@@ -12,8 +17,6 @@ public class StatusBar extends JPanel {
     private final JButton nextStep;
     private final JLabel currentAction;
     private final JLabel currentName;
-    private Player player;
-    private GameController nextButtonController;
     private JLabel deployLabel;
 
     public StatusBar(){
@@ -51,15 +54,15 @@ public class StatusBar extends JPanel {
     /**
      * Set current player in the object Status bar may reference variables from the player such as deployLabel which
      * updates when the deployable troops value goes down
-     * @param player Player Object
+     * @param player Model.Player Object
      */
     public void setPlayer(Player player){
-        this.player = player;
-        deployLabel = player.getDeployLabel();
+        PlayerView playerView = player.getPlayerView();
+        deployLabel = playerView.getDeployLabel();
         currentName.setText(player.getName());
-        currentPlayerIcon.setIcon(player.getplayer_icon());
-        descriptionPanel.setBackground(player.getBackground().brighter());
-        setBackground(player.getBackground());
+        currentPlayerIcon.setIcon(playerView.getplayer_icon());
+        descriptionPanel.setBackground(playerView.getBackground().brighter());
+        setBackground(playerView.getBackground());
         displayReinforce();
     }
 
@@ -68,8 +71,7 @@ public class StatusBar extends JPanel {
      * @param control Game controller which contains action listener nextState
      */
     public void setController(GameController control){
-        nextButtonController = control;
-        nextStep.addActionListener(nextButtonController::nextState);
+        nextStep.addActionListener(control::nextState);
     }
 
     /**
@@ -80,9 +82,7 @@ public class StatusBar extends JPanel {
         descriptionPanel.remove(deployLabel);
         this.revalidate();
         this.repaint();
-
         currentAction.setText("<html>Time to FIGHT!<br>Attack enemy Territories</html>");
-
     }
 
     /**
@@ -110,18 +110,14 @@ public class StatusBar extends JPanel {
     }
 
     /**
-     * Called in GameView and occurs everytime the player clicks nextStep Button.
+     * Called in View.GameView and occurs everytime the player clicks nextStep Button.
      * @param state State of the game can either be Reinforce,Attack, or Fortify.
      */
     public void updateDisplay(String state){
-        if(state == "Reinforce"){
-
-            displayReinforce();
-        } else if(state == "Attack"){
-            displayAttack();
-        } else if(state == "Fortify"){
-            displayFortify();
+        switch (state) {
+            case "Reinforce" -> displayReinforce();
+            case "Attack" -> displayAttack();
+            case "Fortify" -> displayFortify();
         }
-
     }
 }
