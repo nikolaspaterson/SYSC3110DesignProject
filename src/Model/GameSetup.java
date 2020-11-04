@@ -1,5 +1,7 @@
 package Model;
 
+import View.TerritoryView;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -114,7 +116,8 @@ public class GameSetup {
             y = Integer.parseInt(temp_territory[2]);
             width = Integer.parseInt(temp_territory[3]) - x;
             height = Integer.parseInt(temp_territory[4]) - y;
-            Territory added_territory = new Territory(territory_name,x,y,width,height,parent);
+            Territory added_territory = new Territory(territory_name);
+            added_territory.setTerritoryView(territory_name,x,y,width,height,parent);
             world_map.put(territory_name,added_territory);
             if (continentMap.get(continent_name) == null){
                 continentMap.put(continent_name,new Continent(continent_name));
@@ -161,6 +164,7 @@ public class GameSetup {
      */
     public void printWorldInfo(){
         for(Territory x : world_map.values()){
+            x.updateView();
             x.print_info();
         }
     }

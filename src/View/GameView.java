@@ -68,7 +68,9 @@ public class GameView extends JFrame {
         color_list.add(new Color(139, 224, 87));
 
         for( PlayerSelectPanel x : players){
-            playerList.add(new Player(x.getPlayerName(), color_list.pop(), (ImageIcon) x.getImageIcon()));
+            Player newPlayer = new Player(x.getPlayerName());
+            newPlayer.setPlayerView(color_list.pop(), (ImageIcon) x.getImageIcon());
+            playerList.add(newPlayer);
         }
 
         JPanel players_overlay = new JPanel();
@@ -227,6 +229,7 @@ public class GameView extends JFrame {
             troops += ((currentPlayer.getTerritoriesOccupied().size()) / 3);
         }
         currentPlayer.addDeployableTroops(troops);
+        currentPlayer.updateView();
     }
 
     /**

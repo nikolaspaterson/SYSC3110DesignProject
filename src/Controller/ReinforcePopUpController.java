@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.GameEvent;
+import Model.Territory;
 import View.ReinforcePopUp;
 
 import java.awt.event.ActionEvent;
@@ -47,6 +48,9 @@ public class ReinforcePopUpController implements ActionListener {
         }else if(e.getSource().equals(popup.getDeployButton())){ //if deploy button is pressed
             if(x > 0){
                 ge.reinforce(popup.getTerritory(), x);
+                Territory temp = popup.getTerritory();
+                temp.updateView();
+                temp.getOccupant().updateView();
                 popup.setVisible(false);
             }
         }

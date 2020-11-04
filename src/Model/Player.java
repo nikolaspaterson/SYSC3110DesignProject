@@ -24,16 +24,15 @@ public class Player {
      * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
      * @param name the name of the player.
      */
-    public Player(String name, Color player_color, ImageIcon player_icon) {
+    public Player(String name) {
         this.name = name;
         this.total_troops = 0;
         territoriesOccupied = new HashMap<>();
-        playerView = new PlayerView(name, player_color, player_icon, total_troops);
+
     }
 
-    public Player(String name) {
-        this.name = name;
-        territoriesOccupied = new HashMap<>();
+    public void setPlayerView(Color player_color, ImageIcon player_icon){
+        playerView = new PlayerView(name, player_color, player_icon, total_troops);
     }
 
     public PlayerView getPlayerView() {
@@ -61,7 +60,6 @@ public class Player {
      */
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
-        playerView.setDeployLabel(this.deployableTroops);
         addTotal(deployableTroops);
     }
 
@@ -71,7 +69,6 @@ public class Player {
      */
     public void addTotal(int troops) {
         total_troops += troops;
-        playerView.setTotalTroopsLabel(total_troops);
     }
 
     /**
@@ -88,7 +85,6 @@ public class Player {
      */
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
-        playerView.setDeployLabel(this.deployableTroops);
         addTotal(deployableTroops);
     }
 
@@ -141,9 +137,7 @@ public class Player {
      */
     public void removeTerritory(String territory) {
         territoriesOccupied.remove(territory);
-        if(territoriesOccupied.values().size() == 0){
-            playerView.xOutPlayer();
-        }
+
     }
 
     /**
@@ -179,5 +173,13 @@ public class Player {
             output += ally + enemy;
         }
         return output;
+    }
+
+    public void updateView(){
+        playerView.setDeployLabel(this.deployableTroops);
+        playerView.setTotalTroopsLabel(total_troops);
+        if(territoriesOccupied.values().size() == 0){
+            playerView.xOutPlayer();
+        }
     }
 }

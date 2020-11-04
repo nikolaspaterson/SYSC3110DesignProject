@@ -15,7 +15,7 @@ public class TerritoryView extends JButton {
     private final JLabel occupant_name_label;
     private final Territory territory;
 
-    public TerritoryView(String territoryName, int x, int y, int width, int height, Component parent, int troops, Territory territory) {
+    public TerritoryView(String territoryName, int x, int y, int width, int height, Component parent, Territory territory) {
         this.territory = territory;
         setBounds(x,y,width,height);
         popup_info = new JPanel();
@@ -24,7 +24,7 @@ public class TerritoryView extends JButton {
         popup_info.setMaximumSize(new Dimension(100,50));
         JLabel territory_name_label = new JLabel(territoryName);
         territory_name_label.setFont(new Font("Arial",Font.BOLD,12));
-        troop_count_label = new JLabel("Troops: " + troops);
+        troop_count_label = new JLabel("Troops: " );
         occupant_name_label = new JLabel("");
 
         popup_info.add(territory_name_label);

@@ -19,7 +19,7 @@ public class Territory {
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
 
-    private final TerritoryView territoryView;
+    private TerritoryView territoryView;
     private Color default_color;
     private Timer blinking_yours;
     private Timer blinking_theirs;
@@ -28,15 +28,17 @@ public class Territory {
      * Class constructor for the Model.Territory class. Sets the player who occupies the territory
      * @param territoryName the name of the territory.
      */
-    public Territory(String territoryName,int x, int y, int width, int height,Component parent) {
+    public Territory(String territoryName) {
         this.territoryName = territoryName;
         troops = 0;
         neighbours = new HashMap<>();
         blinking_yours = new Timer("flash_yours");
         blinking_theirs = new Timer("flash_theirs");
-        territoryView = new TerritoryView(territoryName, x, y, width, height, parent, troops, this);
-    }
 
+    }
+    public void setTerritoryView(String territoryName,int x, int y, int width, int height,Component parent){
+        territoryView = new TerritoryView(territoryName, x, y, width, height, parent,this);
+    }
     public TerritoryView getTerritoryView() {
         return territoryView;
     }
@@ -59,8 +61,6 @@ public class Territory {
      */
     public void setTroops(int troops) {
         this.troops = troops;
-        territoryView.setTroopsLabel(troops);
-        territoryView.setText(String.valueOf(troops));
     }
 
     /**
@@ -78,8 +78,7 @@ public class Territory {
     public void removeTroops(int value) {
         troops += (value);
         occupant.addTotal(value);
-        territoryView.setTroopsLabel(troops);
-        territoryView.setText(String.valueOf(troops));
+
     }
 
     /**
@@ -103,8 +102,6 @@ public class Territory {
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
         PlayerView player = occupant.getPlayerView();
-        territoryView.setOccupantLabel(occupant);
-        territoryView.setBackground(player.getPlayer_color());
         default_color = player.getPlayer_color();
     }
 
@@ -173,5 +170,11 @@ public class Territory {
         }
         output += "==================";
         return output;
+    }
+    public void updateView(){
+        territoryView.setOccupantLabel(occupant);
+        territoryView.setBackground(occupant.getPlayerView().getPlayer_color());
+        territoryView.setTroopsLabel(troops);
+        territoryView.setText(String.valueOf(troops));
     }
 }

@@ -62,7 +62,7 @@ public class PlayerView extends JPanel {
     }
 
     public void setTotalTroopsLabel(int troops){
-        total_troops_label.setText(String.valueOf(troops));
+        total_troops_label.setText("Troop#: " + String.valueOf(troops));
     }
 
     /**
