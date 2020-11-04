@@ -32,7 +32,7 @@ TA(Carleton's Best)
 ### Project Milestones
 
 - [x] Milestone 1: Create a text-based playable game.
-- [ ] Milestone 2: Make game GUI based.
+- [x] Milestone 2: Make game GUI based.
 - [ ] Milestone 3: Implement AI players and many more features!
 - [ ] Milestone 4: Save/load game and custom maps
 
@@ -48,11 +48,11 @@ The UML diagram displays how our classes interact with one another.
 We documented all of our code and provided a Word Document describing our choice in data structures.
 
 ### Milesstone 2 Deliverables
-1. Readme :x:
-2. Design file :x:
-3. Unit tests :x:
-4. Source code :x:
-5. Documentation :x:
+1. Readme :white_check_mark:
+2. Design file :white_check_mark:
+3. Unit tests :white_check_mark:
+4. Source code :white_check_mark:
+5. Documentation :white_check_mark:
 
 ### Milestone 3 Deliverables
 1. Readme :x:
@@ -80,7 +80,7 @@ We assumed that each player will,
 3. Players should only fortify ONCE.
 
 ### Text Based User Input Commands
-The user will play the game by typing these commands into the interface.
+The user will play the game by typing these commands into the interface. (From Milestone 1)
 1. **help** - prints availiable list of commands
 2. **fortify** - fortify is for moving troops from one owned territory to another. Example: **fortify Ontario Quebec 4**
 3. **worldmap** - prints out the entire state of the map and each players territories
