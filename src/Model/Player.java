@@ -28,11 +28,10 @@ public class Player {
         this.name = name;
         this.total_troops = 0;
         territoriesOccupied = new HashMap<>();
-
     }
 
-    public void setPlayerView(Color player_color, ImageIcon player_icon){
-        playerView = new PlayerView(name, player_color, player_icon, total_troops);
+    public void setPlayerView(Color playerColor, ImageIcon player_icon){
+        playerView = new PlayerView(name, playerColor, player_icon, total_troops);
     }
 
     public PlayerView getPlayerView() {

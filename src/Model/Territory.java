@@ -78,7 +78,6 @@ public class Territory {
     public void removeTroops(int value) {
         troops += (value);
         occupant.addTotal(value);
-
     }
 
     /**
@@ -101,8 +100,6 @@ public class Territory {
      */
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
-        PlayerView player = occupant.getPlayerView();
-        default_color = player.getPlayer_color();
     }
 
     /**
@@ -171,7 +168,9 @@ public class Territory {
         output += "==================";
         return output;
     }
+
     public void updateView(){
+        default_color = occupant.getPlayerView().getPlayer_color();
         territoryView.setOccupantLabel(occupant);
         territoryView.setBackground(occupant.getPlayerView().getPlayer_color());
         territoryView.setTroopsLabel(troops);
