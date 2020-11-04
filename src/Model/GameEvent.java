@@ -42,6 +42,10 @@ public class GameEvent {
         }
     }
 
+    /**
+     * This method is used to create a temporary Dice object.
+     * @return Dice the temp dice
+     */
     protected Dice createTempDice()
     {
         return new Dice();

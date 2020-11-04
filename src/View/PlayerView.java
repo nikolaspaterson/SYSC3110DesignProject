@@ -4,6 +4,12 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+/**
+ * Used to represent the Player object as a JPanel that will be placed on the main GUI Frame.
+ *
+ * @author Ahmad El-Sammak
+ * @author Erik Iuhas
+ */
 public class PlayerView extends JPanel {
 
     private final JLabel total_troops_label;
@@ -11,6 +17,13 @@ public class PlayerView extends JPanel {
     private final JLabel player_icon;
     private final Color player_color;
 
+    /**
+     * Constructor for the PlayerView Class.
+     * @param name the name of the player
+     * @param player_color the player color
+     * @param player_icon the icon that the player chose
+     * @param total_troops the total number of troops
+     */
     public PlayerView(String name, Color player_color, ImageIcon player_icon, int total_troops) {
         Border darkline = BorderFactory.createLineBorder(player_color.darker());
         setBackground(player_color);
@@ -50,19 +63,27 @@ public class PlayerView extends JPanel {
     public Color getPlayer_color(){ return player_color;}
 
     /**
-     * Gets the deploy label.
+     * Gets the deploy JLabel.
      * @return JLabel
      */
     public JLabel getDeployLabel(){
         return player_deploy;
     }
 
+    /**
+     * Sets the player's deployable troops JLabel
+     * @param troops amount of troops to deploy
+     */
     public void setDeployLabel(int troops){
         player_deploy.setText(String.valueOf(troops));
     }
 
+    /**
+     * Sets the player's Total troops JLabel.
+     * @param troops total troops.
+     */
     public void setTotalTroopsLabel(int troops){
-        total_troops_label.setText("Troop#: " + String.valueOf(troops));
+        total_troops_label.setText("Troop#: " + (troops));
     }
 
     /**
@@ -80,9 +101,5 @@ public class PlayerView extends JPanel {
         revalidate();
         repaint();
     }
-
-
-
-
 
 }

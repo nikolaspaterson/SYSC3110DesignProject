@@ -36,12 +36,17 @@ public class ReinforcePopUpController implements ActionListener {
         int deployableTroops = popup.getPlayer().getDeployableTroops();
 
         if(e.getSource().equals(popup.getPlus())){//if plus button is pressed
-            if(x < deployableTroops){
+            if(x == deployableTroops) {
+                x = 0;
+            } else {
                 x++;
             }
             popup.setTroops(x);
         }else if(e.getSource().equals(popup.getMinus())){//if minus is pressed
-            if(x > 0){
+            if(x == 0) {
+                x = deployableTroops;
+            }
+            else {
                 x--;
             }
             popup.setTroops(x);

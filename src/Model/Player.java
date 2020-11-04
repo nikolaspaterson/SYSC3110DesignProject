@@ -30,10 +30,19 @@ public class Player {
         territoriesOccupied = new HashMap<>();
     }
 
+    /**
+     * Sets the PlayerView.
+     * @param playerColor the player's color
+     * @param player_icon the player icon.
+     */
     public void setPlayerView(Color playerColor, ImageIcon player_icon){
         playerView = new PlayerView(name, playerColor, player_icon, total_troops);
     }
 
+    /**
+     * Gets the PlayerView
+     * @return PlayerView
+     */
     public PlayerView getPlayerView() {
         return playerView;
     }
@@ -140,14 +149,6 @@ public class Player {
     }
 
     /**
-     * Gets the total number of troops a player has across all of their territories.
-     * @return int total troops
-     */
-    public int getTotal_troops() {
-        return total_troops;
-    }
-
-    /**
      * Combines the Model.Player's Name, all their Model.Territory's owned and how many troops are in each Model.Territory.
      * @return String combination of information above.
      */
@@ -174,6 +175,9 @@ public class Player {
         return output;
     }
 
+    /**
+     * Updates all the necessary labels and backgrounds that the view needs to change after an event.
+     */
     public void updateView(){
         playerView.setDeployLabel(this.deployableTroops);
         playerView.setTotalTroopsLabel(total_troops);

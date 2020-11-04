@@ -34,11 +34,25 @@ public class Territory {
         neighbours = new HashMap<>();
         blinking_yours = new Timer("flash_yours");
         blinking_theirs = new Timer("flash_theirs");
-
     }
+
+    /**
+     * Sets up the TerritoryView.
+     * @param territoryName the name of the territory
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param width the width
+     * @param height the height
+     * @param parent the parent component
+     */
     public void setTerritoryView(String territoryName,int x, int y, int width, int height,Component parent){
         territoryView = new TerritoryView(territoryName, x, y, width, height, parent,this);
     }
+
+    /**
+     * gets the TerritoryView
+     * @return TerritoryView the view
+     */
     public TerritoryView getTerritoryView() {
         return territoryView;
     }
@@ -169,6 +183,9 @@ public class Territory {
         return output;
     }
 
+    /**
+     * Updates all the necessary labels and backgrounds that the view needs to change after an event.
+     */
     public void updateView(){
         default_color = occupant.getPlayerView().getPlayer_color();
         territoryView.setOccupantLabel(occupant);
