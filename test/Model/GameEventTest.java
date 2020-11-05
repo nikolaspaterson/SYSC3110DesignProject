@@ -193,6 +193,7 @@ public class GameEventTest {
         // Unsuccessful Attack
         t1.setTroops(2);
         t2.setTroops(2);
+
         gameEvent.attack(t2, t1, 1);
         assertEquals(2, t1.getTroops());
         assertEquals(2, t2.getTroops());
