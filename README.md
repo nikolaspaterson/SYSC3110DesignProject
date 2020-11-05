@@ -73,11 +73,10 @@ We documented all of our code and provided a Word Document describing our choice
 **Milestone 1**<br>
 There were many changes made to this iteration of the progejct. Our UML was revised several times, classes were created, deleted and refactored and many bugs were squashed. Our group also changed, we unfortuantely had a member drop the course resulting in the remaining members to absorb a little extra work. We were able to fix many bugs and after long hours in voice calls we created a playable textbased version of RISK. <br>
 **Milestone 2**<br>
-In this change we had to update the entire game to be GUI based so we went out to achieve the best looking game of RISK ever made. With 3 playable character in the roster and more to come
-
+In Milestone 2, we had to update the entire game to be GUI based so we went out to achieve the best looking game of RISK ever made. With 3 playable character in the roster and more to come. This version of the game has an easy to use interface which allows for players to clearly know their owned territories and enemies with ease. Along with background music and a winning track, the game is bound to get Game of the Year.  
 
 ### Known Issues
-There arent any know issues in our code. 
+There arent any currently known issues in our code. 
 
 ### Deliverables
 
