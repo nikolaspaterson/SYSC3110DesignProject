@@ -1,3 +1,5 @@
+package Model;
+
 import Model.Dice;
 import Model.GameEvent;
 import Model.Player;

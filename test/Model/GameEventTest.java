@@ -1,10 +1,12 @@
-import Model.AttackResult;
-import Model.GameEvent;
-import Model.Player;
-import Model.Territory;
-import junit.framework.TestCase;
+package Model;
 
-class GameEventTest extends TestCase {
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class GameEventTest {
 
     private Player p1;
     private Player p2;
@@ -15,7 +17,8 @@ class GameEventTest extends TestCase {
     private Territory t4;
     private Territory t5;
 
-    public void setUp() {
+    @Before
+    public void setUp() throws Exception {
         p1 = new Player("Fred");
         p2 = new Player("John");
 
@@ -26,9 +29,35 @@ class GameEventTest extends TestCase {
         t5 = new Territory("Greenland");
     }
 
-    @org.junit.jupiter.api.Test
-    void reinforce() {
-        setUp();
+    @After
+    public void tearDown() throws Exception {
+       p1 = null;
+       p2 = null;
+
+       t1 = null;
+       t2 = null;
+       t3 = null;
+       t4 = null;
+       t5 = null;
+    }
+
+    @Test
+    public void testSuccessfulReinforce() {
+        p1.setDeployableTroops(2);
+        p1.addTerritory(t1.getTerritoryName(), t1);
+        t1.setOccupant(p1);
+        t1.setTroops(3);
+
+        GameEvent gameEvent = new GameEvent(p1);
+
+        System.out.println("Successful Reinforce");
+        // Successful reinforce
+        gameEvent.reinforce(t1, 2);
+        assertEquals(5, t1.getTroops());
+    }
+
+    @Test
+    public void testUnsuccessfulReinforce() {
         p1.setDeployableTroops(3);
         p2.setDeployableTroops(3);
 
@@ -40,39 +69,26 @@ class GameEventTest extends TestCase {
         t2.setOccupant(p2);
         t2.setTroops(1);
 
-        p2.addTerritory(t3.getTerritoryName(), t3);
-        t3.setOccupant(p2);
-        t3.setTroops(2);
-
-        ////////////////////////////////////////////
         GameEvent gameEvent = new GameEvent(p1);
-
-        System.out.println("Successful Reinforce");
-        // Successful reinforce
-        gameEvent.reinforce(t1, 2);
-        assertEquals(5, t1.getTroops());
 
         System.out.println("\nFailed Reinforce - Trying to reinforce more troops than the player's deployable troop number");
         // Failed Reinforce - Trying to reinforce more troops than the player's deployable troop number
-        p1.setDeployableTroops(3);
         gameEvent.reinforce(t1, 4);
-        assertEquals(5, t1.getTroops());
+        assertEquals(3, t1.getTroops());
 
         System.out.println( "\nFailed Reinforce  - Negative troops as input");
         // Failed Reinforce  - Negative troops as input
         gameEvent.reinforce(t1, -2);
-        assertEquals(5, t1.getTroops());
+        assertEquals(3, t1.getTroops());
 
         System.out.println("\nFailed Reinforce - Model.Player does NOT occupy the Model.Territory");
         // Failed Reinforce - Model.Player does NOT occupy the Model.Territory
         gameEvent.reinforce(t2, 2);
         assertEquals(1, t2.getTroops());
-
     }
 
-    @org.junit.jupiter.api.Test
-    void attack() {
-        setUp();
+    @Test
+    public void testSuccessfulAttack() {
         p1.addTerritory(t1.getTerritoryName(), t1);
         t1.setOccupant(p1);
         t1.addNeighbour(t2);
@@ -81,10 +97,6 @@ class GameEventTest extends TestCase {
         t2.setOccupant(p2);
         t2.addNeighbour(t1);
 
-        p2.addTerritory(t3.getTerritoryName(), t3);
-        t3.setOccupant(p2);
-
-        ////////////////////////////////////////////
         MockGameEvent gameEvent = new MockGameEvent(p1);
         MockDice fakeDice = gameEvent.getMockDice();
 
@@ -117,6 +129,26 @@ class GameEventTest extends TestCase {
         gameEvent.attack(t1, t2, 3);
         assertEquals(3, t1.getTroops());
         assertEquals(2, t2.getTroops());
+    }
+
+    @Test
+    public void testUnsuccessfulAttack() {
+        p1.addTerritory(t1.getTerritoryName(), t1);
+        t1.setOccupant(p1);
+        t1.addNeighbour(t2);
+
+        p2.addTerritory(t2.getTerritoryName(), t2);
+        t2.setOccupant(p2);
+        t2.addNeighbour(t1);
+
+        p2.addTerritory(t3.getTerritoryName(), t3);
+        t3.setOccupant(p2);
+
+        MockGameEvent gameEvent = new MockGameEvent(p1);
+        MockDice fakeDice = gameEvent.getMockDice();
+
+        // Set mocked outcome - Attacker loses one troop and Defender loses one troop
+        fakeDice.setNextAttackOutcome(AttackResult.A1D1);
 
         System.out.println("\nUnsuccessful Attack - AttackingT and DefendingT are NOT neighbours.");
         // Unsuccessful Attack
@@ -160,9 +192,30 @@ class GameEventTest extends TestCase {
         assertEquals(2, t2.getTroops());
     }
 
-    @org.junit.jupiter.api.Test
-    void fortify() {
-        setUp();
+    @Test
+    public void testSuccessfulFortify() {
+        p1.addTerritory(t1.getTerritoryName(), t1);
+        t1.setOccupant(p1);
+        t1.addNeighbour(t2);
+
+        p1.addTerritory(t2.getTerritoryName(), t2);
+        t2.setOccupant(p1);
+        t2.addNeighbour(t1);
+
+        t1.setTroops(4);
+        t2.setTroops(4);
+
+        GameEvent gameEvent = new GameEvent(p1);
+
+        System.out.println("\nSuccessful Attack - Territory1 and Territory2 are neighbouring and owned by the same player.");
+        // Successful Fortify
+        gameEvent.fortify(t1, t2, 1);
+        assertEquals(3, t1.getTroops());
+        assertEquals(5, t2.getTroops());
+    }
+
+    @Test
+    public void testUnsuccessfulFortify() {
         p1.addTerritory(t1.getTerritoryName(), t1);
         t1.setOccupant(p1);
         t1.addNeighbour(t2);
@@ -184,7 +237,6 @@ class GameEventTest extends TestCase {
         t5.addNeighbour(t2);
         t5.addNeighbour(t1);
 
-
         t1.setTroops(4);
         t2.setTroops(4);
         t3.setTroops(4);
@@ -192,12 +244,6 @@ class GameEventTest extends TestCase {
         t5.setTroops(4);
 
         GameEvent gameEvent = new GameEvent(p1);
-
-        System.out.println("\nSuccessful Attack - Territory1 and Territory2 are neighbouring and owned by the same player.");
-        // Successful Fortify
-        gameEvent.fortify(t1, t2, 1);
-        assertEquals(3, t1.getTroops());
-        assertEquals(5, t2.getTroops());
 
         System.out.println("\nUnsuccessful Attack - Territory1 and Territory2 are not owned by the same player.");
         // Unsuccessful Fortify
@@ -231,4 +277,5 @@ class GameEventTest extends TestCase {
         assertEquals(4, t1.getTroops());
         assertEquals(4, t4.getTroops());
     }
+
 }

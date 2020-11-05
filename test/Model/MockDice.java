@@ -1,3 +1,5 @@
+package Model;
+
 import Model.AttackResult;
 import Model.Dice;
 
