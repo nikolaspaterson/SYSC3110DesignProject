@@ -70,41 +70,49 @@ We documented all of our code and provided a Word Document describing our choice
 
 
 ### Changes Made
-There were many changes made to this iteration of the progejct. Our UML was revised several times, classes were created, deleted and refactored and many bugs were squashed. Our group also changed, we unfortuantely had a member drop the course resulting in the remaining members to absorb a little extra work. We were able to fix many bugs and after long hours in voice calls we created a playable textbased version of RISK. 
+**Milestone 1**<br>
+There were many changes made to this iteration of the progejct. Our UML was revised several times, classes were created, deleted and refactored and many bugs were squashed. Our group also changed, we unfortuantely had a member drop the course resulting in the remaining members to absorb a little extra work. We were able to fix many bugs and after long hours in voice calls we created a playable textbased version of RISK. <br>
+**Milestone 2**<br>
+In Milestone 2, we had to update the entire game to be GUI based so we went out to achieve the best looking game of RISK ever made, with 3 playable character in the roster and more to come. This version of the game has an easy to use interface which allows for players to clearly know their owned territories and enemies with ease. Along with background music and a winning track, the game is bound to get Game of the Year.  
 
 ### Known Issues
-There arent any know issues in our code BUT we did make a couple assumptions about how the players will play the game.
-We assumed that each player will,
-1. Deploy all available troops(can be in many territories)
-2. Attack, players can attack several times each turn
-3. Players should only fortify ONCE.
-
-### Text Based User Input Commands
-The user will play the game by typing these commands into the interface. (From Milestone 1)
-1. **help** - prints availiable list of commands
-2. **fortify** - fortify is for moving troops from one owned territory to another. Example: **fortify Ontario Quebec 4**
-3. **worldmap** - prints out the entire state of the map and each players territories
-4. **reinforce** - reinforce is used to place deployableTroops on owned territoreis at the start of each turn. Example: **reinforce Ontario 3**
-5. **attack** - attack is used for attacking an enemy territory, you can only use 1-3 as dice rolls and you provide your territory first then the one you would like to attack next. Example: **attack Ontario EasternUnitedStates 3**
-6. **mymap** - prints out the current player's 
-7. **quit** - closes the game
-8. **skip** - skips the current player turn to go to the next one
+There arent any currently known issues in our code. 
 
 ### Deliverables
 
 **Scripts:**<br>
+**Old Scripts**<br>
 Command - Nikolas Paterson<br>
 CommandEnum - Nikolas Paterson<br>
 CommandParser - Nikolas Paterson<br>
 CommandWord - Nikolas Paterson<br>
-Model.Dice - Ahmad El-Sammak<br>
 Game - Nikolas Paterson, Erik Iuhas<br>
+
+**Model**<br>
+Model.Dice - Ahmad El-Sammak<br>
 Model.GameEvent - Ahmad El-Sammak<br>
 Model.GameSetup - Erik Iuhas<br>
 Model.Player - Ahmad El-Sammak, Erik Iuhas<br>
 Model.Territory - Ahmad El-Sammak, Erik Iuhas<br>
+
+**View**<br>
 View.GameView - Erik Iuhas <br>
 View.StatusBar - Erik Iuhas <br>
+View.AttackPopUp - Ahmad El-Sammak <br>
+View.TerritoryView - Erik Iuhas, Ahmad El-Sammak<br>
+View.FortifyPopUp - Nikolas Paterson<br>
+View.StartUpView - Nikolas Paterson<br>
+View.PlayerSelectView - Ahmad El-Sammak<br>
+View.PlayerSelectPanel - Ahmad El-Sammak<br>
+View.ReinforcePopUp - Nikolas Paterson<br>
+
+**Controller**<br>
+Controller.AttackPopUpController - Ahmad El-Sammak<br>
+Controller.FortifyPopUpController - Nikolas Paterson<br>
+Controller.GameController - Erik Iuhas<br>
+Controller.PlayerSelectController - Ahmad El-Sammak<br>
+Controller.ReinforcePopUpController -Nikolas Paterson<br>
+Controller.StartUpController - Nikolas Paterson<br>
 
 **Resources:**<br>
 TerritoryNeighbours.csv - Erik Iuhas<br>
@@ -121,8 +129,7 @@ Documentation - Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
 
 
 ### Project Roadmap
-Milestone 2! In the second milestone we are required to convert the game from text based to GUI based and implement Unit Testing. We are looking forward to 
-adding GUI because it will make playing the game a lot more enjoyable. Adding unit testing will also help us save a lot of time because the testing will be automated instead of us constanly playing the game while testing for unexpected behaviour.
+Milestone 3! In the third milestone we are going to create an AI mode that can determine which moves are best and play the game for us. We are looking forward to add AI so instead of playing the game ourselves, we can just sit back and relax to the world domination beats. Our current version in Milestone 2 also includes some of the Milestone 3 requirements such as continent/troop bonus, shout out to Ahmad for taking the lead on that one.
 
 
 ### Copyright matters
