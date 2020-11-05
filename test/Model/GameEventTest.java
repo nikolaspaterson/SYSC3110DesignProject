@@ -16,6 +16,7 @@ public class GameEventTest {
     private Territory t3;
     private Territory t4;
     private Territory t5;
+    private Territory t6;
 
     @Before
     public void setUp() throws Exception {
@@ -27,6 +28,36 @@ public class GameEventTest {
         t3 = new Territory("Egypt");
         t4 = new Territory("Scandinavia");
         t5 = new Territory("Greenland");
+        t6 = new Territory("Wonderland");
+
+        p1.addTerritory(t1.getTerritoryName(), t1);
+        t1.setOccupant(p1);
+        t1.addNeighbour(t2);
+        t1.addNeighbour(t5);
+        t1.addNeighbour(t6);
+
+        p1.addTerritory(t2.getTerritoryName(), t2);
+        t2.setOccupant(p2);
+        t2.addNeighbour(t1);
+        t2.addNeighbour(t5);
+
+        p1.addTerritory(t4.getTerritoryName(), t4);
+        t4.setOccupant(p1);
+
+        p2.addTerritory(t3.getTerritoryName(), t3);
+        t3.setOccupant(p2);
+
+        p2.addTerritory(t5.getTerritoryName(), t5);
+        t5.setOccupant(p2);
+        t5.addNeighbour(t2);
+        t5.addNeighbour(t1);
+
+        p1.addTerritory(t6.getTerritoryName(),t6);
+        t6.setOccupant(p1);
+        t6.addNeighbour(t1);
+
+
+
     }
 
     @After
@@ -39,13 +70,12 @@ public class GameEventTest {
        t3 = null;
        t4 = null;
        t5 = null;
+       t6 = null;
     }
 
     @Test
     public void testSuccessfulReinforce() {
         p1.setDeployableTroops(2);
-        p1.addTerritory(t1.getTerritoryName(), t1);
-        t1.setOccupant(p1);
         t1.setTroops(3);
 
         GameEvent gameEvent = new GameEvent(p1);
@@ -61,12 +91,7 @@ public class GameEventTest {
         p1.setDeployableTroops(3);
         p2.setDeployableTroops(3);
 
-        p1.addTerritory(t1.getTerritoryName(), t1);
-        t1.setOccupant(p1);
         t1.setTroops(3);
-
-        p2.addTerritory(t2.getTerritoryName(), t2);
-        t2.setOccupant(p2);
         t2.setTroops(1);
 
         GameEvent gameEvent = new GameEvent(p1);
@@ -89,14 +114,6 @@ public class GameEventTest {
 
     @Test
     public void testSuccessfulAttack() {
-        p1.addTerritory(t1.getTerritoryName(), t1);
-        t1.setOccupant(p1);
-        t1.addNeighbour(t2);
-
-        p2.addTerritory(t2.getTerritoryName(), t2);
-        t2.setOccupant(p2);
-        t2.addNeighbour(t1);
-
         MockGameEvent gameEvent = new MockGameEvent(p1);
         MockDice fakeDice = gameEvent.getMockDice();
 
@@ -133,17 +150,6 @@ public class GameEventTest {
 
     @Test
     public void testUnsuccessfulAttack() {
-        p1.addTerritory(t1.getTerritoryName(), t1);
-        t1.setOccupant(p1);
-        t1.addNeighbour(t2);
-
-        p2.addTerritory(t2.getTerritoryName(), t2);
-        t2.setOccupant(p2);
-        t2.addNeighbour(t1);
-
-        p2.addTerritory(t3.getTerritoryName(), t3);
-        t3.setOccupant(p2);
-
         MockGameEvent gameEvent = new MockGameEvent(p1);
         MockDice fakeDice = gameEvent.getMockDice();
 
@@ -194,49 +200,20 @@ public class GameEventTest {
 
     @Test
     public void testSuccessfulFortify() {
-        p1.addTerritory(t1.getTerritoryName(), t1);
-        t1.setOccupant(p1);
-        t1.addNeighbour(t2);
-
-        p1.addTerritory(t2.getTerritoryName(), t2);
-        t2.setOccupant(p1);
-        t2.addNeighbour(t1);
-
         t1.setTroops(4);
-        t2.setTroops(4);
+        t6.setTroops(4);
 
         GameEvent gameEvent = new GameEvent(p1);
 
-        System.out.println("\nSuccessful Attack - Territory1 and Territory2 are neighbouring and owned by the same player.");
+        System.out.println("\nSuccessful Fortify - Territory1 and Territory2 are neighbouring and owned by the same player.");
         // Successful Fortify
-        gameEvent.fortify(t1, t2, 1);
+        gameEvent.fortify(t1, t6, 1);
         assertEquals(3, t1.getTroops());
-        assertEquals(5, t2.getTroops());
+        assertEquals(5, t6.getTroops());
     }
 
     @Test
     public void testUnsuccessfulFortify() {
-        p1.addTerritory(t1.getTerritoryName(), t1);
-        t1.setOccupant(p1);
-        t1.addNeighbour(t2);
-        t1.addNeighbour(t5);
-
-        p1.addTerritory(t2.getTerritoryName(), t2);
-        t2.setOccupant(p1);
-        t2.addNeighbour(t1);
-        t2.addNeighbour(t5);
-
-        p1.addTerritory(t4.getTerritoryName(), t4);
-        t4.setOccupant(p1);
-
-        p2.addTerritory(t3.getTerritoryName(), t3);
-        t3.setOccupant(p2);
-
-        p2.addTerritory(t5.getTerritoryName(), t5);
-        t5.setOccupant(p2);
-        t5.addNeighbour(t2);
-        t5.addNeighbour(t1);
-
         t1.setTroops(4);
         t2.setTroops(4);
         t3.setTroops(4);
@@ -245,7 +222,7 @@ public class GameEventTest {
 
         GameEvent gameEvent = new GameEvent(p1);
 
-        System.out.println("\nUnsuccessful Attack - Territory1 and Territory2 are not owned by the same player.");
+        System.out.println("\nUnsuccessful Fortify - Territory1 and Territory2 are not owned by the same player.");
         // Unsuccessful Fortify
         t1.setTroops(4);
         t2.setTroops(4);
@@ -253,25 +230,25 @@ public class GameEventTest {
         assertEquals(4, t1.getTroops());
         assertEquals(4, t3.getTroops());
 
-        System.out.println("\nUnsuccessful Attack - Territory1 and Territory2 are neighbouring BUT is NOT owned by the same player.");
+        System.out.println("\nUnsuccessful Fortify - Territory1 and Territory2 are neighbouring BUT is NOT owned by the same player.");
         // Unsuccessful Fortify
         gameEvent.fortify(t1, t5, 1);
         assertEquals(4, t1.getTroops());
         assertEquals(4, t5.getTroops());
 
-        System.out.println("\nUnsuccessful Attack - negative amount of troops.");
+        System.out.println("\nUnsuccessful Fortify - negative amount of troops.");
         // Unsuccessful Fortify
         gameEvent.fortify(t1, t2, -1);
         assertEquals(4, t1.getTroops());
         assertEquals(4, t2.getTroops());
 
-        System.out.println("\nUnsuccessful Attack - move ALL the troops in your first territory.");
+        System.out.println("\nUnsuccessful Fortify - move ALL the troops in your first territory.");
         // Unsuccessful Fortify
         gameEvent.fortify(t1, t2, 4);
         assertEquals(4, t1.getTroops());
         assertEquals(4, t2.getTroops());
 
-        System.out.println("\nUnsuccessful Attack - Territory1 and Territory2 are NOT neighbouring BUT are owned by the same player.");
+        System.out.println("\nUnsuccessful Fortify - Territory1 and Territory2 are NOT neighbouring BUT are owned by the same player.");
         // Unsuccessful Fortify
         gameEvent.fortify(t1, t4, 1);
         assertEquals(4, t1.getTroops());
