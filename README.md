@@ -80,53 +80,14 @@ There arent any currently known issues in our code.
 
 ### Deliverables
 
-**Scripts:**<br>
-**Old Scripts**<br>
-Command - Nikolas Paterson<br>
-CommandEnum - Nikolas Paterson<br>
-CommandParser - Nikolas Paterson<br>
-CommandWord - Nikolas Paterson<br>
-Game - Nikolas Paterson, Erik Iuhas<br>
-
-**Model**<br>
-Model.Dice - Ahmad El-Sammak<br>
-Model.GameEvent - Ahmad El-Sammak<br>
-Model.GameSetup - Erik Iuhas<br>
-Model.Player - Ahmad El-Sammak, Erik Iuhas<br>
-Model.Territory - Ahmad El-Sammak, Erik Iuhas<br>
-
-**View**<br>
-View.GameView - Erik Iuhas <br>
-View.StatusBar - Erik Iuhas <br>
-View.AttackPopUp - Ahmad El-Sammak <br>
-View.TerritoryView - Erik Iuhas, Ahmad El-Sammak<br>
-View.FortifyPopUp - Nikolas Paterson<br>
-View.StartUpView - Nikolas Paterson<br>
-View.PlayerSelectView - Ahmad El-Sammak<br>
-View.PlayerSelectPanel - Ahmad El-Sammak<br>
-View.ReinforcePopUp - Nikolas Paterson<br>
-
-**Controller**<br>
-Controller.AttackPopUpController - Ahmad El-Sammak<br>
-Controller.FortifyPopUpController - Nikolas Paterson<br>
-Controller.GameController - Erik Iuhas<br>
-Controller.PlayerSelectController - Ahmad El-Sammak<br>
-Controller.ReinforcePopUpController -Nikolas Paterson<br>
-Controller.StartUpController - Nikolas Paterson<br>
-
-**Resources:**<br>
-TerritoryNeighbours.csv - Erik Iuhas<br>
-Map.png - ErikIuhas<br>
-Chizzy.png - ErikIuhas<br>
-TA.png - ErikIuhas<br>
-Captain.png - ErikIuhas<br>
-
-**Documents:**<br>
-README -Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
-UML Diagram - Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
-Sequence Diagrams - Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
-Documentation - Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas<br>
-
+|   | Deliverables |
+| --- | --- |
+| Old Scripts | <table><thread><tr><th>Script</th><th>Author(s)</th></tr></thead><tbody><tr><td>Command</td><td>Nikolas Paterson</td></tr><tr><td>CommandEnum</td><td>Nikolas Paterson</td></tr><tr><td>CommandParser</td><td>Nikolas Paterson</td></tr><tr><td>CommandWord</td><td>Nikolas Paterson</td></tr><tr><td>Game</td><td>Nikolas Paterson, Erik Iuhas</td></tr></tbody></table>|
+| Models | <table><thread><tr><th>Model</th><th>Author(s)</th></tr></thead><tbody><tr><td>Dice</td><td>Ahmad El-Sammak</td></tr><tr><td>GameEvent</td><td>Ahmad El-Sammak</td></tr><tr><td>GameSetup</td><td>Erik Iuhas</td></tr><tr><td>Player</td><td>Ahmad El-Sammak, Erik Iuhas</td></tr><tr><td>Territory</td><td>Ahmad El-Sammak, Erik Iuhas</td></tr></tbody></table>|
+| Views | <table><thread><tr><th>View</th><th>Author(s)</th></tr></thead><tbody><tr><td>GameView</td><td>Erik Iuhas</td></tr><tr><td>StatusBar</td><td>Erik Iuhas</td></tr><tr><td>AttackPopUp</td><td>Ahmad El-Sammak</td></tr><tr><td>TerritoryView</td><td>Ahmad El-Sammak, Erik Iuhas</td></tr><tr><td>FortifyPopUp</td><td>Nikolas Paterson</td></tr><tr><td>StartUpView</td><td>Nikolas Paterson</td></tr><tr><td>PlayerSelectView</td><td>Ahmad El-Sammak</td></tr><tr><td>PlayerSelectPanel</td><td>Ahmad El-Sammak</td></tr><tr><td>ReinforcePopUp</td><td>Nikolas Paterson</td></tr></tbody></table>|
+| Controllers | <table><thread><tr><th>Controller</th><th>Author(s)</th></tr></thead><tbody><tr><td>AttackPopUpController</td><td>Ahmad El-Sammak</td></tr><tr><td>FortifyPopUpController</td><td>Nikolas Paterson</td></tr><tr><td>GameController</td><td>Erik Iuhas</td></tr><tr><td>PlayerSelectController</td><td>Ahmad El-Sammak</td></tr><tr><td>ReinforcePopUpController</td><td>Nikolas Paterson</td></tr><tr><td>StartUpController</td><td>Nikolas Paterson</td></tr></tbody></table>|
+| Resources | <table><thread><tr><th>Resource</th><th>Author(s)</th></tr></thead><tbody><tr><td>TerritoryNeighbours.csv</td><td>Erik Iuhas</td></tr><tr><td>Map.png</td><td>Erik Iuhas</td></tr><tr><td>Chizzy.png</td><td>Erik Iuhas</td></tr><tr><td>TA.png</td><td>Erik Iuhas</td></tr><tr><td>Captain.png</td><td>Erik Iuhas</td></tr></tbody></table>|
+| Documentation | <table><thread><tr><th>Document</th><th>Author(s)</th></tr></thead><tbody><tr><td>README</td><td>Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas</td></tr><tr><td>UML Diagram</td><td>Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas</td></tr><tr><td>Sequence Diagrams</td><td>Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas</td></tr><tr><td>Write Up</td><td>Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas</td></tbody></table>|
 
 ### Project Roadmap
 Milestone 3! In the third milestone we are going to create an AI mode that can determine which moves are best and play the game for us. We are looking forward to add AI so instead of playing the game ourselves, we can just sit back and relax to the world domination beats. Our current version in Milestone 2 also includes some of the Milestone 3 requirements such as continent/troop bonus, shout out to Ahmad for taking the lead on that one.
