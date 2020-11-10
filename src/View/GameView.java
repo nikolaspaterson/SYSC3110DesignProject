@@ -285,7 +285,6 @@ public class GameView extends JFrame {
         for(Territory x : commandTerritory){
             Color color_fix = x.getColor().brighter();
             x.addColor(color_fix);
-            x.cancel_timer();
         }
         commandTerritory.clear();
     }

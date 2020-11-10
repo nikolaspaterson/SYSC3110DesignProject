@@ -1,6 +1,7 @@
 package Model;
 
 import Listener.TerritoryView;
+import Event.TerritoryEvent;
 
 import java.awt.*;
 import java.util.ArrayList;

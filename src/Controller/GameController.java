@@ -39,10 +39,10 @@ public class GameController implements ActionListener {
 
             case "Attack":
                 if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
-                    gameViewRef.clearCommandTerritory();
                     temp_territory.activateTimer();
                     gameViewRef.addCommandTerritory(temp_territory);
                 } else if (gameViewRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())) {
+                    gameViewRef.getCommandTerritory().get(0).cancel_timer();
                     gameViewRef.clearCommandTerritory();
                     temp_territory.activateTimer();
                     gameViewRef.addCommandTerritory(temp_territory);
@@ -51,8 +51,12 @@ public class GameController implements ActionListener {
                     AttackPopUp attackPopUp = new AttackPopUp(gameViewRef.getCommandTerritory().get(0), gameViewRef.getCommandTerritory().get(1), gameViewRef);
                     attackPopUp.show(gameViewRef, 300, 350);
                     System.out.println("Attacker: " + gameViewRef.getCommandTerritory().get(0).toString() + "Defender: " + gameViewRef.getCommandTerritory().get(1).toString());
+                    gameViewRef.getCommandTerritory().get(0).cancel_timer();
                     gameViewRef.clearCommandTerritory();
                 } else {
+                    for(Territory time_stop : gameViewRef.getCommandTerritory()){
+                        time_stop.cancel_timer();
+                    }
                     gameViewRef.clearCommandTerritory();
 
                 }
@@ -81,6 +85,9 @@ public class GameController implements ActionListener {
      * @param e The button from View.StatusBar
      */
     public void nextState(ActionEvent e){
+        for(Territory time_stop : gameViewRef.getCommandTerritory()){
+            time_stop.cancel_timer();
+        }
         gameViewRef.nextState();
         gameViewRef.clearCommandTerritory();
     }
