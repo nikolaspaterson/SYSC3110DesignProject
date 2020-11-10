@@ -1,6 +1,6 @@
 package Model;
 
-import View.TerritoryView;
+import View.TerritoryButton;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -21,6 +21,7 @@ public class GameSetup {
     private final String territory_CSV;
     private final ArrayList<Territory> unclaimed_territory;
     private final HashMap<String, Continent> continentMap;
+    private ArrayList<TerritoryButton> worldMapView;
 
     /**
      * Model.GameSetup is in charge of calling private methods which
@@ -33,6 +34,7 @@ public class GameSetup {
         this.world_map = new HashMap<>();
         this.continentMap = new HashMap<>();
         this.unclaimed_territory = new ArrayList<>();
+        worldMapView = new ArrayList<>();
         set_neighbours(read_csv(),parent);
         distribute_troops(players);
         }
@@ -117,7 +119,9 @@ public class GameSetup {
             width = Integer.parseInt(temp_territory[3]) - x;
             height = Integer.parseInt(temp_territory[4]) - y;
             Territory added_territory = new Territory(territory_name);
-            added_territory.setTerritoryView(territory_name,x,y,width,height,parent);
+            TerritoryButton territoryButton = new TerritoryButton(territory_name,x,y,width,height,parent);
+            added_territory.addTerritoryView(territoryButton);
+            worldMapView.add(territoryButton);
             world_map.put(territory_name,added_territory);
             if (continentMap.get(continent_name) == null){
                 continentMap.put(continent_name,new Continent(continent_name));
@@ -177,6 +181,8 @@ public class GameSetup {
     public HashMap<String, Territory> returnWorldMap(){
         return world_map;
     }
+
+    public ArrayList<TerritoryButton> returnWorldMapView() { return worldMapView; }
 
     public HashMap<String,Continent> returnContinentMap() {
         return continentMap;

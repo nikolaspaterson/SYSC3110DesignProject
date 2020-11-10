@@ -34,6 +34,7 @@ public class GameView extends JFrame {
     private Clip clip;
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
+    private HashMap<String, Territory> worldMap;
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -110,13 +111,15 @@ public class GameView extends JFrame {
         GameSetup gameSetup = new GameSetup(playerList,background);
 
         continentMap = gameSetup.returnContinentMap();
+        worldMap = gameSetup.returnWorldMap();
+        ArrayList<TerritoryButton> worldMapView = gameSetup.returnWorldMapView();
         currentPlayer = playerList.get(currentPlayerIndex);
         playerBonus();
         user_status.setPlayer(currentPlayer);
 
-        for(Territory x : gameSetup.returnWorldMap().values()){
-            background.add(x.getTerritoryView());
-            x.getTerritoryView().addActionListener(game_controller::territoryAction);
+        for(TerritoryButton x : worldMapView){
+            background.add(x);
+            x.addActionListener(game_controller::territoryAction);
         }
 
         add(user_status);
@@ -270,9 +273,8 @@ public class GameView extends JFrame {
      * @param new_territory the new territory to add
      */
     public void addCommandTerritory(Territory new_territory){
-        TerritoryView territoryView = new_territory.getTerritoryView();
-        Color new_color = territoryView.getBackground();
-        territoryView.setBackground(new_color.darker());
+        Color new_color = new_territory.getColor();
+        new_territory.addColor(new_color.darker());
         commandTerritory.add(new_territory);
     }
 
@@ -281,9 +283,9 @@ public class GameView extends JFrame {
      */
     public void clearCommandTerritory(){
         for(Territory x : commandTerritory){
-            x.cancel_timer();
-            TerritoryView territoryView = x.getTerritoryView();
-            territoryView.setBackground(x.getDefault_color());
+            //x.cancel_timer();
+            //TerritoryButton territoryButton = x.getTerritoryView();
+            //territoryButton.setBackground(x.getDefault_color());
         }
         commandTerritory.clear();
     }
@@ -304,6 +306,8 @@ public class GameView extends JFrame {
     public int getCommandTerritorySize(){
         return commandTerritory.size();
     }
+
+    public HashMap<String, Territory> getWorldMap() { return worldMap; }
 
     /**
      * This is to play the most jamming beat as you take over the world. No further explanation required.

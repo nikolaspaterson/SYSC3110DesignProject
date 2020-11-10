@@ -5,6 +5,7 @@ import View.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class GameController implements ActionListener {
 
@@ -22,9 +23,8 @@ public class GameController implements ActionListener {
     public void territoryAction(ActionEvent e){
         String state = gameViewRef.getCurrentState();
         Object obj = e.getSource();
-        TerritoryView territoryView = (TerritoryView) obj;
-        Territory temp_territory = territoryView.getTerritory();
-
+        TerritoryButton territoryButton = (TerritoryButton) obj;
+        Territory temp_territory = gameViewRef.getWorldMap().get(territoryButton.getTerritoryName());
 
         switch (state) {
             case "Reinforce":
@@ -40,11 +40,11 @@ public class GameController implements ActionListener {
             case "Attack":
                 if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
                     gameViewRef.clearCommandTerritory();
-                    temp_territory.activateTimer();
+                    //temp_territory.activateTimer();
                     gameViewRef.addCommandTerritory(temp_territory);
                 } else if (gameViewRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())) {
                     gameViewRef.clearCommandTerritory();
-                    temp_territory.activateTimer();
+                    //temp_territory.activateTimer();
                     gameViewRef.addCommandTerritory(temp_territory);
                 } else if (gameViewRef.getCommandTerritorySize() == 1 && !temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCommandTerritory().get(0).isNeighbour(temp_territory)) {
                     gameViewRef.addCommandTerritory(temp_territory);
