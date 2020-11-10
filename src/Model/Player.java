@@ -24,6 +24,7 @@ public class Player {
     private Icon player_icon;
     private Color player_color;
     private PlayerView playerView;
+    private boolean inGame;
 
     private ArrayList<PlayerListener> playerListeners;
 
@@ -36,6 +37,7 @@ public class Player {
         this.total_troops = 0;
         territoriesOccupied = new HashMap<>();
         playerListeners = new ArrayList<>();
+        inGame = true;
     }
 
 
@@ -112,6 +114,7 @@ public class Player {
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
         addTotal(deployableTroops);
+        updateListeners();
     }
 
     /**
@@ -165,6 +168,10 @@ public class Player {
      */
     public void removeTerritory(String territory) {
         territoriesOccupied.remove(territory);
+        if(territoriesOccupied.size() == 0){
+            eliminatePlayer();
+        }
+
 
     }
 
@@ -195,12 +202,21 @@ public class Player {
         return output;
     }
 
+
+    public void eliminatePlayer() {
+        inGame = false;
+        updateListeners();
+    }
+
+    public boolean getStatus(){ return inGame;}
+
     /**
      * Updates all the necessary labels and backgrounds that the view needs to change after an event.
      */
     public void updateListeners(){
         for(PlayerListener temp : playerListeners){
-            temp.handlePlayerUpdate(new PlayerEvent(this,deployableTroops,total_troops));
+            temp.handlePlayerUpdate(new PlayerEvent(this,deployableTroops,total_troops,inGame));
         }
     }
+
 }

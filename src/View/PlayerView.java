@@ -95,22 +95,24 @@ public class PlayerView extends JPanel implements PlayerListener {
     /**
      * This method is used to add an "X" ontop of players who were eliminated out of the game.
      */
-    public void xOutPlayer(){
-        setBackground(new Color(0x404040));
-        removeAll();
-        ImageIcon scaledImg = new ImageIcon(getClass().getResource("/resources/redx.png"));
-        Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
-        scaledImg = new ImageIcon(img);
-        JLabel x_mark = new JLabel();
-        x_mark.setIcon(scaledImg);
-        add(x_mark);
-        revalidate();
-        repaint();
+    public void xOutPlayer(boolean x){
+        if(!x){
+            setBackground(new Color(0x404040));
+            removeAll();
+            ImageIcon scaledImg = new ImageIcon(getClass().getResource("/resources/redx.png"));
+            Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
+            scaledImg = new ImageIcon(img);
+            JLabel x_mark = new JLabel();
+            x_mark.setIcon(scaledImg);
+            add(x_mark);
+        }
+
     }
 
     @Override
     public void handlePlayerUpdate(PlayerEvent e) {
         setDeployLabel(e.getDeployable_troops());
         setTotalTroopsLabel(e.getTotal_troops());
+        xOutPlayer(e.getStatus());
     }
 }

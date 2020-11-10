@@ -243,6 +243,7 @@ public class GameView extends JFrame {
     public void nextState(){
         clearCommandTerritory();
         if(gameStateIndex + 1 == 3){
+            user_status.removePlayer(currentPlayer);
             nextPlayer();
             user_status.setPlayer(currentPlayer);
         }

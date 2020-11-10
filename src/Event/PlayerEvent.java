@@ -2,11 +2,14 @@ package Event;
 
 import Model.Player;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.EventObject;
 
 public class PlayerEvent extends EventObject {
     private int deployable_troops;
     private int total_troops;
+    private boolean status;
 
     /**
      * Constructs a prototypical Event.
@@ -15,10 +18,11 @@ public class PlayerEvent extends EventObject {
      * @throws IllegalArgumentException if source is null
      */
 
-    public PlayerEvent(Player player, int deployable_troops, int total_troops){
+    public PlayerEvent(Player player, int deployable_troops, int total_troops,boolean status){
         super(player);
         this.deployable_troops = deployable_troops;
         this.total_troops = total_troops;
+        this.status = status;
     }
 
     public int getDeployable_troops() {
@@ -28,4 +32,7 @@ public class PlayerEvent extends EventObject {
     public int getTotal_troops() {
         return total_troops;
     }
+
+    public boolean getStatus() {return status;}
 }
+

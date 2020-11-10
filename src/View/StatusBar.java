@@ -1,7 +1,9 @@
 package View;
 
 import Controller.GameController;
+import Listener.PlayerListener;
 import Model.Player;
+import Event.PlayerEvent;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,7 +12,7 @@ import java.awt.*;
 /**
  * Object constructor for View.StatusBar JPanel which stays at the bottom of the screen and displays
  */
-public class StatusBar extends JPanel {
+public class StatusBar extends JPanel implements PlayerListener {
 
     private final JLabel currentPlayerIcon;
     private final JPanel descriptionPanel;
@@ -59,11 +61,16 @@ public class StatusBar extends JPanel {
      * @param player Model.Player Object
      */
     public void setPlayer(Player player){
+        deployLabel.setText(String.valueOf(player.getDeployableTroops()));
+        player.addPlayerListener(this);
         currentName.setText(player.getName());
         currentPlayerIcon.setIcon(player.getPlayer_icon());
         descriptionPanel.setBackground(player.getPlayer_color().brighter());
         setBackground(player.getPlayer_color());
         displayReinforce();
+    }
+    public void removePlayer(Player player){
+        player.removePlayerListener(this);
     }
 
     /**
@@ -79,6 +86,7 @@ public class StatusBar extends JPanel {
      * The method is called by updateDisplay for when the player interacts with nextStep
      */
     public void displayAttack(){
+
         descriptionPanel.remove(deployLabel);
         this.revalidate();
         this.repaint();
@@ -119,5 +127,11 @@ public class StatusBar extends JPanel {
             case "Attack" -> displayAttack();
             case "Fortify" -> displayFortify();
         }
+    }
+
+    @Override
+    public void handlePlayerUpdate(PlayerEvent e) {
+        deployLabel.setText(String.valueOf(e.getDeployable_troops()));
+
     }
 }
