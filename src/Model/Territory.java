@@ -1,9 +1,12 @@
 package Model;
 
-import View.PlayerView;
+import View.TerritoryButton;
 import View.TerritoryView;
+
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 
 /**
@@ -18,11 +21,8 @@ public class Territory {
     private int troops;
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
-
-    private TerritoryView territoryView;
-    private Color default_color;
-    private Timer blinking_yours;
-    private Timer blinking_theirs;
+    private List<TerritoryView> territoryViews;
+    private Color color;
 
     /**
      * Class constructor for the Model.Territory class. Sets the player who occupies the territory
@@ -32,36 +32,17 @@ public class Territory {
         this.territoryName = territoryName;
         troops = 0;
         neighbours = new HashMap<>();
-        blinking_yours = new Timer("flash_yours");
-        blinking_theirs = new Timer("flash_theirs");
+        territoryViews = new ArrayList<>();
+        color = Color.BLUE;
     }
 
-    /**
-     * Sets up the TerritoryView.
-     * @param territoryName the name of the territory
-     * @param x x coordinate
-     * @param y y coordinate
-     * @param width the width
-     * @param height the height
-     * @param parent the parent component
-     */
-    public void setTerritoryView(String territoryName,int x, int y, int width, int height,Component parent){
-        territoryView = new TerritoryView(territoryName, x, y, width, height, parent,this);
-    }
+    public void addColor(Color color) { this.color = color; }
 
-    /**
-     * gets the TerritoryView
-     * @return TerritoryView the view
-     */
-    public TerritoryView getTerritoryView() {
-        return territoryView;
-    }
+    public Color getColor() { return color; }
 
-    /**
-     * Gets the Occupant's color.
-     * @return Color the color of the player
-     */
-    public Color getDefault_color(){ return default_color;}
+    public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
+
+    public void removeTerritoryView(TerritoryView territoryView) { territoryViews.remove(territoryView); }
 
     /**
      * Gets the name of this Model.Territory.
@@ -147,28 +128,6 @@ public class Territory {
     }
 
     /**
-     * This method is used to stop the timer and stop the flashing of the valid territories that the player can attack.
-     */
-    public void cancel_timer(){
-        blinking_yours.cancel();
-        blinking_theirs.cancel();
-        blinking_yours = new Timer();
-        blinking_theirs = new Timer();
-        for(Territory temp : neighbours.values()){
-            TerritoryView tempView = temp.getTerritoryView();
-            tempView.setBackground(temp.getDefault_color());
-        }
-    }
-
-    /**
-     * This method creates a timer object which is used to flash the valid territory that the player can attack.
-     */
-    public void activateTimer(){
-        blinking_yours.scheduleAtFixedRate(new FlashTimerTask(getDefault_color(),getNeighbours(),1),0,1000);
-        blinking_theirs.scheduleAtFixedRate(new FlashTimerTask(getDefault_color(),getNeighbours(),0),500,1000);
-    }
-
-    /**
      * Creates a String that displays the territory name as well as its neighbouring territories
      * @return String - The string in the description
      */
@@ -183,14 +142,13 @@ public class Territory {
         return output;
     }
 
+
     /**
      * Updates all the necessary labels and backgrounds that the view needs to change after an event.
      */
     public void updateView(){
-        default_color = occupant.getPlayerView().getPlayer_color();
-        territoryView.setOccupantLabel(occupant);
-        territoryView.setBackground(occupant.getPlayerView().getPlayer_color());
-        territoryView.setTroopsLabel(troops);
-        territoryView.setText(String.valueOf(troops));
+        for(TerritoryView territoryView : territoryViews){
+            territoryView.handleTerritoryUpdate(new TerritoryEvent(this, occupant, troops, color));
+        }
     }
 }

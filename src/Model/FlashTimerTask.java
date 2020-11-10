@@ -21,13 +21,13 @@ public class FlashTimerTask extends TimerTask {
     public void run(){
         if(i == 0){
             for(Territory temp : neighbours.values()){
-                TerritoryView territoryView = temp.getTerritoryView();
-                territoryView.setBackground(temp.getDefault_color());
+                //TerritoryView territoryView = temp.getTerritoryView();
+                //territoryView.setBackground(temp.getDefault_color());
             }
         } else if(i == 1){
             for(Territory temp : neighbours.values()){
-                TerritoryView territoryView = temp.getTerritoryView();
-                territoryView.setBackground(main_color);
+                //TerritoryView territoryView = temp.getTerritoryView();
+                //territoryView.setBackground(main_color);
             }
         }
     }
