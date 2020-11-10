@@ -24,9 +24,6 @@ public class TerritoryButton extends JButton implements TerritoryView {
     private final JLabel occupant_name_label;
     private String territoryName;
 
-    private java.util.Timer blinking_yours;
-    private Timer blinking_theirs;
-
     /**
      * Constructor for the TerritoryView class.
      * @param territoryName the territory name
@@ -47,9 +44,6 @@ public class TerritoryButton extends JButton implements TerritoryView {
         territory_name_label.setFont(new Font("Arial",Font.BOLD,12));
         troop_count_label = new JLabel("Troops: " );
         occupant_name_label = new JLabel("");
-
-        blinking_yours = new Timer("flash_yours");
-        blinking_theirs = new Timer("flash_theirs");
 
         popup_info.add(territory_name_label);
         popup_info.add(troop_count_label);
@@ -85,32 +79,6 @@ public class TerritoryButton extends JButton implements TerritoryView {
         occupant_name_label.setText("Occ: "+occupant.getName());
     }
 
-
-    /**
-     * This method is used to stop the timer and stop the flashing of the valid territories that the player can attack.
-     */
-
-    /*
-    public void cancel_timer(){
-        blinking_yours.cancel();
-        blinking_theirs.cancel();
-        blinking_yours = new Timer();
-        blinking_theirs = new Timer();
-        for(Territory temp : neighbours.values()){
-            TerritoryButton tempView = temp.getTerritoryView();
-            tempView.setBackground(temp.getDefault_color());
-        }
-    }
-
-    /**
-     * This method creates a timer object which is used to flash the valid territory that the player can attack.
-     */
-    /*
-    public void activateTimer(){
-        blinking_yours.scheduleAtFixedRate(new FlashTimerTask(getDefault_color(),getNeighbours(),1),0,1000);
-        blinking_theirs.scheduleAtFixedRate(new FlashTimerTask(getDefault_color(),getNeighbours(),0),500,1000);
-    }
-     */
 
     public String getTerritoryName() { return territoryName; }
 

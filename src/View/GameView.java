@@ -283,9 +283,9 @@ public class GameView extends JFrame {
      */
     public void clearCommandTerritory(){
         for(Territory x : commandTerritory){
-            //x.cancel_timer();
-            //TerritoryButton territoryButton = x.getTerritoryView();
-            //territoryButton.setBackground(x.getDefault_color());
+            Color color_fix = x.getColor().brighter();
+            x.addColor(color_fix);
+            x.cancel_timer();
         }
         commandTerritory.clear();
     }

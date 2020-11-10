@@ -23,6 +23,11 @@ public class Territory {
     private final String territoryName;
     private List<TerritoryView> territoryViews;
     private Color color;
+    private Color neighbourColor;
+
+    private java.util.Timer blinking_yours;
+    private Timer blinking_theirs;
+
 
     /**
      * Class constructor for the Model.Territory class. Sets the player who occupies the territory
@@ -33,13 +38,22 @@ public class Territory {
         troops = 0;
         neighbours = new HashMap<>();
         territoryViews = new ArrayList<>();
-        color = Color.BLUE;
+
+        blinking_yours = new Timer("flash_yours");
+        blinking_theirs = new Timer("flash_theirs");
     }
 
-    public void addColor(Color color) { this.color = color; }
+    public void setNeighbourColor(Color color){
+        this.neighbourColor = color;
+    }
+
+    public void addColor(Color color) {
+        this.color = color;
+        updateView();
+    }
 
     public Color getColor() { return color; }
-
+    public Color getNeighbourColor() { return  neighbourColor;}
     public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
 
     public void removeTerritoryView(TerritoryView territoryView) { territoryViews.remove(territoryView); }
@@ -56,6 +70,7 @@ public class Territory {
      */
     public void setTroops(int troops) {
         this.troops = troops;
+        updateView();
     }
 
     /**
@@ -73,6 +88,7 @@ public class Territory {
     public void removeTroops(int value) {
         troops += (value);
         occupant.addTotal(value);
+        updateView();
     }
 
     /**
@@ -95,6 +111,8 @@ public class Territory {
      */
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
+        this.color = occupant.getPlayer_color();
+        updateView();
     }
 
     /**
@@ -142,6 +160,26 @@ public class Territory {
         return output;
     }
 
+    /**
+     * This method is used to stop the timer and stop the flashing of the valid territories that the player can attack.
+     */
+    public void cancel_timer(){
+        blinking_yours.cancel();
+        blinking_theirs.cancel();
+        blinking_yours = new Timer();
+        blinking_theirs = new Timer();
+        for(Territory temp : neighbours.values()){
+            temp.addColor(temp.getNeighbourColor());
+        }
+    }
+
+    /**
+     * This method creates a timer object which is used to flash the valid territory that the player can attack.
+     */
+    public void activateTimer(){
+        blinking_yours.scheduleAtFixedRate(new FlashTimerTask(getColor(),getNeighbours(),0),0,1000);
+        blinking_theirs.scheduleAtFixedRate(new FlashTimerTask(getColor(),getNeighbours(),1),500,1000);
+    }
 
     /**
      * Updates all the necessary labels and backgrounds that the view needs to change after an event.

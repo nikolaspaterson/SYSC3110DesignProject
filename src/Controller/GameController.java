@@ -29,22 +29,22 @@ public class GameController implements ActionListener {
         switch (state) {
             case "Reinforce":
                 if (temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCurrentPlayer().getDeployableTroops() != 0) {
-                    gameViewRef.clearCommandTerritory();
                     gameViewRef.addCommandTerritory(temp_territory);
                     ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
                     temp.show(gameViewRef, 300, 350);
                     System.out.println("Pop up Reinforce + \n" + temp_territory.toString());
+                    gameViewRef.clearCommandTerritory();
                 }
                 break;
 
             case "Attack":
                 if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
                     gameViewRef.clearCommandTerritory();
-                    //temp_territory.activateTimer();
+                    temp_territory.activateTimer();
                     gameViewRef.addCommandTerritory(temp_territory);
                 } else if (gameViewRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())) {
                     gameViewRef.clearCommandTerritory();
-                    //temp_territory.activateTimer();
+                    temp_territory.activateTimer();
                     gameViewRef.addCommandTerritory(temp_territory);
                 } else if (gameViewRef.getCommandTerritorySize() == 1 && !temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCommandTerritory().get(0).isNeighbour(temp_territory)) {
                     gameViewRef.addCommandTerritory(temp_territory);

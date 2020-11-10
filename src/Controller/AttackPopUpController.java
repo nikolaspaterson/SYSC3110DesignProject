@@ -63,13 +63,8 @@ public class AttackPopUpController implements ActionListener {
                 }
                 attackPopUp.getNumDice().setText(x + "");
             } else {
-                Territory tempDef = attackPopUp.getDefendingTerritory();
-                Player def_owner = tempDef.getOccupant();
                 gameEvent.attack(attackPopUp.getAttackingTerritory(), attackPopUp.getDefendingTerritory(), Integer.parseInt(attackPopUp.getNumDice().getText()));
                 attackPopUp.refreshLabels(gameEvent.getAttackerRolls(), gameEvent.getDefendingRolls(), gameEvent.getResult());
-                Territory tempAttk = attackPopUp.getAttackingTerritory();
-                tempAttk.updateView();
-                tempDef.updateView();
                 if(gameEvent.getAttackerWon()) {
                     FortifyPopUp fortifyPopUp = new FortifyPopUp(attackPopUp.getAttackingTerritory(), attackPopUp.getDefendingTerritory());
                     fortifyPopUp.show(attackPopUp.getGameViewRef(), 300, 350);

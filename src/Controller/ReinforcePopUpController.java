@@ -53,8 +53,6 @@ public class ReinforcePopUpController implements ActionListener {
         }else if(e.getSource().equals(popup.getDeployButton())){ //if deploy button is pressed
             if(x > 0){
                 ge.reinforce(popup.getTerritory(), x);
-                Territory temp = popup.getTerritory();
-                temp.updateView();
                 popup.setVisible(false);
             }
         }
