@@ -1,4 +1,7 @@
-package Model;
+package Event;
+
+import Model.Player;
+import Model.Territory;
 
 import java.awt.*;
 import java.util.EventObject;

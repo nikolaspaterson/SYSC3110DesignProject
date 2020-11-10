@@ -1,15 +1,13 @@
 package View;
 
-import Model.FlashTimerTask;
+import Listener.TerritoryView;
 import Model.Player;
-import Model.Territory;
-import Model.TerritoryEvent;
+import Event.TerritoryEvent;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Timer;
 
 /**
  * Used to represent the Territory object as a JButton that will be placed on the map.

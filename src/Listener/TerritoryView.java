@@ -1,6 +1,6 @@
-package View;
+package Listener;
 
-import Model.TerritoryEvent;
+import Event.TerritoryEvent;
 
 public interface TerritoryView {
 

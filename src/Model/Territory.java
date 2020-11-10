@@ -1,7 +1,6 @@
 package Model;
 
-import View.TerritoryButton;
-import View.TerritoryView;
+import Listener.TerritoryView;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,7 +1,5 @@
 package Model;
 
-import View.TerritoryView;
-
 import java.awt.*;
 import java.util.HashMap;
 import java.util.TimerTask;
