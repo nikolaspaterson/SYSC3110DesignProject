@@ -1,9 +1,12 @@
 package Model;
 
+import Listener.PlayerListener;
 import View.PlayerView;
+import Event.PlayerEvent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,7 +21,11 @@ public class Player {
     private final HashMap<String, Territory> territoriesOccupied;
     private int deployableTroops;
     private int total_troops;
+    private Icon player_icon;
+    private Color player_color;
     private PlayerView playerView;
+
+    private ArrayList<PlayerListener> playerListeners;
 
     /**
      * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
@@ -28,24 +35,34 @@ public class Player {
         this.name = name;
         this.total_troops = 0;
         territoriesOccupied = new HashMap<>();
+        playerListeners = new ArrayList<>();
     }
 
-    /**
-     * Sets the PlayerView.
-     * @param playerColor the player's color
-     * @param player_icon the player icon.
-     */
-    public void setPlayerView(Color playerColor, ImageIcon player_icon){
-        playerView = new PlayerView(name, playerColor, player_icon, total_troops);
+
+    public void addGuiInfo(Color player_color, ImageIcon player_icon){
+        this.player_color = player_color;
+        this.player_icon = player_icon;
     }
 
+    public Icon getPlayer_icon() {
+        return player_icon;
+    }
+
+    public Color getPlayer_color() {
+        return player_color;
+    }
+
+
+    public void addPlayerListener(PlayerListener list){
+        playerListeners.add(list);
+    }
+    public void removePlayerListener(PlayerListener list){
+        playerListeners.remove(list);
+    }
     /**
      * Gets the PlayerView
      * @return PlayerView
      */
-    public PlayerView getPlayerView() {
-        return playerView;
-    }
 
     /**
      * Gets the player's name.
@@ -69,6 +86,7 @@ public class Player {
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
         addTotal(deployableTroops);
+        updateListeners();
     }
 
     /**
@@ -104,10 +122,12 @@ public class Player {
     public int placeDeployableTroops(int troop_count) {
         if (deployableTroops - troop_count >= 0) {
             deployableTroops -= troop_count;
+            updateListeners();
             return troop_count;
         } else {
             int temp = deployableTroops;
             deployableTroops = 0;
+            updateListeners();
             return temp;
         }
     }
@@ -178,11 +198,9 @@ public class Player {
     /**
      * Updates all the necessary labels and backgrounds that the view needs to change after an event.
      */
-    public void updateView(){
-        playerView.setDeployLabel(this.deployableTroops);
-        playerView.setTotalTroopsLabel(total_troops);
-        if(territoriesOccupied.values().size() == 0){
-            playerView.xOutPlayer();
+    public void updateListeners(){
+        for(PlayerListener temp : playerListeners){
+            temp.handlePlayerUpdate(new PlayerEvent(this,deployableTroops,total_troops));
         }
     }
 }

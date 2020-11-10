@@ -55,7 +55,6 @@ public class ReinforcePopUpController implements ActionListener {
                 ge.reinforce(popup.getTerritory(), x);
                 Territory temp = popup.getTerritory();
                 temp.updateView();
-                temp.getOccupant().updateView();
                 popup.setVisible(false);
             }
         }

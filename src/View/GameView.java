@@ -23,6 +23,7 @@ import java.util.Stack;
 public class GameView extends JFrame {
 
     private final ArrayList<Player> playerList;
+    private ArrayList<PlayerView> playerViews;
     private Player currentPlayer;
     private int currentPlayerIndex;
     private final StatusBar user_status;
@@ -67,18 +68,18 @@ public class GameView extends JFrame {
         color_list.add(new Color(202, 128, 255));
         color_list.add(new Color(139, 224, 87));
 
-        for( PlayerSelectPanel x : players){
-            Player newPlayer = new Player(x.getPlayerName());
-            newPlayer.setPlayerView(color_list.pop(), (ImageIcon) x.getImageIcon());
-            playerList.add(newPlayer);
-        }
-
         JPanel players_overlay = new JPanel();
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());
-        for (Player x: playerList){
-            PlayerView playerView = x.getPlayerView();
-            players_overlay.add(playerView);
+
+        for( PlayerSelectPanel x : players){
+            Player newPlayer = new Player(x.getPlayerName());
+            Color temp_color = color_list.pop();
+            ImageIcon player_icon = (ImageIcon) x.getImageIcon();
+            newPlayer.addGuiInfo(temp_color,player_icon);
+            PlayerView new_view = new PlayerView(newPlayer,newPlayer.getName(), temp_color, player_icon,0);
+            playerList.add(newPlayer);
+            players_overlay.add(new_view);
         }
 
         players_overlay.setBounds(1160,0,100,814);
@@ -163,8 +164,8 @@ public class GameView extends JFrame {
         name.setVerticalAlignment(name.CENTER);
 
         JLabel playerIcon = new JLabel();
-        PlayerView currentPlayerView = currentPlayer.getPlayerView();
-        ImageIcon a = (ImageIcon) currentPlayerView.getplayer_icon();
+
+        ImageIcon a = (ImageIcon) currentPlayer.getPlayer_icon();
         Image i = a.getImage().getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH );
         a = new ImageIcon(i);
         playerIcon.setIcon(a);
@@ -229,7 +230,6 @@ public class GameView extends JFrame {
             troops += ((currentPlayer.getTerritoriesOccupied().size()) / 3);
         }
         currentPlayer.addDeployableTroops(troops);
-        currentPlayer.updateView();
     }
 
     /**

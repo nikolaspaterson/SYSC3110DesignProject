@@ -68,8 +68,8 @@ public class ReinforcePopUp extends JPopupMenu {
         territoryName.setFont(new Font("Comic Sans MS", Font.ITALIC,20));
 
         photo = new JLabel();
-        PlayerView player = getPlayer().getPlayerView();
-        photo.setIcon(player.getplayer_icon());
+        Player player = getPlayer();
+        photo.setIcon(player.getPlayer_icon());
         photo.setHorizontalAlignment(photo.CENTER);
         photo.setVerticalAlignment(photo.CENTER);
 

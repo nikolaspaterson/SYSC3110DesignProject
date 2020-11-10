@@ -112,11 +112,8 @@ public class AttackPopUp extends JPopupMenu {
         Player attacker = attackingTerritory.getOccupant();
         Player defender = defendingTerritory.getOccupant();
 
-        PlayerView attackingView = attacker.getPlayerView();
-        PlayerView defendingView = defender.getPlayerView();
-
-        JPanel leftPanel = playerPanel(attackingView.getplayer_icon(), "left");
-        JPanel rightPanel = playerPanel(defendingView.getplayer_icon(), "right");
+        JPanel leftPanel = playerPanel(attacker.getPlayer_icon(), "left");
+        JPanel rightPanel = playerPanel(defender.getPlayer_icon(), "right");
 
         AttackPopUpController attackPopUpController = new AttackPopUpController(this);
 

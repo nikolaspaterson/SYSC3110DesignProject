@@ -69,9 +69,7 @@ public class AttackPopUpController implements ActionListener {
                 attackPopUp.refreshLabels(gameEvent.getAttackerRolls(), gameEvent.getDefendingRolls(), gameEvent.getResult());
                 Territory tempAttk = attackPopUp.getAttackingTerritory();
                 tempAttk.updateView();
-                tempAttk.getOccupant().updateView();
                 tempDef.updateView();
-                def_owner.updateView();
                 if(gameEvent.getAttackerWon()) {
                     FortifyPopUp fortifyPopUp = new FortifyPopUp(attackPopUp.getAttackingTerritory(), attackPopUp.getDefendingTerritory());
                     fortifyPopUp.show(attackPopUp.getGameViewRef(), 300, 350);

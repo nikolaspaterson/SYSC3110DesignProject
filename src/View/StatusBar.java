@@ -43,6 +43,8 @@ public class StatusBar extends JPanel {
         nextStep.setFont(new Font("Impact",Font.PLAIN,30));
         nextStep.setBackground(new Color(178, 236, 83));
 
+        deployLabel = new JLabel();
+
         setBounds(306,697,539,86);
         add(currentPlayerIcon);
         add(descriptionPanel);
@@ -57,12 +59,10 @@ public class StatusBar extends JPanel {
      * @param player Model.Player Object
      */
     public void setPlayer(Player player){
-        PlayerView playerView = player.getPlayerView();
-        deployLabel = playerView.getDeployLabel();
         currentName.setText(player.getName());
-        currentPlayerIcon.setIcon(playerView.getplayer_icon());
-        descriptionPanel.setBackground(playerView.getBackground().brighter());
-        setBackground(playerView.getBackground());
+        currentPlayerIcon.setIcon(player.getPlayer_icon());
+        descriptionPanel.setBackground(player.getPlayer_color().brighter());
+        setBackground(player.getPlayer_color());
         displayReinforce();
     }
 

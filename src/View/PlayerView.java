@@ -1,5 +1,9 @@
 package View;
 
+import Listener.PlayerListener;
+import Model.Player;
+import Event.PlayerEvent;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -10,7 +14,7 @@ import java.awt.*;
  * @author Ahmad El-Sammak
  * @author Erik Iuhas
  */
-public class PlayerView extends JPanel {
+public class PlayerView extends JPanel implements PlayerListener {
 
     private final JLabel total_troops_label;
     private final JLabel player_deploy;
@@ -24,10 +28,12 @@ public class PlayerView extends JPanel {
      * @param player_icon the icon that the player chose
      * @param total_troops the total number of troops
      */
-    public PlayerView(String name, Color player_color, ImageIcon player_icon, int total_troops) {
+    public PlayerView(Player model, String name, Color player_color, ImageIcon player_icon, int total_troops) {
         Border darkline = BorderFactory.createLineBorder(player_color.darker());
         setBackground(player_color);
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+
+        model.addPlayerListener(this);
 
         this.player_icon = new JLabel();
         JLabel player_name_label = new JLabel();
@@ -102,4 +108,9 @@ public class PlayerView extends JPanel {
         repaint();
     }
 
+    @Override
+    public void handlePlayerUpdate(PlayerEvent e) {
+        setDeployLabel(e.getDeployable_troops());
+        setTotalTroopsLabel(e.getTotal_troops());
+    }
 }

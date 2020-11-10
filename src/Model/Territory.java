@@ -187,9 +187,7 @@ public class Territory {
      * Updates all the necessary labels and backgrounds that the view needs to change after an event.
      */
     public void updateView(){
-        default_color = occupant.getPlayerView().getPlayer_color();
         territoryView.setOccupantLabel(occupant);
-        territoryView.setBackground(occupant.getPlayerView().getPlayer_color());
         territoryView.setTroopsLabel(troops);
         territoryView.setText(String.valueOf(troops));
     }
