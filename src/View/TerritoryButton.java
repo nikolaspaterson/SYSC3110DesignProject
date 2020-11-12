@@ -1,5 +1,6 @@
 package View;
 
+import Controller.TerritoryButtonController;
 import Listener.TerritoryView;
 import Model.Player;
 import Event.TerritoryEvent;
@@ -42,23 +43,11 @@ public class TerritoryButton extends JButton implements TerritoryView {
         territory_name_label.setFont(new Font("Arial",Font.BOLD,12));
         troop_count_label = new JLabel("Troops: " );
         occupant_name_label = new JLabel("");
-
         popup_info.add(territory_name_label);
         popup_info.add(troop_count_label);
         popup_info.add(occupant_name_label);
-
-        this.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent me) {
-                parent.getParent().add(popup_info);
-                parent.getParent().revalidate();
-                parent.getParent().repaint();
-            }
-            public void mouseExited(MouseEvent me) {
-                parent.getParent().remove(popup_info);
-                parent.getParent().revalidate();
-                parent.getParent().repaint();
-            }
-        });
+        TerritoryButtonController tbc = new TerritoryButtonController(parent, popup_info);
+        this.addMouseListener(tbc);
     }
 
     /**
