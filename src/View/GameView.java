@@ -299,6 +299,9 @@ public class GameView extends JFrame {
         return commandTerritory;
     }
 
+    public Territory getFirstCommandTerritory(){
+        return commandTerritory.get(0);
+    }
     /**
      * Returns the size of the commandTerritory ArrayList
      * @return commandTerritory

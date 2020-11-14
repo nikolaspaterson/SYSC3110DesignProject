@@ -4,10 +4,8 @@ import Listener.TerritoryView;
 import Event.TerritoryEvent;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * The Model.Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
@@ -24,6 +22,7 @@ public class Territory {
     private List<TerritoryView> territoryViews;
     private Color color;
     private Color neighbourColor;
+    private ArrayList<Territory> linkedNeighbours;
 
     private java.util.Timer blinking_yours;
     private Timer blinking_theirs;
@@ -159,7 +158,20 @@ public class Territory {
         output += "==================";
         return output;
     }
+    public ArrayList<Territory> getLinkedNeighbours(){
+        linkedNeighbours = new ArrayList<Territory>(linkNeighbours(getOccupant(),new HashSet<>()));
+        return linkedNeighbours;
+    }
+    public Set<Territory> linkNeighbours(Player owner,Set<Territory> val){
+        for(Territory neighbour : neighbours.values()){
+            if(neighbour.getOccupant().equals(owner) && !val.contains(neighbour)){
+                val.add(neighbour);
+                val.addAll(neighbour.linkNeighbours(owner,val));
+            }
+        }
+        return val;
 
+    }
     /**
      * This method is used to stop the timer and stop the flashing of the valid territories that the player can attack.
      */

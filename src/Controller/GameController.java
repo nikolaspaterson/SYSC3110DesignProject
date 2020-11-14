@@ -65,7 +65,7 @@ public class GameController implements ActionListener {
                 if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())) {
                     gameViewRef.clearCommandTerritory();
                     gameViewRef.addCommandTerritory(temp_territory);
-                } else if (gameViewRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCommandTerritory().get(0).isNeighbour(temp_territory)) {
+                } else if (gameViewRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getFirstCommandTerritory().getLinkedNeighbours().contains(temp_territory)) {
                     gameViewRef.addCommandTerritory(temp_territory);
                     System.out.println("Ally1: " + gameViewRef.getCommandTerritory().get(0).toString() + "Ally2: " + gameViewRef.getCommandTerritory().get(1).toString());
                     FortifyPopUp fortifyPopUp = new FortifyPopUp(gameViewRef.getCommandTerritory().get(0), gameViewRef.getCommandTerritory().get(1));
