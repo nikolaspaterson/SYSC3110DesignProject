@@ -136,7 +136,7 @@ public class GameView extends JFrame {
         this.setVisible(true);
         playMusic("/resources/beat.wav");
         if(currentPlayer instanceof AIPlayer) {
-            aiTimer.scheduleAtFixedRate(new PlayerTimer((AIPlayer) currentPlayer),0,50);
+            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,50);
         }
     }
 
@@ -159,7 +159,7 @@ public class GameView extends JFrame {
         if(currentPlayer instanceof AIPlayer) {
             aiTimer.cancel();
             aiTimer = new Timer();
-            aiTimer.scheduleAtFixedRate(new PlayerTimer((AIPlayer) currentPlayer),0,50);
+            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,50);
         }
     }
 
