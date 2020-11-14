@@ -15,6 +15,7 @@ public class PlayerSelectPanel extends JPanel {
 
     private final JTextField playerName;
     private final JButton photo;
+    private final JButton option;
 
     /**
      * Class constructor for View.PlayerSelectPanel class.
@@ -27,7 +28,7 @@ public class PlayerSelectPanel extends JPanel {
         JLabel pn = new JLabel("Player Name:");
         pn.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         playerName = new JTextField(8);
-        JButton option = new JButton("PLAYER");
+        option = new JButton("PLAYER");
         option.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         option.setBounds(new Rectangle(50,50));
 
@@ -69,6 +70,8 @@ public class PlayerSelectPanel extends JPanel {
         setSize(600, 600);
         setVisible(true);
     }
+
+    public String getPlayerType() { return option.getText(); }
 
     /**
      * Gets the name of the player.

@@ -1,10 +1,8 @@
 package View;
 
 import Controller.GameController;
-import Model.Continent;
-import Model.GameSetup;
-import Model.Player;
-import Model.Territory;
+import Model.*;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -73,8 +71,15 @@ public class GameView extends JFrame {
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());
 
-        for( PlayerSelectPanel x : players){
-            Player newPlayer = new Player(x.getPlayerName());
+        for(PlayerSelectPanel x : players){
+            Player newPlayer;
+
+            if(x.getPlayerType().equals("AI")) {
+                newPlayer = new AIPlayer(x.getPlayerName(), this);
+            } else {
+                newPlayer = new Player(x.getPlayerName());
+            }
+
             Color temp_color = color_list.pop();
             ImageIcon player_icon = (ImageIcon) x.getImageIcon();
             newPlayer.addGuiInfo(temp_color,player_icon);
@@ -127,6 +132,9 @@ public class GameView extends JFrame {
         setResizable(false);
         this.setVisible(true);
         playMusic("/resources/beat.wav");
+        if(currentPlayer instanceof AIPlayer) {
+            ((AIPlayer) currentPlayer).play();
+        }
     }
 
     /**
@@ -134,7 +142,7 @@ public class GameView extends JFrame {
      * A method there counts out of game to see if there is one person remaining to declare a winner.
      * The game will only end after the player ends their last turn.
      */
-    public void nextPlayer(){
+    public void nextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentPlayer = playerList.get(currentPlayerIndex);
         if(currentPlayer.getTerritoriesOccupied().size() == 0){
@@ -147,6 +155,9 @@ public class GameView extends JFrame {
             outOfGame = 0;
         }
         playerBonus();
+        if(currentPlayer instanceof AIPlayer) {
+            ((AIPlayer) currentPlayer).play();
+        }
     }
 
     public void winnerScreen(){
@@ -242,14 +253,14 @@ public class GameView extends JFrame {
      */
     public void nextState(){
         clearCommandTerritory();
-        if(gameStateIndex + 1 == 3){
-            user_status.removePlayer(currentPlayer);
-            nextPlayer();
-            user_status.setPlayer(currentPlayer);
-        }
-        gameStateIndex = (gameStateIndex + 1) % gameState.size();
         currentState = gameState.get(gameStateIndex);
         user_status.updateDisplay(currentState);
+        if(gameStateIndex + 1 == 3){
+            gameStateIndex = (gameStateIndex + 1) % gameState.size();
+            user_status.removePlayer(currentPlayer);
+            user_status.setPlayer(playerList.get(currentPlayerIndex + 1));
+            nextPlayer();
+        }
     }
 
     /**

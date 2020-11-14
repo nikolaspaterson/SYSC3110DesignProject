@@ -23,7 +23,6 @@ public class Player {
     private int total_troops;
     private Icon player_icon;
     private Color player_color;
-    private PlayerView playerView;
     private boolean inGame;
 
     private ArrayList<PlayerListener> playerListeners;
