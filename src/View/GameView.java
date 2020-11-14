@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
+import java.util.Timer;
 
 
 public class GameView extends JFrame {
@@ -33,6 +34,7 @@ public class GameView extends JFrame {
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
+    private Timer aiTimer;
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -54,6 +56,7 @@ public class GameView extends JFrame {
         gameState.add("Attack");
         gameState.add("Fortify");
         gameStateIndex = 0;
+        aiTimer = new Timer("AI");
 
         currentState = "Reinforce";
         currentPlayerIndex = 0;
@@ -133,7 +136,7 @@ public class GameView extends JFrame {
         this.setVisible(true);
         playMusic("/resources/beat.wav");
         if(currentPlayer instanceof AIPlayer) {
-            ((AIPlayer) currentPlayer).play();
+            aiTimer.scheduleAtFixedRate(new PlayerTimer((AIPlayer) currentPlayer),0,50);
         }
     }
 
@@ -143,8 +146,6 @@ public class GameView extends JFrame {
      * The game will only end after the player ends their last turn.
      */
     public void nextPlayer() {
-        currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
-        currentPlayer = playerList.get(currentPlayerIndex);
         if(currentPlayer.getTerritoriesOccupied().size() == 0){
             outOfGame++;
             nextPlayer();
@@ -156,7 +157,9 @@ public class GameView extends JFrame {
         }
         playerBonus();
         if(currentPlayer instanceof AIPlayer) {
-            ((AIPlayer) currentPlayer).play();
+            aiTimer.cancel();
+            aiTimer = new Timer();
+            aiTimer.scheduleAtFixedRate(new PlayerTimer((AIPlayer) currentPlayer),0,50);
         }
     }
 
@@ -253,13 +256,18 @@ public class GameView extends JFrame {
      */
     public void nextState(){
         clearCommandTerritory();
-        currentState = gameState.get(gameStateIndex);
-        user_status.updateDisplay(currentState);
         if(gameStateIndex + 1 == 3){
             gameStateIndex = (gameStateIndex + 1) % gameState.size();
+            currentState = gameState.get(gameStateIndex);
             user_status.removePlayer(currentPlayer);
-            user_status.setPlayer(playerList.get(currentPlayerIndex + 1));
+            currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+            currentPlayer = playerList.get(currentPlayerIndex);
+            user_status.setPlayer(currentPlayer);
             nextPlayer();
+        }else{
+            gameStateIndex = (gameStateIndex + 1) % gameState.size();
+            currentState = gameState.get(gameStateIndex);
+            user_status.updateDisplay(currentState);
         }
     }
 

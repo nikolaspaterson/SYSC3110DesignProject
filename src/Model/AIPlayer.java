@@ -53,6 +53,15 @@ public class AIPlayer extends Player {
         gameEvent.attack(terrAttack.get(0), terrAttack.get(1), 1);
     }
 
+    public String getState(){
+        return gameView.getCurrentState();
+    }
+
+    public void nextState(){
+        System.out.println(gameView.getCurrentState());
+        gameView.nextState();
+
+    }
     public void play() {
         try {
             reinforce();
@@ -64,7 +73,7 @@ public class AIPlayer extends Player {
             //fortify();
             gameView.nextState();
         } catch (Exception e) {
-            System.out.println("ERROR");
+            System.out.println(e.toString());
         }
     }
 }

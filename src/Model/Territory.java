@@ -24,7 +24,7 @@ public class Territory {
     private Color neighbourColor;
     private ArrayList<Territory> linkedNeighbours;
 
-    private java.util.Timer blinking_yours;
+    private Timer blinking_yours;
     private Timer blinking_theirs;
 
 
