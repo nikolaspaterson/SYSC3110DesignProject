@@ -16,13 +16,53 @@ public class AIPlayer extends Player {
         gameEvent = new GameEvent(this);
     }
 
+    public float enemyNeighbourRatio(Territory territory) {
+        int enemyNeighbour = 0;
+        for (Territory neighbour : territory.getNeighbours().values()) {
+            if (!(neighbour.getOccupant().equals(this))) {
+                enemyNeighbour++;
+            }
+        }
+        return (enemyNeighbour/territory.getNeighbours().size());
+    }
+
+    public int leastEnemySurrounded(float enemyNeighbourRatio) {
+        if(enemyNeighbourRatio <= 0.25 && enemyNeighbourRatio > 0) {
+            return 6;
+        } else if(enemyNeighbourRatio > 0.25 && enemyNeighbourRatio <= 0.50) {
+            return 4;
+        } else if(enemyNeighbourRatio > 0.50 && enemyNeighbourRatio <= 0.75) {
+            return 2;
+        } else {
+            return -3;
+        }
+    }
+
+    public int lowestTroopTerritory(Territory territory) {
+        if(territory.getTroops() == 1) {
+            return 3;
+        } else if(territory.getTroops() == 2) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
     public Territory bestReinforceTerritory() {
         Territory bestTerritory = null;
-        for(Territory territory : getTerritoriesOccupied().values()) {
-            if(bestTerritory == null) {
-                bestTerritory = territory;
-            } else if(bestTerritory.getTroops() > territory.getTroops()) {
-                bestTerritory = territory;
+        int value = 0;
+        for (Territory curr : getTerritoriesOccupied().values()) {
+            if (bestTerritory == null) {
+                bestTerritory = curr;
+                value += leastEnemySurrounded(enemyNeighbourRatio(bestTerritory));
+                value += lowestTroopTerritory(bestTerritory);
+            } else {
+                int challengerValue = 0;
+                challengerValue += leastEnemySurrounded(enemyNeighbourRatio(curr));
+                challengerValue += lowestTroopTerritory(curr);
+                if (value < challengerValue) {
+                    bestTerritory = curr;
+                }
             }
         }
         return bestTerritory;
@@ -61,8 +101,6 @@ public class AIPlayer extends Player {
         System.out.println(gameView.getCurrentState());
         gameView.nextState();
     }
-
-
 
     private float continentValue(Territory territory){
         Continent temp_continent = gameView.getContinent(territory);

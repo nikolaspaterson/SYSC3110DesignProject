@@ -158,10 +158,12 @@ public class Territory {
         output += "==================";
         return output;
     }
+
     public ArrayList<Territory> getLinkedNeighbours(){
-        linkedNeighbours = new ArrayList<Territory>(linkNeighbours(getOccupant(),new HashSet<>()));
+        linkedNeighbours = new ArrayList<>(linkNeighbours(getOccupant(),new HashSet<>()));
         return linkedNeighbours;
     }
+
     public Set<Territory> linkNeighbours(Player owner,Set<Territory> val){
         for(Territory neighbour : neighbours.values()){
             if(neighbour.getOccupant().equals(owner) && !val.contains(neighbour)){
@@ -170,8 +172,8 @@ public class Territory {
             }
         }
         return val;
-
     }
+
     /**
      * This method is used to stop the timer and stop the flashing of the valid territories that the player can attack.
      */
