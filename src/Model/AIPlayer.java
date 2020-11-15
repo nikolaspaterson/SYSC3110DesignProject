@@ -56,55 +56,78 @@ public class AIPlayer extends Player {
         gameEvent.attack(terrAttack.get(0), terrAttack.get(1), 1);
     }
 
+    /**
+     * Creates a fortify event if a territory can benefit from fortifying
+     */
     public void fortify(){
         Territory[] territories = bestFortifyTerritory();
-        try{
-            System.out.println("YERR");
+        if(territories != null){
             gameEvent.fortify(territories[0], territories[1], availableTroopsToReceive(territories[0]));
-            System.out.println("Fortified " + territories[1].toString() + " with " + availableTroopsToReceive(territories[0]) + " from " + territories[0].toString());
-        }catch (Exception e){
-            System.out.println(e);
         }
     }
 
+    /**
+     * Checks for the best territory to reinforce.
+     * Territory will only be reinforced if there is a territory that can donate troops without increasing their own
+     * threat level.
+     * @return territory array, index 0 is territory to lose troops, index 1 is territory to gain troops.
+     */
     private Territory[] bestFortifyTerritory(){
         Territory[] territories = new Territory[2];
         HashMap<Territory, Integer> threatMap = new HashMap<>();
 
-        for(Territory t : this.getTerritoriesOccupied().values()){
-            threatMap.put(t, assignThreatLevel(t, -1));
+        for(Territory t : this.getTerritoriesOccupied().values()){ //assign threat to each territory
+            threatMap.put(t, assignThreatLevel(t, t.getTroops()));
         }
 
-        Territory t = getGreatestDangerLevel(threatMap);
-        for(Territory friendlyNeighbour : t.getLinkedNeighbours()){
-            if(assignThreatLevel(friendlyNeighbour, -1) < threatMap.get(t)){ //is neighbour is safer than t
-                int newThreatLevelTerritory = assignThreatLevel(t, t.getTroops() + availableTroopsToReceive(friendlyNeighbour));
-                int newThreatLevelDonoTerritory = assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops() - availableTroopsToReceive(friendlyNeighbour));
-                if(newThreatLevelTerritory < threatMap.get(t) && newThreatLevelDonoTerritory == assignThreatLevel(friendlyNeighbour, -1)){
-                    territories[0] = friendlyNeighbour;
-                    territories[1] = t;
-                    return territories;
+        Territory[] mostInDanger = getGreatestDangerLevel(threatMap); //array of territories in decreasing danger
+        for(int i = 0; i < mostInDanger.length; i++){ //check if territory can be helped
+            for(Territory friendlyNeighbour : mostInDanger[i].getLinkedNeighbours()){
+                if(assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops()) < assignThreatLevel(mostInDanger[i], mostInDanger[i].getTroops())){
+                    //friend is safer than you, so they can help
+                    int newThreatLevelTerritory = assignThreatLevel(mostInDanger[i], mostInDanger[i].getTroops() + availableTroopsToReceive(friendlyNeighbour));
+                    int newThreatLevelDonoTerritory = assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops() - availableTroopsToReceive(friendlyNeighbour));
+                    if(newThreatLevelTerritory < threatMap.get(mostInDanger[i]) && newThreatLevelDonoTerritory == assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops())){
+                        //friend helping you will not hurt them, so they will sent troops
+                        territories[0] = friendlyNeighbour;
+                        territories[1] = mostInDanger[i];
+                        return territories;
+                    }//else it will hurt friend so you will find some other friend
                 }
             }
         }
-        return null;
+        return null; //no good fortify move found
     }
 
     /**
-     * returns territory in most danger
-     * @param map hashmap of territories and integers
-     * @return territory
+     * Takes a hashmap of territories and their threat levels, returns a sorted array of territories decreasing based
+     * on their threat levels.
+     * @param map
+     * @return sorted Territory array
      */
-    private Territory getGreatestDangerLevel(HashMap<Territory, Integer> map){
-        Territory highestPriority = null;
-        for(Map.Entry<Territory, Integer> entry : map.entrySet()){
-            if(highestPriority == null){
-                highestPriority = entry.getKey();
-            }else if(entry.getValue() > map.get(highestPriority)){
-                highestPriority = entry.getKey();
+    private Territory[] getGreatestDangerLevel(HashMap<Territory, Integer> map){
+        if(map.isEmpty()){
+            return null;
+        }
+
+        Territory[] sortedDanger = new Territory[map.size()];
+        int i = 0;
+        for(Territory t : map.keySet()){ //fill array with territories
+            sortedDanger[i] = t;
+            i++;
+        }
+
+        //sorts array based on territories threat level in hashmap
+        for(int j = 0; j < sortedDanger.length; j++){
+            for(int k = 0; k < sortedDanger.length; k++){
+                if(map.get(sortedDanger[j])  < map.get(sortedDanger[k])){
+                    Territory temp = sortedDanger[j];
+                    sortedDanger[j] = sortedDanger[k];
+                    sortedDanger[k] = temp;
+                }
             }
         }
-        return highestPriority;
+        return sortedDanger;
     }
 
     /**
@@ -116,9 +139,6 @@ public class AIPlayer extends Player {
      */
     private int assignThreatLevel(Territory t, int troops){
         int threat = 0;
-        if(troops == -1){
-            troops = t.getTroops();
-        }
         if (!isSafe(t)) {
             for (Territory neighbourTerritory : t.getNeighbours().values()) {
                 if (!neighbourTerritory.getOccupant().equals(t.getOccupant())) {
@@ -195,22 +215,5 @@ public class AIPlayer extends Player {
         }
         float continentRatio = ownedTerritories/continentSize;
         return continentRatio;
-    }
-
-
-
-    public void play() {
-        try {
-            reinforce();
-            TimeUnit.SECONDS.sleep(1);
-            gameView.nextState();
-            attack();
-            TimeUnit.SECONDS.sleep(1);
-            gameView.nextState();
-            fortify();
-            gameView.nextState();
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
     }
 }
