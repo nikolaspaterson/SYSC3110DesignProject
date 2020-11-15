@@ -34,6 +34,7 @@ public class GameView extends JFrame {
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
+    private final int AISpeed = 50;
     private Timer aiTimer;
 
     /**
@@ -136,7 +137,7 @@ public class GameView extends JFrame {
         this.setVisible(true);
         playMusic("/resources/beat.wav");
         if(currentPlayer instanceof AIPlayer) {
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,50);
+            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,AISpeed);
         }
     }
 
@@ -146,6 +147,10 @@ public class GameView extends JFrame {
      * The game will only end after the player ends their last turn.
      */
     public void nextPlayer() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+        currentPlayer = playerList.get(currentPlayerIndex);
+        user_status.setPlayer(currentPlayer);
+
         if(currentPlayer.getTerritoriesOccupied().size() == 0){
             outOfGame++;
             nextPlayer();
@@ -156,10 +161,10 @@ public class GameView extends JFrame {
             outOfGame = 0;
         }
         playerBonus();
+        aiTimer.cancel();
+        aiTimer = new Timer();
         if(currentPlayer instanceof AIPlayer) {
-            aiTimer.cancel();
-            aiTimer = new Timer();
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,50);
+            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,AISpeed);
         }
     }
 
@@ -260,9 +265,6 @@ public class GameView extends JFrame {
             gameStateIndex = (gameStateIndex + 1) % gameState.size();
             currentState = gameState.get(gameStateIndex);
             user_status.removePlayer(currentPlayer);
-            currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
-            currentPlayer = playerList.get(currentPlayerIndex);
-            user_status.setPlayer(currentPlayer);
             nextPlayer();
         }else{
             gameStateIndex = (gameStateIndex + 1) % gameState.size();
@@ -327,6 +329,10 @@ public class GameView extends JFrame {
      */
     public int getCommandTerritorySize(){
         return commandTerritory.size();
+    }
+
+    public Continent getContinent(Territory territory){
+        return continentMap.get(territory.getTerritoryName());
     }
 
     public HashMap<String, Territory> getWorldMap() { return worldMap; }

@@ -180,8 +180,25 @@ public class AIPlayer extends Player {
     public void nextState(){
         System.out.println(gameView.getCurrentState());
         gameView.nextState();
-
     }
+
+
+
+    private float continentValue(Territory territory){
+        Continent temp_continent = gameView.getContinent(territory);
+        int continentSize = temp_continent.getContinentTerritory().size();
+        int ownedTerritories = 0;
+        for(Territory c_terri : temp_continent.getContinentTerritory().values()){
+            if(c_terri.getOccupant().equals(this)){
+                ownedTerritories++;
+            }
+        }
+        float continentRatio = ownedTerritories/continentSize;
+        return continentRatio;
+    }
+
+
+
     public void play() {
         try {
             reinforce();
