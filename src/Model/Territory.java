@@ -20,6 +20,7 @@ public class Territory {
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
     private List<TerritoryView> territoryViews;
+    private String continentName;
     private Color color;
     private Color neighbourColor;
     private ArrayList<Territory> linkedNeighbours;
@@ -54,9 +55,13 @@ public class Territory {
     public Color getColor() { return color; }
     public Color getNeighbourColor() { return  neighbourColor;}
     public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
-
+    public void setContinentName(String name){
+        continentName = name;
+    }
+    public String getContinentName(){
+        return continentName;
+    }
     public void removeTerritoryView(TerritoryView territoryView) { territoryViews.remove(territoryView); }
-
     /**
      * Gets the name of this Model.Territory.
      * @return String the Model.Territory name.

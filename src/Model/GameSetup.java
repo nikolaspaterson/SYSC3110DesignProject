@@ -126,6 +126,7 @@ public class GameSetup {
             if (continentMap.get(continent_name) == null){
                 continentMap.put(continent_name,new Continent(continent_name));
             }
+            added_territory.setContinentName(continent_name);
             continentMap.get(continent_name).addContinentTerritory(added_territory.getTerritoryName(),added_territory);
         }
         for(String[] temp_territory : territories){

@@ -34,7 +34,7 @@ public class GameView extends JFrame {
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
-    private final int AISpeed = 50;
+    private final int AISpeed = 10;
     private Timer aiTimer;
 
     /**
@@ -332,7 +332,7 @@ public class GameView extends JFrame {
     }
 
     public Continent getContinent(Territory territory){
-        return continentMap.get(territory.getTerritoryName());
+        return continentMap.get(territory.getContinentName());
     }
 
     public HashMap<String, Territory> getWorldMap() { return worldMap; }
