@@ -122,10 +122,12 @@ public class AIPlayer extends Player {
             }else {
                 gameEvent.attack(attacker, terrAttack.get(1), 1);
             }
+            if(gameEvent.getAttackerWon()) {
+                gameEvent.fortify(terrAttack.get(0), terrAttack.get(1), (terrAttack.get(0).getTroops()/2));
+            }
         }else {
             attacking = false;
         }
-
     }
 
     public String getState(){
@@ -151,12 +153,12 @@ public class AIPlayer extends Player {
         }else {
             return -4;
         }
-
-
     }
+
     public boolean stillAttacking(){
         return attacking;
     }
+
     private int continentValue(Territory territory){
         Continent temp_continent = gameView.getContinent(territory);
         int value = 0;
@@ -175,6 +177,6 @@ public class AIPlayer extends Player {
         }else {
            return  0;
         }
-
     }
+
 }

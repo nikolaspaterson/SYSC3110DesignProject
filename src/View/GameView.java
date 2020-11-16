@@ -150,7 +150,8 @@ public class GameView extends JFrame {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentPlayer = playerList.get(currentPlayerIndex);
         user_status.setPlayer(currentPlayer);
-
+        aiTimer.cancel();
+        aiTimer = new Timer();
         if(currentPlayer.getTerritoriesOccupied().size() == 0){
             outOfGame++;
             nextPlayer();
@@ -159,12 +160,10 @@ public class GameView extends JFrame {
             System.out.println("Winner!");
         }else{
             outOfGame = 0;
-        }
-        playerBonus();
-        aiTimer.cancel();
-        aiTimer = new Timer();
-        if(currentPlayer instanceof AIPlayer) {
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,AISpeed);
+            playerBonus();
+            if(currentPlayer instanceof AIPlayer) {
+                aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,AISpeed);
+            }
         }
     }
 
