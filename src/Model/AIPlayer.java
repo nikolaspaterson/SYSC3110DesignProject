@@ -19,42 +19,6 @@ public class AIPlayer extends Player {
         gameEvent = new GameEvent(this);
     }
 
-    public Territory bestReinforceTerritory() {
-        Territory bestTerritory = null;
-        for(Territory territory : getTerritoriesOccupied().values()) {
-            if(bestTerritory == null) {
-                bestTerritory = territory;
-            } else if(bestTerritory.getTroops() > territory.getTroops()) {
-                bestTerritory = territory;
-            }
-        }
-        return bestTerritory;
-    }
-
-    public void reinforce() {
-        Territory bestTerritory = bestReinforceTerritory();
-        gameEvent.reinforce(bestTerritory, this.getDeployableTroops());
-    }
-
-    public ArrayList<Territory> bestAttackTerritory() {
-        ArrayList<Territory> weakest = new ArrayList<>();
-        for(Territory territory : getTerritoriesOccupied().values()) {
-            for(Territory enemy : territory.getNeighbours().values()) {
-                if(!enemy.getOccupant().equals(this)) {
-                    if(weakest.isEmpty() && territory.getTroops() != 1) {
-                        weakest.add(territory);
-                        weakest.add(enemy);
-                    }
-                }
-            }
-        }
-        return weakest;
-    }
-
-    public void attack() {
-        ArrayList<Territory> terrAttack = bestAttackTerritory();
-        gameEvent.attack(terrAttack.get(0), terrAttack.get(1), 1);
-    }
 
     /**
      * Creates a fortify event if a territory can benefit from fortifying
@@ -190,30 +154,5 @@ public class AIPlayer extends Player {
             }
         }
         return true;
-    }
-
-
-    public String getState(){
-        return gameView.getCurrentState();
-    }
-
-    public void nextState(){
-        System.out.println(gameView.getCurrentState());
-        gameView.nextState();
-    }
-
-
-
-    private float continentValue(Territory territory){
-        Continent temp_continent = gameView.getContinent(territory);
-        int continentSize = temp_continent.getContinentTerritory().size();
-        int ownedTerritories = 0;
-        for(Territory c_terri : temp_continent.getContinentTerritory().values()){
-            if(c_terri.getOccupant().equals(this)){
-                ownedTerritories++;
-            }
-        }
-        float continentRatio = ownedTerritories/continentSize;
-        return continentRatio;
     }
 }
