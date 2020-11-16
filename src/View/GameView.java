@@ -34,7 +34,7 @@ public class GameView extends JFrame {
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
-    private final int AISpeed = 10;
+    private final int AISpeed = 1000;
     private Timer aiTimer;
 
     /**
@@ -137,7 +137,7 @@ public class GameView extends JFrame {
         this.setVisible(true);
         playMusic("/resources/beat.wav");
         if(currentPlayer instanceof AIPlayer) {
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,AISpeed);
+            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),AISpeed,AISpeed);
         }
     }
 
@@ -162,7 +162,7 @@ public class GameView extends JFrame {
             outOfGame = 0;
             playerBonus();
             if(currentPlayer instanceof AIPlayer) {
-                aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,AISpeed);
+                aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),AISpeed,AISpeed);
             }
         }
     }

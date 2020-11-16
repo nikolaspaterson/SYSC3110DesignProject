@@ -25,7 +25,10 @@ public class AITimer extends TimerTask {
                     aiPlayer.nextState();
                 }
             }
-            case "Fortify" -> aiPlayer.nextState();
+            case "Fortify" -> {
+                aiPlayer.fortify();
+                aiPlayer.nextState();
+            }
         }
 
     }
