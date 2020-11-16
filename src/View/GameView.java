@@ -34,7 +34,7 @@ public class GameView extends JFrame {
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
-    private final int AISpeed = 1000;
+    private final int AISpeed = 10;
     private Timer aiTimer;
 
     /**

@@ -90,7 +90,7 @@ public class AIPlayer extends Player {
 
     public ArrayList<Territory> bestAttackTerritory() {
         ArrayList<Territory> weakest = new ArrayList<>();
-        int highestValue = 0;
+        int highestValue = 2;
         int newValue;
         for(Territory allTerritories : getTerritoriesOccupied().values()){
             for(Territory currentEnemy : allTerritories.getNeighbours().values()){

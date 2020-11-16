@@ -31,7 +31,7 @@ public class GameEvent {
     public void reinforce(Territory territory, int troops) {
         if(territory.getOccupant().equals(player) && troops <= player.getDeployableTroops() && troops > 0) {
             player.incrementTroops(territory, troops);
-            player.setDeployableTroops(player.getDeployableTroops() - troops);
+            player.subtractDeployableTroops(troops);
             System.out.println("you have " + player.getDeployableTroops() + " LEFT to deploy");
         }else if(troops < 0){
             System.out.println("Nice try! No negative troops!");

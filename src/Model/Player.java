@@ -96,6 +96,7 @@ public class Player {
      */
     public void addTotal(int troops) {
         total_troops += troops;
+        updateListeners();
     }
 
     /**
@@ -113,6 +114,11 @@ public class Player {
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
         addTotal(deployableTroops);
+        updateListeners();
+    }
+
+    public void subtractDeployableTroops(int subtract){
+        this.deployableTroops -= subtract;
         updateListeners();
     }
 
