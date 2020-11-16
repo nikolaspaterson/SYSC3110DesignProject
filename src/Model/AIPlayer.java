@@ -88,13 +88,12 @@ public class AIPlayer extends Player {
 
     public ArrayList<Territory> bestAttackTerritory() {
         ArrayList<Territory> weakest = new ArrayList<>();
-        int highestValue = 2;
+        int highestValue = 3;
         int newValue;
         for(Territory allTerritories : getTerritoriesOccupied().values()){
             for(Territory currentEnemy : allTerritories.getNeighbours().values()){
                 if(!currentEnemy.getOccupant().equals(this)){
                     newValue = successfulAttackProbability(allTerritories,currentEnemy);
-                    //newValue += continentValue(allTerritories);
                     if(weakest.size() == 0 && highestValue < newValue){
                         highestValue = newValue;
                         weakest.add(allTerritories);
@@ -122,14 +121,20 @@ public class AIPlayer extends Player {
                 gameEvent.attack(attacker, terrAttack.get(1), 1);
             }
             if(gameEvent.getAttackerWon()) {
-                gameEvent.fortify(terrAttack.get(0), terrAttack.get(1), (terrAttack.get(0).getTroops()/2));
+                int value = leastEnemySurrounded(enemyNeighbourRatio(terrAttack.get(0)));
+                if(value < 0) {
+                    gameEvent.fortify(terrAttack.get(0), terrAttack.get(1), (terrAttack.get(0).getTroops()-1));
+                } else {
+                    gameEvent.fortify(terrAttack.get(0), terrAttack.get(1), (terrAttack.get(0).getTroops()/2));
+                }
+                this.setFortifyStatus(true);
             }
         }else {
             attacking = false;
         }
     }
 
-    public String getState(){
+    public GameState getState(){
         return gameView.getCurrentState();
     }
 
@@ -137,6 +142,7 @@ public class AIPlayer extends Player {
         attacking = true;
         gameView.nextState();
     }
+
     private int successfulAttackProbability(Territory allyTerritory,Territory enemyTerritory){
         float troopDifference;
         int total = allyTerritory.getTroops() + enemyTerritory.getTroops();

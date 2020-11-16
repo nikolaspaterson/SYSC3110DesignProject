@@ -1,11 +1,12 @@
 package Controller;
 
+import Model.AIPlayer;
+import Model.GameState;
 import Model.Territory;
 import View.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class GameController implements ActionListener {
+public class GameController {
 
     private final GameView gameViewRef;
 
@@ -19,13 +20,17 @@ public class GameController implements ActionListener {
      * @param e This action event is a button Model.Territory
      */
     public void territoryAction(ActionEvent e){
-        String state = gameViewRef.getCurrentState();
+        GameState state = gameViewRef.getCurrentState();
         Object obj = e.getSource();
         TerritoryButton territoryButton = (TerritoryButton) obj;
         Territory temp_territory = gameViewRef.getWorldMap().get(territoryButton.getTerritoryName());
 
+        if(gameViewRef.getCurrentPlayer() instanceof AIPlayer) {
+            return;
+        }
+
         switch (state) {
-            case "Reinforce":
+            case REINFORCE:
                 if (temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCurrentPlayer().getDeployableTroops() != 0) {
                     gameViewRef.addCommandTerritory(temp_territory);
                     ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
@@ -35,7 +40,7 @@ public class GameController implements ActionListener {
                 }
                 break;
 
-            case "Attack":
+            case ATTACK:
                 if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
                     temp_territory.activateTimer();
                     gameViewRef.addCommandTerritory(temp_territory);
@@ -59,7 +64,7 @@ public class GameController implements ActionListener {
                 }
                 break;
 
-            case "Fortify":
+            case FORTIFY:
                 if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCurrentPlayer().getFortifyStatus()) {
                     gameViewRef.clearCommandTerritory();
                     gameViewRef.addCommandTerritory(temp_territory);
@@ -82,19 +87,13 @@ public class GameController implements ActionListener {
      * @param e The button from View.StatusBar
      */
     public void nextState(ActionEvent e){
+        if(gameViewRef.getCurrentPlayer() instanceof AIPlayer) {
+            return;
+        }
         for(Territory time_stop : gameViewRef.getCommandTerritory()){
             time_stop.cancel_timer();
         }
         gameViewRef.nextState();
         gameViewRef.clearCommandTerritory();
-    }
-
-    /**
-     * This override function is not being used due to the buttons referencing the ActionListeners from Controller.GameController Methods
-     * @param e N/A
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }

@@ -11,21 +11,21 @@ public class AITimer extends TimerTask {
     @Override
     public void run() {
         switch (aiPlayer.getState()) {
-            case "Reinforce" -> {
+            case REINFORCE -> {
                 if(aiPlayer.getDeployableTroops() != 0) {
                     aiPlayer.reinforce();
                 } else {
                     aiPlayer.nextState();
                 }
             }
-            case "Attack" -> {
+            case ATTACK -> {
                 if(aiPlayer.stillAttacking()){
                     aiPlayer.attack();
                 }else {
                     aiPlayer.nextState();
                 }
             }
-            case "Fortify" -> {
+            case FORTIFY -> {
                 aiPlayer.fortify();
                 aiPlayer.nextState();
             }

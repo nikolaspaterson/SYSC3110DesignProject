@@ -25,15 +25,17 @@ public class GameView extends JFrame {
     private int currentPlayerIndex;
     private final StatusBar user_status;
     private final HashMap<String, Continent> continentMap;
-    private final ArrayList<String> gameState;
+    private final ArrayList<GameState> gameState;
     private int gameStateIndex;
-    private String currentState;
+    private GameState currentState;
     private Clip clip;
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private final HashMap<String, Territory> worldMap;
-    private final int AISpeed = 10;
+    private final int AISpeed = 100;
     private Timer aiTimer;
+
+
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -51,13 +53,13 @@ public class GameView extends JFrame {
         user_status.setController(game_controller);
         outOfGame = 0;
         gameState = new ArrayList<>();
-        gameState.add("Reinforce");
-        gameState.add("Attack");
-        gameState.add("Fortify");
+        gameState.add(GameState.REINFORCE);
+        gameState.add(GameState.ATTACK);
+        gameState.add(GameState.FORTIFY);
         gameStateIndex = 0;
         aiTimer = new Timer("AI");
 
-        currentState = "Reinforce";
+        currentState = GameState.REINFORCE;
         currentPlayerIndex = 0;
         commandTerritory = new ArrayList<>();
 
@@ -274,7 +276,7 @@ public class GameView extends JFrame {
      * Method returns String, to check what the current state of the game
      * @return returns either Reinforce, Attack, or Fortify
      */
-    public String getCurrentState(){
+    public GameState getCurrentState(){
         return currentState;
     }
 

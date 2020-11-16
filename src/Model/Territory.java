@@ -35,7 +35,7 @@ public class Territory {
         troops = 0;
         neighbours = new HashMap<>();
         territoryViews = new ArrayList<>();
-
+        linkedNeighbours = new ArrayList<>();
         blinking_yours = new Timer("flash_yours");
         blinking_theirs = new Timer("flash_theirs");
     }
@@ -151,7 +151,7 @@ public class Territory {
      * @return String - The string in the description
      */
     public String toString() {
-        String output = "------>Model.Territory Name: " + this.territoryName + "<------\n";
+        String output = "------>Territory Name: " + this.territoryName + "<------\n";
         output += "======Neighbouring Territories======\n";
 
         for(String str : neighbours.keySet()) {

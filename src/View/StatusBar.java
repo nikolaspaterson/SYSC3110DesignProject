@@ -2,6 +2,7 @@ package View;
 
 import Controller.GameController;
 import Listener.PlayerListener;
+import Model.GameState;
 import Model.Player;
 import Event.PlayerEvent;
 import javax.swing.*;
@@ -118,11 +119,11 @@ public class StatusBar extends JPanel implements PlayerListener {
      * Called in View.GameView and occurs everytime the player clicks nextStep Button.
      * @param state State of the game can either be Reinforce,Attack, or Fortify.
      */
-    public void updateDisplay(String state){
+    public void updateDisplay(GameState state){
         switch (state) {
-            case "Reinforce" -> displayReinforce();
-            case "Attack" -> displayAttack();
-            case "Fortify" -> displayFortify();
+            case REINFORCE -> displayReinforce();
+            case ATTACK -> displayAttack();
+            case FORTIFY -> displayFortify();
         }
     }
 
