@@ -161,7 +161,6 @@ public class AIPlayer extends Player {
 
     private int continentValue(Territory territory){
         Continent temp_continent = gameView.getContinent(territory);
-        int value = 0;
         int continentSize = temp_continent.getContinentTerritory().size();
         int ownedTerritories = 0;
         for(Territory c_terri : temp_continent.getContinentTerritory().values()){
