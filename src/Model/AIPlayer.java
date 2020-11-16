@@ -74,9 +74,17 @@ public class AIPlayer extends Player {
         return bestTerritory;
     }
 
+    public int splitDeployTroops() {
+        int troops = this.getDeployableTroops();
+        if(troops <= 3) {
+            return troops;
+        }
+        return (troops/3);
+    }
+
     public void reinforce() {
         Territory bestTerritory = bestReinforceTerritory();
-        gameEvent.reinforce(bestTerritory, this.getDeployableTroops());
+        gameEvent.reinforce(bestTerritory, splitDeployTroops());
     }
 
     public ArrayList<Territory> bestAttackTerritory() {
@@ -87,7 +95,7 @@ public class AIPlayer extends Player {
             for(Territory currentEnemy : allTerritories.getNeighbours().values()){
                 if(!currentEnemy.getOccupant().equals(this)){
                     newValue = successfulAttackProbability(allTerritories,currentEnemy);
-                    newValue += continentValue(allTerritories);
+                    //newValue += continentValue(allTerritories);
                     if(weakest.size() == 0 && highestValue < newValue){
                         highestValue = newValue;
                         weakest.add(allTerritories);
