@@ -4,11 +4,8 @@ import Controller.TerritoryButtonController;
 import Listener.TerritoryView;
 import Model.Player;
 import Event.TerritoryEvent;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * Used to represent the Territory object as a JButton that will be placed on the map.
@@ -18,10 +15,9 @@ import java.awt.event.MouseEvent;
  */
 public class TerritoryButton extends JButton implements TerritoryView {
 
-    private final JPanel popup_info;
     private final JLabel troop_count_label;
     private final JLabel occupant_name_label;
-    private String territoryName;
+    private final String territoryName;
 
     /**
      * Constructor for the TerritoryView class.
@@ -35,7 +31,7 @@ public class TerritoryButton extends JButton implements TerritoryView {
     public TerritoryButton(String territoryName, int x, int y, int width, int height, Component parent) {
         this.territoryName = territoryName;
         setBounds(x,y,width,height);
-        popup_info = new JPanel();
+        JPanel popup_info = new JPanel();
         popup_info.setLayout(new BoxLayout(popup_info,BoxLayout.Y_AXIS));
         popup_info.setBounds(x+width,y,100,50);
         popup_info.setMaximumSize(new Dimension(100,50));
@@ -65,7 +61,6 @@ public class TerritoryButton extends JButton implements TerritoryView {
     public void setOccupantLabel(Player occupant) {
         occupant_name_label.setText("Occ: "+occupant.getName());
     }
-
 
     public String getTerritoryName() { return territoryName; }
 

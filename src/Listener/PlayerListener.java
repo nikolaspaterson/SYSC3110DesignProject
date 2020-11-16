@@ -3,5 +3,5 @@ package Listener;
 import Event.PlayerEvent;
 
 public interface PlayerListener {
-    public void handlePlayerUpdate(PlayerEvent e);
+    void handlePlayerUpdate(PlayerEvent e);
 }

@@ -2,7 +2,6 @@ package Controller;
 
 import Model.GameEvent;
 import View.FortifyPopUp;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

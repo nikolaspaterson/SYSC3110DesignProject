@@ -3,7 +3,7 @@ package Model;
 import java.util.TimerTask;
 
 public class AITimer extends TimerTask {
-    private AIPlayer aiPlayer;
+    private final AIPlayer aiPlayer;
 
     public AITimer(AIPlayer aiPlayer){
         this.aiPlayer = aiPlayer;
@@ -30,6 +30,5 @@ public class AITimer extends TimerTask {
                 aiPlayer.nextState();
             }
         }
-
     }
 }

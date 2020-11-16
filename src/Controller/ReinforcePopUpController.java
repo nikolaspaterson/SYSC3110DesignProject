@@ -1,9 +1,7 @@
 package Controller;
 
 import Model.GameEvent;
-import Model.Territory;
 import View.ReinforcePopUp;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

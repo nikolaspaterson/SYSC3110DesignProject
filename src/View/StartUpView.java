@@ -1,7 +1,6 @@
 package View;
 
 import Controller.StartUpController;
-
 import javax.swing.*;
 import java.awt.*;
 

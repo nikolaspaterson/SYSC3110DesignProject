@@ -4,7 +4,6 @@ import Controller.GameController;
 import Listener.PlayerListener;
 import Model.Player;
 import Event.PlayerEvent;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -19,7 +18,7 @@ public class StatusBar extends JPanel implements PlayerListener {
     private final JButton nextStep;
     private final JLabel currentAction;
     private final JLabel currentName;
-    private JLabel deployLabel;
+    private final JLabel deployLabel;
 
     public StatusBar(){
         this.setLayout(new GridLayout(1, 3, 3, 0));
@@ -52,7 +51,6 @@ public class StatusBar extends JPanel implements PlayerListener {
         add(descriptionPanel);
         setBorder(darkLine);
         add(nextStep);
-
     }
 
     /**
@@ -104,7 +102,6 @@ public class StatusBar extends JPanel implements PlayerListener {
         nextStep.setBackground(new Color(113, 220, 70));
         nextStep.setText("Next"); //add to first if after implementation
         currentAction.setText("<html>Troops to deploy!");
-
     }
 
     /**
@@ -132,6 +129,5 @@ public class StatusBar extends JPanel implements PlayerListener {
     @Override
     public void handlePlayerUpdate(PlayerEvent e) {
         deployLabel.setText(String.valueOf(e.getDeployable_troops()));
-
     }
 }

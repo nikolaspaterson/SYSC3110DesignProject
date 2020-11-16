@@ -2,7 +2,6 @@ package View;
 
 import Controller.GameController;
 import Model.*;
-
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -22,7 +21,6 @@ import java.util.Timer;
 public class GameView extends JFrame {
 
     private final ArrayList<Player> playerList;
-    private ArrayList<PlayerView> playerViews;
     private Player currentPlayer;
     private int currentPlayerIndex;
     private final StatusBar user_status;
@@ -33,7 +31,7 @@ public class GameView extends JFrame {
     private Clip clip;
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
-    private HashMap<String, Territory> worldMap;
+    private final HashMap<String, Territory> worldMap;
     private final int AISpeed = 10;
     private Timer aiTimer;
 

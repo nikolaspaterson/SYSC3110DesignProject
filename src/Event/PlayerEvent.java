@@ -1,15 +1,12 @@
 package Event;
 
 import Model.Player;
-
-import javax.swing.*;
-import java.awt.*;
 import java.util.EventObject;
 
 public class PlayerEvent extends EventObject {
-    private int deployable_troops;
-    private int total_troops;
-    private boolean status;
+    private final int deployable_troops;
+    private final int total_troops;
+    private final boolean status;
 
     /**
      * Constructs a prototypical Event.
@@ -35,4 +32,3 @@ public class PlayerEvent extends EventObject {
 
     public boolean getStatus() {return status;}
 }
-

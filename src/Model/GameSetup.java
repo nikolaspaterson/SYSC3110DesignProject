@@ -1,7 +1,6 @@
 package Model;
 
 import View.TerritoryButton;
-
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,7 +20,7 @@ public class GameSetup {
     private final String territory_CSV;
     private final ArrayList<Territory> unclaimed_territory;
     private final HashMap<String, Continent> continentMap;
-    private ArrayList<TerritoryButton> worldMapView;
+    private final ArrayList<TerritoryButton> worldMapView;
 
     /**
      * Model.GameSetup is in charge of calling private methods which

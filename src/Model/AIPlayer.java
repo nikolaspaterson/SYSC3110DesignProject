@@ -1,15 +1,13 @@
 package Model;
 
 import View.GameView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 public class AIPlayer extends Player {
 
-    private GameView gameView;
-    private GameEvent gameEvent;
+    private final GameView gameView;
+    private final GameEvent gameEvent;
     private boolean attacking;
 
     public AIPlayer(String name, GameView gameView) {
@@ -204,18 +202,20 @@ public class AIPlayer extends Player {
         }
 
         Territory[] mostInDanger = getGreatestDangerLevel(threatMap); //array of territories in decreasing danger
-        for (Territory territory : mostInDanger) { //check if territory can be helped
-            for (Territory friendlyNeighbour : territory.getLinkedNeighbours()) {
-                if (assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops()) < assignThreatLevel(territory, territory.getTroops())) {
-                    //friend is safer than you, so they can help
-                    int newThreatLevelTerritory = assignThreatLevel(territory, territory.getTroops() + availableTroopsToReceive(friendlyNeighbour));
-                    int newThreatLevelDonoTerritory = assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops() - availableTroopsToReceive(friendlyNeighbour));
-                    if (newThreatLevelTerritory < threatMap.get(territory) && newThreatLevelDonoTerritory == assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops())) {
-                        //friend helping you will not hurt them, so they will sent troops
-                        territories[0] = friendlyNeighbour;
-                        territories[1] = territory;
-                        return territories;
-                    }//else it will hurt friend so you will find some other friend
+        if (mostInDanger != null) {
+            for (Territory territory : mostInDanger) { //check if territory can be helped
+                for (Territory friendlyNeighbour : territory.getLinkedNeighbours()) {
+                    if (assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops()) < assignThreatLevel(territory, territory.getTroops())) {
+                        //friend is safer than you, so they can help
+                        int newThreatLevelTerritory = assignThreatLevel(territory, territory.getTroops() + availableTroopsToReceive(friendlyNeighbour));
+                        int newThreatLevelDonoTerritory = assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops() - availableTroopsToReceive(friendlyNeighbour));
+                        if (newThreatLevelTerritory < threatMap.get(territory) && newThreatLevelDonoTerritory == assignThreatLevel(friendlyNeighbour, friendlyNeighbour.getTroops())) {
+                            //friend helping you will not hurt them, so they will sent troops
+                            territories[0] = friendlyNeighbour;
+                            territories[1] = territory;
+                            return territories;
+                        }//else it will hurt friend so you will find some other friend
+                    }
                 }
             }
         }
@@ -314,5 +314,4 @@ public class AIPlayer extends Player {
         }
         return true;
     }
-
 }

@@ -1,7 +1,5 @@
 package Controller;
 
-import Model.Territory;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -9,8 +7,8 @@ import java.awt.event.MouseEvent;
 
 public class TerritoryButtonController extends MouseAdapter {
 
-    private Component parent;
-    private JPanel popup_info;
+    private final Component parent;
+    private final JPanel popup_info;
 
     public TerritoryButtonController(Component parent, JPanel popup_info) {
         this.parent = parent;

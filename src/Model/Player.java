@@ -1,9 +1,7 @@
 package Model;
 
 import Listener.PlayerListener;
-import View.PlayerView;
 import Event.PlayerEvent;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ public class Player {
     private Color player_color;
     private boolean inGame;
 
-    private ArrayList<PlayerListener> playerListeners;
+    private final ArrayList<PlayerListener> playerListeners;
 
     /**
      * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
@@ -57,13 +55,10 @@ public class Player {
     public void addPlayerListener(PlayerListener list){
         playerListeners.add(list);
     }
+
     public void removePlayerListener(PlayerListener list){
         playerListeners.remove(list);
     }
-    /**
-     * Gets the PlayerView
-     * @return PlayerView
-     */
 
     /**
      * Gets the player's name.

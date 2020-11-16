@@ -2,10 +2,8 @@ package Controller;
 
 import Model.Territory;
 import View.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 public class GameController implements ActionListener {
 

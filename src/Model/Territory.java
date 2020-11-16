@@ -2,7 +2,6 @@ package Model;
 
 import Listener.TerritoryView;
 import Event.TerritoryEvent;
-
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -19,15 +18,13 @@ public class Territory {
     private int troops;
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
-    private List<TerritoryView> territoryViews;
+    private final List<TerritoryView> territoryViews;
     private String continentName;
     private Color color;
     private Color neighbourColor;
     private ArrayList<Territory> linkedNeighbours;
-
     private Timer blinking_yours;
     private Timer blinking_theirs;
-
 
     /**
      * Class constructor for the Model.Territory class. Sets the player who occupies the territory
@@ -61,7 +58,7 @@ public class Territory {
     public String getContinentName(){
         return continentName;
     }
-    public void removeTerritoryView(TerritoryView territoryView) { territoryViews.remove(territoryView); }
+
     /**
      * Gets the name of this Model.Territory.
      * @return String the Model.Territory name.

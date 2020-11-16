@@ -3,7 +3,6 @@ package View;
 import Listener.PlayerListener;
 import Model.Player;
 import Event.PlayerEvent;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -19,7 +18,6 @@ public class PlayerView extends JPanel implements PlayerListener {
     private final JLabel total_troops_label;
     private final JLabel player_deploy;
     private final JLabel player_icon;
-    private final Color player_color;
 
     /**
      * Constructor for the PlayerView Class.
@@ -39,7 +37,6 @@ public class PlayerView extends JPanel implements PlayerListener {
         JLabel player_name_label = new JLabel();
         total_troops_label = new JLabel();
         player_deploy = new JLabel();
-        this.player_color = player_color;
 
         player_deploy.setFont(new Font("Impact",Font.PLAIN,20));
         player_deploy.setForeground(new Color(0xE73A3A));
@@ -60,20 +57,6 @@ public class PlayerView extends JPanel implements PlayerListener {
      */
     public Icon getplayer_icon(){
         return player_icon.getIcon();
-    }
-
-    /**
-     * Gets the player's color.
-     * @return Color
-     */
-    public Color getPlayer_color(){ return player_color;}
-
-    /**
-     * Gets the deploy JLabel.
-     * @return JLabel
-     */
-    public JLabel getDeployLabel(){
-        return player_deploy;
     }
 
     /**
@@ -106,7 +89,6 @@ public class PlayerView extends JPanel implements PlayerListener {
             x_mark.setIcon(scaledImg);
             add(x_mark);
         }
-
     }
 
     @Override

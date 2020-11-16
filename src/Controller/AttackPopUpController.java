@@ -1,11 +1,8 @@
 package Controller;
 
 import Model.GameEvent;
-import Model.Player;
-import Model.Territory;
 import View.AttackPopUp;
 import View.FortifyPopUp;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
