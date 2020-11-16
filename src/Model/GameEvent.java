@@ -152,10 +152,11 @@ public class GameEvent {
      * @param troops the number of troops to move from territory1 to territory2.
      */
     public void fortify(Territory territory1, Territory territory2, int troops) {
-        if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant().equals(player) && territory1.isNeighbour(territory2)) {
+        if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant().equals(player) && territory1.getLinkedNeighbours().contains(territory2) && player.getFortifyStatus()) {
             if(troops < territory1.getTroops() && troops > 0) {
                 player.decrementTroops(territory1, troops);
                 player.incrementTroops(territory2, troops);
+                player.setFortifyStatus(false);
                 System.out.println("You have moved " + troops + " from " + territory1.getTerritoryName() + " to " + territory2.getTerritoryName());
             } else if (troops <= 0){
                 System.out.println("No troops will be moved.");

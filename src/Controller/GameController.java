@@ -60,7 +60,7 @@ public class GameController implements ActionListener {
                 break;
 
             case "Fortify":
-                if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())) {
+                if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCurrentPlayer().getFortifyStatus()) {
                     gameViewRef.clearCommandTerritory();
                     gameViewRef.addCommandTerritory(temp_territory);
                 } else if (gameViewRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getFirstCommandTerritory().getLinkedNeighbours().contains(temp_territory)) {

@@ -22,7 +22,7 @@ public class Player {
     private Icon player_icon;
     private Color player_color;
     private boolean inGame;
-
+    private boolean fortifyStatus;
     private final ArrayList<PlayerListener> playerListeners;
 
     /**
@@ -35,6 +35,7 @@ public class Player {
         territoriesOccupied = new HashMap<>();
         playerListeners = new ArrayList<>();
         inGame = true;
+        fortifyStatus = true;
     }
 
 
@@ -60,6 +61,10 @@ public class Player {
         playerListeners.remove(list);
     }
 
+    public boolean getFortifyStatus() { return fortifyStatus; }
+
+    public void setFortifyStatus(boolean fortifyStatus) { this.fortifyStatus = fortifyStatus; }
+
     /**
      * Gets the player's name.
      * @return String - Players name
@@ -82,6 +87,7 @@ public class Player {
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
         addTotal(deployableTroops);
+        fortifyStatus = true;
         updateListeners();
     }
 
