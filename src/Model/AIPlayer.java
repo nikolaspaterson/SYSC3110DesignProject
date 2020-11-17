@@ -3,12 +3,14 @@ package Model;
 import View.GameView;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.lang.Math;
 
 public class AIPlayer extends Player {
 
     private final GameView gameView;
     private final GameEvent gameEvent;
     private boolean attacking;
+
 
     public AIPlayer(String name, GameView gameView) {
         super(name);
@@ -99,12 +101,13 @@ public class AIPlayer extends Player {
 
     public ArrayList<Territory> bestAttackTerritory() {
         ArrayList<Territory> weakest = new ArrayList<>();
-        int highestValue = 3;
-        int newValue;
+        double highestValue = 3;
+        double threshold = 3;
+        double newValue;
         for(Territory allTerritories : getTerritoriesOccupied().values()){
             for(Territory currentEnemy : allTerritories.getNeighbours().values()){
                 if(!currentEnemy.getOccupant().equals(this)){
-                    newValue = successfulAttackProbability(allTerritories,currentEnemy);
+                    newValue = successfulAttackProbability(allTerritories,currentEnemy,threshold);
                     if(weakest.size() == 0 && highestValue < newValue){
                         highestValue = newValue;
                         weakest.add(allTerritories);
@@ -156,34 +159,28 @@ public class AIPlayer extends Player {
 
     private int predictiveAttackProbability(Territory allyTerritory,Territory enemyTerritory,int deployableBonus){
         int total_with = allyTerritory.getTroops() + deployableBonus + enemyTerritory.getTroops();
-        float troopDifference_with = (float) (allyTerritory.getTroops() + deployableBonus - enemyTerritory.getTroops())/total_with;
+        float troopDifference_with = (float) (allyTerritory.getTroops() + deployableBonus - enemyTerritory.getTroops( ))/total_with;
 
         int total = allyTerritory.getTroops() + enemyTerritory.getTroops();
         float troopDifference = (float) (allyTerritory.getTroops() - enemyTerritory.getTroops())/total;
 
         if(troopDifference_with/troopDifference > 2) {
+            return 3;
+        } else if(troopDifference > 1.5){
+            return 2;
+        }else if(troopDifference > 1.25) {
             return 1;
-        } else {
+        }else{
             return 0;
         }
     }
 
 
-    private int successfulAttackProbability(Territory allyTerritory,Territory enemyTerritory){
-        float troopDifference;
-        int total = allyTerritory.getTroops() + enemyTerritory.getTroops();
-        troopDifference = (float) (allyTerritory.getTroops() - enemyTerritory.getTroops())/total;
-        if(troopDifference >= 0.75){
-            return 8;
-        } else if(troopDifference < 0.75 && troopDifference >= 0.5){
-            return 6;
-        } else if (troopDifference < 0.5 && troopDifference >= 0.25){
-            return 4;
-        } else if (troopDifference < 0.25 && troopDifference > 0){
-            return 2;
-        }else {
-            return -4;
-        }
+    private double successfulAttackProbability(Territory allyTerritory,Territory enemyTerritory,double threshold){
+        double troopDifference;
+        int difference = allyTerritory.getTroops() - enemyTerritory.getTroops();
+        troopDifference = Math.log((double) allyTerritory.getTroops()-threshold) + difference;
+        return troopDifference;
     }
 
     public boolean stillAttacking(){
