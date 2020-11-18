@@ -74,7 +74,6 @@ public class Player {
         return player_color;
     }
 
-
     public void addPlayerListener(PlayerListener list){
         playerListeners.add(list);
     }
@@ -199,8 +198,6 @@ public class Player {
         if(territoriesOccupied.size() == 0){
             eliminatePlayer();
         }
-
-
     }
 
     /**
@@ -229,7 +226,6 @@ public class Player {
         }
         return output;
     }
-
 
     public void eliminatePlayer() {
         inGame = false;

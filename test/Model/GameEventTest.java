@@ -63,7 +63,10 @@ public class GameEventTest {
         t6.addNeighbour(t1);
     }
 
-    public void setUpNewFeatures() {
+    /**
+     * This method is used to set up the territories and necessary troops to test troop movement for fortifying in milestone 3.
+     */
+    public void setUpForLinkedFortify() {
         temp1 = new Territory("Ontario");
         temp2 = new Territory("Quebec");
         temp3 = new Territory("Egypt");
@@ -242,7 +245,7 @@ public class GameEventTest {
 
     @Test
     public void testSuccessfulLinkedFortify() {
-        setUpNewFeatures();
+        setUpForLinkedFortify();
         GameEvent gameEvent1 = new GameEvent(player1);
         System.out.println("\nSuccessful Fortify - Territory1 and Territory2 are neighbouring, owned by the same player and are CONNECTED but not NEIGHBOURING.");
         // Successful Fortify
@@ -253,7 +256,7 @@ public class GameEventTest {
 
     @Test
     public void testUnSuccessfulLinkedFortify() {
-        setUpNewFeatures();
+        setUpForLinkedFortify();
         player1.removeTerritory(temp2.getTerritoryName());
 
         Player player2 = new Player("P2");
