@@ -123,7 +123,7 @@ public class GameView extends JFrame {
         worldMap = gameSetup.returnWorldMap();
         ArrayList<TerritoryButton> worldMapView = gameSetup.returnWorldMapView();
         currentPlayer = playerList.get(currentPlayerIndex);
-        playerBonus();
+        currentPlayer.playerBonus(continentMap);
         user_status.setPlayer(currentPlayer);
 
         for(TerritoryButton x : worldMapView){
@@ -160,7 +160,7 @@ public class GameView extends JFrame {
             System.out.println("Winner!");
         }else{
             outOfGame = 0;
-            playerBonus();
+            currentPlayer.playerBonus(continentMap);
             if(currentPlayer instanceof AIPlayer) {
                 aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),AISpeed,AISpeed);
             }
@@ -229,28 +229,6 @@ public class GameView extends JFrame {
 
         winnerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         winnerFrame.setVisible(true);
-    }
-
-    /**
-     * PlayerBonus calculates how many troops each player will get at the start of their turn by checking how many territories
-     * they own and weather or not they occupy an entire continent
-     */
-    public void playerBonus(){
-
-        int troops = 0;
-        if (continentMap.get("Asia").checkContinentOccupant(currentPlayer)) troops += 7; // Asia Bonus
-        if (continentMap.get("Australia").checkContinentOccupant(currentPlayer)) troops += 2; // Australia Bonus
-        if (continentMap.get("Europe").checkContinentOccupant(currentPlayer)) troops += 5; // Europe Bonus
-        if (continentMap.get("Africa").checkContinentOccupant(currentPlayer)) troops += 3; // Africa Bonus
-        if (continentMap.get("SouthAmerica").checkContinentOccupant(currentPlayer)) troops += 2; // South America Bonus
-        if (continentMap.get("NorthAmerica").checkContinentOccupant(currentPlayer)) troops += 5; // North America Bonus
-
-        if ((currentPlayer.getTerritoriesOccupied().size()) <= 9) {
-            troops += 3;
-        } else {
-            troops += ((currentPlayer.getTerritoriesOccupied().size()) / 3);
-        }
-        currentPlayer.addDeployableTroops(troops);
     }
 
     /**

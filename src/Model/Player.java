@@ -44,6 +44,28 @@ public class Player {
         this.player_icon = player_icon;
     }
 
+    /**
+     * PlayerBonus calculates how many troops each player will get at the start of their turn by checking how many territories
+     * they own and weather or not they occupy an entire continent
+     */
+    public void playerBonus(HashMap<String, Continent> continentMap){
+
+        int troops = 0;
+        if (continentMap.get("Asia").checkContinentOccupant(this)) troops += 7; // Asia Bonus
+        if (continentMap.get("Australia").checkContinentOccupant(this)) troops += 2; // Australia Bonus
+        if (continentMap.get("Europe").checkContinentOccupant(this)) troops += 5; // Europe Bonus
+        if (continentMap.get("Africa").checkContinentOccupant(this)) troops += 3; // Africa Bonus
+        if (continentMap.get("SouthAmerica").checkContinentOccupant(this)) troops += 2; // South America Bonus
+        if (continentMap.get("NorthAmerica").checkContinentOccupant(this)) troops += 5; // North America Bonus
+
+        if ((this.getTerritoriesOccupied().size()) <= 9) {
+            troops += 3;
+        } else {
+            troops += ((this.getTerritoriesOccupied().size()) / 3);
+        }
+        this.addDeployableTroops(troops);
+    }
+
     public Icon getPlayer_icon() {
         return player_icon;
     }
