@@ -63,9 +63,9 @@ public class PlayerSelectPanel extends JPanel {
                 photo.setIcon(chip);
             } else if (photo.getIcon().equals(chip)) {
                 photo.setIcon(nik);
-            } else if (photo.getIcon().equals(pass)){
+            } else if (photo.getIcon().equals(nik)){
                 photo.setIcon(pass);
-            }else{
+            } else {
                 photo.setIcon(chizzy);
             }
         });

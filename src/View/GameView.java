@@ -251,21 +251,15 @@ public class GameView extends JFrame {
      * @param filepath the filepath of the music to play
      */
     public void playMusic(String filepath) {
-        {
-            try
-            {
+            try {
                 URL url = getClass().getResource(filepath);
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
                 clip = AudioSystem.getClip( );
                 clip.open(audioInputStream);
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
-            }
-            catch(Exception ex)
-            {
+            } catch(Exception ex) {
                 System.out.println("Error with playing sound.");
                 ex.printStackTrace( );
             }
-        }
-
     }
 }

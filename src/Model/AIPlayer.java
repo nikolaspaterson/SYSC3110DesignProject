@@ -30,7 +30,6 @@ public class AIPlayer extends Player {
         this.gameView = gameView;
         gameEvent = new GameEvent(this);
         attacking = true;
-
     }
 
     /**
@@ -95,24 +94,9 @@ public class AIPlayer extends Player {
         for (Territory curr : getTerritoriesOccupied().values()) {
             if (bestTerritory == null) {
                 bestTerritory = curr;
-                value += leastEnemySurrounded(enemyNeighbourRatio(bestTerritory));
-                value += lowestTroopTerritory(bestTerritory);
-                value += continentValue(curr);
-                for (Territory enemies : curr.getNeighbours().values()){
-                    if(!enemies.getOccupant().equals(this)){
-                        value += predictiveAttackProbability(curr, enemies, troopBonus);
-                    }
-                }
+                value = reinforcePriorityValue(bestTerritory, troopBonus);
             } else {
-                int challengerValue = 0;
-                challengerValue += leastEnemySurrounded(enemyNeighbourRatio(curr));
-                challengerValue += lowestTroopTerritory(curr);
-                challengerValue += continentValue(curr);
-                for (Territory enemies : curr.getNeighbours().values()){
-                    if(!enemies.getOccupant().equals(this)){
-                        challengerValue += predictiveAttackProbability(curr, enemies, troopBonus);
-                    }
-                }
+                int challengerValue = reinforcePriorityValue(curr, troopBonus);
                 if (value < challengerValue) {
                     value = challengerValue;
                     bestTerritory = curr;
@@ -120,6 +104,16 @@ public class AIPlayer extends Player {
             }
         }
         return bestTerritory;
+    }
+
+    private int reinforcePriorityValue(Territory territory, int troopBonus) {
+        int value = leastEnemySurrounded(enemyNeighbourRatio(territory)) + lowestTroopTerritory(territory) + continentValue(territory);
+        for (Territory enemies : territory.getNeighbours().values()){
+            if(!enemies.getOccupant().equals(this)){
+                value += predictiveAttackProbability(territory, enemies, troopBonus);
+            }
+        }
+        return value;
     }
 
     /**
@@ -153,11 +147,10 @@ public class AIPlayer extends Player {
         ArrayList<Territory> weakest = new ArrayList<>();
         double highestValue = 2;
         double threshold = 2;
-        double newValue;
         for(Territory allTerritories : getTerritoriesOccupied().values()){
             for(Territory currentEnemy : allTerritories.getNeighbours().values()){
                 if(!currentEnemy.getOccupant().equals(this)){
-                    newValue = successfulAttackProbability(allTerritories,currentEnemy,threshold);
+                    double newValue = successfulAttackProbability(allTerritories, currentEnemy, threshold);
                     if(weakest.size() == 0 && highestValue < newValue){
                         highestValue = newValue;
                         weakest.add(allTerritories);
@@ -179,25 +172,32 @@ public class AIPlayer extends Player {
     public void attack() {
         ArrayList<Territory> terrAttack = bestAttackTerritory();
         if (terrAttack.size() != 0){
-            Territory attacker = terrAttack.get(0);
-            if(attacker.getTroops() >= 4){
-                gameEvent.attack(attacker, terrAttack.get(1), 3);
-            }else if(attacker.getTroops() == 3){
-                gameEvent.attack(attacker, terrAttack.get(1), 2);
-            }else {
-                gameEvent.attack(attacker, terrAttack.get(1), 1);
-            }
-            if(gameEvent.getAttackerWon()) {
-                int value = leastEnemySurrounded(enemyNeighbourRatio(terrAttack.get(0)));
-                if(value < 0) {
-                    gameEvent.fortify(terrAttack.get(0), terrAttack.get(1), (terrAttack.get(0).getTroops()-1));
-                } else {
-                    gameEvent.fortify(terrAttack.get(0), terrAttack.get(1), (terrAttack.get(0).getTroops()/2));
-                }
-                this.setFortifyStatus(true);
-            }
+            attackingMove(terrAttack.get(0), terrAttack.get(1));
+            winningAttackingMove(terrAttack.get(0), terrAttack.get(1));
         }else {
             attacking = false;
+        }
+    }
+
+    public void winningAttackingMove(Territory attacking, Territory defending) {
+        if(gameEvent.getAttackerWon()) {
+            int value = leastEnemySurrounded(enemyNeighbourRatio(attacking));
+            if(value < 0) {
+                gameEvent.fortify(attacking, defending, (attacking.getTroops()-1));
+            } else {
+                gameEvent.fortify(attacking, defending, (attacking.getTroops()/2));
+            }
+            this.setFortifyStatus(true);
+        }
+    }
+
+    public void attackingMove(Territory attacker, Territory defender) {
+        if(attacker.getTroops() >= 4){
+            gameEvent.attack(attacker, defender, 3);
+        }else if(attacker.getTroops() == 3){
+            gameEvent.attack(attacker, defender, 2);
+        }else {
+            gameEvent.attack(attacker, defender, 1);
         }
     }
 
@@ -226,7 +226,7 @@ public class AIPlayer extends Player {
      * @param deployableBonus the amount of troops
      * @return int priority
      */
-    private int predictiveAttackProbability(Territory allyTerritory,Territory enemyTerritory,int deployableBonus){
+    private int predictiveAttackProbability(Territory allyTerritory, Territory enemyTerritory, int deployableBonus){
         int total_with = allyTerritory.getTroops() + deployableBonus + enemyTerritory.getTroops();
         float troopDifference_with = (float) (allyTerritory.getTroops() + deployableBonus - enemyTerritory.getTroops( ))/total_with;
 
@@ -253,10 +253,9 @@ public class AIPlayer extends Player {
      * @param threshold the amount of troops
      * @return int priority
      */
-    private double  successfulAttackProbability(Territory allyTerritory,Territory enemyTerritory,double threshold){
-        double troopDifference;
+    private double successfulAttackProbability(Territory allyTerritory, Territory enemyTerritory, double threshold){
         int difference = allyTerritory.getTroops() - enemyTerritory.getTroops();
-        troopDifference = Math.log((double) allyTerritory.getTroops()-threshold) + difference;
+        double troopDifference = Math.log((double) allyTerritory.getTroops()-threshold) + difference;
         return troopDifference;
     }
 
