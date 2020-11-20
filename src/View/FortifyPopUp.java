@@ -105,7 +105,6 @@ public class FortifyPopUp extends JPopupMenu {
         minusButton.addActionListener(controller);
         plusButton.addActionListener(controller);
         fortifyButton.addActionListener(controller);
-
     }
 
     /**

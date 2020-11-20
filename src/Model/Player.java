@@ -49,7 +49,6 @@ public class Player {
      * they own and weather or not they occupy an entire continent
      */
     public void playerBonus(HashMap<String, Continent> continentMap){
-
         int troops = 0;
         if (continentMap.get("Asia").checkContinentOccupant(this)) troops += 7; // Asia Bonus
         if (continentMap.get("Australia").checkContinentOccupant(this)) troops += 2; // Australia Bonus
@@ -242,5 +241,4 @@ public class Player {
             temp.handlePlayerUpdate(new PlayerEvent(this,deployableTroops,total_troops,inGame));
         }
     }
-
 }

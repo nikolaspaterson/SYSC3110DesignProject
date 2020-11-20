@@ -50,11 +50,15 @@ public class Territory {
     }
 
     public Color getColor() { return color; }
+
     public Color getNeighbourColor() { return  neighbourColor;}
+
     public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
+
     public void setContinentName(String name){
         continentName = name;
     }
+
     public String getContinentName(){
         return continentName;
     }

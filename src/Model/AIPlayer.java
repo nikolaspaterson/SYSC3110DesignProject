@@ -255,8 +255,7 @@ public class AIPlayer extends Player {
      */
     private double successfulAttackProbability(Territory allyTerritory, Territory enemyTerritory, double threshold){
         int difference = allyTerritory.getTroops() - enemyTerritory.getTroops();
-        double troopDifference = Math.log((double) allyTerritory.getTroops()-threshold) + difference;
-        return troopDifference;
+        return Math.log((double) allyTerritory.getTroops()-threshold) + difference;
     }
 
     /**
@@ -286,7 +285,7 @@ public class AIPlayer extends Player {
         float continentRatio = (float) ownedTerritories/continentSize;
         if (continentRatio == 1){
             return -5;
-        }if(continentRatio >= 0.75){
+        } else if(continentRatio >= 0.75){
             return 5;
         }else {
            return  0;
@@ -359,7 +358,7 @@ public class AIPlayer extends Player {
         //sorts array based on territories threat level in hashmap
         for(int j = 0; j < sortedDanger.length; j++){
             for(int k = 0; k < sortedDanger.length; k++){
-                if(map.get(sortedDanger[j])  < map.get(sortedDanger[k])){
+                if(map.get(sortedDanger[j]) < map.get(sortedDanger[k])){
                     Territory temp = sortedDanger[j];
                     sortedDanger[j] = sortedDanger[k];
                     sortedDanger[k] = temp;
@@ -407,7 +406,7 @@ public class AIPlayer extends Player {
             //Check for neighbouring enemy with highest number of troops (AKA Biggest threat)
             int enemyTroops = 0;
             for(Territory enemyTerritory : t.getNeighbours().values()){
-                if(! enemyTerritory.getOccupant().equals(t.getOccupant())){
+                if(!enemyTerritory.getOccupant().equals(t.getOccupant())){
                     if(enemyTerritory.getTroops() > enemyTroops){
                         enemyTroops = enemyTerritory.getTroops();
                     }
@@ -424,7 +423,7 @@ public class AIPlayer extends Player {
      */
     private boolean isSafe(Territory t){
         for(Territory neighbouringTerritory: t.getNeighbours().values()){
-            if(! neighbouringTerritory.getOccupant().equals(this)){
+            if(!neighbouringTerritory.getOccupant().equals(this)){
                 return false;
             }
         }

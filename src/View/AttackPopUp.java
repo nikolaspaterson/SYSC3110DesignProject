@@ -17,14 +17,16 @@ public class AttackPopUp extends JPopupMenu {
 
     private final Territory attackingTerritory;
     private final Territory defendingTerritory;
-    private final JButton minus;
-    private final JLabel numDice;
-    private final JButton plus;
-    private final JLabel attackerLabel;
-    private final JLabel defenderLabel;
-    private final JLabel outcome;
+    private JButton minus;
+    private JLabel numDice;
+    private JButton plus;
+    private JLabel attackerLabel;
+    private JLabel defenderLabel;
+    private JLabel outcome;
     private JLabel attackingLabel;
     private JLabel defendingLabel;
+    private JPanel jPanel;
+    private JPanel result;
     private final JFrame gameViewRef;
 
     /**
@@ -36,6 +38,8 @@ public class AttackPopUp extends JPopupMenu {
     public AttackPopUp(Territory attackingTerritory, Territory defendingTerritory, JFrame gameViewRef) {
         super();
         setLayout(new GridLayout(0, 1));
+
+        //Sets a black border
         Border darkLine = BorderFactory.createLineBorder(Color.black,3);
         setBorder(darkLine);
 
@@ -43,7 +47,16 @@ public class AttackPopUp extends JPopupMenu {
         this.attackingTerritory = attackingTerritory;
         this.defendingTerritory = defendingTerritory;
 
-        JPanel jPanel = new JPanel(new FlowLayout());
+        //Helper function to configure all panel components
+        configurePanels();
+
+        add(jPanel);
+        add(result);
+        setVisible(true);
+    }
+
+    private void configurePanels() {
+        jPanel = new JPanel(new FlowLayout());
         JPanel jp = new JPanel();
 
         JPanel middlePanel = new JPanel();
@@ -80,7 +93,7 @@ public class AttackPopUp extends JPopupMenu {
 
         jp.add(middlePanel);
 
-        JPanel result = new JPanel();
+        result = new JPanel();
         result.setLayout(new GridLayout(4, 1));
 
         JLabel resultLabel = new JLabel("RESULT");
@@ -123,10 +136,6 @@ public class AttackPopUp extends JPopupMenu {
         jPanel.add(leftPanel, BorderLayout.WEST);
         jPanel.add(jp, BorderLayout.CENTER);
         jPanel.add(rightPanel, BorderLayout.EAST);
-
-        add(jPanel);
-        add(result);
-        setVisible(true);
     }
 
     /**

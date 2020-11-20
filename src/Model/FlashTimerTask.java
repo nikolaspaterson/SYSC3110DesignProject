@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.TimerTask;
 
 public class FlashTimerTask extends TimerTask {
+
     private final int i;
     private final HashMap<String, Territory> neighbours;
     private final Color main_color;
