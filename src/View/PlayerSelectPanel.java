@@ -45,11 +45,13 @@ public class PlayerSelectPanel extends JPanel {
         file.add("/resources/TA.png");
         file.add("/resources/Captain.png");
         file.add("/resources/nik.png");
+        file.add("/resources/passki.png");
 
         ImageIcon chizzy = scaleImage(file.get(0));
         ImageIcon TA = scaleImage(file.get(1));
         ImageIcon chip = scaleImage((file.get(2)));
         ImageIcon nik = scaleImage((file.get(3)));
+        ImageIcon pass = scaleImage((file.get(4)));
 
         photo = new JButton();
         photo.setIcon(chizzy);
@@ -61,6 +63,8 @@ public class PlayerSelectPanel extends JPanel {
                 photo.setIcon(chip);
             } else if (photo.getIcon().equals(chip)) {
                 photo.setIcon(nik);
+            } else if (photo.getIcon().equals(pass)){
+                photo.setIcon(pass);
             }else{
                 photo.setIcon(chizzy);
             }

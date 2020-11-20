@@ -253,7 +253,7 @@ public class AIPlayer extends Player {
      * @param threshold the amount of troops
      * @return int priority
      */
-    private double successfulAttackProbability(Territory allyTerritory,Territory enemyTerritory,double threshold){
+    private double  successfulAttackProbability(Territory allyTerritory,Territory enemyTerritory,double threshold){
         double troopDifference;
         int difference = allyTerritory.getTroops() - enemyTerritory.getTroops();
         troopDifference = Math.log((double) allyTerritory.getTroops()-threshold) + difference;
