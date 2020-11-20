@@ -2,6 +2,9 @@ package View;
 
 import Controller.GameController;
 import Model.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -10,8 +13,11 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
@@ -33,9 +39,11 @@ public class GameView extends JFrame {
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
     private JPanel players_overlay;
+    private String board_name;
     private Stack<Color> color_list;
     private final int AISpeed = 100;
     private Timer aiTimer;
+    private GameMenuBar gameMenuBar;
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -45,8 +53,11 @@ public class GameView extends JFrame {
     public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
         super("Risk!");
         UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
+        board_name = "Default Board";
         playerList = new ArrayList<>();
         color_list = new Stack<>();
+        gameMenuBar = new GameMenuBar();
+        MenuBarController menu_controller = new MenuBarController(this,gameMenuBar);
         currentPlayer = null;
         user_status = new StatusBar();
         GameController game_controller = new GameController(this);
@@ -95,6 +106,7 @@ public class GameView extends JFrame {
         background.add(players_overlay);
         setResizable(false);
         setVisible(true);
+        setJMenuBar(gameMenuBar);
         playMusic("/resources/beat.wav");
         initializeAITimer();
     }
@@ -246,6 +258,58 @@ public class GameView extends JFrame {
         clip.stop();
     }
 
+    public String createDirectory(){
+        String path =  this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+        String decodedPath = URLDecoder.decode(path, "UTF-8");
+        File chop_jar = new File(decodedPath);
+        if(chop_jar.getName().contains(".jar")){
+            decodedPath = decodedPath.replace(chop_jar.getName(),"");
+        }
+        System.out.println(decodedPath);
+        String output_folder = decodedPath + "/output/";
+        File file = new File(output_folder);
+        if(file.exists()){
+            System.out.println("Directory already exists!");
+        }else if(file.mkdir()){
+            System.out.println("Directory created!");
+        } else {
+            System.out.println("Failed creating directory!");
+        }
+        return output_folder;
+    }
+    public void saveJSON(){
+        try{
+            String output_folder = createDirectory();
+            JSONObject gameBoard = new JSONObject();
+            JSONArray playerArray = new JSONArray();
+            int i = 0;
+            bookJson.put("Title",title);
+            for(BuddyInfo temp_bud : myBuddies){
+                buddyArray.add(temp_bud.createJSONBuddy());
+                i++;
+            }
+            bookJson.put("Buddies",buddyArray);
+            String addressBookPath = output_folder + title  + ".json";
+            File address_file = new File(addressBookPath);
+            if(address_file.createNewFile()){
+                System.out.println("File created");
+            } else{
+                System.out.println("File existed");
+            }
+            FileWriter writer = new FileWriter(addressBookPath);
+            String value = bookJson.toString();
+            System.out.println(value);
+            writer.write(value);
+            writer.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+    public void loadJSON(){
+
+    }
     /**
      * This is to play the most jamming beat as you take over the world. No further explanation required.
      * @param filepath the filepath of the music to play

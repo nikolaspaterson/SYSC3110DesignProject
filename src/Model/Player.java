@@ -2,6 +2,11 @@ package Model;
 
 import Listener.PlayerListener;
 import Event.PlayerEvent;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -240,5 +245,12 @@ public class Player {
         for(PlayerListener temp : playerListeners){
             temp.handlePlayerUpdate(new PlayerEvent(this,deployableTroops,total_troops,inGame));
         }
+    }
+    public static Player loadJSON(JSONObject object){
+        return new Player("P");
+    }
+    public JSONObject saveJSON(){
+        JSONObject playerJSON = new JSONObject();
+        return playerJSON;
     }
 }

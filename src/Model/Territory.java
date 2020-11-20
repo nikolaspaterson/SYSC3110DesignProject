@@ -5,6 +5,10 @@ import Event.TerritoryEvent;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 
 /**
  * The Model.Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
@@ -209,4 +213,6 @@ public class Territory {
             territoryView.handleTerritoryUpdate(new TerritoryEvent(this, occupant, troops, color));
         }
     }
+
+    public static JSONObject
 }
