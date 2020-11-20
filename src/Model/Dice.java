@@ -175,5 +175,4 @@ public class Dice {
     public int[] getRoll() {
         return rolls;
     }
-
 }

@@ -3,7 +3,6 @@ package View;
 import Controller.FortifyPopUpController;
 import Model.Player;
 import Model.Territory;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -25,6 +24,7 @@ public class FortifyPopUp extends JPopupMenu {
     private JButton fortifyButton;
     private JLabel t2Name;
     private JLabel t2Troops;
+    private boolean winningMove;
 
     /**
      * Popup constructor.
@@ -35,6 +35,8 @@ public class FortifyPopUp extends JPopupMenu {
         super();
         this.t1=territory1;
         this.t2=territory2;
+
+        winningMove = false;
 
         //Helper function to initialize all panel components
         initializeComponents();
@@ -103,7 +105,6 @@ public class FortifyPopUp extends JPopupMenu {
         minusButton.addActionListener(controller);
         plusButton.addActionListener(controller);
         fortifyButton.addActionListener(controller);
-
     }
 
     /**
@@ -218,4 +219,8 @@ public class FortifyPopUp extends JPopupMenu {
     public void setTroops(int x){
         troops.setText(String.valueOf(x));
     }
+
+    public void setWinningMove(boolean winningMove) { this.winningMove = winningMove; }
+
+    public boolean getWinningMove() { return winningMove; }
 }

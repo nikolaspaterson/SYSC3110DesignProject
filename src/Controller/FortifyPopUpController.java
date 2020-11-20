@@ -2,7 +2,6 @@ package Controller;
 
 import Model.GameEvent;
 import View.FortifyPopUp;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -49,6 +48,9 @@ public class FortifyPopUpController implements ActionListener {
         }else if(e.getSource().equals(popup.getFortifyButton())){//if fortify button is pressed
             ge.fortify(popup.getTerritoryToLoseTroops(), popup.getTerritoryToGainTroops(), x);
             popup.setVisible(false);
+            if(popup.getWinningMove()) {
+                popup.getPlayer().setFortifyStatus(true);
+            }
         }
     }
 }

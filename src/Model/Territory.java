@@ -2,7 +2,6 @@ package Model;
 
 import Listener.TerritoryView;
 import Event.TerritoryEvent;
-
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -19,14 +18,13 @@ public class Territory {
     private int troops;
     private final HashMap<String, Territory> neighbours;
     private final String territoryName;
-    private List<TerritoryView> territoryViews;
+    private final List<TerritoryView> territoryViews;
+    private String continentName;
     private Color color;
     private Color neighbourColor;
     private ArrayList<Territory> linkedNeighbours;
-
     private Timer blinking_yours;
     private Timer blinking_theirs;
-
 
     /**
      * Class constructor for the Model.Territory class. Sets the player who occupies the territory
@@ -37,7 +35,7 @@ public class Territory {
         troops = 0;
         neighbours = new HashMap<>();
         territoryViews = new ArrayList<>();
-
+        linkedNeighbours = new ArrayList<>();
         blinking_yours = new Timer("flash_yours");
         blinking_theirs = new Timer("flash_theirs");
     }
@@ -52,10 +50,18 @@ public class Territory {
     }
 
     public Color getColor() { return color; }
+
     public Color getNeighbourColor() { return  neighbourColor;}
+
     public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
 
-    public void removeTerritoryView(TerritoryView territoryView) { territoryViews.remove(territoryView); }
+    public void setContinentName(String name){
+        continentName = name;
+    }
+
+    public String getContinentName(){
+        return continentName;
+    }
 
     /**
      * Gets the name of this Model.Territory.
@@ -149,7 +155,7 @@ public class Territory {
      * @return String - The string in the description
      */
     public String toString() {
-        String output = "------>Model.Territory Name: " + this.territoryName + "<------\n";
+        String output = "------>Territory Name: " + this.territoryName + "<------\n";
         output += "======Neighbouring Territories======\n";
 
         for(String str : neighbours.keySet()) {
@@ -158,10 +164,12 @@ public class Territory {
         output += "==================";
         return output;
     }
+
     public ArrayList<Territory> getLinkedNeighbours(){
-        linkedNeighbours = new ArrayList<Territory>(linkNeighbours(getOccupant(),new HashSet<>()));
+        linkedNeighbours = new ArrayList<>(linkNeighbours(getOccupant(),new HashSet<>()));
         return linkedNeighbours;
     }
+
     public Set<Territory> linkNeighbours(Player owner,Set<Territory> val){
         for(Territory neighbour : neighbours.values()){
             if(neighbour.getOccupant().equals(owner) && !val.contains(neighbour)){
@@ -170,8 +178,8 @@ public class Territory {
             }
         }
         return val;
-
     }
+
     /**
      * This method is used to stop the timer and stop the flashing of the valid territories that the player can attack.
      */

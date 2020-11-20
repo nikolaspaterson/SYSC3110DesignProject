@@ -2,7 +2,6 @@ package View;
 
 import Controller.GameController;
 import Model.*;
-
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -22,19 +21,20 @@ import java.util.Timer;
 public class GameView extends JFrame {
 
     private final ArrayList<Player> playerList;
-    private ArrayList<PlayerView> playerViews;
     private Player currentPlayer;
     private int currentPlayerIndex;
     private final StatusBar user_status;
-    private final HashMap<String, Continent> continentMap;
-    private final ArrayList<String> gameState;
+    private HashMap<String, Continent> continentMap;
+    private final ArrayList<GameState> gameState;
     private int gameStateIndex;
-    private String currentState;
+    private GameState currentState;
     private Clip clip;
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
-    private final int AISpeed = 50;
+    private JPanel players_overlay;
+    private Stack<Color> color_list;
+    private final int AISpeed = 100;
     private Timer aiTimer;
 
     /**
@@ -46,20 +46,20 @@ public class GameView extends JFrame {
         super("Risk!");
         UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
         playerList = new ArrayList<>();
-        Stack<Color> color_list = new Stack<>();
+        color_list = new Stack<>();
         currentPlayer = null;
         user_status = new StatusBar();
         GameController game_controller = new GameController(this);
         user_status.setController(game_controller);
         outOfGame = 0;
         gameState = new ArrayList<>();
-        gameState.add("Reinforce");
-        gameState.add("Attack");
-        gameState.add("Fortify");
+        gameState.add(GameState.REINFORCE);
+        gameState.add(GameState.ATTACK);
+        gameState.add(GameState.FORTIFY);
         gameStateIndex = 0;
         aiTimer = new Timer("AI");
 
-        currentState = "Reinforce";
+        currentState = GameState.REINFORCE;
         currentPlayerIndex = 0;
         commandTerritory = new ArrayList<>();
 
@@ -71,73 +71,67 @@ public class GameView extends JFrame {
         color_list.add(new Color(202, 128, 255));
         color_list.add(new Color(139, 224, 87));
 
-        JPanel players_overlay = new JPanel();
+        players_overlay = new JPanel();
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());
-
-        for(PlayerSelectPanel x : players){
-            Player newPlayer;
-
-            if(x.getPlayerType().equals("AI")) {
-                newPlayer = new AIPlayer(x.getPlayerName(), this);
-            } else {
-                newPlayer = new Player(x.getPlayerName());
-            }
-
-            Color temp_color = color_list.pop();
-            ImageIcon player_icon = (ImageIcon) x.getImageIcon();
-            newPlayer.addGuiInfo(temp_color,player_icon);
-            PlayerView new_view = new PlayerView(newPlayer,newPlayer.getName(), temp_color, player_icon,0);
-            playerList.add(newPlayer);
-            players_overlay.add(new_view);
-        }
-
+        addPlayersToOverlay(players);
         players_overlay.setBounds(1160,0,100,814);
 
-        this.setSize(1280,814);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(null);
-
-        this.setMinimumSize(new Dimension(1280,840));
-        JPanel background;
         BufferedImage image = ImageIO.read(getClass().getResource("/resources/Map.png"));
-        background = new JPanel(){
-            @Override
-            protected void paintComponent(Graphics g){
-                super.paintComponent(g);
-                g.drawImage(image,0,0,this);
-            }
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(image.getWidth(), image.getHeight());
-            }
-        };
+        BackgroundPanel background = new BackgroundPanel(image);
+
+        setSize(1280,814);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        setMinimumSize(new Dimension(1280,840));
         add(background);
         setContentPane(background);
         background.setLayout(null);
         setLocationRelativeTo(null);
 
-        GameSetup gameSetup = new GameSetup(playerList,background);
-
-        continentMap = gameSetup.returnContinentMap();
-        worldMap = gameSetup.returnWorldMap();
-        ArrayList<TerritoryButton> worldMapView = gameSetup.returnWorldMapView();
-        currentPlayer = playerList.get(currentPlayerIndex);
-        playerBonus();
-        user_status.setPlayer(currentPlayer);
-
-        for(TerritoryButton x : worldMapView){
-            background.add(x);
-            x.addActionListener(game_controller::territoryAction);
-        }
+        gameSetup(playerList, background, game_controller);
 
         add(user_status);
         background.add(players_overlay);
         setResizable(false);
-        this.setVisible(true);
+        setVisible(true);
         playMusic("/resources/beat.wav");
+        initializeAITimer();
+    }
+
+    public void initializeAITimer() {
         if(currentPlayer instanceof AIPlayer) {
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,AISpeed);
+            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),AISpeed,AISpeed);
+        }
+    }
+
+    public void gameSetup(ArrayList<Player> playerList, JPanel background, GameController game_controller) {
+        GameSetup gameSetup = new GameSetup(playerList, background);
+        continentMap = gameSetup.returnContinentMap();
+        worldMap = gameSetup.returnWorldMap();
+        currentPlayer = playerList.get(currentPlayerIndex);
+        currentPlayer.playerBonus(continentMap);
+        user_status.setPlayer(currentPlayer);
+        for(TerritoryButton x : gameSetup.returnWorldMapView()){
+            background.add(x);
+            x.addActionListener(game_controller::territoryAction);
+        }
+    }
+
+    public void addPlayersToOverlay(ArrayList<PlayerSelectPanel> players) {
+        for(PlayerSelectPanel x : players){
+            Player newPlayer;
+            if(x.getPlayerType().equals("AI")) {
+                newPlayer = new AIPlayer(x.getPlayerName(), this);
+            } else {
+                newPlayer = new Player(x.getPlayerName());
+            }
+            Color temp_color = color_list.pop();
+            ImageIcon player_icon = (ImageIcon) x.getImageIcon();
+            newPlayer.addGuiInfo(temp_color, player_icon);
+            PlayerView new_view = new PlayerView(newPlayer, newPlayer.getName(), temp_color, player_icon,0);
+            playerList.add(newPlayer);
+            players_overlay.add(new_view);
         }
     }
 
@@ -150,108 +144,18 @@ public class GameView extends JFrame {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
         currentPlayer = playerList.get(currentPlayerIndex);
         user_status.setPlayer(currentPlayer);
-
+        aiTimer.cancel();
+        aiTimer = new Timer();
         if(currentPlayer.getTerritoriesOccupied().size() == 0){
             outOfGame++;
             nextPlayer();
         }else if(outOfGame == playerList.size()-1){
-            winnerScreen();
-            System.out.println("Winner!");
+            new WinningScreenFrame(currentPlayer, this);
         }else{
             outOfGame = 0;
+            currentPlayer.playerBonus(continentMap);
+            initializeAITimer();
         }
-        playerBonus();
-        aiTimer.cancel();
-        aiTimer = new Timer();
-        if(currentPlayer instanceof AIPlayer) {
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),0,AISpeed);
-        }
-    }
-
-    public void winnerScreen(){
-        this.dispose();
-        clip.stop();
-        JFrame winnerFrame = new JFrame("WINNER!");
-        winnerFrame.setSize(650, 450);
-        winnerFrame.setLocation(400,400);
-        winnerFrame.setLayout(new BorderLayout());
-
-        JPanel playerPanel = new JPanel(new FlowLayout());
-
-        JPanel playerIconName = new JPanel(new BorderLayout());
-
-        JLabel name = new JLabel(currentPlayer.getName());
-        name.setFont(new Font("Impact", Font.PLAIN, 30));
-        name.setHorizontalAlignment(name.CENTER);
-        name.setVerticalAlignment(name.CENTER);
-
-        JLabel playerIcon = new JLabel();
-
-        ImageIcon a = (ImageIcon) currentPlayer.getPlayer_icon();
-        Image i = a.getImage().getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH );
-        a = new ImageIcon(i);
-        playerIcon.setIcon(a);
-
-        playerIconName.add(playerIcon, BorderLayout.NORTH);
-        playerIconName.add(name, BorderLayout.SOUTH);
-
-        JLabel confettiLeft = new JLabel();
-        ImageIcon b = new ImageIcon(getClass().getResource("/resources/confetti.png"));
-        Image m = b.getImage().getScaledInstance( 200, 200,  java.awt.Image.SCALE_SMOOTH );
-        b = new ImageIcon(m);
-        confettiLeft.setIcon(b);
-
-        JLabel confettiRight = new JLabel();
-        ImageIcon img1 = new ImageIcon(getClass().getResource("/resources/confettiflip.png"));
-        Image m1 = img1.getImage().getScaledInstance( 200, 200,  java.awt.Image.SCALE_SMOOTH );
-        img1 = new ImageIcon(m1);
-        confettiRight.setIcon(img1);
-
-        playerPanel.add(confettiLeft, FlowLayout.LEFT);
-        playerPanel.add(playerIconName, FlowLayout.CENTER);
-        playerPanel.add(confettiRight, FlowLayout.RIGHT);
-
-        JLabel winnerText = new JLabel("Winner Winner Chicken Dinner!");
-        winnerText.setFont(new Font("Comic SANS MS", Font.ITALIC, 35));
-        winnerText.setHorizontalAlignment(winnerText.CENTER);
-        winnerText.setVerticalAlignment(winnerText.CENTER);
-
-        JLabel crown = new JLabel();
-        ImageIcon c = new ImageIcon(getClass().getResource("/resources/crown1.gif"));
-        crown.setIcon(c);
-        crown.setHorizontalAlignment(crown.CENTER);
-        crown.setVerticalAlignment(crown.CENTER);
-
-        winnerFrame.add(winnerText, BorderLayout.NORTH);
-        winnerFrame.add(crown, BorderLayout.CENTER);
-        winnerFrame.add(playerPanel, BorderLayout.SOUTH);
-
-        playMusic("/resources/allido.wav");
-
-        winnerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        winnerFrame.setVisible(true);
-    }
-
-    /**
-     * PlayerBonus calculates how many troops each player will get at the start of their turn by checking how many territories
-     * they own and weather or not they occupy an entire continent
-     */
-    public void playerBonus(){
-
-        int troops = 0;
-        if (continentMap.get("Asia").checkContinentOccupant(currentPlayer)) troops += 7; // Asia Bonus
-        if (continentMap.get("Australia").checkContinentOccupant(currentPlayer)) troops += 2; // Australia Bonus
-        if (continentMap.get("Europe").checkContinentOccupant(currentPlayer)) troops += 5; // Europe Bonus
-        if (continentMap.get("Africa").checkContinentOccupant(currentPlayer)) troops += 3; // Africa Bonus
-        if (continentMap.get("SouthAmerica").checkContinentOccupant(currentPlayer)) troops += 2; // South America Bonus
-        if (continentMap.get("NorthAmerica").checkContinentOccupant(currentPlayer)) troops += 5; // North America Bonus
-
-        if ((currentPlayer.getTerritoriesOccupied().size()) <= 9) {
-            troops += 3;
-        } else {
-            troops += ((currentPlayer.getTerritoriesOccupied().size()) / 3);
-        }
-        currentPlayer.addDeployableTroops(troops);
     }
 
     /**
@@ -277,7 +181,7 @@ public class GameView extends JFrame {
      * Method returns String, to check what the current state of the game
      * @return returns either Reinforce, Attack, or Fortify
      */
-    public String getCurrentState(){
+    public GameState getCurrentState(){
         return currentState;
     }
 
@@ -323,6 +227,7 @@ public class GameView extends JFrame {
     public Territory getFirstCommandTerritory(){
         return commandTerritory.get(0);
     }
+
     /**
      * Returns the size of the commandTerritory ArrayList
      * @return commandTerritory
@@ -332,31 +237,29 @@ public class GameView extends JFrame {
     }
 
     public Continent getContinent(Territory territory){
-        return continentMap.get(territory.getTerritoryName());
+        return continentMap.get(territory.getContinentName());
     }
 
     public HashMap<String, Territory> getWorldMap() { return worldMap; }
+
+    public void stopMusic() {
+        clip.stop();
+    }
 
     /**
      * This is to play the most jamming beat as you take over the world. No further explanation required.
      * @param filepath the filepath of the music to play
      */
     public void playMusic(String filepath) {
-        {
-            try
-            {
+            try {
                 URL url = getClass().getResource(filepath);
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
                 clip = AudioSystem.getClip( );
                 clip.open(audioInputStream);
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
-            }
-            catch(Exception ex)
-            {
+            } catch(Exception ex) {
                 System.out.println("Error with playing sound.");
                 ex.printStackTrace( );
             }
-        }
-
     }
 }

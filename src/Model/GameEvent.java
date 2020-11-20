@@ -30,8 +30,11 @@ public class GameEvent {
      */
     public void reinforce(Territory territory, int troops) {
         if(territory.getOccupant().equals(player) && troops <= player.getDeployableTroops() && troops > 0) {
+            int originalTroopCount = territory.getTroops();
             player.incrementTroops(territory, troops);
-            player.setDeployableTroops(player.getDeployableTroops() - troops);
+            player.subtractDeployableTroops(troops);
+            System.out.println("Reinforced territory: " + territory.getTerritoryName());
+            System.out.println("Original Troop count:" + originalTroopCount + ", With reinforce: " + territory.getTroops());
             System.out.println("you have " + player.getDeployableTroops() + " LEFT to deploy");
         }else if(troops < 0){
             System.out.println("Nice try! No negative troops!");
@@ -152,10 +155,11 @@ public class GameEvent {
      * @param troops the number of troops to move from territory1 to territory2.
      */
     public void fortify(Territory territory1, Territory territory2, int troops) {
-        if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant().equals(player) && territory1.isNeighbour(territory2)) {
+        if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant().equals(player) && territory1.getLinkedNeighbours().contains(territory2) && player.getFortifyStatus()) {
             if(troops < territory1.getTroops() && troops > 0) {
                 player.decrementTroops(territory1, troops);
                 player.incrementTroops(territory2, troops);
+                player.setFortifyStatus(false);
                 System.out.println("You have moved " + troops + " from " + territory1.getTerritoryName() + " to " + territory2.getTerritoryName());
             } else if (troops <= 0){
                 System.out.println("No troops will be moved.");

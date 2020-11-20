@@ -1,9 +1,7 @@
 package Model;
 
 import Listener.PlayerListener;
-import View.PlayerView;
 import Event.PlayerEvent;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,8 +22,8 @@ public class Player {
     private Icon player_icon;
     private Color player_color;
     private boolean inGame;
-
-    private ArrayList<PlayerListener> playerListeners;
+    private boolean fortifyStatus;
+    private final ArrayList<PlayerListener> playerListeners;
 
     /**
      * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
@@ -37,12 +35,34 @@ public class Player {
         territoriesOccupied = new HashMap<>();
         playerListeners = new ArrayList<>();
         inGame = true;
+        fortifyStatus = true;
     }
 
 
     public void addGuiInfo(Color player_color, ImageIcon player_icon){
         this.player_color = player_color;
         this.player_icon = player_icon;
+    }
+
+    /**
+     * PlayerBonus calculates how many troops each player will get at the start of their turn by checking how many territories
+     * they own and weather or not they occupy an entire continent
+     */
+    public void playerBonus(HashMap<String, Continent> continentMap){
+        int troops = 0;
+        if (continentMap.get("Asia").checkContinentOccupant(this)) troops += 7; // Asia Bonus
+        if (continentMap.get("Australia").checkContinentOccupant(this)) troops += 2; // Australia Bonus
+        if (continentMap.get("Europe").checkContinentOccupant(this)) troops += 5; // Europe Bonus
+        if (continentMap.get("Africa").checkContinentOccupant(this)) troops += 3; // Africa Bonus
+        if (continentMap.get("SouthAmerica").checkContinentOccupant(this)) troops += 2; // South America Bonus
+        if (continentMap.get("NorthAmerica").checkContinentOccupant(this)) troops += 5; // North America Bonus
+
+        if ((this.getTerritoriesOccupied().size()) <= 9) {
+            troops += 3;
+        } else {
+            troops += ((this.getTerritoriesOccupied().size()) / 3);
+        }
+        this.addDeployableTroops(troops);
     }
 
     public Icon getPlayer_icon() {
@@ -53,17 +73,17 @@ public class Player {
         return player_color;
     }
 
-
     public void addPlayerListener(PlayerListener list){
         playerListeners.add(list);
     }
+
     public void removePlayerListener(PlayerListener list){
         playerListeners.remove(list);
     }
-    /**
-     * Gets the PlayerView
-     * @return PlayerView
-     */
+
+    public boolean getFortifyStatus() { return fortifyStatus; }
+
+    public void setFortifyStatus(boolean fortifyStatus) { this.fortifyStatus = fortifyStatus; }
 
     /**
      * Gets the player's name.
@@ -87,6 +107,7 @@ public class Player {
     public void addDeployableTroops(int deployableTroops) {
         this.deployableTroops += deployableTroops;
         addTotal(deployableTroops);
+        fortifyStatus = true;
         updateListeners();
     }
 
@@ -96,6 +117,7 @@ public class Player {
      */
     public void addTotal(int troops) {
         total_troops += troops;
+        updateListeners();
     }
 
     /**
@@ -113,6 +135,11 @@ public class Player {
     public void setDeployableTroops(int deployableTroops) {
         this.deployableTroops = deployableTroops;
         addTotal(deployableTroops);
+        updateListeners();
+    }
+
+    public void subtractDeployableTroops(int subtract){
+        this.deployableTroops -= subtract;
         updateListeners();
     }
 
@@ -170,8 +197,6 @@ public class Player {
         if(territoriesOccupied.size() == 0){
             eliminatePlayer();
         }
-
-
     }
 
     /**
@@ -201,7 +226,6 @@ public class Player {
         return output;
     }
 
-
     public void eliminatePlayer() {
         inGame = false;
         updateListeners();
@@ -217,5 +241,4 @@ public class Player {
             temp.handlePlayerUpdate(new PlayerEvent(this,deployableTroops,total_troops,inGame));
         }
     }
-
 }

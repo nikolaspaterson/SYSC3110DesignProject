@@ -1,7 +1,6 @@
 package Model;
 
 import View.TerritoryButton;
-
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,7 +20,7 @@ public class GameSetup {
     private final String territory_CSV;
     private final ArrayList<Territory> unclaimed_territory;
     private final HashMap<String, Continent> continentMap;
-    private ArrayList<TerritoryButton> worldMapView;
+    private final ArrayList<TerritoryButton> worldMapView;
 
     /**
      * Model.GameSetup is in charge of calling private methods which
@@ -30,10 +29,10 @@ public class GameSetup {
      * @param players a list of the players, provided by Game object
      */
     public GameSetup(ArrayList<Player> players, Component parent){
-        this.territory_CSV = "/resources/TerritoryNeighbours.csv";
-        this.world_map = new HashMap<>();
-        this.continentMap = new HashMap<>();
-        this.unclaimed_territory = new ArrayList<>();
+        territory_CSV = "/resources/TerritoryNeighbours.csv";
+        world_map = new HashMap<>();
+        continentMap = new HashMap<>();
+        unclaimed_territory = new ArrayList<>();
         worldMapView = new ArrayList<>();
         set_neighbours(read_csv(),parent);
         distribute_troops(players);
@@ -63,28 +62,27 @@ public class GameSetup {
      */
     private void distribute_troops(ArrayList<Player> players){
         provide_troops(players);
-        Player current_player;
-        Territory current_territory;
-        int troop_num;
-        for(int i = 0; unclaimed_territory.size() != 0;i++){
-            current_player = players.get(i%players.size());
-            current_territory = select_random_territory(unclaimed_territory);
+        distributeTerritories(players);
+        for(Player curr_player : players){
+            ArrayList<Territory> territory_list = new ArrayList<>(curr_player.getTerritoriesOccupied().values());
+            while(curr_player.getDeployableTroops() != 0){
+                int troop_num = 1;
+                Territory random_territory = select_random_territory(territory_list);
+                random_territory.setTroops(random_territory.getTroops()+curr_player.placeDeployableTroops(troop_num));
+            }
+        }
+        printWorldInfo();
+    }
+
+    public void distributeTerritories(ArrayList<Player> players) {
+        for(int i = 0; unclaimed_territory.size() != 0; i++){
+            Player current_player = players.get(i%players.size());
+            Territory current_territory = select_random_territory(unclaimed_territory);
             current_territory.setOccupant(current_player);
             current_territory.setTroops(current_player.placeDeployableTroops(1));
             current_player.addTerritory(current_territory.getTerritoryName(),current_territory);
             unclaimed_territory.remove(current_territory);
         }
-        Territory random_territory;
-        ArrayList<Territory> territory_list;
-        for(Player curr_player : players){
-            territory_list = new ArrayList<>(curr_player.getTerritoriesOccupied().values());
-            while(curr_player.getDeployableTroops() != 0){
-                troop_num = 1;
-                random_territory = select_random_territory(territory_list);
-                random_territory.setTroops(random_territory.getTroops()+curr_player.placeDeployableTroops(troop_num));
-            }
-        }
-        printWorldInfo();
     }
 
     /**
@@ -94,8 +92,7 @@ public class GameSetup {
      */
     private Territory select_random_territory(ArrayList<Territory> list_of_territories){
         Random number_generator = new Random();
-        int territory_num;
-        territory_num = number_generator.nextInt(list_of_territories.size()) ;
+        int territory_num = number_generator.nextInt(list_of_territories.size()) ;
         return list_of_territories.get(territory_num);
     }
 
@@ -105,37 +102,40 @@ public class GameSetup {
      * @param territories ArrayList generated from TerritoryNeighbours.csv
      */
     private void set_neighbours(ArrayList<String[]> territories, Component parent){
-        String continent_name;
-        String territory_name;
-        int x;
-        int width;
-        int y;
-        int height;
         for(String[] temp_territory : territories){
-            continent_name = temp_territory[0];
-            territory_name = temp_territory[5];
-            x = Integer.parseInt(temp_territory[1]);
-            y = Integer.parseInt(temp_territory[2]);
-            width = Integer.parseInt(temp_territory[3]) - x;
-            height = Integer.parseInt(temp_territory[4]) - y;
+            String continent_name = temp_territory[0];
+            String territory_name = temp_territory[5];
+            int x = Integer.parseInt(temp_territory[1]);
+            int y = Integer.parseInt(temp_territory[2]);
+            int width = Integer.parseInt(temp_territory[3]) - x;
+            int height = Integer.parseInt(temp_territory[4]) - y;
             Territory added_territory = new Territory(territory_name);
             TerritoryButton territoryButton = new TerritoryButton(territory_name,x,y,width,height,parent);
             added_territory.addTerritoryView(territoryButton);
             worldMapView.add(territoryButton);
             world_map.put(territory_name,added_territory);
-            if (continentMap.get(continent_name) == null){
-                continentMap.put(continent_name,new Continent(continent_name));
-            }
-            continentMap.get(continent_name).addContinentTerritory(added_territory.getTerritoryName(),added_territory);
+            createContinent(continent_name, added_territory);
         }
+        linkNeighbours(territories);
+        unclaimed_territory.addAll(world_map.values());
+    }
+
+    private void createContinent(String continent_name, Territory added_territory) {
+        if (continentMap.get(continent_name) == null){
+            continentMap.put(continent_name, new Continent(continent_name));
+        }
+        added_territory.setContinentName(continent_name);
+        continentMap.get(continent_name).addContinentTerritory(added_territory.getTerritoryName(),added_territory);
+    }
+
+    private void linkNeighbours(ArrayList<String[]> territories) {
         for(String[] temp_territory : territories){
-            territory_name = temp_territory[5];
+            String territory_name = temp_territory[5];
             ArrayList<String> temp_sub = new ArrayList<>(Arrays.asList(temp_territory));
             for(String temp_neighbours : temp_sub.subList(6,temp_sub.size())){
                 world_map.get(territory_name).addNeighbour(world_map.get(temp_neighbours));
             }
         }
-        unclaimed_territory.addAll(world_map.values());
     }
 
     /**
@@ -146,7 +146,6 @@ public class GameSetup {
     private ArrayList<String[]> read_csv(){
         String row;
         ArrayList<String[]> territory_list = new ArrayList<>();
-
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(this.territory_CSV)));
             reader.readLine(); //Skip first line

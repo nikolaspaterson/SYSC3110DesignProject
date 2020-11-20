@@ -2,7 +2,6 @@ package Controller;
 
 import View.PlayerSelectView;
 import View.StartUpView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

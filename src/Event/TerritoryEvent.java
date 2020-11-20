@@ -2,15 +2,14 @@ package Event;
 
 import Model.Player;
 import Model.Territory;
-
 import java.awt.*;
 import java.util.EventObject;
 
 public class TerritoryEvent extends EventObject {
 
-    private Player occupant;
-    private int troops;
-    private Color color;
+    private final Player occupant;
+    private final int troops;
+    private final Color color;
 
     public TerritoryEvent(Territory territory, Player occupant, int troops, Color color) {
         super(territory);

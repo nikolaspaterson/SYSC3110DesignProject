@@ -1,11 +1,8 @@
 package Controller;
 
 import Model.GameEvent;
-import Model.Player;
-import Model.Territory;
 import View.AttackPopUp;
 import View.FortifyPopUp;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -68,6 +65,7 @@ public class AttackPopUpController implements ActionListener {
                 if(gameEvent.getAttackerWon()) {
                     FortifyPopUp fortifyPopUp = new FortifyPopUp(attackPopUp.getAttackingTerritory(), attackPopUp.getDefendingTerritory());
                     fortifyPopUp.show(attackPopUp.getGameViewRef(), 300, 350);
+                    fortifyPopUp.setWinningMove(true);
                 }
             }
         }

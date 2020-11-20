@@ -3,7 +3,6 @@ package View;
 import Controller.ReinforcePopUpController;
 import Model.Player;
 import Model.Territory;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
