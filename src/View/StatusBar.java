@@ -68,6 +68,7 @@ public class StatusBar extends JPanel implements PlayerListener {
         setBackground(player.getPlayer_color());
         displayReinforce();
     }
+
     public void removePlayer(Player player){
         player.removePlayerListener(this);
     }

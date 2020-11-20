@@ -24,18 +24,18 @@ public class GameView extends JFrame {
     private Player currentPlayer;
     private int currentPlayerIndex;
     private final StatusBar user_status;
-    private final HashMap<String, Continent> continentMap;
+    private HashMap<String, Continent> continentMap;
     private final ArrayList<GameState> gameState;
     private int gameStateIndex;
     private GameState currentState;
     private Clip clip;
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
-    private final HashMap<String, Territory> worldMap;
+    private HashMap<String, Territory> worldMap;
+    private JPanel players_overlay;
+    private Stack<Color> color_list;
     private final int AISpeed = 100;
     private Timer aiTimer;
-
-
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -46,7 +46,7 @@ public class GameView extends JFrame {
         super("Risk!");
         UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
         playerList = new ArrayList<>();
-        Stack<Color> color_list = new Stack<>();
+        color_list = new Stack<>();
         currentPlayer = null;
         user_status = new StatusBar();
         GameController game_controller = new GameController(this);
@@ -71,34 +71,12 @@ public class GameView extends JFrame {
         color_list.add(new Color(202, 128, 255));
         color_list.add(new Color(139, 224, 87));
 
-        JPanel players_overlay = new JPanel();
+        players_overlay = new JPanel();
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());
-
-        for(PlayerSelectPanel x : players){
-            Player newPlayer;
-
-            if(x.getPlayerType().equals("AI")) {
-                newPlayer = new AIPlayer(x.getPlayerName(), this);
-            } else {
-                newPlayer = new Player(x.getPlayerName());
-            }
-
-            Color temp_color = color_list.pop();
-            ImageIcon player_icon = (ImageIcon) x.getImageIcon();
-            newPlayer.addGuiInfo(temp_color,player_icon);
-            PlayerView new_view = new PlayerView(newPlayer,newPlayer.getName(), temp_color, player_icon,0);
-            playerList.add(newPlayer);
-            players_overlay.add(new_view);
-        }
-
+        addPlayersToOverlay(players);
         players_overlay.setBounds(1160,0,100,814);
 
-        this.setSize(1280,814);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(null);
-
-        this.setMinimumSize(new Dimension(1280,840));
         JPanel background;
         BufferedImage image = ImageIO.read(getClass().getResource("/resources/Map.png"));
         background = new JPanel(){
@@ -112,32 +90,57 @@ public class GameView extends JFrame {
                 return new Dimension(image.getWidth(), image.getHeight());
             }
         };
+
+        setSize(1280,814);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        setMinimumSize(new Dimension(1280,840));
         add(background);
         setContentPane(background);
         background.setLayout(null);
         setLocationRelativeTo(null);
 
-        GameSetup gameSetup = new GameSetup(playerList,background);
-
-        continentMap = gameSetup.returnContinentMap();
-        worldMap = gameSetup.returnWorldMap();
-        ArrayList<TerritoryButton> worldMapView = gameSetup.returnWorldMapView();
-        currentPlayer = playerList.get(currentPlayerIndex);
-        currentPlayer.playerBonus(continentMap);
-        user_status.setPlayer(currentPlayer);
-
-        for(TerritoryButton x : worldMapView){
-            background.add(x);
-            x.addActionListener(game_controller::territoryAction);
-        }
+        gameSetup(playerList, background, game_controller);
 
         add(user_status);
         background.add(players_overlay);
         setResizable(false);
-        this.setVisible(true);
+        setVisible(true);
         playMusic("/resources/beat.wav");
         if(currentPlayer instanceof AIPlayer) {
             aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),AISpeed,AISpeed);
+        }
+    }
+
+    public void gameSetup(ArrayList<Player> playerList, JPanel background, GameController game_controller) {
+        GameSetup gameSetup = new GameSetup(playerList, background);
+
+        continentMap = gameSetup.returnContinentMap();
+        worldMap = gameSetup.returnWorldMap();
+        currentPlayer = playerList.get(currentPlayerIndex);
+        currentPlayer.playerBonus(continentMap);
+        user_status.setPlayer(currentPlayer);
+
+        for(TerritoryButton x : gameSetup.returnWorldMapView()){
+            background.add(x);
+            x.addActionListener(game_controller::territoryAction);
+        }
+    }
+
+    public void addPlayersToOverlay(ArrayList<PlayerSelectPanel> players) {
+        for(PlayerSelectPanel x : players){
+            Player newPlayer;
+            if(x.getPlayerType().equals("AI")) {
+                newPlayer = new AIPlayer(x.getPlayerName(), this);
+            } else {
+                newPlayer = new Player(x.getPlayerName());
+            }
+            Color temp_color = color_list.pop();
+            ImageIcon player_icon = (ImageIcon) x.getImageIcon();
+            newPlayer.addGuiInfo(temp_color, player_icon);
+            PlayerView new_view = new PlayerView(newPlayer, newPlayer.getName(), temp_color, player_icon,0);
+            playerList.add(newPlayer);
+            players_overlay.add(new_view);
         }
     }
 
@@ -300,6 +303,7 @@ public class GameView extends JFrame {
     public Territory getFirstCommandTerritory(){
         return commandTerritory.get(0);
     }
+
     /**
      * Returns the size of the commandTerritory ArrayList
      * @return commandTerritory
