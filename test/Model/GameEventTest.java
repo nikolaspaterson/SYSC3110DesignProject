@@ -270,7 +270,6 @@ public class GameEventTest {
         sa.addContinentTerritory(t1.getTerritoryName(), t1);
 
         australia.addContinentTerritory(t2.getTerritoryName(), t2);
-        australia.addContinentTerritory(t6.getTerritoryName(), t6);
 
         HashMap<String, Continent> continentHashMap = new HashMap<>();
         continentHashMap.put(australia.getContinentName(), australia);
