@@ -20,8 +20,6 @@ public class UserStatusEvent extends EventObject {
         super(model);
         this.currentPlayer = currentPlayer;
         this.gameState = gameState;
-
-
     }
 
     public Player getCurrentPlayer() {

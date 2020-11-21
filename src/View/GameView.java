@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class GameView extends JFrame implements UserStatusListener {
-    private GameModel gameModel;
+
     private final StatusBar user_status;
-    private JPanel players_overlay;
+    private final JPanel players_overlay;
     private Clip clip;
-    private Stack<Color> color_list;
-    private GameController game_controller;
-    private BackgroundPanel background;
+    private final Stack<Color> color_list;
+    private final GameController game_controller;
+    private final BackgroundPanel background;
 
     public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
         super("Risk!");
@@ -38,8 +38,8 @@ public class GameView extends JFrame implements UserStatusListener {
         color_list.add(new Color(139, 224, 87));
 
         UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
-        gameModel = new GameModel();
-        gameModel.addPlayers(addPlayers(players));
+        GameModel gameModel = new GameModel();
+        gameModel.addPlayers(addPlayersFromPanel(players, gameModel));
         gameModel.addView(this);
 
         user_status = new StatusBar();
@@ -66,7 +66,7 @@ public class GameView extends JFrame implements UserStatusListener {
         players_overlay.setLayout(new FlowLayout());
 
         players_overlay.setBounds(1160,0,100,814);
-        addPlayerOverlay();
+        addPlayerOverlay(gameModel);
         addTerritoryOverlay(setupGame);
 
         add(user_status);
@@ -76,12 +76,13 @@ public class GameView extends JFrame implements UserStatusListener {
         playMusic("/resources/beat.wav");
     }
 
-    private void addPlayerOverlay(){
+    private void addPlayerOverlay(GameModel gameModel){
         for(Player temp_player : gameModel.getPlayers()){
             PlayerView new_view = new PlayerView(temp_player, temp_player.getName(), temp_player.getPlayer_color(), (ImageIcon) temp_player.getPlayer_icon(),0);
             players_overlay.add(new_view);
         }
     }
+
     private void addTerritoryOverlay(GameSetup setup){
         for(TerritoryButton temp_territory : setup.returnWorldMapView()){
             background.add(temp_territory);
@@ -92,7 +93,8 @@ public class GameView extends JFrame implements UserStatusListener {
     public void stopMusic() {
         clip.stop();
     }
-    public ArrayList<Player> addPlayers(ArrayList<PlayerSelectPanel> players) {
+
+    public ArrayList<Player> addPlayersFromPanel(ArrayList<PlayerSelectPanel> players, GameModel gameModel) {
         ArrayList<Player> playerList = new ArrayList<>();
         for(PlayerSelectPanel x : players){
             Player newPlayer;
@@ -104,12 +106,11 @@ public class GameView extends JFrame implements UserStatusListener {
             Color temp_color = color_list.pop();
             ImageIcon player_icon = (ImageIcon) x.getImageIcon();
             newPlayer.addGuiInfo(temp_color, player_icon);
-            //PlayerView new_view = new PlayerView(newPlayer, newPlayer.getName(), temp_color, player_icon,0);
             playerList.add(newPlayer);
-            //players_overlay.add(new_view);
         }
         return playerList;
     }
+
     /**
      * This is to play the most jamming beat as you take over the world. No further explanation required.
      * @param filepath the filepath of the music to play
@@ -131,22 +132,16 @@ public class GameView extends JFrame implements UserStatusListener {
     public void updateUserStatus(UserStatusEvent event) {
         switch (event.getGameState()){
             case REINFORCE -> {
-                user_status.setPlayer(gameModel.getCurrentPlayer());
-                gameModel.getCurrentPlayer().addPlayerListener(user_status);
+                user_status.setPlayer(event.getCurrentPlayer());
+                event.getCurrentPlayer().addPlayerListener(user_status);
                 user_status.displayReinforce();
             }
             case ATTACK -> {
-                gameModel.getCurrentPlayer().removePlayerListener(user_status);
+                event.getCurrentPlayer().removePlayerListener(user_status);
                 user_status.displayAttack();
             }
-            case FORTIFY -> {
-                user_status.displayFortify();
-            }
-            case WINNING -> {
-                new WinningScreenFrame(gameModel.getCurrentPlayer(),this);
-
-            }
-
+            case FORTIFY -> user_status.displayFortify();
+            case WINNING -> new WinningScreenFrame(event.getCurrentPlayer(),this);
         }
     }
 }

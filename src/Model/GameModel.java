@@ -25,16 +25,13 @@ public class GameModel{
     private final ArrayList<Player> playerList;
     private Player currentPlayer;
     private int currentPlayerIndex;
-
     private HashMap<String, Continent> continentMap;
     private final ArrayList<GameState> gameState;
     private int gameStateIndex;
     private GameState currentState;
-    private Clip clip;
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
-    private JPanel players_overlay;
     private final int AISpeed = 10;
     private Timer aiTimer;
     private ArrayList<UserStatusListener> gameViews;
@@ -54,16 +51,15 @@ public class GameModel{
         gameState.add(GameState.FORTIFY);
         gameStateIndex = 0;
         aiTimer = new Timer("AI");
-
         currentState = GameState.REINFORCE;
         currentPlayerIndex = 0;
         commandTerritory = new ArrayList<>();
-
     }
 
     public void addView(UserStatusListener view){
         gameViews.add(view);
     }
+
     public void addPlayers(ArrayList<Player> players){
         playerList.addAll(players);
     }
@@ -90,7 +86,6 @@ public class GameModel{
     public ArrayList<Player> getPlayers(){
         return playerList;
     }
-
 
     /**
      * This method is for switching the characters and occurs when the game reaches the end of the game state arrayList
@@ -199,7 +194,7 @@ public class GameModel{
 
     private void updateView(){
         for(UserStatusListener temp : gameViews){
-            temp.updateUserStatus(new UserStatusEvent(this,currentPlayer,currentState));
+            temp.updateUserStatus(new UserStatusEvent(this, currentPlayer, currentState));
         }
     }
 

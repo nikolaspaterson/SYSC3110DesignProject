@@ -3,6 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.lang.Math;
+import java.util.List;
 
 /**
  * The AIPlayer class is used to make the decisions made by the "AI" player in the game of Risk.

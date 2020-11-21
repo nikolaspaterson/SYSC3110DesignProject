@@ -15,7 +15,7 @@ public class PlayerEvent extends EventObject {
      * @throws IllegalArgumentException if source is null
      */
 
-    public PlayerEvent(Player player, int deployable_troops, int total_troops,boolean status){
+    public PlayerEvent(Player player, int deployable_troops, int total_troops, boolean status){
         super(player);
         this.deployable_troops = deployable_troops;
         this.total_troops = total_troops;
