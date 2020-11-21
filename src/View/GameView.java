@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class GameView extends JFrame implements UserStatusListener {
@@ -26,6 +27,8 @@ public class GameView extends JFrame implements UserStatusListener {
     private final Stack<Color> color_list;
     private final GameController game_controller;
     private final BackgroundPanel background;
+    private HashMap<String,TerritoryButton> territoryViews;
+    private ArrayList<PlayerView> playerViews;
 
     public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
         super("Risk!");
@@ -48,7 +51,6 @@ public class GameView extends JFrame implements UserStatusListener {
         BufferedImage image = ImageIO.read(getClass().getResource("/resources/Map.png"));
         background = new BackgroundPanel(image);
 
-
         setSize(1280,814);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
@@ -58,7 +60,6 @@ public class GameView extends JFrame implements UserStatusListener {
         background.setLayout(null);
         setLocationRelativeTo(null);
 
-
         GameSetup setupGame = new GameSetup(gameModel.getPlayers(),background);
         gameModel.getGameSetup(setupGame);
         players_overlay = new JPanel();
@@ -67,7 +68,8 @@ public class GameView extends JFrame implements UserStatusListener {
 
         players_overlay.setBounds(1160,0,100,814);
         addPlayerOverlay(gameModel);
-        addTerritoryOverlay(setupGame);
+        territoryViews = setupGame.returnWorldMapView();
+        addTerritoryOverlay();
 
         add(user_status);
         background.add(players_overlay);
@@ -80,11 +82,12 @@ public class GameView extends JFrame implements UserStatusListener {
         for(Player temp_player : gameModel.getPlayers()){
             PlayerView new_view = new PlayerView(temp_player, temp_player.getName(), temp_player.getPlayer_color(), (ImageIcon) temp_player.getPlayer_icon(),0);
             players_overlay.add(new_view);
+            playerViews.add(new_view);
         }
     }
 
-    private void addTerritoryOverlay(GameSetup setup){
-        for(TerritoryButton temp_territory : setup.returnWorldMapView()){
+    private void addTerritoryOverlay(){
+        for(TerritoryButton temp_territory : territoryViews.values()){
             background.add(temp_territory);
             temp_territory.addActionListener(game_controller::territoryAction);
         }

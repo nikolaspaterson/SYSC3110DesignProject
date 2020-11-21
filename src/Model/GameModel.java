@@ -1,22 +1,11 @@
 package Model;
 
-import Controller.GameController;
 import Listener.UserStatusListener;
 import Event.UserStatusEvent;
-import Model.*;
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 import java.util.Timer;
 
 

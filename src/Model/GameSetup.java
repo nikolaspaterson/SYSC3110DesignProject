@@ -20,7 +20,7 @@ public class GameSetup {
     private final String territory_CSV;
     private final ArrayList<Territory> unclaimed_territory;
     private final HashMap<String, Continent> continentMap;
-    private final ArrayList<TerritoryButton> worldMapView;
+    private final HashMap<String,TerritoryButton> worldMapView;
 
     /**
      * Model.GameSetup is in charge of calling private methods which
@@ -33,7 +33,7 @@ public class GameSetup {
         world_map = new HashMap<>();
         continentMap = new HashMap<>();
         unclaimed_territory = new ArrayList<>();
-        worldMapView = new ArrayList<>();
+        worldMapView = new HashMap<>();
         set_neighbours(read_csv(),parent);
         distribute_troops(players);
         }
@@ -112,7 +112,7 @@ public class GameSetup {
             Territory added_territory = new Territory(territory_name);
             TerritoryButton territoryButton = new TerritoryButton(territory_name,x,y,width,height,parent);
             added_territory.addTerritoryView(territoryButton);
-            worldMapView.add(territoryButton);
+            worldMapView.put(territory_name,territoryButton);
             world_map.put(territory_name,added_territory);
             createContinent(continent_name, added_territory);
         }
@@ -181,7 +181,7 @@ public class GameSetup {
         return world_map;
     }
 
-    public ArrayList<TerritoryButton> returnWorldMapView() { return worldMapView; }
+    public HashMap<String,TerritoryButton> returnWorldMapView() { return worldMapView; }
 
     public HashMap<String,Continent> returnContinentMap() {
         return continentMap;
