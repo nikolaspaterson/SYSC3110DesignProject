@@ -1,8 +1,5 @@
 package Model;
 
-import Model.AttackResult;
-import Model.Dice;
-
 public class MockDice extends Dice {
 
     private AttackResult attackOutcome;

@@ -33,7 +33,7 @@ TA(Carleton's Best)
 
 - [x] Milestone 1: Create a text-based playable game.
 - [x] Milestone 2: Make game GUI based.
-- [ ] Milestone 3: Implement AI players and many more features!
+- [x] Milestone 3: Implement AI players and many more features!
 - [ ] Milestone 4: Save/load game and custom maps
 
 ### Milestone 1 Deliverables
@@ -55,11 +55,11 @@ We documented all of our code and provided a Word Document describing our choice
 5. Documentation :white_check_mark:
 
 ### Milestone 3 Deliverables
-1. Readme :x:
-2. Source code :x:
-3. Unit tests :x:
-4. Refined design :x:
-5. Removed 'smelly code' :x:
+1. Readme :white_check_mark:
+2. Source code :white_check_mark:
+3. Unit tests :white_check_mark:
+4. Refined design :white_check_mark:
+5. Removed 'smelly code' :white_check_mark:
 
 
 ### Milestone 4 Deliverables
@@ -70,34 +70,91 @@ We documented all of our code and provided a Word Document describing our choice
 
 
 ### Changes Made
-**Milestone 1**<br>
-There were many changes made to this iteration of the progejct. Our UML was revised several times, classes were created, deleted and refactored and many bugs were squashed. Our group also changed, we unfortuantely had a member drop the course resulting in the remaining members to absorb a little extra work. We were able to fix many bugs and after long hours in voice calls we created a playable textbased version of RISK. <br>
-**Milestone 2**<br>
-In Milestone 2, we had to update the entire game to be GUI based so we went out to achieve the best looking game of RISK ever made, with 3 playable character in the roster and more to come. This version of the game has an easy to use interface which allows for players to clearly know their owned territories and enemies with ease. Along with background music and a winning track, the game is bound to get Game of the Year.  
+**Milestone 1**
+There were many changes made to this iteration of the progejct. Our UML was revised several times, classes were created, deleted and refactored and many bugs were squashed. Our group also changed, we unfortuantely had a member drop the course resulting in the remaining members to absorb a little extra work. We were able to fix many bugs and after long hours in voice calls we created a playable textbased version of RISK.
+
+**Milestone 2**
+In Milestone 2, we had to update the entire game to be GUI based so we went out to achieve the best looking game of RISK ever made, with 3 playable character in the roster and more to come. This version of the game has an easy to use interface which allows for players to clearly identify their owned territories and enemies with ease. Along with background music and a winning track, the game is bound to get Game of the Year.  
+
+**Milestone 3**
+Are you smarter than our AI? Thats right, in the third milestone we added an ai player that you can compete against. We also added implemented unit testing, this means we were able to fix any bugs that I player may abuse to get an unfair advantage.
 
 ### Known Issues
-There arent any currently known issues in our code. 
+There still arent any known issues in our code. 
 
 ### Deliverables
-
-|   | Deliverables |
+**Old Scripts**
+| Script | Author(s) |
 | --- | --- |
-| Old Scripts | <table><thread><tr><th>Script</th><th>Author(s)</th></tr></thead><tbody><tr><td>Command</td><td>Nikolas Paterson</td></tr><tr><td>CommandEnum</td><td>Nikolas Paterson</td></tr><tr><td>CommandParser</td><td>Nikolas Paterson</td></tr><tr><td>CommandWord</td><td>Nikolas Paterson</td></tr><tr><td>Game</td><td>Nikolas Paterson, Erik Iuhas</td></tr></tbody></table>|
-| Models | <table><thread><tr><th>Model</th><th>Author(s)</th></tr></thead><tbody><tr><td>Dice</td><td>Ahmad El-Sammak</td></tr><tr><td>GameEvent</td><td>Ahmad El-Sammak</td></tr><tr><td>GameSetup</td><td>Erik Iuhas</td></tr><tr><td>Player</td><td>Ahmad El-Sammak, Erik Iuhas</td></tr><tr><td>Territory</td><td>Ahmad El-Sammak, Erik Iuhas</td></tr></tbody></table>|
-| Views | <table><thread><tr><th>View</th><th>Author(s)</th></tr></thead><tbody><tr><td>GameView</td><td>Erik Iuhas</td></tr><tr><td>StatusBar</td><td>Erik Iuhas</td></tr><tr><td>AttackPopUp</td><td>Ahmad El-Sammak</td></tr><tr><td>TerritoryView</td><td>Ahmad El-Sammak, Erik Iuhas</td></tr><tr><td>FortifyPopUp</td><td>Nikolas Paterson</td></tr><tr><td>StartUpView</td><td>Nikolas Paterson</td></tr><tr><td>PlayerSelectView</td><td>Ahmad El-Sammak</td></tr><tr><td>PlayerSelectPanel</td><td>Ahmad El-Sammak</td></tr><tr><td>ReinforcePopUp</td><td>Nikolas Paterson</td></tr></tbody></table>|
-| Controllers | <table><thread><tr><th>Controller</th><th>Author(s)</th></tr></thead><tbody><tr><td>AttackPopUpController</td><td>Ahmad El-Sammak</td></tr><tr><td>FortifyPopUpController</td><td>Nikolas Paterson</td></tr><tr><td>GameController</td><td>Erik Iuhas</td></tr><tr><td>PlayerSelectController</td><td>Ahmad El-Sammak</td></tr><tr><td>ReinforcePopUpController</td><td>Nikolas Paterson</td></tr><tr><td>StartUpController</td><td>Nikolas Paterson</td></tr></tbody></table>|
-| Resources | <table><thread><tr><th>Resource</th><th>Author(s)</th></tr></thead><tbody><tr><td>TerritoryNeighbours.csv</td><td>Erik Iuhas</td></tr><tr><td>Map.png</td><td>Erik Iuhas</td></tr><tr><td>Chizzy.png</td><td>Erik Iuhas</td></tr><tr><td>TA.png</td><td>Erik Iuhas</td></tr><tr><td>Captain.png</td><td>Erik Iuhas</td></tr></tbody></table>|
-| Documentation | <table><thread><tr><th>Document</th><th>Author(s)</th></tr></thead><tbody><tr><td>README</td><td>Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas</td></tr><tr><td>UML Diagram</td><td>Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas</td></tr><tr><td>Sequence Diagrams</td><td>Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas</td></tr><tr><td>Write Up</td><td>Ahmad El-Sammak, Nikolas Paterson, Erik Iuhas</td></tbody></table>|
+| Command | Nikolas Paterson |
+| CommandEnum | Nikolas Paterson |
+| CommandParser | Nikolas Paterson |
+| CommandWord | Nikolas Paterson |
+| Game | Erik Iuhas, Nikolas Paterson |
+
+**Models**
+| Model | Author(s) |
+| --- | --- |
+| Dice | Ahmad El-Sammak |
+| GameEvent | Ahmad El-Sammak |
+| GameSetup | Erik Iuhas |
+| Player | Ahmad El-Sammak, Erik Iuhas |
+| Territory | Ahmad El-Sammak, Erik Iuhas |
+| AIPlayer | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+
+**Views**
+| View | Author(s) |
+| --- | --- |
+| GameView | Erik Iuhas |
+| StatusBar |	Erik Iuhas |
+| AttackPopUp |	Ahmad El-Sammak |
+| TerritoryView |	Ahmad El-Sammak, Erik Iuhas |
+| FortifyPopUp	| Nikolas Paterson |
+| StartUpView |	Nikolas Paterson |
+| PlayerSelectView |	Ahmad El-Sammak |
+| PlayerSelectPanel	| Ahmad El-Sammak |
+| ReinforcePopUp	| Nikolas Paterson |
+
+**Controllers**
+| Controller | Author(s) |
+| --- | --- |
+| AttackPopUpController | Ahmad El-Sammak  |
+| FortifyPopUpController | Nikolas Paterson |
+| GameController | Erik Iuhas |
+| PlayerSelectController | Ahmad El-Sammak  |
+| ReinforcePopUpController | Nikolas Paterson |
+| StartUpController | Nikolas Paterson |
+
+**Unit Tests**
+| Test | Author(s) |
+| --- | --- |
+| GameEventTest | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| MockDice | Ahmad El-Sammak |
+| MockGameEvent | Ahmad El-Sammak |
+
+**Resources**
+| Resource | Author(s) |
+| --- | --- |
+| TerritoryNeighbours.csv | Erik Iuhas |
+| Map.png | Erik Iuhas |
+| Chizzy.png | Erik Iuhas |
+| TA.png | Erik Iuhas |
+| Captain.png | Erik Iuhas |
+
+**Documentation**
+| Document | Author(s) |
+| --- | --- |
+| README | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| UML Diagram | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| Sequence Diagrams | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| Write Up | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 
 ### Project Roadmap
-Milestone 3! In the third milestone we are going to create an AI mode that can determine which moves are best and play the game for us. We are looking forward to add AI so instead of playing the game ourselves, we can just sit back and relax to the world domination beats. Our current version in Milestone 2 also includes some of the Milestone 3 requirements such as continent/troop bonus, shout out to Ahmad for taking the lead on that one.
-
+Milestone 4! In the fourth milestone we are going to create a save and load feature so you can pick up your game at a different time. We are looking forward to implementing this feature because it will also allow the user to load in their very own custom maps! We are hopeful to finish the final milestone early so polish off the project and get a head start on studying for exams.
 
 ### Copyright matters
 If you are interested in our game please check out its original insperation, [Risk: Global Domination](https://store.steampowered.com/app/1128810/RISK_Global_Domination/).
 We are creating this game for educational purposes which falls under fair use.
 If you have concerns about copyrighted material please contact one of the project creators.
 
-See you again when we have completed Milestone 2! :metal:
-
-
+See you again when we have completed Milestone 4! :metal:

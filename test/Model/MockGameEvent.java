@@ -1,9 +1,5 @@
 package Model;
 
-import Model.Dice;
-import Model.GameEvent;
-import Model.Player;
-
 public class MockGameEvent extends GameEvent {
 
     private MockDice mockDice;
