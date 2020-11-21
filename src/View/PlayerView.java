@@ -88,6 +88,7 @@ public class PlayerView extends JPanel implements PlayerListener {
             JLabel x_mark = new JLabel();
             x_mark.setIcon(scaledImg);
             add(x_mark);
+
         }
     }
 

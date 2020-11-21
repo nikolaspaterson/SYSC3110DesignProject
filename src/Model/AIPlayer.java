@@ -1,6 +1,5 @@
 package Model;
 
-import View.GameView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.lang.Math;
@@ -14,7 +13,7 @@ import java.lang.Math;
  */
 public class AIPlayer extends Player {
 
-    private final GameView gameView;
+    private final GameModel gameModel;
     private final GameEvent gameEvent;
     private boolean attacking;
 
@@ -23,11 +22,11 @@ public class AIPlayer extends Player {
      * which move the AI will be controlling.
      *
      * @param name the name of the AIPlayer
-     * @param gameView a reference to the gameView
+     * @param gameModel a reference to the gameView
      */
-    public AIPlayer(String name, GameView gameView) {
+    public AIPlayer(String name, GameModel gameModel) {
         super(name);
-        this.gameView = gameView;
+        this.gameModel = gameModel;
         gameEvent = new GameEvent(this);
         attacking = true;
     }
@@ -207,7 +206,7 @@ public class AIPlayer extends Player {
      * @return GameState state of the game
      */
     public GameState getState(){
-        return gameView.getCurrentState();
+        return gameModel.getCurrentState();
     }
 
     /**
@@ -215,7 +214,7 @@ public class AIPlayer extends Player {
      */
     public void nextState(){
         attacking = true;
-        gameView.nextState();
+        gameModel.nextState();
     }
 
     /**
@@ -274,7 +273,7 @@ public class AIPlayer extends Player {
      * @return int priority
      */
     private int continentValue(Territory territory){
-        Continent temp_continent = gameView.getContinent(territory);
+        Continent temp_continent = gameModel.getContinent(territory);
         int continentSize = temp_continent.getContinentTerritory().size();
         int ownedTerritories = 0;
         for(Territory c_terri : temp_continent.getContinentTerritory().values()){

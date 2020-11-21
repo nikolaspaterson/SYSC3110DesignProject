@@ -20,6 +20,7 @@ public class StatusBar extends JPanel implements PlayerListener {
     private final JLabel currentAction;
     private final JLabel currentName;
     private final JLabel deployLabel;
+    private Player temp_player;
 
     public StatusBar(){
         this.setLayout(new GridLayout(1, 3, 3, 0));
@@ -61,7 +62,7 @@ public class StatusBar extends JPanel implements PlayerListener {
      */
     public void setPlayer(Player player){
         deployLabel.setText(String.valueOf(player.getDeployableTroops()));
-        player.addPlayerListener(this);
+        temp_player = player;
         currentName.setText(player.getName());
         currentPlayerIcon.setIcon(player.getPlayer_icon());
         descriptionPanel.setBackground(player.getPlayer_color().brighter());
@@ -69,9 +70,6 @@ public class StatusBar extends JPanel implements PlayerListener {
         displayReinforce();
     }
 
-    public void removePlayer(Player player){
-        player.removePlayerListener(this);
-    }
 
     /**
      * Set the action for nextStep button from nextButtonController
@@ -86,7 +84,6 @@ public class StatusBar extends JPanel implements PlayerListener {
      * The method is called by updateDisplay for when the player interacts with nextStep
      */
     public void displayAttack(){
-
         descriptionPanel.remove(deployLabel);
         this.revalidate();
         this.repaint();

@@ -2,12 +2,8 @@ package View;
 
 import Model.Player;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
 public class WinningScreenFrame extends JFrame {
 

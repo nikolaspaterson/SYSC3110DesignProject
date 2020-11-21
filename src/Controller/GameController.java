@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.AIPlayer;
+import Model.GameModel;
 import Model.GameState;
 import Model.Territory;
 import View.*;
@@ -8,10 +9,12 @@ import java.awt.event.ActionEvent;
 
 public class GameController {
 
-    private final GameView gameViewRef;
+    private final GameModel gameModelRef;
+    private final GameView gameView;
 
-    public GameController(GameView game_ref){
-        gameViewRef = game_ref;
+    public GameController(GameModel game_ref,GameView gameView){
+        gameModelRef = game_ref;
+        this.gameView = gameView;
     }
 
     /**
@@ -20,62 +23,62 @@ public class GameController {
      * @param e This action event is a button Model.Territory
      */
     public void territoryAction(ActionEvent e){
-        GameState state = gameViewRef.getCurrentState();
+        GameState state = gameModelRef.getCurrentState();
         Object obj = e.getSource();
         TerritoryButton territoryButton = (TerritoryButton) obj;
-        Territory temp_territory = gameViewRef.getWorldMap().get(territoryButton.getTerritoryName());
+        Territory temp_territory = gameModelRef.getWorldMap().get(territoryButton.getTerritoryName());
 
-        if(gameViewRef.getCurrentPlayer() instanceof AIPlayer) {
+        if(gameModelRef.getCurrentPlayer() instanceof AIPlayer) {
             return;
         }
 
         switch (state) {
             case REINFORCE:
-                if (temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCurrentPlayer().getDeployableTroops() != 0) {
-                    gameViewRef.addCommandTerritory(temp_territory);
+                if (temp_territory.getOccupant().equals(gameModelRef.getCurrentPlayer()) && gameModelRef.getCurrentPlayer().getDeployableTroops() != 0) {
+                    gameModelRef.addCommandTerritory(temp_territory);
                     ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
-                    temp.show(gameViewRef, 300, 350);
+                    temp.show(gameView, 300, 350);
                     System.out.println("Pop up Reinforce + \n" + temp_territory.toString());
-                    gameViewRef.clearCommandTerritory();
+                    gameModelRef.clearCommandTerritory();
                 }
                 break;
 
             case ATTACK:
-                if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
+                if (gameModelRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModelRef.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
                     temp_territory.activateTimer();
-                    gameViewRef.addCommandTerritory(temp_territory);
-                } else if (gameViewRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer())) {
-                    gameViewRef.getCommandTerritory().get(0).cancel_timer();
-                    gameViewRef.clearCommandTerritory();
+                    gameModelRef.addCommandTerritory(temp_territory);
+                } else if (gameModelRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameModelRef.getCurrentPlayer())) {
+                    gameModelRef.getCommandTerritory().get(0).cancel_timer();
+                    gameModelRef.clearCommandTerritory();
                     temp_territory.activateTimer();
-                    gameViewRef.addCommandTerritory(temp_territory);
-                } else if (gameViewRef.getCommandTerritorySize() == 1 && !temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCommandTerritory().get(0).isNeighbour(temp_territory)) {
-                    AttackPopUp attackPopUp = new AttackPopUp(gameViewRef.getCommandTerritory().get(0), temp_territory, gameViewRef);
-                    attackPopUp.show(gameViewRef, 300, 350);
-                    System.out.println("Attacker: " + gameViewRef.getCommandTerritory().get(0).toString() + "Defender: " + temp_territory.toString());
-                    gameViewRef.getCommandTerritory().get(0).cancel_timer();
-                    gameViewRef.clearCommandTerritory();
+                    gameModelRef.addCommandTerritory(temp_territory);
+                } else if (gameModelRef.getCommandTerritorySize() == 1 && !temp_territory.getOccupant().equals(gameModelRef.getCurrentPlayer()) && gameModelRef.getCommandTerritory().get(0).isNeighbour(temp_territory)) {
+                    AttackPopUp attackPopUp = new AttackPopUp(gameModelRef.getCommandTerritory().get(0), temp_territory, gameView);
+                    attackPopUp.show(gameView, 300, 350);
+                    System.out.println("Attacker: " + gameModelRef.getCommandTerritory().get(0).toString() + "Defender: " + temp_territory.toString());
+                    gameModelRef.getCommandTerritory().get(0).cancel_timer();
+                    gameModelRef.clearCommandTerritory();
                 } else {
-                    for(Territory time_stop : gameViewRef.getCommandTerritory()){
+                    for(Territory time_stop : gameModelRef.getCommandTerritory()){
                         time_stop.cancel_timer();
                     }
-                    gameViewRef.clearCommandTerritory();
+                    gameModelRef.clearCommandTerritory();
 
                 }
                 break;
 
             case FORTIFY:
-                if (gameViewRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getCurrentPlayer().getFortifyStatus()) {
-                    gameViewRef.clearCommandTerritory();
-                    gameViewRef.addCommandTerritory(temp_territory);
-                } else if (gameViewRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameViewRef.getCurrentPlayer()) && gameViewRef.getFirstCommandTerritory().getLinkedNeighbours().contains(temp_territory)) {
-                    gameViewRef.addCommandTerritory(temp_territory);
-                    System.out.println("Ally1: " + gameViewRef.getCommandTerritory().get(0).toString() + "Ally2: " + gameViewRef.getCommandTerritory().get(1).toString());
-                    FortifyPopUp fortifyPopUp = new FortifyPopUp(gameViewRef.getCommandTerritory().get(0), gameViewRef.getCommandTerritory().get(1));
-                    fortifyPopUp.show(gameViewRef, 300, 350);
-                    gameViewRef.clearCommandTerritory();
+                if (gameModelRef.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModelRef.getCurrentPlayer()) && gameModelRef.getCurrentPlayer().getFortifyStatus()) {
+                    gameModelRef.clearCommandTerritory();
+                    gameModelRef.addCommandTerritory(temp_territory);
+                } else if (gameModelRef.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameModelRef.getCurrentPlayer()) && gameModelRef.getFirstCommandTerritory().getLinkedNeighbours().contains(temp_territory)) {
+                    gameModelRef.addCommandTerritory(temp_territory);
+                    System.out.println("Ally1: " + gameModelRef.getCommandTerritory().get(0).toString() + "Ally2: " + gameModelRef.getCommandTerritory().get(1).toString());
+                    FortifyPopUp fortifyPopUp = new FortifyPopUp(gameModelRef.getCommandTerritory().get(0), gameModelRef.getCommandTerritory().get(1));
+                    fortifyPopUp.show(gameView, 300, 350);
+                    gameModelRef.clearCommandTerritory();
                 } else {
-                    gameViewRef.clearCommandTerritory();
+                    gameModelRef.clearCommandTerritory();
                 }
                 break;
         }
@@ -87,13 +90,13 @@ public class GameController {
      * @param e The button from View.StatusBar
      */
     public void nextState(ActionEvent e){
-        if(gameViewRef.getCurrentPlayer() instanceof AIPlayer) {
+        if(gameModelRef.getCurrentPlayer() instanceof AIPlayer) {
             return;
         }
-        for(Territory time_stop : gameViewRef.getCommandTerritory()){
+        for(Territory time_stop : gameModelRef.getCommandTerritory()){
             time_stop.cancel_timer();
         }
-        gameViewRef.nextState();
-        gameViewRef.clearCommandTerritory();
+        gameModelRef.nextState();
+        gameModelRef.clearCommandTerritory();
     }
 }
