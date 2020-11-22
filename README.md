@@ -97,8 +97,8 @@ There still arent any known issues in our code.
 | --- | --- |
 | Dice | Ahmad El-Sammak |
 | GameEvent | Ahmad El-Sammak |
-| GameSetup | Erik Iuhas |
 | Player | Ahmad El-Sammak, Erik Iuhas |
+| Game Model | Erik Iuhas, Adi El-Sammak |
 | Territory | Ahmad El-Sammak, Erik Iuhas |
 | AIPlayer | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 
@@ -106,6 +106,7 @@ There still arent any known issues in our code.
 | View | Author(s) |
 | --- | --- |
 | GameView | Erik Iuhas |
+| GameSetup | Erik Iuhas |
 | StatusBar |	Erik Iuhas |
 | AttackPopUp |	Ahmad El-Sammak |
 | TerritoryView |	Ahmad El-Sammak, Erik Iuhas |
@@ -129,6 +130,7 @@ There still arent any known issues in our code.
 | Test | Author(s) |
 | --- | --- |
 | GameEventTest | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| GameModelTest | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 | MockDice | Ahmad El-Sammak |
 | MockGameEvent | Ahmad El-Sammak |
 
@@ -140,6 +142,7 @@ There still arent any known issues in our code.
 | Chizzy.png | Erik Iuhas |
 | TA.png | Erik Iuhas |
 | Captain.png | Erik Iuhas |
+
 
 **Documentation**
 | Document | Author(s) |
