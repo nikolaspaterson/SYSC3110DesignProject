@@ -181,8 +181,16 @@ public class GameSetup {
         return world_map;
     }
 
+    /**
+     * Getter for the world map of Territory Buttons.
+     * @return ArrayList<TerritoryButton> the world map
+     */
     public ArrayList<TerritoryButton> returnWorldMapView() { return worldMapView; }
 
+    /**
+     * Getter for the Continent map.
+     * @return HashMap<String,Continent> the map of all continents
+     */
     public HashMap<String,Continent> returnContinentMap() {
         return continentMap;
     }

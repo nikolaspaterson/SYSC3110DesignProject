@@ -62,8 +62,16 @@ public class TerritoryButton extends JButton implements TerritoryView {
         occupant_name_label.setText("Occ: "+occupant.getName());
     }
 
+    /**
+     * Getter for the Territory Name.
+     * @return String the territory name.
+     */
     public String getTerritoryName() { return territoryName; }
 
+    /**
+     * This method is used to handle updates from the TerritoryModel and update the view components respectively.
+     * @param event the event
+     */
     @Override
     public void handleTerritoryUpdate(TerritoryEvent event) {
         this.setOccupantLabel(event.getOccupant());

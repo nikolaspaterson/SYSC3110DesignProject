@@ -18,6 +18,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * This class is used to handle all the view components of the Game.
+ */
 public class GameView extends JFrame implements UserStatusListener {
 
     private final StatusBar user_status;
@@ -27,6 +30,11 @@ public class GameView extends JFrame implements UserStatusListener {
     private final GameController game_controller;
     private final BackgroundPanel background;
 
+    /**
+     * Constructor for the GameView class.
+     * @param players the list of players that were passed in from the playerselect phase
+     * @throws IOException
+     */
     public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
         super("Risk!");
         color_list = new Stack<>();
@@ -76,6 +84,10 @@ public class GameView extends JFrame implements UserStatusListener {
         playMusic("/resources/beat.wav");
     }
 
+    /**
+     * Used to add players from the model to the View
+     * @param gameModel
+     */
     private void addPlayerOverlay(GameModel gameModel){
         for(Player temp_player : gameModel.getPlayers()){
             PlayerView new_view = new PlayerView(temp_player, temp_player.getName(), temp_player.getPlayer_color(), (ImageIcon) temp_player.getPlayer_icon(),0);
@@ -83,6 +95,10 @@ public class GameView extends JFrame implements UserStatusListener {
         }
     }
 
+    /**
+     * Used to add the TerritoryButtons onto the Game Frame.
+     * @param setup the game setup
+     */
     private void addTerritoryOverlay(GameSetup setup){
         for(TerritoryButton temp_territory : setup.returnWorldMapView()){
             background.add(temp_territory);
@@ -90,10 +106,19 @@ public class GameView extends JFrame implements UserStatusListener {
         }
     }
 
+    /**
+     * Used to stop the music.
+     */
     public void stopMusic() {
         clip.stop();
     }
 
+    /**
+     * This method is used to create all players from the playerselect phase and add them to the GameModel.
+     * @param players the players from PlayerSelectPanel
+     * @param gameModel the game model
+     * @return ArrayList<Player> the list of players
+     */
     public ArrayList<Player> addPlayersFromPanel(ArrayList<PlayerSelectPanel> players, GameModel gameModel) {
         ArrayList<Player> playerList = new ArrayList<>();
         for(PlayerSelectPanel x : players){
@@ -128,6 +153,10 @@ public class GameView extends JFrame implements UserStatusListener {
         }
     }
 
+    /**
+     * This method is used to handle updates from the GameModel and update the view respectively.
+     * @param event the event
+     */
     @Override
     public void updateUserStatus(UserStatusEvent event) {
         switch (event.getGameState()){

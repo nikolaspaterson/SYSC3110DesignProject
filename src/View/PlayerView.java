@@ -92,6 +92,10 @@ public class PlayerView extends JPanel implements PlayerListener {
         }
     }
 
+    /**
+     * This method is used to handle updates from the PlayerModel and update the view components respectively.
+     * @param e the event
+     */
     @Override
     public void handlePlayerUpdate(PlayerEvent e) {
         setDeployLabel(e.getDeployable_troops());

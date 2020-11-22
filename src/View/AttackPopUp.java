@@ -55,6 +55,9 @@ public class AttackPopUp extends JPopupMenu {
         setVisible(true);
     }
 
+    /**
+     * Used to configure panels for the attack pop up.
+     */
     private void configurePanels() {
         jPanel = new JPanel(new FlowLayout());
         JPanel jp = new JPanel();
