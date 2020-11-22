@@ -3,6 +3,8 @@ package Model;
 import java.util.HashMap;
 
 /**
+ * The Continent class is used to contain all information that a continent should contain.
+ *
  * @author Erik Iuhas
  */
 public class Continent {
@@ -60,6 +62,11 @@ public class Continent {
         }
         return true;
     }
+
+    /**
+     * Getter for the bonus troops a continent will give if a Player Occupies it.
+     * @return int the amount of bonus troops
+     */
     public int getBonusTroops(){
         return bonusTroops;
     }

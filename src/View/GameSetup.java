@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
+ * The GameSetup class is used to initialize all things prior to the Game being played.
+ *
  * @author Erik Iuhas
  */
 public class GameSetup {
@@ -76,6 +78,10 @@ public class GameSetup {
         printWorldInfo();
     }
 
+    /**
+     * This method is used to distribute territories among the list of players.
+     * @param players the arraylistof players
+     */
     public void distributeTerritories(ArrayList<Player> players) {
         for(int i = 0; unclaimed_territory.size() != 0; i++){
             Player current_player = players.get(i%players.size());
@@ -122,6 +128,13 @@ public class GameSetup {
         unclaimed_territory.addAll(world_map.values());
     }
 
+    /**
+     * This method is used to create a continent.
+     *
+     * @param continent_name the continent name
+     * @param added_territory the territory to add
+     * @param bonusTroops the amount of extra troops a continent gives if a player controls it
+     */
     private void createContinent(String continent_name, Territory added_territory,int bonusTroops) {
         if (continentMap.get(continent_name) == null){
             continentMap.put(continent_name, new Continent(continent_name,bonusTroops));
@@ -130,6 +143,11 @@ public class GameSetup {
         continentMap.get(continent_name).addContinentTerritory(added_territory.getTerritoryName(),added_territory);
     }
 
+    /**
+     * This method is used to link territories that are connected.
+     *
+     * @param territories the arraylist of territories
+     */
     private void linkNeighbours(ArrayList<String[]> territories) {
         for(String[] temp_territory : territories){
             String territory_name = temp_territory[6];
