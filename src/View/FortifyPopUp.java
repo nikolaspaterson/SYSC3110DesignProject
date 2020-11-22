@@ -220,7 +220,15 @@ public class FortifyPopUp extends JPopupMenu {
         troops.setText(String.valueOf(x));
     }
 
+    /**
+     * Setter for the winningMove.
+     * @param winningMove true if the attacker beat the defending territory, else false.
+     */
     public void setWinningMove(boolean winningMove) { this.winningMove = winningMove; }
 
+    /**
+     * Getter for the winning move.
+     * @return boolean true if the attacker won, false if not.
+     */
     public boolean getWinningMove() { return winningMove; }
 }

@@ -1,10 +1,9 @@
 package View;
 
 import Controller.GameController;
-import Listener.PlayerListener;
-import Model.GameState;
-import Model.Player;
 import Event.PlayerEvent;
+import Listener.PlayerListener;
+import Model.Player;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -20,8 +19,10 @@ public class StatusBar extends JPanel implements PlayerListener {
     private final JLabel currentAction;
     private final JLabel currentName;
     private final JLabel deployLabel;
-    private Player temp_player;
 
+    /**
+     * Constructor for the StatusBar class.
+     */
     public StatusBar(){
         this.setLayout(new GridLayout(1, 3, 3, 0));
 
@@ -62,14 +63,12 @@ public class StatusBar extends JPanel implements PlayerListener {
      */
     public void setPlayer(Player player){
         deployLabel.setText(String.valueOf(player.getDeployableTroops()));
-        temp_player = player;
         currentName.setText(player.getName());
         currentPlayerIcon.setIcon(player.getPlayer_icon());
         descriptionPanel.setBackground(player.getPlayer_color().brighter());
         setBackground(player.getPlayer_color());
         displayReinforce();
     }
-
 
     /**
      * Set the action for nextStep button from nextButtonController
@@ -114,17 +113,9 @@ public class StatusBar extends JPanel implements PlayerListener {
     }
 
     /**
-     * Called in View.GameView and occurs everytime the player clicks nextStep Button.
-     * @param state State of the game can either be Reinforce,Attack, or Fortify.
+     * This method is used to handle updates from the PlayerModel and update the view components respectively.
+     * @param e player event
      */
-    public void updateDisplay(GameState state){
-        switch (state) {
-            case REINFORCE -> displayReinforce();
-            case ATTACK -> displayAttack();
-            case FORTIFY -> displayFortify();
-        }
-    }
-
     @Override
     public void handlePlayerUpdate(PlayerEvent e) {
         deployLabel.setText(String.valueOf(e.getDeployable_troops()));

@@ -1,14 +1,16 @@
 package Model;
 
-import Listener.UserStatusListener;
 import Event.UserStatusEvent;
+import Listener.UserStatusListener;
+
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 
-
+/**
+ * This class is used to handle all the logic of the Game.
+ */
 public class GameModel{
 
     private final ArrayList<Player> playerList;
@@ -21,15 +23,13 @@ public class GameModel{
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
-    private final int AISpeed = 10;
     private Timer aiTimer;
-    private ArrayList<UserStatusListener> gameViews;
+    private final ArrayList<UserStatusListener> gameViews;
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
-     * @throws IOException handle a possible IOException
      */
-    public GameModel() throws IOException {
+    public GameModel() {
         playerList = new ArrayList<>();
         currentPlayer = null;
         gameViews = new ArrayList<>();
@@ -45,24 +45,44 @@ public class GameModel{
         commandTerritory = new ArrayList<>();
     }
 
+    /**
+     * This method is used to add UserStatuslisteners of the model.
+     * @param view the Listener to add
+     */
     public void addView(UserStatusListener view){
         gameViews.add(view);
     }
 
+    /**
+     * This method is used to add all players in the game into an ArrayList.
+     * @param players the player ArrayList
+     */
     public void addPlayers(ArrayList<Player> players){
         playerList.addAll(players);
     }
 
+    /**
+     * This method is used to remove UserStatuslisteners of the model.
+     * @param view the Listener to remove
+     */
     public void removeView(UserStatusListener view){
         gameViews.remove(view);
     }
 
+    /**
+     * This method is used to check if the Player is an AIPlayer and if so, to start adding the delay to all the AIPlayer's moves.
+     */
     public void initializeAITimer() {
         if(currentPlayer instanceof AIPlayer) {
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),AISpeed,AISpeed);
+            int AISpeed = 10;
+            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer), AISpeed, AISpeed);
         }
     }
 
+    /**
+     * Retrieves all important information from the GameSetup
+     * @param setup the GameSetup
+     */
     public void getGameSetup(GameSetup setup) {
         continentMap = setup.returnContinentMap();
         worldMap = setup.returnWorldMap();
@@ -72,6 +92,10 @@ public class GameModel{
         updateView();
     }
 
+    /**
+     * Getter for the player list
+     * @return ArrayList<Player> the player list
+     */
     public ArrayList<Player> getPlayers(){
         return playerList;
     }
@@ -163,28 +187,44 @@ public class GameModel{
         return commandTerritory;
     }
 
+    /**
+     * This method is used to get the first CommandTerritory in the list.
+     * @return Territory first CommandTerritory
+     */
     public Territory getFirstCommandTerritory(){
         return commandTerritory.get(0);
     }
 
     /**
      * Returns the size of the commandTerritory ArrayList
-     * @return commandTerritory
+     * @return int the size.
      */
     public int getCommandTerritorySize(){
         return commandTerritory.size();
     }
 
+    /**
+     * Returns the continent that the Territory being passed in is contained in.
+     * @param territory the territory to check
+     * @return Continent the continent
+     */
     public Continent getContinent(Territory territory){
         return continentMap.get(territory.getContinentName());
     }
 
+    /**
+     * Getter for the WorldMap.
+     * @return HashMap<String, Territory> the world map.
+     */
     public HashMap<String, Territory> getWorldMap() { return worldMap; }
 
+    /**
+     * This method is used to loop through every UserStatusListener that is listening to this and
+     * create UserStatusEvents that will notify the view of the changes
+     */
     private void updateView(){
         for(UserStatusListener temp : gameViews){
             temp.updateUserStatus(new UserStatusEvent(this, currentPlayer, currentState));
         }
     }
-
 }
