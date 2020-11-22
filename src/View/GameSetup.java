@@ -132,7 +132,7 @@ public class GameSetup {
 
     private void linkNeighbours(ArrayList<String[]> territories) {
         for(String[] temp_territory : territories){
-            String territory_name = temp_territory[5];
+            String territory_name = temp_territory[6];
             ArrayList<String> temp_sub = new ArrayList<>(Arrays.asList(temp_territory));
             for(String temp_neighbours : temp_sub.subList(6,temp_sub.size())){
                 world_map.get(territory_name).addNeighbour(world_map.get(temp_neighbours));

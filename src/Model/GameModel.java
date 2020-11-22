@@ -73,7 +73,7 @@ public class GameModel{
      */
     public void initializeAITimer() {
         if(currentPlayer instanceof AIPlayer) {
-            int AISpeed = 10;
+            int AISpeed = 100;
             aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer), AISpeed, AISpeed);
         }
     }
