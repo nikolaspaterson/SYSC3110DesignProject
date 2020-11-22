@@ -98,9 +98,13 @@ There still arent any known issues in our code.
 | Dice | Ahmad El-Sammak |
 | GameEvent | Ahmad El-Sammak |
 | Player | Ahmad El-Sammak, Erik Iuhas |
-| Game Model | Erik Iuhas, Adi El-Sammak |
+| Game Model | Erik Iuhas, Nikolas Paterson, Ahmad El-Sammak |
 | Territory | Ahmad El-Sammak, Erik Iuhas |
+| Continent | Erik Iuhas, Nikolas Paterson, Ahmad El-Sammak |
 | AIPlayer | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| AttackResult | Ahmad El-Sammak |
+| AITimer | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+
 
 **Views**
 | View | Author(s) |
@@ -109,12 +113,15 @@ There still arent any known issues in our code.
 | GameSetup | Erik Iuhas |
 | StatusBar |	Erik Iuhas |
 | AttackPopUp |	Ahmad El-Sammak |
-| TerritoryView |	Ahmad El-Sammak, Erik Iuhas |
+| PlayerView | Erik Iuhas | 
+| BackgroundPanel | Erik Iuhas |
+| TerritoryButton |	Ahmad El-Sammak, Erik Iuhas |
 | FortifyPopUp	| Nikolas Paterson |
 | StartUpView |	Nikolas Paterson |
 | PlayerSelectView |	Ahmad El-Sammak |
 | PlayerSelectPanel	| Ahmad El-Sammak |
 | ReinforcePopUp	| Nikolas Paterson |
+| WinningScreenFrame | Ahmad El-Sammak|
 
 **Controllers**
 | Controller | Author(s) |
@@ -125,6 +132,7 @@ There still arent any known issues in our code.
 | PlayerSelectController | Ahmad El-Sammak  |
 | ReinforcePopUpController | Nikolas Paterson |
 | StartUpController | Nikolas Paterson |
+| TerritoryButtonController | Ahmad El-Sammak, Erik Iuhas|
 
 **Unit Tests**
 | Test | Author(s) |
@@ -143,6 +151,20 @@ There still arent any known issues in our code.
 | TA.png | Erik Iuhas |
 | Captain.png | Erik Iuhas |
 
+**Event**
+
+| Event | Author(s) |
+| --- | --- |
+| PlayerEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
+| PlayerEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
+| PlayerEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
+
+**Listener**
+| Interface | Author(s) | 
+| --- | --- |
+| PlayerListener | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| TerritoryView | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
+| UserStatusListener | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 
 **Documentation**
 | Document | Author(s) |
