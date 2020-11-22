@@ -1,22 +1,11 @@
 package Model;
 
-import Controller.GameController;
-import Listener.UserStatusListener;
 import Event.UserStatusEvent;
-import Model.*;
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
+import Listener.UserStatusListener;
+
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 import java.util.Timer;
 
 /**
@@ -34,15 +23,13 @@ public class GameModel{
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
-    private final int AISpeed = 10;
     private Timer aiTimer;
-    private ArrayList<UserStatusListener> gameViews;
+    private final ArrayList<UserStatusListener> gameViews;
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
-     * @throws IOException handle a possible IOException
      */
-    public GameModel() throws IOException {
+    public GameModel() {
         playerList = new ArrayList<>();
         currentPlayer = null;
         gameViews = new ArrayList<>();
@@ -87,7 +74,8 @@ public class GameModel{
      */
     public void initializeAITimer() {
         if(currentPlayer instanceof AIPlayer) {
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer),AISpeed,AISpeed);
+            int AISpeed = 10;
+            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer), AISpeed, AISpeed);
         }
     }
 

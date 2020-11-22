@@ -1,10 +1,9 @@
 package View;
 
 import Controller.GameController;
-import Listener.PlayerListener;
-import Model.GameState;
-import Model.Player;
 import Event.PlayerEvent;
+import Listener.PlayerListener;
+import Model.Player;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -115,7 +114,7 @@ public class StatusBar extends JPanel implements PlayerListener {
 
     /**
      * This method is used to handle updates from the PlayerModel and update the view components respectively.
-     * @param e
+     * @param e player event
      */
     @Override
     public void handlePlayerUpdate(PlayerEvent e) {

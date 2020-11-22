@@ -12,8 +12,8 @@ import java.util.EventObject;
  */
 public class UserStatusEvent extends EventObject {
 
-    private Player currentPlayer;
-    private GameState gameState;
+    private final Player currentPlayer;
+    private final GameState gameState;
 
     /**
      * Constructor for the UserStatusEvent class.

@@ -33,7 +33,7 @@ public class GameView extends JFrame implements UserStatusListener {
     /**
      * Constructor for the GameView class.
      * @param players the list of players that were passed in from the playerselect phase
-     * @throws IOException
+     * @throws IOException exception
      */
     public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
         super("Risk!");
@@ -86,7 +86,7 @@ public class GameView extends JFrame implements UserStatusListener {
 
     /**
      * Used to add players from the model to the View
-     * @param gameModel
+     * @param gameModel the game model
      */
     private void addPlayerOverlay(GameModel gameModel){
         for(Player temp_player : gameModel.getPlayers()){

@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
  */
 public class BackgroundPanel extends JPanel {
 
-    private BufferedImage image;
+    private final BufferedImage image;
 
     /**
      * Constructor for the BackgroundPanel class.
