@@ -2,15 +2,21 @@ package View;
 
 import Model.Player;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
+/**
+ * This method is used to create the winning screen frame when the player wins the game!
+ *
+ * @author Ahmad El-Sammak
+ */
 public class WinningScreenFrame extends JFrame {
 
+    /**
+     * Constructor for the WinningScreenFrame class.
+     * @param currentPlayer the winning player
+     * @param gameView the gameView
+     */
     public WinningScreenFrame(Player currentPlayer, GameView gameView) {
         gameView.dispose();
         gameView.stopMusic();

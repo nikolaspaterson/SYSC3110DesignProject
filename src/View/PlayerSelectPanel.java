@@ -79,6 +79,10 @@ public class PlayerSelectPanel extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * Getter for the player type.
+     * @return String the player type
+     */
     public String getPlayerType() { return option.getText(); }
 
     /**

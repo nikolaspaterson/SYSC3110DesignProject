@@ -38,7 +38,12 @@ public class Player {
         fortifyStatus = true;
     }
 
-
+    /**
+     * This method is used to store the player's color and icon.
+     *
+     * @param player_color the color
+     * @param player_icon the icon
+     */
     public void addGuiInfo(Color player_color, ImageIcon player_icon){
         this.player_color = player_color;
         this.player_icon = player_icon;
@@ -65,24 +70,48 @@ public class Player {
         this.addDeployableTroops(troops);
     }
 
+    /**
+     * Getter for the player's icon.
+     * @return Icon the player's icon
+     */
     public Icon getPlayer_icon() {
         return player_icon;
     }
 
+    /**
+     * Getter for the player's color
+     * @return Color the player's color
+     */
     public Color getPlayer_color() {
         return player_color;
     }
 
+    /**
+     * This method is used to addPlayerListeners of the Model.
+     * @param list the listener to be added.
+     */
     public void addPlayerListener(PlayerListener list){
         playerListeners.add(list);
     }
 
+    /**
+     * This method is used to removePlayerListeners of the Model.
+     * @param list the listener to be remove.
+     */
     public void removePlayerListener(PlayerListener list){
         playerListeners.remove(list);
     }
 
+    /**
+     * This method used to know if I player is fortifying or not.
+     * @return boolean fortify status
+     */
     public boolean getFortifyStatus() { return fortifyStatus; }
 
+    /**
+     * Sets the fortify status for the player
+     * @param fortifyStatus the status
+     */
     public void setFortifyStatus(boolean fortifyStatus) { this.fortifyStatus = fortifyStatus; }
 
     /**
@@ -138,6 +167,10 @@ public class Player {
         updateListeners();
     }
 
+    /**
+     * This method is used to subtract troops from the amount of deployable troops.
+     * @param subtract the amount of troops to remove.
+     */
     public void subtractDeployableTroops(int subtract){
         this.deployableTroops -= subtract;
         updateListeners();
@@ -226,11 +259,18 @@ public class Player {
         return output;
     }
 
+    /**
+     * This method is used to eliminate players from the game.
+     */
     public void eliminatePlayer() {
         inGame = false;
         updateListeners();
     }
 
+    /**
+     * Getter for the status (if the player is eliminated from the game or not)
+     * @return boolean status
+     */
     public boolean getStatus(){ return inGame;}
 
     /**

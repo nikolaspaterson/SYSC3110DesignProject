@@ -40,25 +40,53 @@ public class Territory {
         blinking_theirs = new Timer("flash_theirs");
     }
 
+    /**
+     * Sets the color of the neighbouring territory.
+     * @param color the color to set
+     */
     public void setNeighbourColor(Color color){
         this.neighbourColor = color;
     }
 
+    /**
+     * Adds a color.
+     * @param color color to be added
+     */
     public void addColor(Color color) {
         this.color = color;
         updateView();
     }
 
+    /**
+     * Getter for the color of the Territory
+     * @return Color the color
+     */
     public Color getColor() { return color; }
 
-    public Color getNeighbourColor() { return  neighbourColor;}
+    /**
+     * Getter for the neighbouring Territory color.
+     * @return Color the color
+     */
+    public Color getNeighbourColor() { return neighbourColor; }
 
+    /**
+     * This method is used to addTerritoryView listeners of the Model to update the view.
+     * @param territoryView the listener to add
+     */
     public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
 
+    /**
+     * Sets the continent name
+     * @param name the continent name
+     */
     public void setContinentName(String name){
         continentName = name;
     }
 
+    /**
+     * Gets the continent name.
+     * @return String continent name
+     */
     public String getContinentName(){
         return continentName;
     }
@@ -165,11 +193,21 @@ public class Territory {
         return output;
     }
 
+    /**
+     * Getter for all neighbours that are linked.
+     * @return ArrayList<Territory> list of neighbours that are linked
+     */
     public ArrayList<Territory> getLinkedNeighbours(){
         linkedNeighbours = new ArrayList<>(linkNeighbours(getOccupant(),new HashSet<>()));
         return linkedNeighbours;
     }
 
+    /**
+     * Used to link neighbours and put it into a set.
+     * @param owner the player
+     * @param val to compare
+     * @return Set<Territory> the set of linked neighbours
+     */
     public Set<Territory> linkNeighbours(Player owner,Set<Territory> val){
         for(Territory neighbour : neighbours.values()){
             if(neighbour.getOccupant().equals(owner) && !val.contains(neighbour)){

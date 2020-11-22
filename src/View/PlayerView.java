@@ -88,9 +88,14 @@ public class PlayerView extends JPanel implements PlayerListener {
             JLabel x_mark = new JLabel();
             x_mark.setIcon(scaledImg);
             add(x_mark);
+
         }
     }
 
+    /**
+     * This method is used to handle updates from the PlayerModel and update the view components respectively.
+     * @param e the event
+     */
     @Override
     public void handlePlayerUpdate(PlayerEvent e) {
         setDeployLabel(e.getDeployable_troops());
