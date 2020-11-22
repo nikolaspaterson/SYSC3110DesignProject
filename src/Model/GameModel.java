@@ -2,7 +2,6 @@ package Model;
 
 import Event.UserStatusEvent;
 import Listener.UserStatusListener;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,12 +79,13 @@ public class GameModel{
     }
 
     /**
-     * Retrieves all important information from the GameSetup
-     * @param setup the GameSetup
+     * Gets the models for continentMap and worldMap and initializes the game to start.
+     * @param continentMap continentMap
+     * @param worldMap worldMap
      */
-    public void getGameSetup(GameSetup setup) {
-        continentMap = setup.returnContinentMap();
-        worldMap = setup.returnWorldMap();
+    public void getWorld(HashMap<String,Continent> continentMap,HashMap<String,Territory> worldMap) {
+        this.continentMap = continentMap;
+        this.worldMap = worldMap;
         currentPlayer = playerList.get(currentPlayerIndex);
         currentPlayer.playerBonus(continentMap);
         initializeAITimer();

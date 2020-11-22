@@ -68,7 +68,7 @@ public class GameView extends JFrame implements UserStatusListener {
 
 
         GameSetup setupGame = new GameSetup(gameModel.getPlayers(),background);
-        gameModel.getGameSetup(setupGame);
+        gameModel.getWorld(setupGame.returnContinentMap(),setupGame.returnWorldMap());
         players_overlay = new JPanel();
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());

@@ -331,7 +331,7 @@
     </void>
     <void property="methods">
      <void property="text">
-      <string>+ Model.GameSetup(players: ArrayList&lt;Model.Player&gt;)
+      <string>+ View.GameSetup(players: ArrayList&lt;Model.Player&gt;)
 - provideTroops(players: ArrayList&lt;Model.Player&gt;)
 - setNeighbours(ArrayList&lt;String[]&gt;)
 + distributeTroops()
@@ -344,7 +344,7 @@
     </void>
     <void property="name">
      <void property="text">
-      <string>Model.GameSetup</string>
+      <string>View.GameSetup</string>
      </void>
     </void>
    </object>

@@ -1,6 +1,8 @@
-package Model;
+package View;
 
-import View.TerritoryButton;
+import Model.Continent;
+import Model.Player;
+import Model.Territory;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -23,7 +25,7 @@ public class GameSetup {
     private final ArrayList<TerritoryButton> worldMapView;
 
     /**
-     * Model.GameSetup is in charge of calling private methods which
+     * View.GameSetup is in charge of calling private methods which
      * distribute the troops to players and then begins to place
      * the troops randomly on the world_map
      * @param players a list of the players, provided by Game object
@@ -104,25 +106,25 @@ public class GameSetup {
     private void set_neighbours(ArrayList<String[]> territories, Component parent){
         for(String[] temp_territory : territories){
             String continent_name = temp_territory[0];
-            String territory_name = temp_territory[5];
-            int x = Integer.parseInt(temp_territory[1]);
-            int y = Integer.parseInt(temp_territory[2]);
-            int width = Integer.parseInt(temp_territory[3]) - x;
-            int height = Integer.parseInt(temp_territory[4]) - y;
+            String territory_name = temp_territory[6];
+            int x = Integer.parseInt(temp_territory[2]);
+            int y = Integer.parseInt(temp_territory[3]);
+            int width = Integer.parseInt(temp_territory[4]) - x;
+            int height = Integer.parseInt(temp_territory[5]) - y;
             Territory added_territory = new Territory(territory_name);
             TerritoryButton territoryButton = new TerritoryButton(territory_name,x,y,width,height,parent);
             added_territory.addTerritoryView(territoryButton);
             worldMapView.add(territoryButton);
             world_map.put(territory_name,added_territory);
-            createContinent(continent_name, added_territory);
+            createContinent(continent_name, added_territory, Integer.parseInt(temp_territory[1]));
         }
         linkNeighbours(territories);
         unclaimed_territory.addAll(world_map.values());
     }
 
-    private void createContinent(String continent_name, Territory added_territory) {
+    private void createContinent(String continent_name, Territory added_territory,int bonusTroops) {
         if (continentMap.get(continent_name) == null){
-            continentMap.put(continent_name, new Continent(continent_name));
+            continentMap.put(continent_name, new Continent(continent_name,bonusTroops));
         }
         added_territory.setContinentName(continent_name);
         continentMap.get(continent_name).addContinentTerritory(added_territory.getTerritoryName(),added_territory);

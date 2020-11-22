@@ -9,15 +9,17 @@ public class Continent {
 
     private final HashMap<String, Territory> continentTerritory;
     private final String continentName;
+    private final int bonusTroops;
 
     /**
      * Model.Continent object stores all the territories withing that continent. This is used for calculation of the troop
      * bonus in View.GameView which is called at the start of everyone's turn
      * @param continentName the name of the continent
      */
-    public Continent(String continentName){
+    public Continent(String continentName,int bonusTroops){
         this.continentName = continentName;
         continentTerritory = new HashMap<>();
+        this.bonusTroops = bonusTroops;
     }
 
     /**
@@ -57,5 +59,8 @@ public class Continent {
             }
         }
         return true;
+    }
+    public int getBonusTroops(){
+        return bonusTroops;
     }
 }

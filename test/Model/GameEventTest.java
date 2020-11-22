@@ -256,28 +256,16 @@ public class GameEventTest {
 
     @Test
     public void testBonusTroops() {
-        Continent australia = new Continent("Australia");
-        Continent asia = new Continent("Asia");
-        Continent europe = new Continent("Europe");
-        Continent africa = new Continent("Africa");
-        Continent na = new Continent("NorthAmerica");
-        Continent sa = new Continent("SouthAmerica");
+        Continent australia = new Continent("Australia",2);
+        Continent asia = new Continent("Asia",7);
 
         asia.addContinentTerritory(t1.getTerritoryName(), t1);
-        europe.addContinentTerritory(t1.getTerritoryName(), t1);
-        africa.addContinentTerritory(t1.getTerritoryName(), t1);
-        na.addContinentTerritory(t1.getTerritoryName(), t1);
-        sa.addContinentTerritory(t1.getTerritoryName(), t1);
 
         australia.addContinentTerritory(t2.getTerritoryName(), t2);
 
         HashMap<String, Continent> continentHashMap = new HashMap<>();
         continentHashMap.put(australia.getContinentName(), australia);
         continentHashMap.put(asia.getContinentName(), asia);
-        continentHashMap.put(europe.getContinentName(), europe);
-        continentHashMap.put(africa.getContinentName(), africa);
-        continentHashMap.put(na.getContinentName(), na);
-        continentHashMap.put(sa.getContinentName(), sa);
 
         // Players owns less than 9 territories (gains 3 troops) and controls Australia for the continent bonus of 2 troops.
         player1.playerBonus(continentHashMap);

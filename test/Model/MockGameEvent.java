@@ -2,7 +2,7 @@ package Model;
 
 public class MockGameEvent extends GameEvent {
 
-    private MockDice mockDice;
+    private final MockDice mockDice;
 
     /**
      * Super Constructor for GameEvent class where a GameEvent should be initiated by a Player.
