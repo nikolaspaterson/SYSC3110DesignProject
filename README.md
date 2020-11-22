@@ -84,6 +84,7 @@ There still arent any known issues in our code.
 
 ### Deliverables
 **Old Scripts**
+
 | Script | Author(s) |
 | --- | --- |
 | Command | Nikolas Paterson |
@@ -93,6 +94,7 @@ There still arent any known issues in our code.
 | Game | Erik Iuhas, Nikolas Paterson |
 
 **Models**
+
 | Model | Author(s) |
 | --- | --- |
 | Dice | Ahmad El-Sammak |
@@ -107,6 +109,7 @@ There still arent any known issues in our code.
 
 
 **Views**
+
 | View | Author(s) |
 | --- | --- |
 | GameView | Erik Iuhas |
@@ -124,6 +127,7 @@ There still arent any known issues in our code.
 | WinningScreenFrame | Ahmad El-Sammak|
 
 **Controllers**
+
 | Controller | Author(s) |
 | --- | --- |
 | AttackPopUpController | Ahmad El-Sammak  |
@@ -135,6 +139,7 @@ There still arent any known issues in our code.
 | TerritoryButtonController | Ahmad El-Sammak, Erik Iuhas|
 
 **Unit Tests**
+
 | Test | Author(s) |
 | --- | --- |
 | GameEventTest | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
@@ -143,6 +148,7 @@ There still arent any known issues in our code.
 | MockGameEvent | Ahmad El-Sammak |
 
 **Resources**
+
 | Resource | Author(s) |
 | --- | --- |
 | TerritoryNeighbours.csv | Erik Iuhas |
@@ -160,6 +166,7 @@ There still arent any known issues in our code.
 | PlayerEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
 
 **Listener**
+
 | Interface | Author(s) | 
 | --- | --- |
 | PlayerListener | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
@@ -167,6 +174,7 @@ There still arent any known issues in our code.
 | UserStatusListener | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 
 **Documentation**
+
 | Document | Author(s) |
 | --- | --- |
 | README | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
