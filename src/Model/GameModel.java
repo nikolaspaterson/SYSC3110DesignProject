@@ -2,6 +2,9 @@ package Model;
 
 import Event.UserStatusEvent;
 import Listener.UserStatusListener;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +27,7 @@ public class GameModel{
     private HashMap<String, Territory> worldMap;
     private Timer aiTimer;
     private final ArrayList<UserStatusListener> gameViews;
-
+    private String gameName;
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
      */
@@ -44,6 +47,9 @@ public class GameModel{
         commandTerritory = new ArrayList<>();
     }
 
+    public void setGameName(String name){
+        gameName = name;
+    }
     /**
      * This method is used to add UserStatuslisteners of the model.
      * @param view the Listener to add
@@ -227,4 +233,25 @@ public class GameModel{
             temp.updateUserStatus(new UserStatusEvent(this, currentPlayer, currentState));
         }
     }
+
+    public JSONObject saveJSON(){
+        JSONObject game_json = new JSONObject();
+        game_json.put("GameState",currentState.toString());
+        game_json.put("GameName",gameName);
+        game_json.put("CurrentPlayer",currentPlayerIndex);
+        JSONArray player_array = new JSONArray();
+
+        for(Player temp_player : playerList){
+            player_array.add(temp_player.saveJSON());
+        }
+        JSONArray territory_array = new JSONArray();
+        game_json.put("Players",player_array);
+        for(Territory temp_territory : worldMap.values()){
+            territory_array.add(temp_territory.saveJSON());
+        }
+        game_json.put("Territories",territory_array);
+        return game_json;
+    }
+
+
 }

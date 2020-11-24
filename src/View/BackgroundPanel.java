@@ -26,7 +26,9 @@ public class BackgroundPanel extends JPanel {
         }
 
     }
-
+    public Dimension imageSize(){
+        return new Dimension(image.getWidth(this),image.getHeight(this));
+    }
     /**
      * Used to paint the image.
      * @param g Graphics

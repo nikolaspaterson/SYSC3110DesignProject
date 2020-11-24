@@ -2,6 +2,9 @@ package Model;
 
 import Listener.TerritoryView;
 import Event.TerritoryEvent;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -261,5 +264,19 @@ public class Territory {
         for(TerritoryView territoryView : territoryViews){
             territoryView.handleTerritoryUpdate(new TerritoryEvent(this, occupant, troops, color));
         }
+    }
+
+    public JSONObject saveJSON(){
+        JSONObject territory_json = new JSONObject();
+        JSONArray neighbours = new JSONArray();
+        territory_json.put("Territory",territoryName);
+        territory_json.put("Continent",continentName);
+        territory_json.put("Occupant",occupant.getPlayerNumber());
+        territory_json.put("Troops",troops);
+        for(Territory temp_territory : getNeighbours().values()){
+            neighbours.add(temp_territory.getTerritoryName());
+        }
+        territory_json.put("Neighbours", neighbours);
+        return territory_json;
     }
 }

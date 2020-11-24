@@ -1,6 +1,7 @@
 package View;
 
 import Controller.GameController;
+import Controller.SaveController;
 import Listener.UserStatusListener;
 import Model.*;
 import Event.UserStatusEvent;
@@ -29,6 +30,8 @@ public class GameView extends JFrame implements UserStatusListener {
     private final Stack<Color> color_list;
     private final GameController game_controller;
     private BackgroundPanel background;
+    private GameMenuBar menuBar;
+    private SaveController saveController;
 
     /**
      * Constructor for the GameView class.
@@ -54,31 +57,35 @@ public class GameView extends JFrame implements UserStatusListener {
         game_controller = new GameController(gameModel,this);
         user_status.setController(game_controller);
 
-
-
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
-        setMinimumSize(new Dimension(1280,840));
-        setLocationRelativeTo(null);
+        menuBar = new GameMenuBar();
+        setJMenuBar(menuBar);
 
 
         GameSetup setupGame = new GameSetup(gameModel.getPlayers(),"/resources/HxH.json");
         background = setupGame.getBackground();
-        setSize(background.getSize());
+        gameModel.setGameName(setupGame.getGameName());
+
+        setSize(background.imageSize());
         add(background);
         setContentPane(background);
+        setMinimumSize(new Dimension(background.getWidth() , (int) (background.imageSize().getHeight() + 40)));
         gameModel.getWorld(setupGame.returnContinentMap(),setupGame.returnWorldMap());
         players_overlay = new JPanel();
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());
 
-        players_overlay.setBounds(1160,0,100,814);
+        saveController = new SaveController(gameModel,menuBar,setupGame.getOutput_subdirectory());
+
+        players_overlay.setBounds(this.getWidth()-120,0,100, this.getHeight());
         addPlayerOverlay(gameModel);
         addTerritoryOverlay(setupGame);
-
+        user_status.setBounds(this.getWidth()/3,this.getHeight()-175,500, 100);
         add(user_status);
         background.add(players_overlay);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
         playMusic("/resources/beat.wav");
@@ -121,6 +128,7 @@ public class GameView extends JFrame implements UserStatusListener {
      */
     public ArrayList<Player> addPlayersFromPanel(ArrayList<PlayerSelectPanel> players, GameModel gameModel) {
         ArrayList<Player> playerList = new ArrayList<>();
+        int player_index = 0;
         for(PlayerSelectPanel x : players){
             Player newPlayer;
             if(x.getPlayerType().equals("AI")) {
@@ -128,10 +136,12 @@ public class GameView extends JFrame implements UserStatusListener {
             } else {
                 newPlayer = new Player(x.getPlayerName());
             }
+            newPlayer.setPlayerNumber(player_index);
             Color temp_color = color_list.pop();
             ImageIcon player_icon = (ImageIcon) x.getImageIcon();
             newPlayer.addGuiInfo(temp_color, player_icon);
             playerList.add(newPlayer);
+            player_index++;
         }
         return playerList;
     }

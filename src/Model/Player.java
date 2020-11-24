@@ -2,6 +2,9 @@ package Model;
 
 import Listener.PlayerListener;
 import Event.PlayerEvent;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class Player {
     private boolean inGame;
     private boolean fortifyStatus;
     private final ArrayList<PlayerListener> playerListeners;
+    private int playerNumber;
 
     /**
      * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
@@ -49,6 +53,12 @@ public class Player {
         this.player_icon = player_icon;
     }
 
+    public void setPlayerNumber(int number){
+        playerNumber = number;
+    }
+    public int getPlayerNumber(){
+        return playerNumber;
+    }
     /**
      * PlayerBonus calculates how many troops each player will get at the start of their turn by checking how many territories
      * they own and weather or not they occupy an entire continent
@@ -280,5 +290,24 @@ public class Player {
         for(PlayerListener temp : playerListeners){
             temp.handlePlayerUpdate(new PlayerEvent(this,deployableTroops,total_troops,inGame));
         }
+    }
+
+    public JSONObject saveJSON(){
+        JSONObject player_json = new JSONObject();
+        JSONArray occupiedTerritories = new JSONArray();
+
+        for(String temp_territories : territoriesOccupied.keySet()){
+            occupiedTerritories.add(temp_territories);
+        }
+
+        player_json.put("Name",name);
+        player_json.put("PlayerIndex", playerNumber);
+        player_json.put("Color",player_color.getRGB());
+        player_json.put("DeployableTroops", deployableTroops);
+        player_json.put("Fortify",fortifyStatus);
+        player_json.put("TotalTroops",total_troops);
+        player_json.put("Type", getClass().getName());
+        player_json.put("OccupiedTerritories",occupiedTerritories);
+        return player_json;
     }
 }

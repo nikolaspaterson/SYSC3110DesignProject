@@ -30,6 +30,9 @@ public class GameSetup {
     private String backgroundPath;
     private String jsonPath;
     private String output_folder;
+    private String output_subdirectory;
+    private String gameName;
+
 
     /**
      * View.GameSetup is in charge of calling private methods which
@@ -122,28 +125,39 @@ public class GameSetup {
             }
             System.out.println(decodedPath);
             output_folder = decodedPath + "/output/";
-            File file = new File(output_folder);
-            if(file.exists()){
-                System.out.println("Directory already exists!");
-            }else if(file.mkdir()){
-                System.out.println("Directory created!");
-            } else {
-                System.out.println("Failed creating directory!");
-            }
+            createFolder(output_folder);
+            output_subdirectory = output_folder + gameName + "/";
+            createFolder(output_subdirectory);
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
     }
+    public String getGameName(){
+        return gameName;
+    }
+    public String getOutput_subdirectory(){
+        return output_subdirectory;
+    }
+    private void createFolder(String path){
+        File file = new File(path);
+        if(file.exists()){
+            System.out.println("Directory already exists!");
+        }else if(file.mkdir()){
+            System.out.println("Directory created!");
+        } else {
+            System.out.println("Failed creating directory!");
+        }
+    }
     private void set_neighboursJson(){
         try {
-            InputStreamReader jsonFile = null;
             int total_territories = 0;
-            jsonFile = new InputStreamReader(getClass().getResourceAsStream(jsonPath));
+            InputStreamReader jsonFile = new InputStreamReader(getClass().getResourceAsStream(jsonPath));
             JSONParser parser = new JSONParser();
             JSONObject map = (JSONObject) parser.parse(jsonFile);
             background = new BackgroundPanel((String) map.get("Background"));
+            gameName = (String) map.get("Name");
             for(Object obj_c : (JSONArray) map.get("Continents")){
                 JSONObject continent = (JSONObject) obj_c;
                 String continent_name = (String)continent.get("Continent");
@@ -166,11 +180,11 @@ public class GameSetup {
 
                     TerritoryButton new_territory_view = new TerritoryButton(territory_name,X1,Y1,(X2-X1),(Y2-Y1),background);
                     world_map.get(territory_name).addTerritoryView(new_territory_view);
+
                     worldMapView.add(new_territory_view);
 
                 }
             }
-            Set<String> key = world_map.keySet();
             for( Territory check_territory : world_map.values()){
                 if(check_territory.debugLink().size() != total_territories){
                     System.out.println("Invalid");
@@ -188,6 +202,7 @@ public class GameSetup {
     private void addToWorld(String territory_name,String continent){
         if(world_map.get(territory_name) == null){
             Territory new_territory = new Territory(territory_name);
+            new_territory.setContinentName(continent);
             world_map.put(territory_name,new_territory);
             continentMap.get(continent).addContinentTerritory(territory_name,new_territory);
         }
