@@ -3,15 +3,16 @@ package View;
 import Model.Continent;
 import Model.Player;
 import Model.Territory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Random;
+import java.io.*;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.List;
 
 /**
  * The GameSetup class is used to initialize all things prior to the Game being played.
@@ -25,6 +26,10 @@ public class GameSetup {
     private final ArrayList<Territory> unclaimed_territory;
     private final HashMap<String, Continent> continentMap;
     private final ArrayList<TerritoryButton> worldMapView;
+    private BackgroundPanel background;
+    private String backgroundPath;
+    private String jsonPath;
+    private String output_folder;
 
     /**
      * View.GameSetup is in charge of calling private methods which
@@ -32,13 +37,17 @@ public class GameSetup {
      * the troops randomly on the world_map
      * @param players a list of the players, provided by Game object
      */
-    public GameSetup(ArrayList<Player> players, Component parent){
+    public GameSetup(ArrayList<Player> players,String jsonPath){
         territory_CSV = "/resources/TerritoryNeighbours.csv";
+
+
         world_map = new HashMap<>();
         continentMap = new HashMap<>();
         unclaimed_territory = new ArrayList<>();
         worldMapView = new ArrayList<>();
-        set_neighbours(read_csv(),parent);
+        this.jsonPath = jsonPath;
+        set_neighboursJson();
+        createSaveFolder();
         distribute_troops(players);
         }
 
@@ -103,7 +112,86 @@ public class GameSetup {
         int territory_num = number_generator.nextInt(list_of_territories.size()) ;
         return list_of_territories.get(territory_num);
     }
+    private void createSaveFolder(){
+        try{
+            String path =  this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            String decodedPath = URLDecoder.decode(path, "UTF-8");
+            File chop_jar = new File(decodedPath);
+            if(chop_jar.getName().contains(".jar")){
+                decodedPath = decodedPath.replace(chop_jar.getName(),"");
+            }
+            System.out.println(decodedPath);
+            output_folder = decodedPath + "/output/";
+            File file = new File(output_folder);
+            if(file.exists()){
+                System.out.println("Directory already exists!");
+            }else if(file.mkdir()){
+                System.out.println("Directory created!");
+            } else {
+                System.out.println("Failed creating directory!");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
+    }
+    private void set_neighboursJson(){
+        try {
+            InputStreamReader jsonFile = null;
+            int total_territories = 0;
+            jsonFile = new InputStreamReader(getClass().getResourceAsStream(jsonPath));
+            JSONParser parser = new JSONParser();
+            JSONObject map = (JSONObject) parser.parse(jsonFile);
+            background = new BackgroundPanel((String) map.get("Background"));
+            for(Object obj_c : (JSONArray) map.get("Continents")){
+                JSONObject continent = (JSONObject) obj_c;
+                String continent_name = (String)continent.get("Continent");
+                continentMap.put(continent_name, new Continent((String)continent.get("Continent"),(int) (long) continent.get("TroopBonus")));
+                for(Object obj_t : (JSONArray) continent.get("Territories")){
+                    JSONObject territory = (JSONObject) obj_t;
+                    JSONArray neighbours = (JSONArray) territory.get("Neighbours");
+                    String territory_name = (String) territory.get("Territory");
+                    addToWorld(territory_name,continent_name);
+                    for(Object neighbour_n:neighbours){
+                        String neighbour_name = (String) neighbour_n;
+                        addToWorld(neighbour_name,continent_name);
+                        world_map.get(territory_name).addNeighbour(world_map.get(neighbour_name));
+                    }
+                    int X1 = (int) (long) territory.get("X1");
+                    int Y1 = (int) (long) territory.get("Y1");
+                    int X2 = (int) (long) territory.get("X2");
+                    int Y2 = (int) (long) territory.get("Y2");
+                    total_territories++;
+
+                    TerritoryButton new_territory_view = new TerritoryButton(territory_name,X1,Y1,(X2-X1),(Y2-Y1),background);
+                    world_map.get(territory_name).addTerritoryView(new_territory_view);
+                    worldMapView.add(new_territory_view);
+
+                }
+            }
+            Set<String> key = world_map.keySet();
+            for( Territory check_territory : world_map.values()){
+                if(check_territory.debugLink().size() != total_territories){
+                    System.out.println("Invalid");
+                }
+            }
+            unclaimed_territory.addAll(world_map.values());
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void addToWorld(String territory_name,String continent){
+        if(world_map.get(territory_name) == null){
+            Territory new_territory = new Territory(territory_name);
+            world_map.put(territory_name,new_territory);
+            continentMap.get(continent).addContinentTerritory(territory_name,new_territory);
+        }
+    }
     /**
      * Iterate through ArrayList generated by CSV to obtain neighbours for
      * territories.
@@ -191,7 +279,13 @@ public class GameSetup {
             x.print_info();
         }
     }
+    public BackgroundPanel getBackground(){
+        return background;
+    }
 
+    public String getOutput_folder(){
+        return output_folder;
+    }
     /**
      * After gameSetup ends it's final method is used for returning the world map. The gameSetup method could be used again
      * later if players would like to restart the game.

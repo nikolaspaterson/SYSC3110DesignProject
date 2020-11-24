@@ -1,5 +1,6 @@
 package View;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,14 +10,21 @@ import java.awt.image.BufferedImage;
  */
 public class BackgroundPanel extends JPanel {
 
-    private final BufferedImage image;
+    private Image image;
 
     /**
      * Constructor for the BackgroundPanel class.
-     * @param image the image to add
+     * @param path the image to add
      */
-    public BackgroundPanel(BufferedImage image) {
-        this.image = image;
+    public BackgroundPanel(String path) {
+        try{
+            BufferedImage image = ImageIO.read(getClass().getResource(path));
+            this.image = image;
+            this.setLayout(null);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -35,6 +43,6 @@ public class BackgroundPanel extends JPanel {
      */
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(image.getWidth(), image.getHeight());
+        return new Dimension(image.getWidth(this), image.getHeight(this));
     }
 }

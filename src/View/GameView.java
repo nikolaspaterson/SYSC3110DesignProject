@@ -28,7 +28,7 @@ public class GameView extends JFrame implements UserStatusListener {
     private Clip clip;
     private final Stack<Color> color_list;
     private final GameController game_controller;
-    private final BackgroundPanel background;
+    private BackgroundPanel background;
 
     /**
      * Constructor for the GameView class.
@@ -53,21 +53,21 @@ public class GameView extends JFrame implements UserStatusListener {
         user_status = new StatusBar();
         game_controller = new GameController(gameModel,this);
         user_status.setController(game_controller);
-        BufferedImage image = ImageIO.read(getClass().getResource("/resources/Map.png"));
-        background = new BackgroundPanel(image);
 
 
-        setSize(1280,814);
+
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setMinimumSize(new Dimension(1280,840));
-        add(background);
-        setContentPane(background);
-        background.setLayout(null);
         setLocationRelativeTo(null);
 
 
-        GameSetup setupGame = new GameSetup(gameModel.getPlayers(),background);
+        GameSetup setupGame = new GameSetup(gameModel.getPlayers(),"/resources/HxH.json");
+        background = setupGame.getBackground();
+        setSize(background.getSize());
+        add(background);
+        setContentPane(background);
         gameModel.getWorld(setupGame.returnContinentMap(),setupGame.returnWorldMap());
         players_overlay = new JPanel();
         players_overlay.setBackground(new Color(0,0,0, 0));
@@ -153,6 +153,9 @@ public class GameView extends JFrame implements UserStatusListener {
         }
     }
 
+    private void load_file(){
+
+    }
     /**
      * This method is used to handle updates from the GameModel and update the view respectively.
      * @param event the event

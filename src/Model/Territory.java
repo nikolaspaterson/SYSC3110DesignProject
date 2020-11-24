@@ -218,6 +218,21 @@ public class Territory {
         return val;
     }
 
+    public ArrayList<Territory> debugLink(){
+        linkedNeighbours = new ArrayList<>(debugLinkNeighbours(new HashSet<>()));
+        return linkedNeighbours;
+    }
+
+    public Set<Territory> debugLinkNeighbours(Set<Territory> val){
+        for(Territory neighbour : neighbours.values()){
+            if(!val.contains(neighbour)){
+                val.add(neighbour);
+                val.addAll(neighbour.debugLinkNeighbours(val));
+            }
+        }
+        return val;
+    }
+
     /**
      * This method is used to stop the timer and stop the flashing of the valid territories that the player can attack.
      */

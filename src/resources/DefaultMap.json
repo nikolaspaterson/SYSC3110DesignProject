@@ -1,0 +1,585 @@
+{
+	"Background": "/resources/Map.png",
+	"Continents": [
+		{
+			"TroopBonus": 7,
+			"Continent": "Asia",
+			"Territories": [
+				{
+					"Territory": "Afghanistan",
+					"Neighbours": [
+						"Ukraine",
+						"Ural",
+						"China",
+						"India",
+						"MiddleEast"
+					],
+					"Y1": 251,
+					"X1": 731,
+					"Y2": 282,
+					"X2": 796
+				},
+				{
+					"Territory": "China",
+					"Neighbours": [
+						"Ural",
+						"Siberia",
+						"Mongolia",
+						"Siam",
+						"India",
+						"Afghanistan"
+					],
+					"Y1": 303,
+					"X1": 862,
+					"Y2": 336,
+					"X2": 928
+				},
+				{
+					"Territory": "India",
+					"Neighbours": [
+						"Afghanistan",
+						"China",
+						"Siam",
+						"MiddleEast"
+					],
+					"Y1": 358,
+					"X1": 795,
+					"Y2": 388,
+					"X2": 854
+				},
+				{
+					"Territory": "Irkutsk",
+					"Neighbours": [
+						"Siberia",
+						"Yakutsk",
+						"Kamchatka",
+						"Mongolia"
+					],
+					"Y1": 166,
+					"X1": 878,
+					"Y2": 193,
+					"X2": 936
+				},
+				{
+					"Territory": "Japan",
+					"Neighbours": [
+						"Mongolia",
+						"Kamchatka"
+					],
+					"Y1": 239,
+					"X1": 1008,
+					"Y2": 269,
+					"X2": 1066
+				},
+				{
+					"Territory": "Kamchatka",
+					"Neighbours": [
+						"Yakutsk",
+						"Alaska",
+						"Japan",
+						"Irkutsk"
+					],
+					"Y1": 76,
+					"X1": 975,
+					"Y2": 108,
+					"X2": 1037
+				},
+				{
+					"Territory": "MiddleEast",
+					"Neighbours": [
+						"SouthernEurope",
+						"Ukraine",
+						"Afghanistan",
+						"India",
+						"EastAfrica",
+						"Egypt"
+					],
+					"Y1": 338,
+					"X1": 661,
+					"Y2": 372,
+					"X2": 730
+				},
+				{
+					"Territory": "Mongolia",
+					"Neighbours": [
+						"Siberia",
+						"Irkutsk",
+						"Kamchatka",
+						"Japan",
+						"China"
+					],
+					"Y1": 231,
+					"X1": 884,
+					"Y2": 262,
+					"X2": 950
+				},
+				{
+					"Territory": "Siam",
+					"Neighbours": [
+						"India",
+						"China",
+						"Indonesia"
+					],
+					"Y1": 390,
+					"X1": 886,
+					"Y2": 423,
+					"X2": 945
+				},
+				{
+					"Territory": "Siberia",
+					"Neighbours": [
+						"Ural",
+						"Yakutsk",
+						"Irkutsk",
+						"Mongolia",
+						"China"
+					],
+					"Y1": 86,
+					"X1": 790,
+					"Y2": 120,
+					"X2": 859
+				},
+				{
+					"Territory": "Ural",
+					"Neighbours": [
+						"Ukraine",
+						"Siberia",
+						"China",
+						"Afghanistan"
+					],
+					"Y1": 151,
+					"X1": 745,
+					"Y2": 181,
+					"X2": 800
+				},
+				{
+					"Territory": "Yakutsk",
+					"Neighbours": [
+						"Siberia",
+						"Kamchatka",
+						"Irkutsk"
+					],
+					"Y1": 69,
+					"X1": 887,
+					"Y2": 101,
+					"X2": 948
+				}
+			]
+		},
+		{
+			"TroopBonus": 5,
+			"Continent": "Europe",
+			"Territories": [
+				{
+					"Territory": "GreatBritain",
+					"Neighbours": [
+						"Iceland",
+						"Scandinavia",
+						"NorthernEurope",
+						"WesternEurope"
+					],
+					"Y1": 220,
+					"X1": 428,
+					"Y2": 245,
+					"X2": 478
+				},
+				{
+					"Territory": "Iceland",
+					"Neighbours": [
+						"Greenland",
+						"Scandinavia",
+						"GreatBritain"
+					],
+					"Y1": 132,
+					"X1": 455,
+					"Y2": 158,
+					"X2": 503
+				},
+				{
+					"Territory": "NorthernEurope",
+					"Neighbours": [
+						"GreatBritain",
+						"Scandinavia",
+						"WesternEurope",
+						"SouthernEurope",
+						"Ukraine"
+					],
+					"Y1": 231,
+					"X1": 535,
+					"Y2": 258,
+					"X2": 597
+				},
+				{
+					"Territory": "Scandinavia",
+					"Neighbours": [
+						"Ukraine",
+						"NorthernEurope",
+						"GreatBritain",
+						"Iceland"
+					],
+					"Y1": 122,
+					"X1": 537,
+					"Y2": 148,
+					"X2": 588
+				},
+				{
+					"Territory": "SouthernEurope",
+					"Neighbours": [
+						"NorthernEurope",
+						"WesternEurope",
+						"Ukraine",
+						"MiddleEast",
+						"Egypt",
+						"NorthAfrica"
+					],
+					"Y1": 290,
+					"X1": 545,
+					"Y2": 319,
+					"X2": 605
+				},
+				{
+					"Territory": "Ukraine",
+					"Neighbours": [
+						"Scandinavia",
+						"NorthernEurope",
+						"SouthernEurope",
+						"MiddleEast",
+						"Afghanistan",
+						"Ural"
+					],
+					"Y1": 171,
+					"X1": 633,
+					"Y2": 201,
+					"X2": 700
+				},
+				{
+					"Territory": "WesternEurope",
+					"Neighbours": [
+						"GreatBritain",
+						"NorthernEurope",
+						"SouthernEurope",
+						"NorthAfrica"
+					],
+					"Y1": 323,
+					"X1": 450,
+					"Y2": 349,
+					"X2": 500
+				}
+			]
+		},
+		{
+			"TroopBonus": 3,
+			"Continent": "Africa",
+			"Territories": [
+				{
+					"Territory": "Congo",
+					"Neighbours": [
+						"EastAfrica",
+						"NorthAfrica",
+						"SouthAfrica"
+					],
+					"Y1": 533,
+					"X1": 581,
+					"Y2": 568,
+					"X2": 647
+				},
+				{
+					"Territory": "EastAfrica",
+					"Neighbours": [
+						"Egypt",
+						"Congo",
+						"Madagascar",
+						"SouthAfrica",
+						"NorthAfrica",
+						"MiddleEast"
+					],
+					"Y1": 484,
+					"X1": 642,
+					"Y2": 518,
+					"X2": 705
+				},
+				{
+					"Territory": "Egypt",
+					"Neighbours": [
+						"NorthAfrica",
+						"EastAfrica",
+						"MiddleEast",
+						"SouthernEurope"
+					],
+					"Y1": 401,
+					"X1": 579,
+					"Y2": 432,
+					"X2": 643
+				},
+				{
+					"Territory": "Madagascar",
+					"Neighbours": [
+						"EastAfrica",
+						"SouthAfrica"
+					],
+					"Y1": 637,
+					"X1": 704,
+					"Y2": 666,
+					"X2": 757
+				},
+				{
+					"Territory": "NorthAfrica",
+					"Neighbours": [
+						"Brazil",
+						"WesternEurope",
+						"SouthernEurope",
+						"Egypt",
+						"EastAfrica",
+						"Congo"
+					],
+					"Y1": 444,
+					"X1": 488,
+					"Y2": 478,
+					"X2": 556
+				},
+				{
+					"Territory": "SouthAfrica",
+					"Neighbours": [
+						"Congo",
+						"EastAfrica",
+						"Madagascar"
+					],
+					"Y1": 625,
+					"X1": 597,
+					"Y2": 658,
+					"X2": 661
+				}
+			]
+		},
+		{
+			"TroopBonus": 3,
+			"Continent": "SouthAmerica",
+			"Territories": [
+				{
+					"Territory": "Argentina",
+					"Neighbours": [
+						"Peru",
+						"Brazil"
+					],
+					"Y1": 584,
+					"X1": 263,
+					"Y2": 612,
+					"X2": 319
+				},
+				{
+					"Territory": "Brazil",
+					"Neighbours": [
+						"Peru",
+						"Argentina",
+						"Venezuela",
+						"NorthAfrica"
+					],
+					"Y1": 462,
+					"X1": 317,
+					"Y2": 489,
+					"X2": 377
+				},
+				{
+					"Territory": "Peru",
+					"Neighbours": [
+						"Brazil",
+						"Venezuela",
+						"Argentina"
+					],
+					"Y1": 487,
+					"X1": 230,
+					"Y2": 516,
+					"X2": 287
+				},
+				{
+					"Territory": "Venezuela",
+					"Neighbours": [
+						"CentralAmerica",
+						"Brazil",
+						"Peru"
+					],
+					"Y1": 397,
+					"X1": 229,
+					"Y2": 424,
+					"X2": 282
+				}
+			]
+		},
+		{
+			"TroopBonus": 2,
+			"Continent": "Australia",
+			"Territories": [
+				{
+					"Territory": "EasternAustralia",
+					"Neighbours": [
+						"WesternAustralia",
+						"NewGuinea"
+					],
+					"Y1": 592,
+					"X1": 1030,
+					"Y2": 623,
+					"X2": 1090
+				},
+				{
+					"Territory": "Indonesia",
+					"Neighbours": [
+						"Siam",
+						"WesternAustralia",
+						"NewGuinea"
+					],
+					"Y1": 517,
+					"X1": 908,
+					"Y2": 545,
+					"X2": 967
+				},
+				{
+					"Territory": "NewGuinea",
+					"Neighbours": [
+						"Indonesia",
+						"WesternAustralia",
+						"EasternAustralia"
+					],
+					"Y1": 485,
+					"X1": 1008,
+					"Y2": 514,
+					"X2": 1064
+				},
+				{
+					"Territory": "WesternAustralia",
+					"Neighbours": [
+						"EasternAustralia",
+						"Indonesia",
+						"NewGuinea"
+					],
+					"Y1": 632,
+					"X1": 964,
+					"Y2": 664,
+					"X2": 1024
+				}
+			]
+		},
+		{
+			"TroopBonus": 5,
+			"Continent": "NorthAmerica",
+			"Territories": [
+				{
+					"Territory": "Alaska",
+					"Neighbours": [
+						"NorthwestTerritory",
+						"Alberta",
+						"Kamchatka"
+					],
+					"Y1": 86,
+					"X1": 25,
+					"Y2": 112,
+					"X2": 80
+				},
+				{
+					"Territory": "Alberta",
+					"Neighbours": [
+						"Alaska",
+						"NorthwestTerritory",
+						"Ontario",
+						"WesternUnitedStates"
+					],
+					"Y1": 153,
+					"X1": 125,
+					"Y2": 176,
+					"X2": 181
+				},
+				{
+					"Territory": "CentralAmerica",
+					"Neighbours": [
+						"WesternUnitedStates",
+						"EasternUnitedStates",
+						"Venezuela"
+					],
+					"Y1": 315,
+					"X1": 140,
+					"Y2": 341,
+					"X2": 193
+				},
+				{
+					"Territory": "EasternUnitedStates",
+					"Neighbours": [
+						"CentralAmerica",
+						"WesternUnitedStates",
+						"Ontario",
+						"Quebec"
+					],
+					"Y1": 258,
+					"X1": 223,
+					"Y2": 283,
+					"X2": 283
+				},
+				{
+					"Territory": "Greenland",
+					"Neighbours": [
+						"NorthwestTerritory",
+						"Ontario",
+						"Quebec",
+						"Iceland"
+					],
+					"Y1": 48,
+					"X1": 350,
+					"Y2": 76,
+					"X2": 410
+				},
+				{
+					"Territory": "NorthwestTerritory",
+					"Neighbours": [
+						"Alaska",
+						"Alberta",
+						"Ontario",
+						"Greenland"
+					],
+					"Y1": 87,
+					"X1": 119,
+					"Y2": 112,
+					"X2": 177
+				},
+				{
+					"Territory": "Ontario",
+					"Neighbours": [
+						"Alberta",
+						"Quebec",
+						"NorthwestTerritory",
+						"EasternUnitedStates",
+						"Greenland",
+						"WesternUnitedStates"
+					],
+					"Y1": 172,
+					"X1": 208,
+					"Y2": 199,
+					"X2": 258
+				},
+				{
+					"Territory": "Quebec",
+					"Neighbours": [
+						"Ontario",
+						"Greenland",
+						"EasternUnitedStates"
+					],
+					"Y1": 172,
+					"X1": 286,
+					"Y2": 197,
+					"X2": 341
+				},
+				{
+					"Territory": "WesternUnitedStates",
+					"Neighbours": [
+						"CentralAmerica",
+						"EasternUnitedStates",
+						"Ontario",
+						"Alberta"
+					],
+					"Y1": 234,
+					"X1": 132,
+					"Y2": 258,
+					"X2": 186
+				}
+			]
+		}
+	],
+	"Name": "DefaultMap"
+}
