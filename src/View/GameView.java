@@ -38,7 +38,7 @@ public class GameView extends JFrame implements UserStatusListener {
      * @param players the list of players that were passed in from the playerselect phase
      * @throws IOException exception
      */
-    public GameView(ArrayList<PlayerSelectPanel> players) throws IOException {
+    public GameView(ArrayList<PlayerSelectPanel> players,String path) throws IOException {
         super("Risk!");
         color_list = new Stack<>();
         color_list.add(new Color(239, 150, 75));
@@ -61,7 +61,7 @@ public class GameView extends JFrame implements UserStatusListener {
         setJMenuBar(menuBar);
 
 
-        GameSetup setupGame = new GameSetup(gameModel.getPlayers(),"/resources/HxH.json");
+        GameSetup setupGame = new GameSetup(gameModel.getPlayers(),path);
         background = setupGame.getBackground();
         gameModel.setGameName(setupGame.getGameName());
 
