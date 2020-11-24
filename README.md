@@ -162,8 +162,8 @@ There still arent any known issues in our code.
 | Event | Author(s) |
 | --- | --- |
 | PlayerEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
-| PlayerEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
-| PlayerEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
+| UserStatusEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
+| TerritoryEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
 
 **Listener**
 
