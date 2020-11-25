@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.Timer;
 
 /**
@@ -299,11 +300,16 @@ public class GameModel{
         continentMap.putAll(oldGame.getContinentMap());
         worldMap.putAll(oldGame.getWorldMap());
         JSONArray territoryList = (JSONArray) game.get("Territories");
+        HashMap<String, Set<String>> old_links = new HashMap<>();
         for(Object territoryObj : territoryList){
             JSONObject temp_territory  = (JSONObject) territoryObj;
             String territory_name = (String) temp_territory.get("Territory");
             Territory oldTerritory = worldMap.get(territory_name);
-            worldMap.replace(territory_name,new Territory(temp_territory,oldTerritory,worldMap));
+            old_links.put(territory_name,oldTerritory.getNeighbours().keySet());
+            worldMap.replace(territory_name,new Territory(temp_territory,oldTerritory));
+        }
+        for(String territory_names : old_links.keySet()){
+            worldMap.get(territory_names).updateLink(old_links.get(territory_names),worldMap);
         }
         for(Continent continent : continentMap.values()){
             continent.updateTerritories(worldMap);

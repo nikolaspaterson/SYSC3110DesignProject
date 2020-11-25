@@ -275,27 +275,26 @@ public class Territory {
     public JSONObject saveJSON(){
         JSONObject territory_json = new JSONObject();
         territory_json.put("Territory",territoryName);
-        territory_json.put("Occupant",occupant.getPlayerNumber());
         territory_json.put("Troops",troops);
         return territory_json;
     }
 
-    public Territory(JSONObject territory,Territory old_territory, HashMap<String,Territory> map){
+    public Territory(JSONObject territory,Territory old_territory){
         territoryViews = new ArrayList<>();
         territoryName = (String) territory.get("Territory");
         troops = (int) (long) territory.get("Troops");
-        occupantNumber = (int) (long) territory.get("Occupant");
         neighbours = new HashMap<>();
-        for (String territory_names : old_territory.getNeighbours().keySet()){
-            neighbours.put(territory_names,map.get(territory_names));
-        }
+
         territoryViews.addAll(old_territory.removeTerritoryViews());
         linkedNeighbours = new ArrayList<>();
         blinking_yours = new Timer("flash_yours");
         blinking_theirs = new Timer("flash_theirs");
 
     }
-    public int getOccupantNumber(){
-        return occupantNumber;
+    public void updateLink(Set<String> neighbours, HashMap<String,Territory> map){
+        for (String territory_names : neighbours){
+            this.neighbours.put(territory_names,map.get(territory_names));
+        }
     }
+
 }
