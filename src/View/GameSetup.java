@@ -115,6 +115,7 @@ public class GameSetup {
         int territory_num = number_generator.nextInt(list_of_territories.size()) ;
         return list_of_territories.get(territory_num);
     }
+    
     private void createSaveFolder(){
         try{
             String path =  this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
