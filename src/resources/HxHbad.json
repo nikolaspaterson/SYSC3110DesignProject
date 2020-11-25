@@ -1,0 +1,451 @@
+{
+  "Background": "/resources/HxHMap.png",
+  "Continents": [
+    {
+      "TroopBonus": 2,
+      "Continent": "Heaven",
+      "Territories": [
+        {
+          "Territory": "arena",
+          "Neighbours": [
+            "republic4",
+            "northazian3"
+          ],
+          "Y1": 61,
+          "X1": 596,
+          "Y2": 91,
+          "X2": 656
+        }
+      ]
+    },
+    {
+      "TroopBonus": 7,
+      "Continent": "NorthAzian",
+      "Territories": [
+        {
+          "Territory": "northazian1",
+          "Neighbours": [
+            "northazian4",
+            "northazian2",
+            "northazian3"
+          ],
+          "Y1": 79,
+          "X1": 893,
+          "Y2": 109,
+          "X2": 953
+        },
+        {
+          "Territory": "northazian2",
+          "Neighbours": [
+            "northazian4",
+            "northazian1"
+          ],
+          "Y1": 147,
+          "X1": 1010,
+          "Y2": 177,
+          "X2": 1070
+        },
+        {
+          "Territory": "northazian3",
+          "Neighbours": [
+            "northazian4",
+            "arena",
+            "northazian6",
+            "northazian1"
+          ],
+          "Y1": 163,
+          "X1": 769,
+          "Y2": 193,
+          "X2": 829
+        },
+        {
+          "Territory": "northazian4",
+          "Neighbours": [
+            "northazian1",
+            "northazian2",
+            "northazian3",
+            "northazian7"
+          ],
+          "Y1": 185,
+          "X1": 899,
+          "Y2": 215,
+          "X2": 959
+        },
+        {
+          "Territory": "northazian5",
+          "Neighbours": [
+            "northazian6",
+            "southazian1"
+          ],
+          "Y1": 287,
+          "X1": 705,
+          "Y2": 317,
+          "X2": 765
+        },
+        {
+          "Territory": "northazian6",
+          "Neighbours": [
+            "northazian5",
+            "northazian3",
+            "northazian7",
+            "southazian1",
+            "southazian2"
+          ],
+          "Y1": 283,
+          "X1": 783,
+          "Y2": 313,
+          "X2": 843
+        },
+        {
+          "Territory": "northazian7",
+          "Neighbours": [
+            "northazian6",
+            "northazian8",
+            "northazian4"
+          ],
+          "Y1": 273,
+          "X1": 889,
+          "Y2": 303,
+          "X2": 949
+        },
+        {
+          "Territory": "northazian8",
+          "Neighbours": [
+            "northazian7",
+            "southazian3",
+            "southazian4"
+          ],
+          "Y1": 364,
+          "X1": 968,
+          "Y2": 394,
+          "X2": 1028
+        }
+      ]
+    },
+    {
+      "TroopBonus": 4,
+      "Continent": "Jappon",
+      "Territories": [
+        {
+          "Territory": "jappon1",
+          "Neighbours": [
+            "jappon2",
+            "jappon3",
+            "jappon4"
+          ],
+          "Y1": 282,
+          "X1": 47,
+          "Y2": 312,
+          "X2": 107
+        },
+        {
+          "Territory": "jappon2",
+          "Neighbours": [
+            "jappon1",
+            "jappon3",
+            "yorbian4",
+            "republic4"
+          ],
+          "Y1": 292,
+          "X1": 161,
+          "Y2": 322,
+          "X2": 221
+        },
+        {
+          "Territory": "jappon3",
+          "Neighbours": [
+            "jappon1",
+            "jappon2",
+            "jappon4",
+            "republic1"
+          ],
+          "Y1": 215,
+          "X1": 116,
+          "Y2": 245,
+          "X2": 176
+        },
+        {
+          "Territory": "jappon4",
+          "Neighbours": [
+            "jappon1",
+            "jappon3"
+          ],
+          "Y1": 139,
+          "X1": 74,
+          "Y2": 169,
+          "X2": 134
+        }
+      ]
+    },
+    {
+      "TroopBonus": 4,
+      "Continent": "Greed",
+      "Territories": [
+        {
+          "Territory": "greed1",
+          "Neighbours": [
+            "greed2"
+          ],
+          "Y1": 535,
+          "X1": 507,
+          "Y2": 565,
+          "X2": 567
+        },
+        {
+          "Territory": "greed2",
+          "Neighbours": [
+            "greed1",
+            "greed3",
+            "greed4",
+            "greed5"
+          ],
+          "Y1": 575,
+          "X1": 595,
+          "Y2": 605,
+          "X2": 655
+        },
+        {
+          "Territory": "greed3",
+          "Neighbours": [
+            "greed5",
+            "greed2"
+          ],
+          "Y1": 663,
+          "X1": 622,
+          "Y2": 693,
+          "X2": 682
+        },
+        {
+          "Territory": "greed4",
+          "Neighbours": [
+            "greed2",
+            "greed5"
+          ],
+          "Y1": 559,
+          "X1": 684,
+          "Y2": 589,
+          "X2": 744
+        },
+        {
+          "Territory": "greed5",
+          "Neighbours": [
+            "greed2",
+            "greed3",
+            "greed4"
+          ],
+          "Y1": 619,
+          "X1": 671,
+          "Y2": 649,
+          "X2": 731
+        }
+      ]
+    },
+    {
+      "TroopBonus": 5,
+      "Continent": "Yorbian",
+      "Territories": [
+        {
+          "Territory": "yorbian1",
+          "Neighbours": [
+            "yorbian2",
+            "yorbian3"
+          ],
+          "Y1": 598,
+          "X1": 196,
+          "Y2": 628,
+          "X2": 256
+        },
+        {
+          "Territory": "yorbian2",
+          "Neighbours": [
+            "yorbian1",
+            "yorbian3",
+            "yorbian4"
+          ],
+          "Y1": 477,
+          "X1": 133,
+          "Y2": 507,
+          "X2": 193
+        },
+        {
+          "Territory": "yorbian3",
+          "Neighbours": [
+            "yorbian1",
+            "yorbian2",
+            "yorbian4",
+            "yorbian5",
+            "yorbian6"
+          ],
+          "Y1": 490,
+          "X1": 249,
+          "Y2": 520,
+          "X2": 309
+        },
+        {
+          "Territory": "yorbian4",
+          "Neighbours": [
+            "yorbian2",
+            "yorbian3"
+          ],
+          "Y1": 396,
+          "X1": 137,
+          "Y2": 426,
+          "X2": 197
+        },
+        {
+          "Territory": "yorbian5",
+          "Neighbours": [
+            "yorbian3",
+            "yorbian6"
+          ],
+          "Y1": 480,
+          "X1": 379,
+          "Y2": 510,
+          "X2": 439
+        },
+        {
+          "Territory": "yorbian6",
+          "Neighbours": [
+            "yorbian3",
+            "yorbian5"
+          ],
+          "Y1": 400,
+          "X1": 361,
+          "Y2": 430,
+          "X2": 421
+        }
+      ]
+    },
+    {
+      "TroopBonus": 5,
+      "Continent": "SouthAzian",
+      "Territories": [
+        {
+          "Territory": "southazian1",
+          "Neighbours": [
+            "southazian2",
+            "northazian6",
+            "northazian5"
+          ],
+          "Y1": 395,
+          "X1": 718,
+          "Y2": 425,
+          "X2": 778
+        },
+        {
+          "Territory": "southazian2",
+          "Neighbours": [
+            "southazian1",
+            "southazian3",
+            "northazian6"
+          ],
+          "Y1": 450,
+          "X1": 790,
+          "Y2": 480,
+          "X2": 850
+        },
+        {
+          "Territory": "southazian3",
+          "Neighbours": [
+            "northazian8",
+            "southazian2",
+            "southazian4"
+          ],
+          "Y1": 445,
+          "X1": 875,
+          "Y2": 475,
+          "X2": 935
+        },
+        {
+          "Territory": "southazian4",
+          "Neighbours": [
+            "southazian3",
+            "southazian5",
+            "northazian8"
+          ],
+          "Y1": 493,
+          "X1": 951,
+          "Y2": 523,
+          "X2": 1011
+        },
+        {
+          "Territory": "southazian5",
+          "Neighbours": [
+            "southazian4"
+          ],
+          "Y1": 599,
+          "X1": 893,
+          "Y2": 629,
+          "X2": 953
+        }
+      ]
+    },
+    {
+      "TroopBonus": 3,
+      "Continent": "Republic",
+      "Territories": [
+        {
+          "Territory": "republic1",
+          "Neighbours": [
+            "republic2",
+            "republic3",
+            "jappon3"
+          ],
+          "Y1": 104,
+          "X1": 155,
+          "Y2": 134,
+          "X2": 215
+        },
+        {
+          "Territory": "republic2",
+          "Neighbours": [
+            "republic1",
+            "republic3",
+            "republic4"
+          ],
+          "Y1": 42,
+          "X1": 242,
+          "Y2": 72,
+          "X2": 302
+        },
+        {
+          "Territory": "republic3",
+          "Neighbours": [
+            "republic1",
+            "republic2",
+            "republic4"
+          ],
+          "Y1": 127,
+          "X1": 263,
+          "Y2": 157,
+          "X2": 323
+        },
+        {
+          "Territory": "republic4",
+          "Neighbours": [
+            "republic3",
+            "republic2",
+            "republic5",
+            "jappon2",
+            "arena"
+          ],
+          "Y1": 60,
+          "X1": 341,
+          "Y2": 90,
+          "X2": 401
+        },
+        {
+          "Territory": "republic5",
+          "Neighbours": [
+            "republic4"
+          ],
+          "Y1": 183,
+          "X1": 388,
+          "Y2": 213,
+          "X2": 448
+        }
+      ]
+    }
+  ],
+  "Name": "NotDefaultMap"
+}
