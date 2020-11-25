@@ -2,6 +2,7 @@ package Model;
 
 import Event.UserStatusEvent;
 import Listener.UserStatusListener;
+import View.GameMenuBar;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -15,18 +16,18 @@ import java.util.Timer;
  */
 public class GameModel{
 
-    private final ArrayList<Player> playerList;
+    private ArrayList<Player> playerList;
     private Player currentPlayer;
     private int currentPlayerIndex;
     private HashMap<String, Continent> continentMap;
-    private final ArrayList<GameState> gameState;
+    private ArrayList<GameState> gameState;
     private int gameStateIndex;
     private GameState currentState;
     private int outOfGame;
-    private final ArrayList<Territory> commandTerritory;
+    private ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
     private Timer aiTimer;
-    private final ArrayList<UserStatusListener> gameViews;
+    private ArrayList<UserStatusListener> gameViews;
     private String gameName;
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -57,7 +58,12 @@ public class GameModel{
     public void addView(UserStatusListener view){
         gameViews.add(view);
     }
-
+    public ArrayList<UserStatusListener> removeListeners(){
+        ArrayList<UserStatusListener> duplicate = new ArrayList<>();
+        duplicate.addAll(gameViews);
+        gameViews.clear();
+        return duplicate;
+    }
     /**
      * This method is used to add all players in the game into an ArrayList.
      * @param players the player ArrayList
@@ -73,7 +79,9 @@ public class GameModel{
     public void removeView(UserStatusListener view){
         gameViews.remove(view);
     }
-
+    public HashMap<String, Continent> getContinentMap(){
+        return continentMap;
+    }
     /**
      * This method is used to check if the Player is an AIPlayer and if so, to start adding the delay to all the AIPlayer's moves.
      */
@@ -239,6 +247,12 @@ public class GameModel{
         game_json.put("GameState",currentState.toString());
         game_json.put("GameName",gameName);
         game_json.put("CurrentPlayer",currentPlayerIndex);
+        if(commandTerritory.isEmpty()){
+            game_json.put("CommandTerritory", "$null$");
+        }else {
+            game_json.put("CommandTerritory",commandTerritory.get(0).getTerritoryName());
+        }
+
         JSONArray player_array = new JSONArray();
 
         for(Player temp_player : playerList){
@@ -251,6 +265,64 @@ public class GameModel{
         }
         game_json.put("Territories",territory_array);
         return game_json;
+    }
+
+    public GameModel(JSONObject game, GameModel oldGame){
+        System.out.println("hi");
+        for(Player temp : oldGame.getPlayers()){
+            temp.removeAllPlayerListeners();
+        }
+        playerList = new ArrayList<>();
+        continentMap = new HashMap<>();
+        worldMap = new HashMap<>();
+        gameViews = new ArrayList<>();
+        gameViews.addAll(oldGame.removeListeners());
+        outOfGame = 0;
+        gameState = new ArrayList<>();
+        gameState.add(GameState.REINFORCE);
+        gameState.add(GameState.ATTACK);
+        gameState.add(GameState.FORTIFY);
+        switch ((String)game.get("GameState")){
+            case ("REINFORCE")->{
+                gameStateIndex = 0;
+            }
+            case ("ATTACK")-> {
+                gameStateIndex = 1;
+            }
+            case ("FORTIFY")-> {
+                gameStateIndex = 2;
+            }
+        }
+        currentState = gameState.get(gameStateIndex);
+        aiTimer = new Timer("AI");
+        currentPlayerIndex = (int) (long) game.get("CurrentPlayer");
+        continentMap.putAll(oldGame.getContinentMap());
+        worldMap.putAll(oldGame.getWorldMap());
+        JSONArray territoryList = (JSONArray) game.get("Territories");
+        for(Object territoryObj : territoryList){
+            JSONObject temp_territory  = (JSONObject) territoryObj;
+            String territory_name = (String) temp_territory.get("Territory");
+            Territory oldTerritory = worldMap.get(territory_name);
+            worldMap.replace(territory_name,new Territory(temp_territory,oldTerritory,worldMap));
+        }
+        for(Continent continent : continentMap.values()){
+            continent.updateTerritories(worldMap);
+        }
+        JSONArray players = (JSONArray) game.get("Players");
+        for(Object playerObj : players){
+            JSONObject temp_player  = (JSONObject) playerObj;
+            playerList.add(new Player(temp_player,worldMap));
+        }
+
+        commandTerritory = new ArrayList<>();
+        String command = (String) game.get("CommandTerritory");
+        if(!command.equals("$null$")){
+            commandTerritory.add(worldMap.get(command));
+            System.out.println("OH GOD NO");
+        }
+        currentPlayer = playerList.get(currentPlayerIndex);
+        initializeAITimer();
+        updateView();
     }
 
 

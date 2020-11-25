@@ -33,6 +33,11 @@ public class Continent {
         continentTerritory.put(territory_name,territory);
     }
 
+    public void updateTerritories(HashMap<String,Territory> worldMap){
+        for(String territory_name : continentTerritory.keySet()){
+            continentTerritory.replace(territory_name,worldMap.get(territory_name));
+        }
+    }
     /**
      * Get the HashMap of Territories that are in the Model.Continent
      * @return The map of territories in Model.Continent

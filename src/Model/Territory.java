@@ -18,10 +18,11 @@ import java.util.List;
 public class Territory {
 
     private Player occupant;
+    private int occupantNumber;
     private int troops;
-    private final HashMap<String, Territory> neighbours;
-    private final String territoryName;
-    private final List<TerritoryView> territoryViews;
+    private HashMap<String, Territory> neighbours;
+    private String territoryName;
+    private ArrayList<TerritoryView> territoryViews;
     private String continentName;
     private Color color;
     private Color neighbourColor;
@@ -78,6 +79,12 @@ public class Territory {
      */
     public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
 
+    public ArrayList<TerritoryView> removeTerritoryViews(){
+        ArrayList<TerritoryView> temp_views = new ArrayList<>();
+        temp_views.addAll(territoryViews);
+        territoryViews.clear();
+        return temp_views;
+    }
     /**
      * Sets the continent name
      * @param name the continent name
@@ -147,8 +154,7 @@ public class Territory {
      */
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
-        this.color = occupant.getPlayer_color();
-        updateView();
+        addColor(occupant.getPlayer_color());
     }
 
     /**
@@ -268,15 +274,28 @@ public class Territory {
 
     public JSONObject saveJSON(){
         JSONObject territory_json = new JSONObject();
-        JSONArray neighbours = new JSONArray();
         territory_json.put("Territory",territoryName);
-        territory_json.put("Continent",continentName);
         territory_json.put("Occupant",occupant.getPlayerNumber());
         territory_json.put("Troops",troops);
-        for(Territory temp_territory : getNeighbours().values()){
-            neighbours.add(temp_territory.getTerritoryName());
-        }
-        territory_json.put("Neighbours", neighbours);
         return territory_json;
+    }
+
+    public Territory(JSONObject territory,Territory old_territory, HashMap<String,Territory> map){
+        territoryViews = new ArrayList<>();
+        territoryName = (String) territory.get("Territory");
+        troops = (int) (long) territory.get("Troops");
+        occupantNumber = (int) (long) territory.get("Occupant");
+        neighbours = new HashMap<>();
+        for (String territory_names : old_territory.getNeighbours().keySet()){
+            neighbours.put(territory_names,map.get(territory_names));
+        }
+        territoryViews.addAll(old_territory.removeTerritoryViews());
+        linkedNeighbours = new ArrayList<>();
+        blinking_yours = new Timer("flash_yours");
+        blinking_theirs = new Timer("flash_theirs");
+
+    }
+    public int getOccupantNumber(){
+        return occupantNumber;
     }
 }

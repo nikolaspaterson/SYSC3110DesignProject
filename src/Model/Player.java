@@ -18,15 +18,15 @@ import java.util.HashMap;
  */
 public class Player {
 
-    private final String name;
-    private final HashMap<String, Territory> territoriesOccupied;
+    private String name;
+    private HashMap<String, Territory> territoriesOccupied;
     private int deployableTroops;
     private int total_troops;
     private Icon player_icon;
     private Color player_color;
     private boolean inGame;
     private boolean fortifyStatus;
-    private final ArrayList<PlayerListener> playerListeners;
+    private ArrayList<PlayerListener> playerListeners;
     private int playerNumber;
 
     /**
@@ -111,7 +111,7 @@ public class Player {
      * @param list the listener to be remove.
      */
     public void removePlayerListener(PlayerListener list){ playerListeners.remove(list); }
-
+    public ArrayList<PlayerListener> removeAllPlayerListeners(){ return playerListeners; }
     /**
      * This method used to know if I player is fortifying or not.
      * @return boolean fortify status
@@ -307,7 +307,35 @@ public class Player {
         player_json.put("Fortify", fortifyStatus);
         player_json.put("TotalTroops",total_troops);
         player_json.put("Type", getClass().getName());
+        player_json.put("InGame",inGame);
         player_json.put("OccupiedTerritories", occupiedTerritories);
         return player_json;
+    }
+
+    public Player(JSONObject player, HashMap<String,Territory> currentMap){
+        name = (String) player.get("Name");
+        total_troops = (int) (long)player.get("TotalTroops");
+        deployableTroops = (int) (long) player.get("DeployableTroops");
+        fortifyStatus = (boolean) player.get("Fortify");
+        JSONArray list_territories = (JSONArray) player.get("OccupiedTerritories");
+        territoriesOccupied = new HashMap<>();
+        player_color = new Color((int) (long) player.get("Color"));
+        for(Object territoryObj : list_territories){
+            String territoryName = (String) territoryObj;
+            territoriesOccupied.put(territoryName, currentMap.get(territoryName));
+            currentMap.get(territoryName).setOccupant(this);
+        }
+        playerNumber = (int) (long)player.get("PlayerIndex");
+        playerListeners = new ArrayList<>();
+        inGame = (boolean) player.get("InGame");
+        player_icon = scaleImage("/resources/Chizzy.png");
+
+    }
+    //temp before we update player to path
+    private ImageIcon scaleImage(String filename) {
+        ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
+        Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
+        scaledImg = new ImageIcon(img);
+        return scaledImg;
     }
 }

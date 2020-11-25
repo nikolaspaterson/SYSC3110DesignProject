@@ -124,7 +124,7 @@ public class GameSetup {
                 decodedPath = decodedPath.replace(chop_jar.getName(),"");
             }
             System.out.println(decodedPath);
-            output_folder = decodedPath + "/output/";
+            output_folder = decodedPath + "output/";
             createFolder(output_folder);
             output_subdirectory = output_folder + gameName + "/";
             createFolder(output_subdirectory);

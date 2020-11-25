@@ -29,6 +29,7 @@ public class GameView extends JFrame implements UserStatusListener {
     private Clip clip;
     private final Stack<Color> color_list;
     private final GameController game_controller;
+    private GameModel gameModel;
     private BackgroundPanel background;
     private GameMenuBar menuBar;
     private SaveController saveController;
@@ -49,7 +50,7 @@ public class GameView extends JFrame implements UserStatusListener {
         color_list.add(new Color(139, 224, 87));
 
         UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
-        GameModel gameModel = new GameModel();
+        gameModel = new GameModel();
         gameModel.addPlayers(addPlayersFromPanel(players, gameModel));
         gameModel.addView(this);
 
@@ -57,10 +58,8 @@ public class GameView extends JFrame implements UserStatusListener {
         game_controller = new GameController(gameModel,this);
         user_status.setController(game_controller);
 
-        menuBar = new GameMenuBar();
-        setJMenuBar(menuBar);
-
         GameSetup setupGame = new GameSetup(gameModel.getPlayers(),path);
+
         background = setupGame.getBackground();
         gameModel.setGameName(setupGame.getGameName());
 
@@ -73,7 +72,10 @@ public class GameView extends JFrame implements UserStatusListener {
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());
 
-        saveController = new SaveController(gameModel,menuBar,setupGame.getOutput_subdirectory());
+        saveController = new SaveController(gameModel,this,setupGame.getOutput_subdirectory());
+        menuBar = new GameMenuBar(saveController,setupGame.getOutput_subdirectory());
+        saveController.addView(menuBar);
+        setJMenuBar(menuBar);
 
         players_overlay.setBounds(this.getWidth()-120,0,100, this.getHeight());
         addPlayerOverlay(gameModel);
@@ -89,7 +91,11 @@ public class GameView extends JFrame implements UserStatusListener {
         setVisible(true);
         playMusic("/resources/beat.wav");
     }
-
+    public void newGameModel(GameModel newModel){
+        gameModel = newModel;
+        game_controller.updateModel(gameModel);
+        buildNewPlayerView();
+    }
     /**
      * Used to add players from the model to the View
      * @param gameModel the game model
@@ -145,7 +151,12 @@ public class GameView extends JFrame implements UserStatusListener {
         }
         return playerList;
     }
-
+    public void buildNewPlayerView(){
+        players_overlay.removeAll();
+        addPlayerOverlay(gameModel);
+        revalidate();
+        repaint();
+    }
     /**
      * This is to play the most jamming beat as you take over the world. No further explanation required.
      * @param filepath the filepath of the music to play
@@ -162,9 +173,11 @@ public class GameView extends JFrame implements UserStatusListener {
             ex.printStackTrace( );
         }
     }
-
+    public GameModel getModel(){
+        return gameModel;
+    }
     private void load_file(){
-
+        buildNewPlayerView();
     }
     /**
      * This method is used to handle updates from the GameModel and update the view respectively.
@@ -172,9 +185,9 @@ public class GameView extends JFrame implements UserStatusListener {
      */
     @Override
     public void updateUserStatus(UserStatusEvent event) {
+        user_status.setPlayer(event.getCurrentPlayer());
         switch (event.getGameState()){
             case REINFORCE -> {
-                user_status.setPlayer(event.getCurrentPlayer());
                 event.getCurrentPlayer().addPlayerListener(user_status);
                 user_status.displayReinforce();
             }
@@ -182,7 +195,10 @@ public class GameView extends JFrame implements UserStatusListener {
                 event.getCurrentPlayer().removePlayerListener(user_status);
                 user_status.displayAttack();
             }
-            case FORTIFY -> user_status.displayFortify();
+            case FORTIFY -> {
+                event.getCurrentPlayer().removePlayerListener(user_status);
+                user_status.displayFortify();
+            }
             case WINNING -> new WinningScreenFrame(event.getCurrentPlayer(),this);
         }
     }
