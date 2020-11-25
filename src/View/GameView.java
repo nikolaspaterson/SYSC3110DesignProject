@@ -60,7 +60,6 @@ public class GameView extends JFrame implements UserStatusListener {
         menuBar = new GameMenuBar();
         setJMenuBar(menuBar);
 
-
         GameSetup setupGame = new GameSetup(gameModel.getPlayers(),path);
         background = setupGame.getBackground();
         gameModel.setGameName(setupGame.getGameName());
@@ -97,7 +96,8 @@ public class GameView extends JFrame implements UserStatusListener {
      */
     private void addPlayerOverlay(GameModel gameModel){
         for(Player temp_player : gameModel.getPlayers()){
-            PlayerView new_view = new PlayerView(temp_player, temp_player.getName(), temp_player.getPlayer_color(), (ImageIcon) temp_player.getPlayer_icon(),0);
+            PlayerView new_view = new PlayerView(temp_player.getName(), temp_player.getPlayer_color(), (ImageIcon) temp_player.getPlayer_icon(),0);
+            temp_player.addPlayerListener(new_view);
             players_overlay.add(new_view);
         }
     }

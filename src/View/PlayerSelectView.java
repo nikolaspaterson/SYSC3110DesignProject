@@ -19,17 +19,20 @@ public class PlayerSelectView extends JFrame {
     private final ArrayList<PlayerSelectPanel> players;
     private final JButton startButton;
     private final ArrayList<PlayerSelectPanel> playerArrayList;
+    private String mapFilePath;
 
     /**
      * Class constructor for View.PlayerSelectView class.
      */
-    public PlayerSelectView() {
+    public PlayerSelectView(String mapFilePath) {
         // Main Frame
         super("Player Setup!");
         setSize(new Dimension(1280,814));
         setMinimumSize(new Dimension(1280,814));
         setMaximumSize(new Dimension(1280,814));
         setLayout(new BorderLayout());
+
+        this.mapFilePath = mapFilePath;
 
         // Panel 1 & 2
         JPanel p1 = new JPanel(new GridLayout(2,1, 0, 0));
@@ -170,5 +173,7 @@ public class PlayerSelectView extends JFrame {
      * @return ArrayList<View.PlayerSelectPanel>
      */
     public ArrayList<PlayerSelectPanel> getPlayers() { return players; }
+
+    public String getMapFilePath() { return mapFilePath; }
 
 }

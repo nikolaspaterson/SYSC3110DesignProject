@@ -1,5 +1,6 @@
 package Controller;
 
+import View.MapSelectScreen;
 import View.PlayerSelectView;
 import View.StartUpView;
 import javax.swing.*;
@@ -69,7 +70,7 @@ public class StartUpController implements ActionListener {
             });
         }else if(e.getActionCommand().equals("Play")){
             startUpView.dispose();
-            new PlayerSelectView();
+            new MapSelectScreen();
         }
     }
 }

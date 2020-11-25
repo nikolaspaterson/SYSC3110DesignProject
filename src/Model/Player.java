@@ -56,6 +56,7 @@ public class Player {
     public void setPlayerNumber(int number){
         playerNumber = number;
     }
+
     public int getPlayerNumber(){
         return playerNumber;
     }
@@ -102,15 +103,14 @@ public class Player {
      */
     public void addPlayerListener(PlayerListener list){
         playerListeners.add(list);
+        updateListeners();
     }
 
     /**
      * This method is used to removePlayerListeners of the Model.
      * @param list the listener to be remove.
      */
-    public void removePlayerListener(PlayerListener list){
-        playerListeners.remove(list);
-    }
+    public void removePlayerListener(PlayerListener list){ playerListeners.remove(list); }
 
     /**
      * This method used to know if I player is fortifying or not.
@@ -302,12 +302,12 @@ public class Player {
 
         player_json.put("Name",name);
         player_json.put("PlayerIndex", playerNumber);
-        player_json.put("Color",player_color.getRGB());
+        player_json.put("Color", player_color.getRGB());
         player_json.put("DeployableTroops", deployableTroops);
-        player_json.put("Fortify",fortifyStatus);
+        player_json.put("Fortify", fortifyStatus);
         player_json.put("TotalTroops",total_troops);
         player_json.put("Type", getClass().getName());
-        player_json.put("OccupiedTerritories",occupiedTerritories);
+        player_json.put("OccupiedTerritories", occupiedTerritories);
         return player_json;
     }
 }

@@ -1,6 +1,6 @@
 package View;
 
-import Model.Continent;
+import Controller.MapSelectController;
 import Model.Territory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -8,20 +8,18 @@ import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class MapSelectScreen extends JFrame {
 
-    private String output_folder;
-    private JPanel mapPanel;
-    private HashMap<String, Territory> world_map;
+    private final JPanel mapPanel;
+    private JButton defaultMap;
+    private final HashMap<String, Territory> world_map;
 
     public MapSelectScreen() {
         super("Map Select Screen!");
@@ -40,47 +38,41 @@ public class MapSelectScreen extends JFrame {
         text.setVerticalAlignment(text.TOP);
         add(text, BorderLayout.NORTH);
 
+        MapSelectController mapSelectController = new MapSelectController(this);
+
         mapPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 10));
         loadDefaultMap();
-        loadCustomMap();
+        loadCustomMap(mapSelectController);
+        defaultMap.addActionListener(mapSelectController);
 
         add(mapPanel, BorderLayout.CENTER);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
 
-    private void loadCustomMap() {
+    private void loadCustomMap(MapSelectController mapSelectController) {
         try {
             String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-            String decodedPath = URLDecoder.decode(path, "UTF-8");
+            String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
             File chop_jar = new File(decodedPath);
             if (chop_jar.getName().contains(".jar")) {
                 decodedPath = decodedPath.replace(chop_jar.getName(), "");
             }
-            output_folder = decodedPath + "Maps/";
-            File file = new File(output_folder);
+            String outputFolder = decodedPath + "Maps/";
+            File file = new File(outputFolder);
             File[] files = file.listFiles();
+            assert files != null;
             for(File temp_file : files) {
                 if(temp_file.getName().contains(".json")) {
                     JButton customMap = new JButton();
                     FileReader jsonFile = new FileReader(temp_file.getPath());
                     JSONParser parser = new JSONParser();
                     JSONObject map = (JSONObject) parser.parse(jsonFile);
-                    ImageIcon icon2 = scaleImage( output_folder + map.get("Background"), false);
+                    ImageIcon icon2 = scaleImage( outputFolder + map.get("Background"), false);
                     customMap.setActionCommand(temp_file.getPath());
                     customMap.setIcon(icon2);
                     mapPanel.add(customMap);
-                    customMap.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            if(checkCustomMapValidity(e.getActionCommand())) {
-                                dispose();
-                                new PlayerSelectView();
-                            } else {
-                                JOptionPane.showMessageDialog(mapPanel, "NICE TRY BUD");
-                            }
-                        }
-                    });
+                    customMap.addActionListener(mapSelectController);
                 }
             }
         } catch(Exception e){
@@ -91,7 +83,7 @@ public class MapSelectScreen extends JFrame {
     private void loadDefaultMap() {
         try {
             String path = "/resources/DefaultMap.json";
-            JButton defaultMap = new JButton();
+            defaultMap = new JButton();
             InputStreamReader jsonFile = new InputStreamReader(getClass().getResourceAsStream(path));
             JSONParser parser = new JSONParser();
             JSONObject map = (JSONObject) parser.parse(jsonFile);
@@ -104,7 +96,7 @@ public class MapSelectScreen extends JFrame {
         }
     }
 
-    private boolean checkCustomMapValidity(String path){
+    public boolean checkCustomMapValidity(String path){
         try {
             int total_territories = 0;
             FileReader jsonFile = new FileReader(path);

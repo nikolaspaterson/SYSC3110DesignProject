@@ -70,7 +70,8 @@ public class PlayerSelectController implements ActionListener {
             try {
                 System.out.println("We started");
                 playerSelectView.dispose();
-                new GameView(playerSelectView.getPlayerArrayList(),"/resources/DefaultMap.json");
+                System.out.println(playerSelectView.getMapFilePath() + " HEYYY");
+                new GameView(playerSelectView.getPlayerArrayList(), playerSelectView.getMapFilePath());
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }

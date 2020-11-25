@@ -43,7 +43,6 @@ public class GameSetup {
     public GameSetup(ArrayList<Player> players,String jsonPath){
         territory_CSV = "/resources/TerritoryNeighbours.csv";
 
-
         world_map = new HashMap<>();
         continentMap = new HashMap<>();
         unclaimed_territory = new ArrayList<>();
@@ -154,10 +153,19 @@ public class GameSetup {
     private void set_neighboursJson(){
         try {
             int total_territories = 0;
-            InputStreamReader jsonFile = new InputStreamReader(getClass().getResourceAsStream(jsonPath));
             JSONParser parser = new JSONParser();
-            JSONObject map = (JSONObject) parser.parse(jsonFile);
-            background = new BackgroundPanel((String) map.get("Background"));
+            JSONObject map;
+            if(jsonPath.contains("/resources/DefaultMap.json")){
+                InputStreamReader jsonFile = new InputStreamReader(getClass().getResourceAsStream(jsonPath));
+                map = (JSONObject) parser.parse(jsonFile);
+                background = new BackgroundPanel((String) map.get("Background"));
+            } else {
+                FileReader jsonFile = new FileReader(jsonPath);
+                map = (JSONObject) parser.parse(jsonFile);
+                File newFile = new File(jsonPath);
+                String mapPath = newFile.getPath().replace(newFile.getName(), "");
+                background = new BackgroundPanel(mapPath + map.get("Background"));
+            }
             gameName = (String) map.get("Name");
             for(Object obj_c : (JSONArray) map.get("Continents")){
                 JSONObject continent = (JSONObject) obj_c;

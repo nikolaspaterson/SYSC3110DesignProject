@@ -1,9 +1,14 @@
 package View;
 
+import org.json.simple.JSONObject;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStreamReader;
 
 /**
  * This class is used to set up the background panel for the GameView.
@@ -18,7 +23,12 @@ public class BackgroundPanel extends JPanel {
      */
     public BackgroundPanel(String path) {
         try{
-            BufferedImage image = ImageIO.read(getClass().getResource(path));
+            BufferedImage image;
+            if(path.contains("/resources/Map.png")){
+                image = ImageIO.read(getClass().getResourceAsStream(path));
+            } else {
+                image = ImageIO.read(new File(path));
+            }
             this.image = image;
             this.setLayout(null);
         } catch (Exception e){
@@ -27,7 +37,7 @@ public class BackgroundPanel extends JPanel {
 
     }
     public Dimension imageSize(){
-        return new Dimension(image.getWidth(this),image.getHeight(this));
+        return new Dimension(image.getWidth(this), image.getHeight(this));
     }
     /**
      * Used to paint the image.

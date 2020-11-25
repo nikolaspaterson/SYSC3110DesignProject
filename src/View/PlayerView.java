@@ -26,12 +26,10 @@ public class PlayerView extends JPanel implements PlayerListener {
      * @param player_icon the icon that the player chose
      * @param total_troops the total number of troops
      */
-    public PlayerView(Player model, String name, Color player_color, ImageIcon player_icon, int total_troops) {
+    public PlayerView(String name, Color player_color, ImageIcon player_icon, int total_troops) {
         Border darkline = BorderFactory.createLineBorder(player_color.darker());
         setBackground(player_color);
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-
-        model.addPlayerListener(this);
 
         this.player_icon = new JLabel();
         JLabel player_name_label = new JLabel();
