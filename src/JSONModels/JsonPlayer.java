@@ -23,6 +23,11 @@ public class JsonPlayer {
     public JsonPlayer(){
         player_json = new JSONObject();
     }
+
+    public JsonPlayer(JSONObject load){
+        loadJson(load);
+        player_json = load;
+    }
     public void loadJson(JSONObject player){
         name = (String) player.get("Name");
         total_troops = (int) (long)player.get("TotalTroops");
@@ -32,6 +37,9 @@ public class JsonPlayer {
         color = new Color((int) (long) player.get("Color"));
         playerNumber = (int) (long)player.get("PlayerIndex");
         inGame = (boolean) player.get("InGame");
+    }
+    public void setPlayer_json(){
+        player_json = new JSONObject();
     }
     public void setPlayer(String player){
         name = player;
@@ -72,6 +80,10 @@ public class JsonPlayer {
         }
         this.territories = occupiedTerritories;
         player_json.put("OccupiedTerritories",occupiedTerritories);
+    }
+
+    public void setTerritories(JSONArray territories) {
+        this.territories = territories;
     }
 
     public String getName() {

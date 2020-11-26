@@ -1,5 +1,6 @@
 package Model;
 
+import JSONModels.JsonTerritory;
 import Listener.TerritoryView;
 import Event.TerritoryEvent;
 import org.json.simple.JSONArray;
@@ -273,16 +274,17 @@ public class Territory {
     }
 
     public JSONObject saveJSON(){
-        JSONObject territory_json = new JSONObject();
-        territory_json.put("Territory",territoryName);
-        territory_json.put("Troops",troops);
-        return territory_json;
+        JsonTerritory territory_json = new JsonTerritory();
+        territory_json.setTerritoryName(territoryName);
+        territory_json.setTroops(troops);
+        return territory_json.getTerritory_json();
     }
 
     public Territory(JSONObject territory,Territory old_territory){
         territoryViews = new ArrayList<>();
-        territoryName = (String) territory.get("Territory");
-        troops = (int) (long) territory.get("Troops");
+        JsonTerritory territory_json = new JsonTerritory(territory);
+        territoryName = territory_json.getTerritoryName();
+        troops = territory_json.getTroops();
         neighbours = new HashMap<>();
         continentName = old_territory.getContinentName();
         territoryViews.addAll(old_territory.removeTerritoryViews());

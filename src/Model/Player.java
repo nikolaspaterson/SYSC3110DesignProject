@@ -346,8 +346,7 @@ public class Player {
     }
 
     public Player(JSONObject player, HashMap<String,Territory> currentMap){
-        JsonPlayer player_json = new JsonPlayer();
-        player_json.loadJson(player);
+        JsonPlayer player_json = new JsonPlayer(player);
         name = player_json.getName();
         player_color = player_json.getColor();
         deployableTroops = player_json.getDeployableTroops();
