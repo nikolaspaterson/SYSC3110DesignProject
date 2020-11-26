@@ -97,6 +97,10 @@ public class Player {
         return player_color;
     }
 
+    public void setPlayerListeners(ArrayList<PlayerListener> playerListeners) {
+        this.playerListeners = playerListeners;
+    }
+
     /**
      * This method is used to addPlayerListeners of the Model.
      * @param list the listener to be added.
@@ -111,7 +115,9 @@ public class Player {
      * @param list the listener to be remove.
      */
     public void removePlayerListener(PlayerListener list){ playerListeners.remove(list); }
-    public ArrayList<PlayerListener> removeAllPlayerListeners(){ return playerListeners; }
+    public ArrayList<PlayerListener> removeAllPlayerListeners(){
+        return playerListeners;
+    }
     /**
      * This method used to know if I player is fortifying or not.
      * @return boolean fortify status
@@ -292,6 +298,38 @@ public class Player {
         }
     }
 
+    public int getTotal_troops() {
+        return total_troops;
+    }
+
+    public boolean isInGame() {
+        return inGame;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTerritoriesOccupied(HashMap<String, Territory> territoriesOccupied) {
+        this.territoriesOccupied = territoriesOccupied;
+    }
+
+    public void setTotal_troops(int total_troops) {
+        this.total_troops = total_troops;
+    }
+
+    public void setPlayer_icon(Icon player_icon) {
+        this.player_icon = player_icon;
+    }
+
+    public void setPlayer_color(Color player_color) {
+        this.player_color = player_color;
+    }
+
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
+    }
+
     public JSONObject saveJSON(){
         JSONObject player_json = new JSONObject();
         JSONArray occupiedTerritories = new JSONArray();
@@ -332,7 +370,7 @@ public class Player {
 
     }
     //temp before we update player to path
-    private ImageIcon scaleImage(String filename) {
+    public ImageIcon scaleImage(String filename) {
         ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
         Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
         scaledImg = new ImageIcon(img);

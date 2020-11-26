@@ -317,7 +317,13 @@ public class GameModel{
         JSONArray players = (JSONArray) game.get("Players");
         for(Object playerObj : players){
             JSONObject temp_player  = (JSONObject) playerObj;
-            playerList.add(new Player(temp_player,worldMap));
+            String type = (String) temp_player.get("Type");
+            if(type.contains("AIPlayer")){
+                playerList.add(new AIPlayer(temp_player,worldMap,this));
+            }else{
+                playerList.add(new Player(temp_player,worldMap));
+            }
+
         }
 
         commandTerritory = new ArrayList<>();

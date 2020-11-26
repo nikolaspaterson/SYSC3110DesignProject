@@ -284,7 +284,7 @@ public class Territory {
         territoryName = (String) territory.get("Territory");
         troops = (int) (long) territory.get("Troops");
         neighbours = new HashMap<>();
-
+        continentName = old_territory.getContinentName();
         territoryViews.addAll(old_territory.removeTerritoryViews());
         linkedNeighbours = new ArrayList<>();
         blinking_yours = new Timer("flash_yours");
