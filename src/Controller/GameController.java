@@ -33,54 +33,57 @@ public class GameController {
         }
 
         switch (state) {
-            case REINFORCE:
-                if (temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getDeployableTroops() != 0) {
-                    gameModel.addCommandTerritory(temp_territory);
-                    ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
-                    temp.show(gameView, 300, 350);
-                    System.out.println("Pop up Reinforce + \n" + temp_territory.toString());
-                    gameModel.clearCommandTerritory();
-                }
-                break;
+            case REINFORCE -> reinforceAction(temp_territory);
+            case ATTACK -> attackAction(temp_territory);
+            case FORTIFY -> fortifyAction(temp_territory);
+        }
+    }
 
-            case ATTACK:
-                if (gameModel.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
-                    temp_territory.activateTimer();
-                    gameModel.addCommandTerritory(temp_territory);
-                } else if (gameModel.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer())) {
-                    gameModel.getCommandTerritory().get(0).cancel_timer();
-                    gameModel.clearCommandTerritory();
-                    temp_territory.activateTimer();
-                    gameModel.addCommandTerritory(temp_territory);
-                } else if (gameModel.getCommandTerritorySize() == 1 && !temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCommandTerritory().get(0).isNeighbour(temp_territory)) {
-                    AttackPopUp attackPopUp = new AttackPopUp(gameModel.getCommandTerritory().get(0), temp_territory, gameView);
-                    attackPopUp.show(gameView, 300, 350);
-                    System.out.println("Attacker: " + gameModel.getCommandTerritory().get(0).toString() + "Defender: " + temp_territory.toString());
-                    gameModel.getCommandTerritory().get(0).cancel_timer();
-                    gameModel.clearCommandTerritory();
-                } else {
-                    for(Territory time_stop : gameModel.getCommandTerritory()){
-                        time_stop.cancel_timer();
-                    }
-                    gameModel.clearCommandTerritory();
+    public void reinforceAction(Territory temp_territory) {
+        if (temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getDeployableTroops() != 0) {
+            gameModel.addCommandTerritory(temp_territory);
+            ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
+            temp.show(gameView, 300, 350);
+            System.out.println("Pop up Reinforce + \n" + temp_territory.toString());
+            gameModel.clearCommandTerritory();
+        }
+    }
 
-                }
-                break;
+    public void attackAction(Territory temp_territory) {
+        if (gameModel.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
+            temp_territory.activateTimer();
+            gameModel.addCommandTerritory(temp_territory);
+        } else if (gameModel.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer())) {
+            gameModel.getCommandTerritory().get(0).cancel_timer();
+            gameModel.clearCommandTerritory();
+            temp_territory.activateTimer();
+            gameModel.addCommandTerritory(temp_territory);
+        } else if (gameModel.getCommandTerritorySize() == 1 && !temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCommandTerritory().get(0).isNeighbour(temp_territory)) {
+            AttackPopUp attackPopUp = new AttackPopUp(gameModel.getCommandTerritory().get(0), temp_territory, gameView);
+            attackPopUp.show(gameView, 300, 350);
+            System.out.println("Attacker: " + gameModel.getCommandTerritory().get(0).toString() + "Defender: " + temp_territory.toString());
+            gameModel.getCommandTerritory().get(0).cancel_timer();
+            gameModel.clearCommandTerritory();
+        } else {
+            for(Territory time_stop : gameModel.getCommandTerritory()){
+                time_stop.cancel_timer();
+            }
+            gameModel.clearCommandTerritory();
+        }
+    }
 
-            case FORTIFY:
-                if (gameModel.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getFortifyStatus()) {
-                    gameModel.clearCommandTerritory();
-                    gameModel.addCommandTerritory(temp_territory);
-                } else if (gameModel.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getFirstCommandTerritory().getLinkedNeighbours().contains(temp_territory)) {
-                    gameModel.addCommandTerritory(temp_territory);
-                    System.out.println("Ally1: " + gameModel.getCommandTerritory().get(0).toString() + "Ally2: " + gameModel.getCommandTerritory().get(1).toString());
-                    FortifyPopUp fortifyPopUp = new FortifyPopUp(gameModel.getCommandTerritory().get(0), gameModel.getCommandTerritory().get(1));
-                    fortifyPopUp.show(gameView, 300, 350);
-                    gameModel.clearCommandTerritory();
-                } else {
-                    gameModel.clearCommandTerritory();
-                }
-                break;
+    public void fortifyAction(Territory temp_territory) {
+        if (gameModel.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getFortifyStatus()) {
+            gameModel.clearCommandTerritory();
+            gameModel.addCommandTerritory(temp_territory);
+        } else if (gameModel.getCommandTerritorySize() == 1 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getFirstCommandTerritory().getLinkedNeighbours().contains(temp_territory)) {
+            gameModel.addCommandTerritory(temp_territory);
+            System.out.println("Ally1: " + gameModel.getCommandTerritory().get(0).toString() + "Ally2: " + gameModel.getCommandTerritory().get(1).toString());
+            FortifyPopUp fortifyPopUp = new FortifyPopUp(gameModel.getCommandTerritory().get(0), gameModel.getCommandTerritory().get(1));
+            fortifyPopUp.show(gameView, 300, 350);
+            gameModel.clearCommandTerritory();
+        } else {
+            gameModel.clearCommandTerritory();
         }
     }
 

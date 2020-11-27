@@ -47,7 +47,7 @@ public class Dice {
                 return new Dice(numDice);
             }
         }
-        if(troops <= 1 ) {
+        if(troops <= 1) {
             System.out.println("You need at least two troops to attack.");
         }
         if(numDice >= troops){

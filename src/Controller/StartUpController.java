@@ -15,6 +15,7 @@ import java.awt.event.FocusListener;
  * @author nikolaspaterson
  */
 public class StartUpController implements ActionListener {
+
     private final StartUpView startUpView;
 
     /**

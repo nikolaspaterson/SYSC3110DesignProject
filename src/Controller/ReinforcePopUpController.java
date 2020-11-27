@@ -12,6 +12,7 @@ public class ReinforcePopUpController implements ActionListener {
 
     private final ReinforcePopUp popup;
     private final GameEvent ge;
+    private final static int MIN_NUM_TROOPS = 0;
 
     /**
      * Controller constructor.
@@ -35,13 +36,13 @@ public class ReinforcePopUpController implements ActionListener {
 
         if(e.getSource().equals(popup.getPlus())){//if plus button is pressed
             if(x == deployableTroops) {
-                x = 0;
+                x = MIN_NUM_TROOPS;
             } else {
                 x++;
             }
             popup.setTroops(x);
         }else if(e.getSource().equals(popup.getMinus())){//if minus is pressed
-            if(x == 0) {
+            if(x == MIN_NUM_TROOPS) {
                 x = deployableTroops;
             }
             else {
@@ -49,7 +50,7 @@ public class ReinforcePopUpController implements ActionListener {
             }
             popup.setTroops(x);
         }else if(e.getSource().equals(popup.getDeployButton())){ //if deploy button is pressed
-            if(x > 0){
+            if(x > MIN_NUM_TROOPS){
                 ge.reinforce(popup.getTerritory(), x);
                 popup.setVisible(false);
             }

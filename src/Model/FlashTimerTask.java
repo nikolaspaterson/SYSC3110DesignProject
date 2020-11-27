@@ -12,6 +12,8 @@ public class FlashTimerTask extends TimerTask {
     private final int i;
     private final HashMap<String, Territory> neighbours;
     private final Color main_color;
+    private final static int FLASHING_PLAYER_COLOR = 0;
+    private final static int FLASHING_NEIGHBOUR_COLOR = 1;
 
     /**
      * Constructor for the FlashTimerTask class.
@@ -31,15 +33,19 @@ public class FlashTimerTask extends TimerTask {
      */
     @Override
     public void run(){
-        if(i == 0){
-            for(Territory temp : neighbours.values()){
-                temp.setNeighbourColor(temp.getColor());
-                temp.addColor(main_color);
-            }
-        } else if(i == 1){
-            for(Territory temp : neighbours.values()){
-                temp.addColor(temp.getNeighbourColor());
-            }
+        switch (i) {
+            case FLASHING_PLAYER_COLOR:
+                for(Territory temp : neighbours.values()){
+                    temp.setNeighbourColor(temp.getColor());
+                    temp.addColor(main_color);
+                }
+                break;
+
+            case FLASHING_NEIGHBOUR_COLOR:
+                for(Territory temp : neighbours.values()){
+                    temp.addColor(temp.getNeighbourColor());
+                }
+                break;
         }
     }
 }

@@ -1,21 +1,16 @@
 package Controller;
 
-import Model.AIPlayer;
 import Model.GameModel;
-import Model.GameState;
-import Model.Territory;
 import View.*;
 import org.json.simple.JSONObject;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.EventObject;
 
 public class SaveController {
+
     private final GameModel gameModel;
     private final GameMenuBar menuBar;
     private String output_path;
@@ -39,8 +34,6 @@ public class SaveController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
 }

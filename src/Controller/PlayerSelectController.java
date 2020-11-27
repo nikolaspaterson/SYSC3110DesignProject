@@ -14,6 +14,8 @@ import java.io.IOException;
 public class PlayerSelectController implements ActionListener {
 
     private final PlayerSelectView playerSelectView;
+    private static final int MIN_PLAYER_SIZE = 2;
+    private static final int MAX_PLAYER_SIZE = 6;
 
     /**
      * Class constructor for Controller.PlayerSelectController class.
@@ -31,50 +33,54 @@ public class PlayerSelectController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == playerSelectView.getLeftArrow()) { // Left arrow button
             int x = (Integer.parseInt(playerSelectView.getNumPlayers().getText()));
-            if (x == 2) {
-                x = 6;
+            if (x == MIN_PLAYER_SIZE) {
+                x = MAX_PLAYER_SIZE;
                 playerSelectView.getPlayerArrayList().clear();
                 for(int i = 0; i < 6; i++) {
-                    playerSelectView.getPlayerList().add(playerSelectView.getPlayers().get(i));
-                    playerSelectView.getPlayerArrayList().add(playerSelectView.getPlayers().get(i));
-                    playerSelectView.getPlayerList().revalidate();
-                    playerSelectView.getPlayerList().repaint();
+                    addPlayers(i);
                 }
             } else {
                 x--;
-                playerSelectView.getPlayerList().remove(playerSelectView.getPlayers().get(x));
-                playerSelectView.getPlayerArrayList().remove(playerSelectView.getPlayers().get(x));
-                playerSelectView.getPlayerList().revalidate();
-                playerSelectView.getPlayerList().repaint();
+                removePlayers(x);
             }
             playerSelectView.getNumPlayers().setText("" + x);
         } else if(e.getSource() == playerSelectView.getRightArrow()) { // Right arrow button
             int x = (Integer.parseInt(playerSelectView.getNumPlayers().getText()));
-            if (x == 6) {
-                x = 2;
+            if (x == MAX_PLAYER_SIZE) {
+                x = MIN_PLAYER_SIZE;
                 for(int i = 5; i > 1; i--) {
-                    playerSelectView.getPlayerList().remove(playerSelectView.getPlayers().get(i));
-                    playerSelectView.getPlayerArrayList().remove(playerSelectView.getPlayers().get(i));
-                    playerSelectView.getPlayerList().revalidate();
-                    playerSelectView.getPlayerList().repaint();
+                    removePlayers(i);
                 }
             } else {
                 x++;
-                playerSelectView.getPlayerList().add(playerSelectView.getPlayers().get(x-1));
-                playerSelectView.getPlayerArrayList().add(playerSelectView.getPlayers().get(x-1));
-                playerSelectView.getPlayerList().revalidate();
-                playerSelectView.getPlayerList().repaint();
+                addPlayers(x-1);
             }
             playerSelectView.getNumPlayers().setText("" + x);
         } else if (e.getSource() == playerSelectView.getStartButton()){ //Start Button
             try {
                 System.out.println("We started");
                 playerSelectView.dispose();
-                System.out.println(playerSelectView.getMapFilePath() + " HEYYY");
                 new GameView(playerSelectView.getPlayerArrayList(), playerSelectView.getMapFilePath());
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
         }
+    }
+
+    private void addPlayers(int index) {
+        playerSelectView.getPlayerList().add(playerSelectView.getPlayers().get(index));
+        playerSelectView.getPlayerArrayList().add(playerSelectView.getPlayers().get(index));
+        refresh();
+    }
+
+    private void removePlayers(int index) {
+        playerSelectView.getPlayerList().remove(playerSelectView.getPlayers().get(index));
+        playerSelectView.getPlayerArrayList().remove(playerSelectView.getPlayers().get(index));
+        refresh();
+    }
+
+    private void refresh() {
+        playerSelectView.getPlayerList().revalidate();
+        playerSelectView.getPlayerList().repaint();
     }
 }
