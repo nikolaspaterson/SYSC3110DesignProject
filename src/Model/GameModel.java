@@ -263,6 +263,7 @@ public class GameModel{
         for(Player temp : oldGame.getPlayers()){
             temp.removeAllPlayerListeners();
         }
+        gameName = game_json.getGameName();
         playerList = new ArrayList<>();
         continentMap = new HashMap<>();
         worldMap = new HashMap<>();
@@ -299,6 +300,7 @@ public class GameModel{
             continent.updateTerritories(worldMap);
         }
     }
+
     private void preparePlayersJSON(JsonGameModel game_json){
         JSONArray players = game_json.getPlayer_array();
         for(Object playerObj : players){

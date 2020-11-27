@@ -5,6 +5,7 @@ import JSONModels.JsonPlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -433,6 +434,8 @@ public class AIPlayer extends Player {
         }
         return true;
     }
+
+
     public JSONObject saveJSON(){
         JsonAIPlayer player_json = new JsonAIPlayer();
         player_json.setPlayer(getName());
@@ -445,6 +448,7 @@ public class AIPlayer extends Player {
         player_json.setInGame(isInGame());
         player_json.setOccupiedTerritories(getTerritoriesOccupied().keySet());
         player_json.setAttacking(attacking);
+        player_json.setIconPath(getFilePath());
         return player_json.getAi_player();
     }
 
@@ -469,7 +473,7 @@ public class AIPlayer extends Player {
         setPlayerNumber(player_json.getPlayerNumber());
         setPlayerListeners(new ArrayList<>());
         setInGame(player_json.isInGame());
-        setPlayer_icon(scaleImage("/resources/Chizzy.png"));
+        setPlayer_icon(scaleImage(player_json.getFilePath()));
         attacking = player_json.isAttacking();
 
     }

@@ -37,7 +37,7 @@ public class SaveController {
 
     public void saveFile(ActionEvent event){
         try {
-            JSONObject save_file = gameModel.saveJSON();
+            JSONObject save_file = gameView.getModel().saveJSON();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-HH-mm-ss");
             Date new_date = new Date();
             FileWriter writer = new FileWriter(output_path + save_file.get("GameName") + dateFormat.format(new_date)+".json");

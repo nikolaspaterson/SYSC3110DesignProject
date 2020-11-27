@@ -56,6 +56,10 @@ public class Player {
         this.filePath = filePath;
     }
 
+    public void setIcon(ImageIcon player_icon) { this.player_icon = player_icon; }
+
+    public String getFilePath() { return filePath; }
+
     public void setPlayerNumber(int number){
         playerNumber = number;
     }
