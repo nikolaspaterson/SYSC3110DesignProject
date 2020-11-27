@@ -29,6 +29,7 @@ public class Player {
     private boolean fortifyStatus;
     private ArrayList<PlayerListener> playerListeners;
     private int playerNumber;
+    private String filePath;
 
     /**
      * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
@@ -49,9 +50,10 @@ public class Player {
      * @param player_color the color
      * @param player_icon the icon
      */
-    public void addGuiInfo(Color player_color, ImageIcon player_icon){
+    public void addGuiInfo(Color player_color, ImageIcon player_icon, String filePath){
         this.player_color = player_color;
         this.player_icon = player_icon;
+        this.filePath = filePath;
     }
 
     public void setPlayerNumber(int number){
@@ -342,12 +344,14 @@ public class Player {
         player_json.setType(getClass().getName());
         player_json.setInGame(inGame);
         player_json.setOccupiedTerritories(territoriesOccupied.keySet());
+        player_json.setIconPath(filePath);
         return player_json.getPlayer_json();
     }
 
     public Player(JSONObject player, HashMap<String,Territory> currentMap){
         JsonPlayer player_json = new JsonPlayer(player);
         name = player_json.getName();
+        filePath = player_json.getFilePath();
         player_color = player_json.getColor();
         deployableTroops = player_json.getDeployableTroops();
         fortifyStatus = player_json.isFortifyStatus();
@@ -362,9 +366,9 @@ public class Player {
             currentMap.get(territoryName).setOccupant(this);
         }
         playerListeners = new ArrayList<>();
-        player_icon = scaleImage("/resources/Chizzy.png");
-
+        player_icon = scaleImage(filePath);
     }
+
     //temp before we update player to path
     public ImageIcon scaleImage(String filename) {
         ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));

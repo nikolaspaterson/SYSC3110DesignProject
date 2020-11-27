@@ -19,6 +19,7 @@ public class JsonPlayer {
     private String type;
     private boolean inGame;
     private JSONArray territories;
+    private String filePath;
 
     public JsonPlayer(){
         player_json = new JSONObject();
@@ -28,6 +29,7 @@ public class JsonPlayer {
         loadJson(load);
         player_json = load;
     }
+
     public void loadJson(JSONObject player){
         name = (String) player.get("Name");
         total_troops = (int) (long)player.get("TotalTroops");
@@ -37,42 +39,60 @@ public class JsonPlayer {
         color = new Color((int) (long) player.get("Color"));
         playerNumber = (int) (long)player.get("PlayerIndex");
         inGame = (boolean) player.get("InGame");
+        filePath = (String) player.get("FilePath");
     }
+
     public void setPlayer_json(){
         player_json = new JSONObject();
     }
+
+    public void setIconPath(String filePath) {
+        this.filePath = filePath;
+        player_json.put("FilePath", filePath);
+    }
+
+    public String getFilePath() { return filePath; }
+
     public void setPlayer(String player){
         name = player;
         player_json.put("Name",player);
     }
+
     public void setPlayerIndex(int playerNumber){
         this.playerNumber = playerNumber;
         player_json.put("PlayerIndex", playerNumber);
     }
+
     public void setColor(Color color){
         this.color = color;
         player_json.put("Color", color.getRGB());
     }
+
     public void setDeployableTroops(int deployableTroops){
         this.deployableTroops = deployableTroops;
         player_json.put("DeployableTroops", deployableTroops);
     }
+
     public void setFortify(boolean fortifyStatus){
         this.fortifyStatus = fortifyStatus;
         player_json.put("Fortify", fortifyStatus);
     }
+
     public void setTotalTroops(int total_troops){
         this.total_troops = total_troops;
         player_json.put("TotalTroops",total_troops);
     }
+
     public void setType(String type){
         this.type = type;
         player_json.put("Type",type);
     }
+
     public void setInGame(boolean inGame){
         this.inGame = inGame;
         player_json.put("InGame",inGame);
     }
+
     public void setOccupiedTerritories(Set<String> territories){
         JSONArray occupiedTerritories = new JSONArray();
         for(String temp_territories : territories){

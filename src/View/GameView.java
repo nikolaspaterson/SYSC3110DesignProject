@@ -145,7 +145,7 @@ public class GameView extends JFrame implements UserStatusListener {
             newPlayer.setPlayerNumber(player_index);
             Color temp_color = color_list.pop();
             ImageIcon player_icon = (ImageIcon) x.getImageIcon();
-            newPlayer.addGuiInfo(temp_color, player_icon);
+            newPlayer.addGuiInfo(temp_color, player_icon, x.getFilePath());
             playerList.add(newPlayer);
             player_index++;
         }

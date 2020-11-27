@@ -16,6 +16,7 @@ public class PlayerSelectPanel extends JPanel {
     private final JTextField playerName;
     private final JButton photo;
     private final JButton option;
+    private String filePath;
 
     /**
      * Class constructor for View.PlayerSelectPanel class.
@@ -56,17 +57,24 @@ public class PlayerSelectPanel extends JPanel {
         photo = new JButton();
         photo.setIcon(chizzy);
 
+
+
         photo.addActionListener(e -> {
             if(photo.getIcon().equals(chizzy)) {
                 photo.setIcon(TA);
+                filePath = "/resources/TA.png";
             } else if (photo.getIcon().equals(TA)) {
                 photo.setIcon(chip);
+                filePath = "/resources/Captain.png";
             } else if (photo.getIcon().equals(chip)) {
                 photo.setIcon(nik);
+                filePath = "/resources/nik.png";
             } else if (photo.getIcon().equals(nik)){
                 photo.setIcon(pass);
+                filePath = "/resources/passki.png";
             } else {
                 photo.setIcon(chizzy);
+                filePath = "/resources/Chizzy.png";
             }
         });
 
@@ -78,6 +86,8 @@ public class PlayerSelectPanel extends JPanel {
         setSize(600, 600);
         setVisible(true);
     }
+
+    public String getFilePath() { return filePath; }
 
     /**
      * Getter for the player type.

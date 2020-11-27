@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import java.awt.*;
 
 public class JsonAIPlayer extends  JsonPlayer{
+
     private JSONObject ai_player;
     private boolean attacking;
 
@@ -18,6 +19,7 @@ public class JsonAIPlayer extends  JsonPlayer{
         setPlayer_json();
         loadJson(load);
     }
+
     @Override
     public void loadJson(JSONObject player){
         setPlayer((String) player.get("Name"));
@@ -29,7 +31,9 @@ public class JsonAIPlayer extends  JsonPlayer{
         setPlayerIndex((int) (long)player.get("PlayerIndex"));
         setInGame((boolean) player.get("InGame"));
         setAttacking((boolean) player.get("Attacking"));
+        setIconPath((String) player.get("FilePath"));
     }
+
     public void setAttacking(boolean attacking){
         this.attacking = attacking;
         ai_player.put("Attacking", attacking);
