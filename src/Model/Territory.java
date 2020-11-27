@@ -1,5 +1,6 @@
 package Model;
 
+import JSONModels.JsonTerritory;
 import Listener.TerritoryView;
 import Event.TerritoryEvent;
 import org.json.simple.JSONArray;
@@ -18,10 +19,11 @@ import java.util.List;
 public class Territory {
 
     private Player occupant;
+    private int occupantNumber;
     private int troops;
-    private final HashMap<String, Territory> neighbours;
-    private final String territoryName;
-    private final List<TerritoryView> territoryViews;
+    private HashMap<String, Territory> neighbours;
+    private String territoryName;
+    private ArrayList<TerritoryView> territoryViews;
     private String continentName;
     private Color color;
     private Color neighbourColor;
@@ -78,6 +80,12 @@ public class Territory {
      */
     public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
 
+    public ArrayList<TerritoryView> removeTerritoryViews(){
+        ArrayList<TerritoryView> temp_views = new ArrayList<>();
+        temp_views.addAll(territoryViews);
+        territoryViews.clear();
+        return temp_views;
+    }
     /**
      * Sets the continent name
      * @param name the continent name
@@ -147,8 +155,7 @@ public class Territory {
      */
     public void setOccupant(Player occupant) {
         this.occupant = occupant;
-        this.color = occupant.getPlayer_color();
-        updateView();
+        addColor(occupant.getPlayer_color());
     }
 
     /**
@@ -267,16 +274,29 @@ public class Territory {
     }
 
     public JSONObject saveJSON(){
-        JSONObject territory_json = new JSONObject();
-        JSONArray neighbours = new JSONArray();
-        territory_json.put("Territory",territoryName);
-        territory_json.put("Continent",continentName);
-        territory_json.put("Occupant",occupant.getPlayerNumber());
-        territory_json.put("Troops",troops);
-        for(Territory temp_territory : getNeighbours().values()){
-            neighbours.add(temp_territory.getTerritoryName());
-        }
-        territory_json.put("Neighbours", neighbours);
-        return territory_json;
+        JsonTerritory territory_json = new JsonTerritory();
+        territory_json.setTerritoryName(territoryName);
+        territory_json.setTroops(troops);
+        return territory_json.getTerritory_json();
     }
+
+    public Territory(JSONObject territory,Territory old_territory){
+        territoryViews = new ArrayList<>();
+        JsonTerritory territory_json = new JsonTerritory(territory);
+        territoryName = territory_json.getTerritoryName();
+        troops = territory_json.getTroops();
+        neighbours = new HashMap<>();
+        continentName = old_territory.getContinentName();
+        territoryViews.addAll(old_territory.removeTerritoryViews());
+        linkedNeighbours = new ArrayList<>();
+        blinking_yours = new Timer("flash_yours");
+        blinking_theirs = new Timer("flash_theirs");
+
+    }
+    public void updateLink(Set<String> neighbours, HashMap<String,Territory> map){
+        for (String territory_names : neighbours){
+            this.neighbours.put(territory_names,map.get(territory_names));
+        }
+    }
+
 }

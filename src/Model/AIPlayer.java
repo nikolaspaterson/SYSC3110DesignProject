@@ -1,5 +1,11 @@
 package Model;
 
+import JSONModels.JsonAIPlayer;
+import JSONModels.JsonPlayer;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,8 +18,8 @@ import java.util.HashMap;
  */
 public class AIPlayer extends Player {
 
-    private final GameModel gameModel;
-    private final GameEvent gameEvent;
+    private GameModel gameModel;
+    private GameEvent gameEvent;
     private boolean attacking;
 
     /**
@@ -427,4 +433,45 @@ public class AIPlayer extends Player {
         }
         return true;
     }
+    public JSONObject saveJSON(){
+        JsonAIPlayer player_json = new JsonAIPlayer();
+        player_json.setPlayer(getName());
+        player_json.setPlayerIndex(getPlayerNumber());
+        player_json.setColor(getPlayer_color());
+        player_json.setDeployableTroops(getDeployableTroops());
+        player_json.setFortify(getFortifyStatus());
+        player_json.setTotalTroops(getTotal_troops());
+        player_json.setType(getClass().getName());
+        player_json.setInGame(isInGame());
+        player_json.setOccupiedTerritories(getTerritoriesOccupied().keySet());
+        player_json.setAttacking(attacking);
+        return player_json.getAi_player();
+    }
+
+    public AIPlayer(JSONObject player, HashMap<String,Territory> currentMap,GameModel gameModel){
+        super(player,currentMap);
+        this.gameModel = gameModel;
+        this.gameEvent = new GameEvent(this);
+        JsonAIPlayer player_json = new JsonAIPlayer(player);
+        setName(player_json.getName());
+        setTotal_troops(player_json.getTotal_troops());
+        setDeployableTroops(player_json.getDeployableTroops());
+        setFortifyStatus(player_json.isFortifyStatus());
+        JSONArray list_territories = player_json.getTerritories();
+        setTerritoriesOccupied(new HashMap<>());
+        setPlayer_color(player_json.getColor());
+        HashMap<String,Territory> ref_map = getTerritoriesOccupied();
+        for(Object territoryObj : list_territories){
+            String territoryName = (String) territoryObj;
+            ref_map.put(territoryName, currentMap.get(territoryName));
+            currentMap.get(territoryName).setOccupant(this);
+        }
+        setPlayerNumber(player_json.getPlayerNumber());
+        setPlayerListeners(new ArrayList<>());
+        setInGame(player_json.isInGame());
+        setPlayer_icon(scaleImage("/resources/Chizzy.png"));
+        attacking = player_json.isAttacking();
+
+    }
+
 }

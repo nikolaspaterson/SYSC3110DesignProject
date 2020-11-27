@@ -1,5 +1,6 @@
 package Model;
 
+import JSONModels.JsonPlayer;
 import Listener.PlayerListener;
 import Event.PlayerEvent;
 import org.json.simple.JSONArray;
@@ -18,15 +19,15 @@ import java.util.HashMap;
  */
 public class Player {
 
-    private final String name;
-    private final HashMap<String, Territory> territoriesOccupied;
+    private String name;
+    private HashMap<String, Territory> territoriesOccupied;
     private int deployableTroops;
     private int total_troops;
     private Icon player_icon;
     private Color player_color;
     private boolean inGame;
     private boolean fortifyStatus;
-    private final ArrayList<PlayerListener> playerListeners;
+    private ArrayList<PlayerListener> playerListeners;
     private int playerNumber;
 
     /**
@@ -97,6 +98,10 @@ public class Player {
         return player_color;
     }
 
+    public void setPlayerListeners(ArrayList<PlayerListener> playerListeners) {
+        this.playerListeners = playerListeners;
+    }
+
     /**
      * This method is used to addPlayerListeners of the Model.
      * @param list the listener to be added.
@@ -111,7 +116,9 @@ public class Player {
      * @param list the listener to be remove.
      */
     public void removePlayerListener(PlayerListener list){ playerListeners.remove(list); }
-
+    public ArrayList<PlayerListener> removeAllPlayerListeners(){
+        return playerListeners;
+    }
     /**
      * This method used to know if I player is fortifying or not.
      * @return boolean fortify status
@@ -292,22 +299,77 @@ public class Player {
         }
     }
 
+    public int getTotal_troops() {
+        return total_troops;
+    }
+
+    public boolean isInGame() {
+        return inGame;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTerritoriesOccupied(HashMap<String, Territory> territoriesOccupied) {
+        this.territoriesOccupied = territoriesOccupied;
+    }
+
+    public void setTotal_troops(int total_troops) {
+        this.total_troops = total_troops;
+    }
+
+    public void setPlayer_icon(Icon player_icon) {
+        this.player_icon = player_icon;
+    }
+
+    public void setPlayer_color(Color player_color) {
+        this.player_color = player_color;
+    }
+
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
+    }
+
     public JSONObject saveJSON(){
-        JSONObject player_json = new JSONObject();
-        JSONArray occupiedTerritories = new JSONArray();
+        JsonPlayer player_json = new JsonPlayer();
+        player_json.setPlayer(name);
+        player_json.setPlayerIndex(playerNumber);
+        player_json.setColor(player_color);
+        player_json.setDeployableTroops(deployableTroops);
+        player_json.setFortify(fortifyStatus);
+        player_json.setTotalTroops(total_troops);
+        player_json.setType(getClass().getName());
+        player_json.setInGame(inGame);
+        player_json.setOccupiedTerritories(territoriesOccupied.keySet());
+        return player_json.getPlayer_json();
+    }
 
-        for(String temp_territories : territoriesOccupied.keySet()){
-            occupiedTerritories.add(temp_territories);
+    public Player(JSONObject player, HashMap<String,Territory> currentMap){
+        JsonPlayer player_json = new JsonPlayer(player);
+        name = player_json.getName();
+        player_color = player_json.getColor();
+        deployableTroops = player_json.getDeployableTroops();
+        fortifyStatus = player_json.isFortifyStatus();
+        playerNumber = player_json.getPlayerNumber();
+        inGame = player_json.isInGame();
+        total_troops = player_json.getTotal_troops();
+        territoriesOccupied = new HashMap<>();
+        JSONArray list_territories = player_json.getTerritories();
+        for(Object territoryObj : list_territories){
+            String territoryName = (String) territoryObj;
+            territoriesOccupied.put(territoryName, currentMap.get(territoryName));
+            currentMap.get(territoryName).setOccupant(this);
         }
+        playerListeners = new ArrayList<>();
+        player_icon = scaleImage("/resources/Chizzy.png");
 
-        player_json.put("Name",name);
-        player_json.put("PlayerIndex", playerNumber);
-        player_json.put("Color", player_color.getRGB());
-        player_json.put("DeployableTroops", deployableTroops);
-        player_json.put("Fortify", fortifyStatus);
-        player_json.put("TotalTroops",total_troops);
-        player_json.put("Type", getClass().getName());
-        player_json.put("OccupiedTerritories", occupiedTerritories);
-        return player_json;
+    }
+    //temp before we update player to path
+    public ImageIcon scaleImage(String filename) {
+        ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
+        Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
+        scaledImg = new ImageIcon(img);
+        return scaledImg;
     }
 }

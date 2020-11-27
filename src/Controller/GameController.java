@@ -9,14 +9,16 @@ import java.awt.event.ActionEvent;
 
 public class GameController {
 
-    private final GameModel gameModel;
+    private GameModel gameModel;
     private final GameView gameView;
 
     public GameController(GameModel gameModel, GameView gameView){
         this.gameModel = gameModel;
         this.gameView = gameView;
     }
-
+    public void updateModel(GameModel gameModel){
+        this.gameModel = gameModel;
+    }
     /**
      *  Using this ActionEvent we attach it to all Territories in the set up phase of the View.GameView.
      *  Its purpose is to check the current player clicking, the state of the game, and the territory button
