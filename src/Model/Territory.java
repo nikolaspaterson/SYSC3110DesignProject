@@ -1,7 +1,7 @@
 package Model;
 
 import Event.TerritoryEvent;
-import JSONModels.JsonTerritory;
+import JSONModels.JSONTerritory;
 import Listener.TerritoryView;
 import org.json.simple.JSONObject;
 import java.awt.*;
@@ -270,7 +270,7 @@ public class Territory {
     }
 
     public JSONObject saveJSON(){
-        JsonTerritory territory_json = new JsonTerritory();
+        JSONTerritory territory_json = new JSONTerritory();
         territory_json.setTerritoryName(territoryName);
         territory_json.setTroops(troops);
         return territory_json.getTerritory_json();
@@ -278,7 +278,7 @@ public class Territory {
 
     public Territory(JSONObject territory,Territory old_territory){
         territoryViews = new ArrayList<>();
-        JsonTerritory territory_json = new JsonTerritory(territory);
+        JSONTerritory territory_json = new JSONTerritory(territory);
         territoryName = territory_json.getTerritoryName();
         troops = territory_json.getTroops();
         neighbours = new HashMap<>();

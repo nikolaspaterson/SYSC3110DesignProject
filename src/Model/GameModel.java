@@ -1,8 +1,8 @@
 package Model;
 
 import Event.UserStatusEvent;
-import JSONModels.JsonGameModel;
-import JSONModels.JsonTerritory;
+import JSONModels.JSONGameModel;
+import JSONModels.JSONTerritory;
 import Listener.UserStatusListener;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -43,7 +43,7 @@ public class GameModel{
     }
 
     public GameModel(JSONObject load, GameModel oldGame){
-        JsonGameModel game_json = new JsonGameModel(load);
+        JSONGameModel game_json = new JSONGameModel(load);
         for(Player temp : oldGame.getPlayers()){
             temp.removeAllPlayerListeners();
         }
@@ -270,7 +270,7 @@ public class GameModel{
     }
 
     public JSONObject saveJSON(){
-        JsonGameModel game_json = new JsonGameModel();
+        JSONGameModel game_json = new JSONGameModel();
         game_json.setGameState(currentState);
         game_json.setGameName(gameName);
         game_json.setCurrentPlayerIndex(currentPlayerIndex);
@@ -280,7 +280,7 @@ public class GameModel{
     }
 
     @SuppressWarnings("unchecked")
-    private void savingPlayer(JsonGameModel game_json, boolean savePlayer) {
+    private void savingPlayer(JSONGameModel game_json, boolean savePlayer) {
         JSONArray savingArr = new JSONArray();
         if(savePlayer) {
             for(Player temp_player : playerList){
@@ -295,11 +295,11 @@ public class GameModel{
         }
     }
 
-    private void prepareTerritoriesJSON(JsonGameModel game_json){
+    private void prepareTerritoriesJSON(JSONGameModel game_json){
         JSONArray territoryList = game_json.getTerritory_array();
         HashMap<String, Set<String>> old_links = new HashMap<>();
         for(Object territoryObj : territoryList){
-            JsonTerritory temp_territory  = new JsonTerritory((JSONObject) territoryObj);
+            JSONTerritory temp_territory  = new JSONTerritory((JSONObject) territoryObj);
             String territory_name = temp_territory.getTerritoryName();
             Territory oldTerritory = worldMap.get(territory_name);
             old_links.put(territory_name,oldTerritory.getNeighbours().keySet());
@@ -313,7 +313,7 @@ public class GameModel{
         }
     }
 
-    private void preparePlayersJSON(JsonGameModel game_json){
+    private void preparePlayersJSON(JSONGameModel game_json){
         JSONArray players = game_json.getPlayer_array();
         for(Object playerObj : players){
             JSONObject temp_player  = (JSONObject) playerObj;

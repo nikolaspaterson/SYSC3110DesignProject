@@ -179,10 +179,6 @@ public class GameView extends JFrame implements UserStatusListener {
         return gameModel;
     }
 
-    private void load_file(){
-        buildNewPlayerView();
-    }
-
     /**
      * This method is used to handle updates from the GameModel and update the view respectively.
      * @param event the event

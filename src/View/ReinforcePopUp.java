@@ -169,14 +169,6 @@ public class ReinforcePopUp extends JPopupMenu {
     }
 
     /**
-     * Return the deployButton.
-     * @return JButton
-     */
-    public JButton getDeployButton(){
-        return deployButton;
-    }
-
-    /**
      * Returns the territory the player wants to reinforce.
      * @return Model.Territory
      */

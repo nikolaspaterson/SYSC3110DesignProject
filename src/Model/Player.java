@@ -1,6 +1,6 @@
 package Model;
 
-import JSONModels.JsonPlayer;
+import JSONModels.JSONPlayer;
 import Listener.PlayerListener;
 import Event.PlayerEvent;
 import org.json.simple.JSONArray;
@@ -45,9 +45,8 @@ public class Player {
     }
 
     public Player(JSONObject player, HashMap<String,Territory> currentMap){
-        JsonPlayer player_json = new JsonPlayer(player);
+        JSONPlayer player_json = new JSONPlayer(player);
         name = player_json.getName();
-        filePath = player_json.getFilePath();
         player_color = player_json.getColor();
         deployableTroops = player_json.getDeployableTroops();
         fortifyStatus = player_json.isFortifyStatus();
@@ -57,7 +56,8 @@ public class Player {
         territoriesOccupied = new HashMap<>();
         initializeTerritories(player_json, currentMap);
         playerListeners = new ArrayList<>();
-        if(filePath != null) {
+        if(player_json.getFilePath() != null) {
+            filePath = player_json.getFilePath();
             player_icon = scaleImage(filePath);
         }
     }
@@ -356,7 +356,7 @@ public class Player {
     }
 
     public JSONObject saveJSON(){
-        JsonPlayer player_json = new JsonPlayer();
+        JSONPlayer player_json = new JSONPlayer();
         player_json.setPlayer(name);
         player_json.setPlayerIndex(playerNumber);
         player_json.setColor(player_color);
@@ -370,7 +370,7 @@ public class Player {
         return player_json.getPlayer_json();
     }
 
-    private void initializeTerritories(JsonPlayer player_json, HashMap<String,Territory> currentMap) {
+    private void initializeTerritories(JSONPlayer player_json, HashMap<String,Territory> currentMap) {
         JSONArray list_territories = player_json.getTerritories();
         for(Object territoryObj : list_territories){
             String territoryName = (String) territoryObj;
@@ -379,7 +379,6 @@ public class Player {
         }
     }
 
-    //temp before we update player to path
     public ImageIcon scaleImage(String filename) {
         ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
         Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );

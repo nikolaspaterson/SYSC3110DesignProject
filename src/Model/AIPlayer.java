@@ -1,6 +1,6 @@
 package Model;
 
-import JSONModels.JsonAIPlayer;
+import JSONModels.JSONAIPlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
@@ -433,7 +433,7 @@ public class AIPlayer extends Player {
 
 
     public JSONObject saveJSON(){
-        JsonAIPlayer player_json = new JsonAIPlayer();
+        JSONAIPlayer player_json = new JSONAIPlayer();
         player_json.setPlayer(getName());
         player_json.setPlayerIndex(getPlayerNumber());
         player_json.setColor(getPlayer_color());
@@ -452,7 +452,7 @@ public class AIPlayer extends Player {
         super(player,currentMap);
         this.gameModel = gameModel;
         this.gameEvent = new GameEvent(this);
-        JsonAIPlayer player_json = new JsonAIPlayer(player);
+        JSONAIPlayer player_json = new JSONAIPlayer(player);
         setName(player_json.getName());
         setTotal_troops(player_json.getTotal_troops());
         setDeployableTroops(player_json.getDeployableTroops());

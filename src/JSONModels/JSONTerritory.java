@@ -2,15 +2,17 @@ package JSONModels;
 
 import org.json.simple.JSONObject;
 
-public class JsonTerritory {
+public class JSONTerritory {
+
     private final JSONObject territory_json;
     private String territoryName;
     private int troops;
 
-    public JsonTerritory(){
+    public JSONTerritory(){
         this.territory_json = new JSONObject();
     }
-    public JsonTerritory(JSONObject load){
+
+    public JSONTerritory(JSONObject load){
         loadJSON(load);
         this.territory_json = load;
     }

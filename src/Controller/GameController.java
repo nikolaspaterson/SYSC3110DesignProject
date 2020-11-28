@@ -45,7 +45,7 @@ public class GameController {
         }
     }
 
-    public void reinforceAction(Territory temp_territory) {
+    private void reinforceAction(Territory temp_territory) {
         if (temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getDeployableTroops() != 0) {
             gameModel.addCommandTerritory(temp_territory);
             ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
@@ -55,7 +55,7 @@ public class GameController {
         }
     }
 
-    public void attackAction(Territory temp_territory) {
+    private void attackAction(Territory temp_territory) {
         if (gameModel.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
             temp_territory.activateTimer();
             gameModel.addCommandTerritory(temp_territory);
@@ -78,7 +78,7 @@ public class GameController {
         }
     }
 
-    public void fortifyAction(Territory temp_territory) {
+    private void fortifyAction(Territory temp_territory) {
         if (gameModel.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getFortifyStatus()) {
             gameModel.clearCommandTerritory();
             gameModel.addCommandTerritory(temp_territory);

@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 import java.awt.*;
 import java.util.Set;
 
-public class JsonPlayer {
+public class JSONPlayer {
 
     private JSONObject player_json;
     private String name;
@@ -19,11 +19,11 @@ public class JsonPlayer {
     private JSONArray territories;
     private String filePath;
 
-    public JsonPlayer(){
+    public JSONPlayer(){
         player_json = new JSONObject();
     }
 
-    public JsonPlayer(JSONObject load){
+    public JSONPlayer(JSONObject load){
         loadJson(load);
         player_json = load;
     }

@@ -4,7 +4,7 @@ import Model.GameState;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class JsonGameModel {
+public class JSONGameModel {
 
     private final JSONObject game_json;
     private JSONArray player_array;
@@ -13,11 +13,11 @@ public class JsonGameModel {
     private String gameName;
     private int currentPlayerIndex;
 
-    public JsonGameModel(){
+    public JSONGameModel(){
         game_json = new JSONObject();
     }
 
-    public JsonGameModel(JSONObject load){
+    public JSONGameModel(JSONObject load){
         loadJSON(load);
         game_json = load;
     }

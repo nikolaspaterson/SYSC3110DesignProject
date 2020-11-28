@@ -1,16 +1,20 @@
 package View;
 
+import JSONModels.JSONContinent;
+import JSONModels.JSONMap;
+import JSONModels.JSONMapTerritory;
 import Model.Continent;
 import Model.Player;
 import Model.Territory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -22,13 +26,11 @@ import java.util.Random;
 public class GameSetup {
 
     private final HashMap<String, Territory> world_map;
-    private final String territory_CSV;
     private final ArrayList<Territory> unclaimed_territory;
     private final HashMap<String, Continent> continentMap;
     private final ArrayList<TerritoryButton> worldMapView;
     private BackgroundPanel background;
     private final String jsonPath;
-    private String output_folder;
     private String output_subdirectory;
     private String gameName;
 
@@ -40,8 +42,6 @@ public class GameSetup {
      * @param players a list of the players, provided by Game object
      */
     public GameSetup(ArrayList<Player> players,String jsonPath){
-        territory_CSV = "/resources/TerritoryNeighbours.csv";
-
         world_map = new HashMap<>();
         continentMap = new HashMap<>();
         unclaimed_territory = new ArrayList<>();
@@ -117,13 +117,12 @@ public class GameSetup {
     private void createSaveFolder(){
         try{
             String path =  this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-            String decodedPath = URLDecoder.decode(path, "UTF-8");
+            String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
             File chop_jar = new File(decodedPath);
             if(chop_jar.getName().contains(".jar")){
                 decodedPath = decodedPath.replace(chop_jar.getName(),"");
             }
-            System.out.println(decodedPath);
-            output_folder = decodedPath + "output/";
+            String output_folder = decodedPath + "output/";
             createFolder(output_folder);
             output_subdirectory = output_folder + gameName + "/";
             createFolder(output_subdirectory);
@@ -136,9 +135,11 @@ public class GameSetup {
     public String getGameName(){
         return gameName;
     }
+
     public String getOutput_subdirectory(){
         return output_subdirectory;
     }
+
     private void createFolder(String path){
         File file = new File(path);
         if(file.exists()){
@@ -149,51 +150,49 @@ public class GameSetup {
             System.out.println("Failed creating directory!");
         }
     }
+
     private void set_neighboursJson(){
         try {
             int total_territories = 0;
             JSONParser parser = new JSONParser();
-            JSONObject map;
+            JSONMap map;
             if(jsonPath.contains("/resources/DefaultMap.json")){
                 InputStreamReader jsonFile = new InputStreamReader(getClass().getResourceAsStream(jsonPath));
-                map = (JSONObject) parser.parse(jsonFile);
-                background = new BackgroundPanel((String) map.get("Background"));
+                map = new JSONMap((JSONObject) parser.parse(jsonFile));
+                background = new BackgroundPanel(map.getFilePath());
             } else {
                 FileReader jsonFile = new FileReader(jsonPath);
-                map = (JSONObject) parser.parse(jsonFile);
+                map = new JSONMap((JSONObject) parser.parse(jsonFile));
                 File newFile = new File(jsonPath);
                 String mapPath = newFile.getPath().replace(newFile.getName(), "");
-                background = new BackgroundPanel(mapPath + map.get("Background"));
+                background = new BackgroundPanel(mapPath + map.getFilePath());
             }
-            gameName = (String) map.get("Name");
-            for(Object obj_c : (JSONArray) map.get("Continents")){
-                JSONObject continent = (JSONObject) obj_c;
-                String continent_name = (String)continent.get("Continent");
-                continentMap.put(continent_name, new Continent((String)continent.get("Continent"),(int) (long) continent.get("TroopBonus")));
-                for(Object obj_t : (JSONArray) continent.get("Territories")){
-                    JSONObject territory = (JSONObject) obj_t;
-                    JSONArray neighbours = (JSONArray) territory.get("Neighbours");
-                    String territory_name = (String) territory.get("Territory");
-                    addToWorld(territory_name,continent_name);
-                    for(Object neighbour_n:neighbours){
-                        String neighbour_name = (String) neighbour_n;
-                        addToWorld(neighbour_name,continent_name);
-                        world_map.get(territory_name).addNeighbour(world_map.get(neighbour_name));
+            gameName = map.getName();
+            for(JSONContinent continent : map.getContinents()){
+                continentMap.put(continent.getName(), new Continent(continent.getName(), continent.getTroopBonus()));
+                for(JSONMapTerritory territory : continent.getTerritories()){
+                    addToWorld(territory.getName(),continent.getName());
+                    for(String neighbour: territory.getNeighbours()){
+                        addToWorld(neighbour,continent.getName());
+                        world_map.get(territory.getName()).addNeighbour(world_map.get(neighbour));
                     }
-                    int X1 = (int) (long) territory.get("X1");
-                    int Y1 = (int) (long) territory.get("Y1");
-                    int X2 = (int) (long) territory.get("X2");
-                    int Y2 = (int) (long) territory.get("Y2");
                     total_territories++;
 
-                    TerritoryButton new_territory_view = new TerritoryButton(territory_name,X1,Y1,(X2-X1),(Y2-Y1),background);
-                    world_map.get(territory_name).addTerritoryView(new_territory_view);
+                    int X1 = territory.getX1();
+                    int X2 = territory.getX2();
+                    int Y1 = territory.getY1();
+                    int Y2 = territory.getY2();
+                    int width = X2 - X1;
+                    int height = Y2 - Y1;
+
+                    TerritoryButton new_territory_view = new TerritoryButton(territory.getName(),X1,Y1,width,height,background);
+                    world_map.get(territory.getName()).addTerritoryView(new_territory_view);
 
                     worldMapView.add(new_territory_view);
 
                 }
             }
-            for( Territory check_territory : world_map.values()){
+            for(Territory check_territory : world_map.values()){
                 if(check_territory.debugLink().size() != total_territories){
                     System.out.println("Invalid");
                 }
@@ -203,94 +202,15 @@ public class GameSetup {
         } catch (Exception e){
             e.printStackTrace();
         }
-
-
     }
 
-    private void addToWorld(String territory_name,String continent){
+    private void addToWorld(String territory_name, String continent){
         if(world_map.get(territory_name) == null){
             Territory new_territory = new Territory(territory_name);
             new_territory.setContinentName(continent);
             world_map.put(territory_name,new_territory);
             continentMap.get(continent).addContinentTerritory(territory_name,new_territory);
         }
-    }
-    /**
-     * Iterate through ArrayList generated by CSV to obtain neighbours for
-     * territories.
-     * @param territories ArrayList generated from TerritoryNeighbours.csv
-     */
-    private void set_neighbours(ArrayList<String[]> territories, Component parent){
-        for(String[] temp_territory : territories){
-            String continent_name = temp_territory[0];
-            String territory_name = temp_territory[6];
-            int x = Integer.parseInt(temp_territory[2]);
-            int y = Integer.parseInt(temp_territory[3]);
-            int width = Integer.parseInt(temp_territory[4]) - x;
-            int height = Integer.parseInt(temp_territory[5]) - y;
-            Territory added_territory = new Territory(territory_name);
-            TerritoryButton territoryButton = new TerritoryButton(territory_name,x,y,width,height,parent);
-            added_territory.addTerritoryView(territoryButton);
-            worldMapView.add(territoryButton);
-            world_map.put(territory_name,added_territory);
-            createContinent(continent_name, added_territory, Integer.parseInt(temp_territory[1]));
-        }
-        linkNeighbours(territories);
-        unclaimed_territory.addAll(world_map.values());
-    }
-
-    /**
-     * This method is used to create a continent.
-     *
-     * @param continent_name the continent name
-     * @param added_territory the territory to add
-     * @param bonusTroops the amount of extra troops a continent gives if a player controls it
-     */
-    private void createContinent(String continent_name, Territory added_territory,int bonusTroops) {
-        if (continentMap.get(continent_name) == null){
-            continentMap.put(continent_name, new Continent(continent_name,bonusTroops));
-        }
-        added_territory.setContinentName(continent_name);
-        continentMap.get(continent_name).addContinentTerritory(added_territory.getTerritoryName(),added_territory);
-    }
-
-    /**
-     * This method is used to link territories that are connected.
-     *
-     * @param territories the arraylist of territories
-     */
-    private void linkNeighbours(ArrayList<String[]> territories) {
-        for(String[] temp_territory : territories){
-            String territory_name = temp_territory[6];
-            ArrayList<String> temp_sub = new ArrayList<>(Arrays.asList(temp_territory));
-            for(String temp_neighbours : temp_sub.subList(6,temp_sub.size())){
-                world_map.get(territory_name).addNeighbour(world_map.get(temp_neighbours));
-            }
-        }
-    }
-
-    /**
-     * Read the CSV file and obtain the Neighbours, it does this by reading file TerritoryNeighbour.csv and sorting it
-     * into a String[].
-     * @return list of territories
-     */
-    private ArrayList<String[]> read_csv(){
-        String row;
-        ArrayList<String[]> territory_list = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(this.territory_CSV)));
-            reader.readLine(); //Skip first line
-            while((row = reader.readLine()) != null){
-                String[] territories = row.split(",");
-                territory_list.add(territories);
-            }
-        } catch (FileNotFoundException e){
-            System.out.println("Error: File not found");
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return territory_list;
     }
 
     /**
@@ -306,9 +226,6 @@ public class GameSetup {
         return background;
     }
 
-    public String getOutput_folder(){
-        return output_folder;
-    }
     /**
      * After gameSetup ends it's final method is used for returning the world map. The gameSetup method could be used again
      * later if players would like to restart the game.

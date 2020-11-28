@@ -4,16 +4,16 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.awt.*;
 
-public class JsonAIPlayer extends  JsonPlayer{
+public class JSONAIPlayer extends JSONPlayer {
 
     private final JSONObject ai_player;
     private boolean attacking;
 
-    public JsonAIPlayer(){
+    public JSONAIPlayer(){
         ai_player = new JSONObject();
     }
 
-    public JsonAIPlayer(JSONObject load){
+    public JSONAIPlayer(JSONObject load){
         ai_player = new JSONObject();
         setPlayer_json();
         loadJson(load);
