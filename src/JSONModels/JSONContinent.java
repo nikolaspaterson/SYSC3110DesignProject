@@ -16,7 +16,7 @@ public class JSONContinent {
         name = continent.get("Continent").toString();
         troopBonus = (int) (long) continent.get("TroopBonus");
         territories = new ArrayList<>();
-        for(Object territory : (JSONArray) continent.get("Continents")) {
+        for(Object territory : (JSONArray) continent.get("Territories")) {
             territories.add(new JSONMapTerritory((JSONObject) territory));
         }
     }
