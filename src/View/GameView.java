@@ -2,18 +2,17 @@ package View;
 
 import Controller.GameController;
 import Controller.SaveController;
-import Listener.UserStatusListener;
-import Model.*;
 import Event.UserStatusEvent;
-
-import javax.imageio.ImageIO;
+import Listener.UserStatusListener;
+import Model.AIPlayer;
+import Model.GameModel;
+import Model.Player;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,13 +29,11 @@ public class GameView extends JFrame implements UserStatusListener {
     private final Stack<Color> color_list;
     private final GameController game_controller;
     private GameModel gameModel;
-    private BackgroundPanel background;
-    private GameMenuBar menuBar;
-    private SaveController saveController;
+    private final BackgroundPanel background;
 
     /**
      * Constructor for the GameView class.
-     * @param players the list of players that were passed in from the playerselect phase
+     * @param players the list of players that were passed in from the player select phase
      * @throws IOException exception
      */
     public GameView(ArrayList<PlayerSelectPanel> players,String path) throws IOException {
@@ -72,8 +69,8 @@ public class GameView extends JFrame implements UserStatusListener {
         players_overlay.setBackground(new Color(0,0,0, 0));
         players_overlay.setLayout(new FlowLayout());
 
-        saveController = new SaveController(gameModel,this,setupGame.getOutput_subdirectory());
-        menuBar = new GameMenuBar(saveController,setupGame.getOutput_subdirectory());
+        SaveController saveController = new SaveController(this, setupGame.getOutput_subdirectory());
+        GameMenuBar menuBar = new GameMenuBar(saveController, setupGame.getOutput_subdirectory());
         saveController.addView(menuBar);
         setJMenuBar(menuBar);
 
@@ -91,11 +88,13 @@ public class GameView extends JFrame implements UserStatusListener {
         setVisible(true);
         playMusic("/resources/beat.wav");
     }
+
     public void newGameModel(GameModel newModel){
         gameModel = newModel;
         game_controller.updateModel(gameModel);
         buildNewPlayerView();
     }
+
     /**
      * Used to add players from the model to the View
      * @param gameModel the game model
@@ -151,12 +150,14 @@ public class GameView extends JFrame implements UserStatusListener {
         }
         return playerList;
     }
+
     public void buildNewPlayerView(){
         players_overlay.removeAll();
         addPlayerOverlay(gameModel);
         revalidate();
         repaint();
     }
+
     /**
      * This is to play the most jamming beat as you take over the world. No further explanation required.
      * @param filepath the filepath of the music to play
@@ -173,12 +174,15 @@ public class GameView extends JFrame implements UserStatusListener {
             ex.printStackTrace( );
         }
     }
+
     public GameModel getModel(){
         return gameModel;
     }
+
     private void load_file(){
         buildNewPlayerView();
     }
+
     /**
      * This method is used to handle updates from the GameModel and update the view respectively.
      * @param event the event

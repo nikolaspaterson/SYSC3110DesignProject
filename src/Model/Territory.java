@@ -77,8 +77,7 @@ public class Territory {
     public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
 
     public ArrayList<TerritoryView> removeTerritoryViews(){
-        ArrayList<TerritoryView> temp_views = new ArrayList<>();
-        temp_views.addAll(territoryViews);
+        ArrayList<TerritoryView> temp_views = new ArrayList<>(territoryViews);
         territoryViews.clear();
         return temp_views;
     }

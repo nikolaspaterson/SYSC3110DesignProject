@@ -44,6 +44,24 @@ public class Player {
         fortifyStatus = true;
     }
 
+    public Player(JSONObject player, HashMap<String,Territory> currentMap){
+        JsonPlayer player_json = new JsonPlayer(player);
+        name = player_json.getName();
+        filePath = player_json.getFilePath();
+        player_color = player_json.getColor();
+        deployableTroops = player_json.getDeployableTroops();
+        fortifyStatus = player_json.isFortifyStatus();
+        playerNumber = player_json.getPlayerNumber();
+        inGame = player_json.isInGame();
+        total_troops = player_json.getTotal_troops();
+        territoriesOccupied = new HashMap<>();
+        initializeTerritories(player_json, currentMap);
+        playerListeners = new ArrayList<>();
+        if(filePath != null) {
+            player_icon = scaleImage(filePath);
+        }
+    }
+
     /**
      * This method is used to store the player's color and icon.
      *
@@ -55,8 +73,6 @@ public class Player {
         this.player_icon = player_icon;
         this.filePath = filePath;
     }
-
-    public void setIcon(ImageIcon player_icon) { this.player_icon = player_icon; }
 
     public String getFilePath() { return filePath; }
 
@@ -123,9 +139,10 @@ public class Player {
      */
     public void removePlayerListener(PlayerListener list){ playerListeners.remove(list); }
 
-    public ArrayList<PlayerListener> removeAllPlayerListeners(){
-        return playerListeners;
+    public void removeAllPlayerListeners(){
+        playerListeners.clear();
     }
+
     /**
      * This method used to know if I player is fortifying or not.
      * @return boolean fortify status
@@ -353,26 +370,12 @@ public class Player {
         return player_json.getPlayer_json();
     }
 
-    public Player(JSONObject player, HashMap<String,Territory> currentMap){
-        JsonPlayer player_json = new JsonPlayer(player);
-        name = player_json.getName();
-        filePath = player_json.getFilePath();
-        player_color = player_json.getColor();
-        deployableTroops = player_json.getDeployableTroops();
-        fortifyStatus = player_json.isFortifyStatus();
-        playerNumber = player_json.getPlayerNumber();
-        inGame = player_json.isInGame();
-        total_troops = player_json.getTotal_troops();
-        territoriesOccupied = new HashMap<>();
+    private void initializeTerritories(JsonPlayer player_json, HashMap<String,Territory> currentMap) {
         JSONArray list_territories = player_json.getTerritories();
         for(Object territoryObj : list_territories){
             String territoryName = (String) territoryObj;
             territoriesOccupied.put(territoryName, currentMap.get(territoryName));
             currentMap.get(territoryName).setOccupant(this);
-        }
-        playerListeners = new ArrayList<>();
-        if(filePath != null) {
-            player_icon = scaleImage(filePath);
         }
     }
 

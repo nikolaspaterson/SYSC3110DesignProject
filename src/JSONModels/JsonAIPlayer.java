@@ -2,12 +2,11 @@ package JSONModels;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.awt.*;
 
 public class JsonAIPlayer extends  JsonPlayer{
 
-    private JSONObject ai_player;
+    private final JSONObject ai_player;
     private boolean attacking;
 
     public JsonAIPlayer(){
@@ -34,11 +33,13 @@ public class JsonAIPlayer extends  JsonPlayer{
         setIconPath((String) player.get("FilePath"));
     }
 
+    @SuppressWarnings("unchecked")
     public void setAttacking(boolean attacking){
         this.attacking = attacking;
         ai_player.put("Attacking", attacking);
     }
 
+    @SuppressWarnings("unchecked")
     public JSONObject getAi_player() {
         ai_player.putAll(getPlayer_json());
         return ai_player;

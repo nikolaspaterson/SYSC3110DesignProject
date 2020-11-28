@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -14,24 +15,31 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SaveController {
+public class SaveController implements ActionListener {
 
-    private final GameModel gameModel;
     private GameMenuBar menuBar;
     private final GameView gameView;
-    private String output_path;
+    private final String output_path;
 
-    public SaveController(GameModel gameModel,GameView gameView,String output_path){
-        this.gameModel = gameModel;
+    public SaveController(GameView gameView,String output_path){
         this.gameView = gameView;
         this.output_path = output_path;
-
     }
+
     public void addView(GameMenuBar menuBar){
         this.menuBar = menuBar;
     }
 
-    public void saveFile(ActionEvent event){
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        if (event.getActionCommand().equals("Save")) {
+            saveAction();
+        } else {
+            loadAction(event.getActionCommand());
+        }
+    }
+
+    private void saveAction() {
         try {
             JSONObject save_file = gameView.getModel().saveJSON();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-HH-mm-ss");
@@ -44,11 +52,10 @@ public class SaveController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-    public void loadFile(ActionEvent event){
-        String path = output_path + event.getActionCommand();
-        System.out.println(path);
+
+    private void loadAction(String actionCommand) {
+        String path = output_path + actionCommand;
         try {
             File json_file = new File(path);
             FileReader load_file = new FileReader(json_file);
@@ -61,5 +68,4 @@ public class SaveController {
             e.printStackTrace();
         }
     }
-
 }

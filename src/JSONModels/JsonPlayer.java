@@ -44,6 +44,7 @@ public class JsonPlayer {
         player_json = new JSONObject();
     }
 
+    @SuppressWarnings("unchecked")
     public void setIconPath(String filePath) {
         this.filePath = filePath;
         player_json.put("FilePath", filePath);
@@ -51,51 +52,58 @@ public class JsonPlayer {
 
     public String getFilePath() { return filePath; }
 
+    @SuppressWarnings("unchecked")
     public void setPlayer(String player){
         name = player;
         player_json.put("Name",player);
     }
 
+    @SuppressWarnings("unchecked")
     public void setPlayerIndex(int playerNumber){
         this.playerNumber = playerNumber;
         player_json.put("PlayerIndex", playerNumber);
     }
 
+    @SuppressWarnings("unchecked")
     public void setColor(Color color){
         this.color = color;
         player_json.put("Color", color.getRGB());
     }
 
+    @SuppressWarnings("unchecked")
     public void setDeployableTroops(int deployableTroops){
         this.deployableTroops = deployableTroops;
         player_json.put("DeployableTroops", deployableTroops);
     }
 
+    @SuppressWarnings("unchecked")
     public void setFortify(boolean fortifyStatus){
         this.fortifyStatus = fortifyStatus;
         player_json.put("Fortify", fortifyStatus);
     }
 
+    @SuppressWarnings("unchecked")
     public void setTotalTroops(int total_troops){
         this.total_troops = total_troops;
         player_json.put("TotalTroops",total_troops);
     }
 
+    @SuppressWarnings("unchecked")
     public void setType(String type){
         this.type = type;
         player_json.put("Type",type);
     }
 
+    @SuppressWarnings("unchecked")
     public void setInGame(boolean inGame){
         this.inGame = inGame;
         player_json.put("InGame",inGame);
     }
 
+    @SuppressWarnings("unchecked")
     public void setOccupiedTerritories(Set<String> territories){
         JSONArray occupiedTerritories = new JSONArray();
-        for(String temp_territories : territories){
-            occupiedTerritories.add(temp_territories);
-        }
+        occupiedTerritories.addAll(territories);
         this.territories = occupiedTerritories;
         player_json.put("OccupiedTerritories",occupiedTerritories);
     }

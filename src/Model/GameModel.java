@@ -42,6 +42,31 @@ public class GameModel{
         commandTerritory = new ArrayList<>();
     }
 
+    public GameModel(JSONObject load, GameModel oldGame){
+        JsonGameModel game_json = new JsonGameModel(load);
+        for(Player temp : oldGame.getPlayers()){
+            temp.removeAllPlayerListeners();
+        }
+        gameName = game_json.getGameName();
+        playerList = new ArrayList<>();
+        continentMap = new HashMap<>();
+        worldMap = new HashMap<>();
+        gameViews = new ArrayList<>();
+        gameViews.addAll(oldGame.removeListeners());
+        outOfGame = 0;
+        aiTimer = new Timer("AI");
+        currentPlayerIndex = game_json.getCurrentPlayerIndex();
+        continentMap.putAll(oldGame.getContinentMap());
+        worldMap.putAll(oldGame.getWorldMap());
+        prepareTerritoriesJSON(game_json);
+        preparePlayersJSON(game_json);
+        commandTerritory = new ArrayList<>();
+        currentPlayer = playerList.get(currentPlayerIndex);
+        currentState = game_json.getGameState();
+        initializeAITimer();
+        updateView();
+    }
+
     public void setGameName(String name){
         gameName = name;
     }
@@ -55,8 +80,7 @@ public class GameModel{
     }
 
     public ArrayList<UserStatusListener> removeListeners(){
-        ArrayList<UserStatusListener> duplicate = new ArrayList<>();
-        duplicate.addAll(gameViews);
+        ArrayList<UserStatusListener> duplicate = new ArrayList<>(gameViews);
         gameViews.clear();
         return duplicate;
     }
@@ -250,42 +274,25 @@ public class GameModel{
         game_json.setGameState(currentState);
         game_json.setGameName(gameName);
         game_json.setCurrentPlayerIndex(currentPlayerIndex);
-        JSONArray player_array = new JSONArray();
-        for(Player temp_player : playerList){
-            player_array.add(temp_player.saveJSON());
-        }
-        game_json.setPlayer_array(player_array);
-        JSONArray territory_array = new JSONArray();
-        for(Territory temp_territory : worldMap.values()){
-            territory_array.add(temp_territory.saveJSON());
-        }
-        game_json.setTerritory_array(territory_array);
+        savingPlayer(game_json, true);
+        savingPlayer(game_json, false);
         return game_json.getGame_json();
     }
 
-    public GameModel(JSONObject load, GameModel oldGame){
-        JsonGameModel game_json = new JsonGameModel(load);
-        for(Player temp : oldGame.getPlayers()){
-            temp.removeAllPlayerListeners();
+    @SuppressWarnings("unchecked")
+    private void savingPlayer(JsonGameModel game_json, boolean savePlayer) {
+        JSONArray savingArr = new JSONArray();
+        if(savePlayer) {
+            for(Player temp_player : playerList){
+                savingArr.add(temp_player.saveJSON());
+            }
+            game_json.setPlayer_array(savingArr);
+        } else {
+            for(Territory temp_territory : worldMap.values()){
+                savingArr.add(temp_territory.saveJSON());
+            }
+            game_json.setTerritory_array(savingArr);
         }
-        gameName = game_json.getGameName();
-        playerList = new ArrayList<>();
-        continentMap = new HashMap<>();
-        worldMap = new HashMap<>();
-        gameViews = new ArrayList<>();
-        gameViews.addAll(oldGame.removeListeners());
-        outOfGame = 0;
-        aiTimer = new Timer("AI");
-        currentPlayerIndex = game_json.getCurrentPlayerIndex();
-        continentMap.putAll(oldGame.getContinentMap());
-        worldMap.putAll(oldGame.getWorldMap());
-        prepareTerritoriesJSON(game_json);
-        preparePlayersJSON(game_json);
-        commandTerritory = new ArrayList<>();
-        currentPlayer = playerList.get(currentPlayerIndex);
-        currentState = game_json.getGameState();
-        initializeAITimer();
-        updateView();
     }
 
     private void prepareTerritoriesJSON(JsonGameModel game_json){

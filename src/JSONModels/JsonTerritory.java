@@ -32,11 +32,13 @@ public class JsonTerritory {
         troops = (int) (long) territory_json.get("Troops");
     }
 
+    @SuppressWarnings("unchecked")
     public void setTerritoryName(String territoryName) {
         this.territoryName = territoryName;
         territory_json.put("Territory",territoryName);
     }
 
+    @SuppressWarnings("unchecked")
     public void setTroops(int troops) {
         this.troops = troops;
         territory_json.put("Troops",troops);

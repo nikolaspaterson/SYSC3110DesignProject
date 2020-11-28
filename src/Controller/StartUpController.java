@@ -68,7 +68,7 @@ public class StartUpController implements ActionListener {
                     popUpFrame.dispose();
                 }
             });
-        }else if(e.getActionCommand().equals("Play")){
+        }else {
             startUpView.dispose();
             new MapSelectScreen();
         }
