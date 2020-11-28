@@ -2,17 +2,17 @@
 package View;
 
 import Controller.SaveController;
-
 import javax.swing.*;
 import java.io.File;
-import java.net.URLDecoder;
 
 public class GameMenuBar extends JMenuBar {
-    private JMenuItem save_load;
-    private JMenuItem save;
-    private JMenu load;
-    private SaveController controller;
-    private String outputPath;
+
+    private final JMenuItem save_load;
+    private final JMenuItem save;
+    private final JMenu load;
+    private final SaveController controller;
+    private final String outputPath;
+
     public GameMenuBar(SaveController controller,String path){
         save_load = new JMenu();
         save = new JMenuItem();

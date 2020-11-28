@@ -11,7 +11,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class CsvToJson {
+
     private String territory_CSV = "/resources/TerritoryNeighbours.csv";
+
     public CsvToJson() throws IOException {
         JSONObject outputJson = createJSONObject(read_csv());
         String output_path = "C:\\Users\\eriki\\OneDrive\\SoftwareEng3\\Sysc3110\\RiskAssignment\\SYSC3110DesignProject\\src\\resources\\DefaultMap.json";

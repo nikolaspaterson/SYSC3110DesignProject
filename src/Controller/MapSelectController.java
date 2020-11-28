@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class MapSelectController implements ActionListener {
 
-    private MapSelectScreen mapSelectScreen;
+    private final MapSelectScreen mapSelectScreen;
 
     public MapSelectController(MapSelectScreen mapSelectScreen) {
         this.mapSelectScreen = mapSelectScreen;

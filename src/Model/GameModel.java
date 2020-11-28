@@ -4,10 +4,8 @@ import Event.UserStatusEvent;
 import JSONModels.JsonGameModel;
 import JSONModels.JsonTerritory;
 import Listener.UserStatusListener;
-import View.GameMenuBar;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,16 +17,16 @@ import java.util.Timer;
  */
 public class GameModel{
 
-    private ArrayList<Player> playerList;
+    private final ArrayList<Player> playerList;
     private Player currentPlayer;
     private int currentPlayerIndex;
     private HashMap<String, Continent> continentMap;
     private GameState currentState;
     private int outOfGame;
-    private ArrayList<Territory> commandTerritory;
+    private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
     private Timer aiTimer;
-    private ArrayList<UserStatusListener> gameViews;
+    private final ArrayList<UserStatusListener> gameViews;
     private String gameName;
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -47,6 +45,7 @@ public class GameModel{
     public void setGameName(String name){
         gameName = name;
     }
+
     /**
      * This method is used to add UserStatuslisteners of the model.
      * @param view the Listener to add
@@ -54,12 +53,14 @@ public class GameModel{
     public void addView(UserStatusListener view){
         gameViews.add(view);
     }
+
     public ArrayList<UserStatusListener> removeListeners(){
         ArrayList<UserStatusListener> duplicate = new ArrayList<>();
         duplicate.addAll(gameViews);
         gameViews.clear();
         return duplicate;
     }
+
     /**
      * This method is used to add all players in the game into an ArrayList.
      * @param players the player ArrayList
@@ -75,9 +76,11 @@ public class GameModel{
     public void removeView(UserStatusListener view){
         gameViews.remove(view);
     }
+
     public HashMap<String, Continent> getContinentMap(){
         return continentMap;
     }
+
     /**
      * This method is used to check if the Player is an AIPlayer and if so, to start adding the delay to all the AIPlayer's moves.
      */
@@ -130,10 +133,12 @@ public class GameModel{
             initializeAITimer();
         }
     }
+
     public void stopAITimer(){
         aiTimer.cancel();
         aiTimer = new Timer();
     }
+
     /**
      * This method is in charge of handling the switching of states and is called everytime the View.StatusBar nextButton
      * is pressed.

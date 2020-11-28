@@ -1,25 +1,21 @@
 package Controller;
 
-import Model.AIPlayer;
 import Model.GameModel;
-import Model.GameState;
-import Model.Territory;
-import View.*;
+import View.GameMenuBar;
+import View.GameView;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.EventObject;
 
 public class SaveController {
+
     private final GameModel gameModel;
     private GameMenuBar menuBar;
     private final GameView gameView;

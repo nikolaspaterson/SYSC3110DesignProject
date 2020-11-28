@@ -1,8 +1,7 @@
 package View;
 
-import Listener.PlayerListener;
-import Model.Player;
 import Event.PlayerEvent;
+import Listener.PlayerListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;

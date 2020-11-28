@@ -1,14 +1,11 @@
 package Model;
 
+import Event.TerritoryEvent;
 import JSONModels.JsonTerritory;
 import Listener.TerritoryView;
-import Event.TerritoryEvent;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * The Model.Territory class is responsible for containing all the important attributes of a territory in the game of Risk.
@@ -19,11 +16,10 @@ import java.util.List;
 public class Territory {
 
     private Player occupant;
-    private int occupantNumber;
     private int troops;
-    private HashMap<String, Territory> neighbours;
-    private String territoryName;
-    private ArrayList<TerritoryView> territoryViews;
+    private final HashMap<String, Territory> neighbours;
+    private final String territoryName;
+    private final ArrayList<TerritoryView> territoryViews;
     private String continentName;
     private Color color;
     private Color neighbourColor;
@@ -86,6 +82,7 @@ public class Territory {
         territoryViews.clear();
         return temp_views;
     }
+
     /**
      * Sets the continent name
      * @param name the continent name

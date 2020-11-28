@@ -1,14 +1,12 @@
 package JSONModels;
 
-import Listener.PlayerListener;
-import Model.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.awt.*;
 import java.util.Set;
 
 public class JsonPlayer {
+
     private JSONObject player_json;
     private String name;
     private int playerNumber;

@@ -11,6 +11,7 @@ public class GameEvent {
     private String attackingRolls;
     private String defendingRolls;
     private boolean attackerWon;
+    private final static int ZERO_TROOPS = 0;
 
     /**
      * Constructor for Model.GameEvent class where a Model.GameEvent should be initiated by a Model.Player.
@@ -29,14 +30,14 @@ public class GameEvent {
      * @param troops the number of troops to add.
      */
     public void reinforce(Territory territory, int troops) {
-        if(territory.getOccupant().equals(player) && troops <= player.getDeployableTroops() && troops > 0) {
+        if(territory.getOccupant().equals(player) && troops <= player.getDeployableTroops() && troops > ZERO_TROOPS) {
             int originalTroopCount = territory.getTroops();
             player.incrementTroops(territory, troops);
             player.subtractDeployableTroops(troops);
             System.out.println("Reinforced territory: " + territory.getTerritoryName());
             System.out.println("Original Troop count:" + originalTroopCount + ", With reinforce: " + territory.getTroops());
             System.out.println("you have " + player.getDeployableTroops() + " LEFT to deploy");
-        }else if(troops < 0){
+        }else if(troops < ZERO_TROOPS){
             System.out.println("Nice try! No negative troops!");
         }else {
             System.out.println("Ensure that the territory that you are trying to reinforce belongs to you");
@@ -95,31 +96,38 @@ public class GameEvent {
                     }
                 }
 
-                attackingRolls = "";
-                defendingRolls = "";
-
-                for(int x : attackingDice.getRoll()){
-                    attackingRolls += " || " + x + " || ";
-                }
-
-                for(int y : defendingDice.getRoll()){
-                    defendingRolls += " || " + y + " || ";
-                }
-
-                if (defending.getTroops() == 0) {
-                    attackerWon = true;
-                    (attacking.getOccupant()).addTerritory(defending.getTerritoryName(), defending);
-                    (defending.getOccupant()).removeTerritory(defending.getTerritoryName());
-                    defending.setOccupant(attacking.getOccupant());
-                    defending.setTroops(1);
-                    attacking.setTroops(attacking.getTroops() - 1);
-                }
+                setResultRolls(attackingDice, defendingDice);
+                winningMove(attacking, defending);
 
             } catch (NullPointerException e) {
                 System.out.println("Null pointer exception!");
             }
         }else{
             System.out.println("You cannot attack your own territory!");
+        }
+    }
+
+    public void setResultRolls(Dice attackingDice, Dice defendingDice) {
+        attackingRolls = "";
+        defendingRolls = "";
+
+        for(int x : attackingDice.getRoll()){
+            attackingRolls += " || " + x + " || ";
+        }
+
+        for(int y : defendingDice.getRoll()){
+            defendingRolls += " || " + y + " || ";
+        }
+    }
+
+    public void winningMove(Territory attacking, Territory defending) {
+        if (defending.getTroops() == ZERO_TROOPS) {
+            attackerWon = true;
+            (attacking.getOccupant()).addTerritory(defending.getTerritoryName(), defending);
+            (defending.getOccupant()).removeTerritory(defending.getTerritoryName());
+            defending.setOccupant(attacking.getOccupant());
+            defending.setTroops(1);
+            attacking.setTroops(attacking.getTroops() - 1);
         }
     }
 
@@ -156,12 +164,12 @@ public class GameEvent {
      */
     public void fortify(Territory territory1, Territory territory2, int troops) {
         if(territory1.getOccupant() == territory2.getOccupant() && territory1.getOccupant().equals(player) && territory1.getLinkedNeighbours().contains(territory2) && player.getFortifyStatus()) {
-            if(troops < territory1.getTroops() && troops > 0) {
+            if(troops < territory1.getTroops() && troops > ZERO_TROOPS) {
                 player.decrementTroops(territory1, troops);
                 player.incrementTroops(territory2, troops);
                 player.setFortifyStatus(false);
                 System.out.println("You have moved " + troops + " from " + territory1.getTerritoryName() + " to " + territory2.getTerritoryName());
-            } else if (troops <= 0){
+            } else if (troops <= ZERO_TROOPS) {
                 System.out.println("No troops will be moved.");
             } else {
                 System.out.println("You cannot move more than " + (territory1.getTroops() - 1));

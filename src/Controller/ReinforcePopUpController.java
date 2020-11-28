@@ -49,7 +49,7 @@ public class ReinforcePopUpController implements ActionListener {
                 x--;
             }
             popup.setTroops(x);
-        }else if(e.getSource().equals(popup.getDeployButton())){ //if deploy button is pressed
+        }else { //if deploy button is pressed
             if(x > MIN_NUM_TROOPS){
                 ge.reinforce(popup.getTerritory(), x);
                 popup.setVisible(false);

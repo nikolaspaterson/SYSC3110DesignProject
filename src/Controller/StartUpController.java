@@ -1,7 +1,6 @@
 package Controller;
 
 import View.MapSelectScreen;
-import View.PlayerSelectView;
 import View.StartUpView;
 import javax.swing.*;
 import java.awt.*;

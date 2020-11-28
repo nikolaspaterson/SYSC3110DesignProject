@@ -3,7 +3,7 @@ package JSONModels;
 import org.json.simple.JSONObject;
 
 public class JsonTerritory {
-    private JSONObject territory_json;
+    private final JSONObject territory_json;
     private String territoryName;
     private int troops;
 

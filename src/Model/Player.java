@@ -122,6 +122,7 @@ public class Player {
      * @param list the listener to be remove.
      */
     public void removePlayerListener(PlayerListener list){ playerListeners.remove(list); }
+
     public ArrayList<PlayerListener> removeAllPlayerListeners(){
         return playerListeners;
     }
@@ -370,7 +371,9 @@ public class Player {
             currentMap.get(territoryName).setOccupant(this);
         }
         playerListeners = new ArrayList<>();
-        player_icon = scaleImage(filePath);
+        if(filePath != null) {
+            player_icon = scaleImage(filePath);
+        }
     }
 
     //temp before we update player to path

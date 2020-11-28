@@ -11,14 +11,18 @@ public class GameController {
 
     private GameModel gameModel;
     private final GameView gameView;
+    private final static int popUpX = 300;
+    private final static int popUpY = 350;
 
     public GameController(GameModel gameModel, GameView gameView){
         this.gameModel = gameModel;
         this.gameView = gameView;
     }
+
     public void updateModel(GameModel gameModel){
         this.gameModel = gameModel;
     }
+
     /**
      *  Using this ActionEvent we attach it to all Territories in the set up phase of the View.GameView.
      *  Its purpose is to check the current player clicking, the state of the game, and the territory button
@@ -45,7 +49,7 @@ public class GameController {
         if (temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getDeployableTroops() != 0) {
             gameModel.addCommandTerritory(temp_territory);
             ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
-            temp.show(gameView, 300, 350);
+            temp.show(gameView, popUpX, popUpY);
             System.out.println("Pop up Reinforce + \n" + temp_territory.toString());
             gameModel.clearCommandTerritory();
         }
@@ -62,7 +66,7 @@ public class GameController {
             gameModel.addCommandTerritory(temp_territory);
         } else if (gameModel.getCommandTerritorySize() == 1 && !temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCommandTerritory().get(0).isNeighbour(temp_territory)) {
             AttackPopUp attackPopUp = new AttackPopUp(gameModel.getCommandTerritory().get(0), temp_territory, gameView);
-            attackPopUp.show(gameView, 300, 350);
+            attackPopUp.show(gameView, popUpX, popUpY);
             System.out.println("Attacker: " + gameModel.getCommandTerritory().get(0).toString() + "Defender: " + temp_territory.toString());
             gameModel.getCommandTerritory().get(0).cancel_timer();
             gameModel.clearCommandTerritory();
@@ -82,7 +86,7 @@ public class GameController {
             gameModel.addCommandTerritory(temp_territory);
             System.out.println("Ally1: " + gameModel.getCommandTerritory().get(0).toString() + "Ally2: " + gameModel.getCommandTerritory().get(1).toString());
             FortifyPopUp fortifyPopUp = new FortifyPopUp(gameModel.getCommandTerritory().get(0), gameModel.getCommandTerritory().get(1));
-            fortifyPopUp.show(gameView, 300, 350);
+            fortifyPopUp.show(gameView, popUpX, popUpY);
             gameModel.clearCommandTerritory();
         } else {
             gameModel.clearCommandTerritory();

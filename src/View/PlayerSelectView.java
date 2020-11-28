@@ -19,7 +19,7 @@ public class PlayerSelectView extends JFrame {
     private final ArrayList<PlayerSelectPanel> players;
     private final JButton startButton;
     private final ArrayList<PlayerSelectPanel> playerArrayList;
-    private String mapFilePath;
+    private final String mapFilePath;
 
     /**
      * Class constructor for View.PlayerSelectView class.

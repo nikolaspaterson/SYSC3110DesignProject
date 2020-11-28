@@ -15,7 +15,6 @@ public class AttackPopUpController implements ActionListener {
 
     private final AttackPopUp attackPopUp;
     private final GameEvent gameEvent;
-    private final int MAX_ATTACK_TROOPS = 3;
 
 
     /**
@@ -35,6 +34,7 @@ public class AttackPopUpController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (Integer.parseInt(attackPopUp.getNumDice().getText()) != 0) {
             int attackingTroops = attackPopUp.getAttackingTerritory().getTroops();
+            int MAX_ATTACK_TROOPS = 3;
             int max = Math.min(attackingTroops - 1, MAX_ATTACK_TROOPS);
 
             if (e.getSource() == attackPopUp.getMinus()) {

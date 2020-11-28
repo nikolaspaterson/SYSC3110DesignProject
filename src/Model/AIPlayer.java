@@ -1,12 +1,8 @@
 package Model;
 
 import JSONModels.JsonAIPlayer;
-import JSONModels.JsonPlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,8 +15,8 @@ import java.util.HashMap;
  */
 public class AIPlayer extends Player {
 
-    private GameModel gameModel;
-    private GameEvent gameEvent;
+    private final GameModel gameModel;
+    private final GameEvent gameEvent;
     private boolean attacking;
 
     /**
@@ -473,9 +469,10 @@ public class AIPlayer extends Player {
         setPlayerNumber(player_json.getPlayerNumber());
         setPlayerListeners(new ArrayList<>());
         setInGame(player_json.isInGame());
-        setPlayer_icon(scaleImage(player_json.getFilePath()));
         attacking = player_json.isAttacking();
-
+        if(getFilePath() != null) {
+            setPlayer_icon(scaleImage(player_json.getFilePath()));
+        }
     }
 
 }

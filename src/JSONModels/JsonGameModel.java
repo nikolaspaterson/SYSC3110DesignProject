@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class JsonGameModel {
+
     private JSONObject game_json;
     private JSONArray player_array;
     private JSONArray territory_array;

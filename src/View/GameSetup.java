@@ -6,13 +6,13 @@ import Model.Territory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 import java.awt.*;
 import java.io.*;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Random;
 
 /**
  * The GameSetup class is used to initialize all things prior to the Game being played.
@@ -27,8 +27,7 @@ public class GameSetup {
     private final HashMap<String, Continent> continentMap;
     private final ArrayList<TerritoryButton> worldMapView;
     private BackgroundPanel background;
-    private String backgroundPath;
-    private String jsonPath;
+    private final String jsonPath;
     private String output_folder;
     private String output_subdirectory;
     private String gameName;

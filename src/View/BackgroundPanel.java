@@ -1,14 +1,10 @@
 package View;
 
-import org.json.simple.JSONObject;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileReader;
-import java.io.InputStreamReader;
 
 /**
  * This class is used to set up the background panel for the GameView.
