@@ -1,16 +1,18 @@
 package Model;
 
 import Event.UserStatusEvent;
+import Event.SaveEvent;
 import JSONModels.JSONGameModel;
 import JSONModels.JSONTerritory;
+import Listener.SaveListener;
 import Listener.UserStatusListener;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Timer;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * This class is used to handle all the logic of the Game.
@@ -28,6 +30,7 @@ public class GameModel{
     private Timer aiTimer;
     private final ArrayList<UserStatusListener> gameViews;
     private String gameName;
+    private final ArrayList<SaveListener> saveView;
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -41,6 +44,7 @@ public class GameModel{
         currentState = GameState.REINFORCE;
         currentPlayerIndex = 0;
         commandTerritory = new ArrayList<>();
+        saveView = new ArrayList<>();
     }
 
     /**
@@ -69,6 +73,8 @@ public class GameModel{
         commandTerritory = new ArrayList<>();
         currentPlayer = playerList.get(currentPlayerIndex);
         currentState = game_json.getGameState();
+        saveView = new ArrayList<>();
+        saveView.addAll(oldGame.removeAllSaveView());
         initializeAITimer();
         updateView();
     }
@@ -93,6 +99,52 @@ public class GameModel{
         ArrayList<UserStatusListener> duplicate = new ArrayList<>(gameViews);
         gameViews.clear();
         return duplicate;
+    }
+
+    /**
+     * This method is used to add saveListener to the model.
+     * @param listener save Listener
+     */
+    public void addSaveView(SaveListener listener){
+        saveView.add(listener);
+    }
+
+    /**
+     * This method is used to remove saveListener to the model.
+     * @param listener saveListener
+     */
+    public void removeSaveView(SaveListener listener){
+        saveView.remove(listener);
+    }
+
+    /**
+     * This method is used to remove all saveListener to the model.
+     * @return Arraylist of listeners
+     */
+    public ArrayList<SaveListener> removeAllSaveView(){
+        ArrayList<SaveListener> temp = new ArrayList<>(saveView);
+        saveView.clear();
+        return temp;
+    }
+
+    /**
+     * Method that saves game state
+     * @param output_path location where file is saved
+     */
+    public void saveAction(String output_path) {
+        try {
+            JSONObject save_file = saveJSON();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-HH-mm-ss");
+            Date new_date = new Date();
+            String fileName = gameName + dateFormat.format(new_date)+".json";
+            FileWriter writer = new FileWriter(output_path + fileName);
+            String value = save_file.toString();
+            writer.write(value);
+            writer.close();
+            updateSaveView(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -276,6 +328,17 @@ public class GameModel{
     private void updateView(){
         for(UserStatusListener temp : gameViews){
             temp.updateUserStatus(new UserStatusEvent(this, currentPlayer, currentState));
+        }
+    }
+
+    /**
+     * This method is used to loop through every UserStatusListener that is listening to this and
+     * create UserStatusEvents that will notify the view of the changes
+     * @param fileName name of file
+     */
+    public void updateSaveView(String fileName){
+        for(SaveListener temp : saveView){
+            temp.updateSave(new SaveEvent(this,fileName));
         }
     }
 
