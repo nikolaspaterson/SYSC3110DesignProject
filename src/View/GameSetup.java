@@ -45,7 +45,7 @@ public class GameSetup {
         unclaimed_territory = new ArrayList<>();
         worldMapView = new ArrayList<>();
         this.jsonPath = jsonPath;
-        set_neighboursJson();
+        setupGameFromJSON();
         createSaveFolder();
         distribute_troops(players);
         }
@@ -157,11 +157,10 @@ public class GameSetup {
     }
 
     /**
-     * This method is used to set up all territories from the JSON file.
+     * This method is used to load the game from the JSON file selected by the user.
      */
-    private void set_neighboursJson(){
+    private void setupGameFromJSON(){
         try {
-            int total_territories = 0;
             JSONParser parser = new JSONParser();
             JSONMap map;
             if(jsonPath.contains("/resources/DefaultMap.json")){
@@ -175,41 +174,44 @@ public class GameSetup {
                 String mapPath = newFile.getPath().replace(newFile.getName(), "");
                 background = new BackgroundPanel(mapPath + map.getFilePath());
             }
-            gameName = map.getName();
-            for(JSONContinent continent : map.getContinents()){
-                continentMap.put(continent.getName(), new Continent(continent.getName(), continent.getTroopBonus()));
-                for(JSONMapTerritory territory : continent.getTerritories()){
-                    addToWorld(territory.getName(),continent.getName());
-                    for(String neighbour: territory.getNeighbours()){
-                        addToWorld(neighbour,continent.getName());
-                        world_map.get(territory.getName()).addNeighbour(world_map.get(neighbour));
-                    }
-                    total_territories++;
-
-                    int X1 = territory.getX1();
-                    int X2 = territory.getX2();
-                    int Y1 = territory.getY1();
-                    int Y2 = territory.getY2();
-                    int width = X2 - X1;
-                    int height = Y2 - Y1;
-
-                    TerritoryButton new_territory_view = new TerritoryButton(territory.getName(),X1,Y1,width,height,background);
-                    world_map.get(territory.getName()).addTerritoryView(new_territory_view);
-
-                    worldMapView.add(new_territory_view);
-
-                }
-            }
-            for(Territory check_territory : world_map.values()){
-                if(check_territory.debugLink().size() != total_territories){
-                    System.out.println("Invalid");
-                }
-            }
-            unclaimed_territory.addAll(world_map.values());
-
+            initializeMap(map);
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This method is used to set up the entire map from the information being parsed in the JSON file.
+     * @param map the JSONMap
+     */
+    private void initializeMap(JSONMap map) {
+        gameName = map.getName();
+        for(JSONContinent continent : map.getContinents()){
+            continentMap.put(continent.getName(), new Continent(continent.getName(), continent.getTroopBonus()));
+            for(JSONMapTerritory territory : continent.getTerritories()){
+                addToWorld(territory.getName(),continent.getName());
+                for(String neighbour: territory.getNeighbours()){
+                    addToWorld(neighbour,continent.getName());
+                    world_map.get(territory.getName()).addNeighbour(world_map.get(neighbour));
+                }
+                initializeTerritoryButtons(territory);
+            }
+        }
+        unclaimed_territory.addAll(world_map.values());
+    }
+
+    /**
+     * This method is used to set up all Territory Buttons with the position specified in the JSON that is being parsed.
+     * @param territory The Territory from the JSON file
+     */
+    private void initializeTerritoryButtons(JSONMapTerritory territory) {
+        int X1 = territory.getX1();
+        int Y1 = territory.getY1();
+        int width = territory.getX2() - X1;
+        int height = territory.getY2() - Y1;
+        TerritoryButton new_territory_view = new TerritoryButton(territory.getName(),X1,Y1,width,height,background);
+        world_map.get(territory.getName()).addTerritoryView(new_territory_view);
+        worldMapView.add(new_territory_view);
     }
 
     /**
@@ -235,6 +237,7 @@ public class GameSetup {
             x.print_info();
         }
     }
+
     public BackgroundPanel getBackground(){
         return background;
     }

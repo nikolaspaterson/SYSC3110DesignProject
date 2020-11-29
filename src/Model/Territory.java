@@ -95,6 +95,10 @@ public class Territory {
      */
     public void addTerritoryView(TerritoryView territoryView) { territoryViews.add(territoryView); }
 
+    /**
+     * This method is used to store all TerritoryViews, remove them from this Territory object and return a list of them.
+     * @return ArrayList<TerritoryView> a list of the TerritoryViews
+     */
     public ArrayList<TerritoryView> removeTerritoryViews(){
         ArrayList<TerritoryView> temp_views = new ArrayList<>(territoryViews);
         territoryViews.clear();
@@ -243,11 +247,22 @@ public class Territory {
         return val;
     }
 
+    /**
+     * Initializes the debugLinkNeighbours as an empty hashset and stores it as an arraylist.
+     * @return ArrayList<Territory> the array list
+     */
     public ArrayList<Territory> debugLink(){
         linkedNeighbours = new ArrayList<>(debugLinkNeighbours(new HashSet<>()));
         return linkedNeighbours;
     }
 
+    /**
+     * Linking method is used in MapSelect to test if map is the proper format.
+     * ie. Each territory must be able to access other territories anywhere on the map
+     * and there shouldn't be any separated island/territories that can't be reached.
+     * @param val the linked neighbours
+     * @return Set<Territory> the set of neighbours
+     */
     public Set<Territory> debugLinkNeighbours(Set<Territory> val){
         for(Territory neighbour : neighbours.values()){
             if(!val.contains(neighbour)){

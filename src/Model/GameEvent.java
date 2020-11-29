@@ -107,7 +107,12 @@ public class GameEvent {
         }
     }
 
-    public void setResultRolls(Dice attackingDice, Dice defendingDice) {
+    /**
+     * This method is used to store the attacker's and defender's rolls in a string.
+     * @param attackingDice
+     * @param defendingDice
+     */
+    private void setResultRolls(Dice attackingDice, Dice defendingDice) {
         attackingRolls = "";
         defendingRolls = "";
 
@@ -120,7 +125,13 @@ public class GameEvent {
         }
     }
 
-    public void winningMove(Territory attacking, Territory defending) {
+    /**
+     * This method is used to check if the attacking territory beat the defending territory after an attack.
+     * If the attacker won, then one troop will automatically be transferred from the attacking territory into the newly won defending territory.
+     * @param attacking the attacker's territory
+     * @param defending the defender's territory
+     */
+    private void winningMove(Territory attacking, Territory defending) {
         if (defending.getTroops() == ZERO_TROOPS) {
             attackerWon = true;
             (attacking.getOccupant()).addTerritory(defending.getTerritoryName(), defending);

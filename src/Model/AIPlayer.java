@@ -461,7 +461,7 @@ public class AIPlayer extends Player {
     }
 
     /**
-     * Checks if a territory is surrounding by territories of the same owner
+     * Checks if a territory is surrounded by territories of the same owner
      * @param t Territory to check
      * @return true if all neighbours are owned by the owner of t
      */

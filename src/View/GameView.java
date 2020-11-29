@@ -89,6 +89,10 @@ public class GameView extends JFrame implements UserStatusListener {
         playMusic("/resources/beat.wav");
     }
 
+    /**
+     * This method is used to set the GameModel and update the controller to use the new game model as well.
+     * @param newModel
+     */
     public void newGameModel(GameModel newModel){
         gameModel = newModel;
         game_controller.updateModel(gameModel);
