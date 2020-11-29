@@ -83,9 +83,7 @@ public class StatusBar extends JPanel implements PlayerListener {
      * The method is called by updateDisplay for when the player interacts with nextStep
      */
     public void displayAttack(){
-        descriptionPanel.remove(deployLabel);
-        this.revalidate();
-        this.repaint();
+        deployLabel.setText("");
         currentAction.setText("<html>Time to FIGHT!<br>Attack enemy Territories</html>");
     }
 
@@ -107,6 +105,7 @@ public class StatusBar extends JPanel implements PlayerListener {
      * The method is called by updateDisplay for when the player interacts with nextStep
      */
     public void displayFortify(){
+        deployLabel.setText("");
         currentAction.setText("<html>Fortify!<br>Move troops from<br>Your territories</html>");
         nextStep.setBackground(new Color(0xF16262));
         nextStep.setText("End Turn");
