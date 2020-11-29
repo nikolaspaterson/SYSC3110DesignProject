@@ -151,6 +151,9 @@ public class GameView extends JFrame implements UserStatusListener {
         return playerList;
     }
 
+    /**
+     * This method is used to Build the player views
+     */
     public void buildNewPlayerView(){
         players_overlay.removeAll();
         addPlayerOverlay(gameModel);

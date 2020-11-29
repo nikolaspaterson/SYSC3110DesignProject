@@ -28,6 +28,7 @@ public class GameModel{
     private Timer aiTimer;
     private final ArrayList<UserStatusListener> gameViews;
     private String gameName;
+
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
      */
@@ -42,6 +43,11 @@ public class GameModel{
         commandTerritory = new ArrayList<>();
     }
 
+    /**
+     * Constructor for the GameModel class. This constructor is used to create the GameModel from the JSON file.
+     * @param load the JSONObject
+     * @param oldGame the old game model
+     */
     public GameModel(JSONObject load, GameModel oldGame){
         JSONGameModel game_json = new JSONGameModel(load);
         for(Player temp : oldGame.getPlayers()){
@@ -79,6 +85,10 @@ public class GameModel{
         gameViews.add(view);
     }
 
+    /**
+     * Removes all listeners of the model and returns it.
+     * @return ArrayList<UserStatusListener> the old gameview list of listeners
+     */
     public ArrayList<UserStatusListener> removeListeners(){
         ArrayList<UserStatusListener> duplicate = new ArrayList<>(gameViews);
         gameViews.clear();
@@ -269,6 +279,10 @@ public class GameModel{
         }
     }
 
+    /**
+     * Saves the model to the JSONGameModel
+     * @return JSONObject the game model
+     */
     public JSONObject saveJSON(){
         JSONGameModel game_json = new JSONGameModel();
         game_json.setGameState(currentState);
@@ -279,6 +293,11 @@ public class GameModel{
         return game_json.getGame_json();
     }
 
+    /**
+     * Saves the list of players or the Territories in an JSONArray to the JSONGameModel.
+     * @param game_json the JSONGameModel
+     * @param savePlayer true if saving Player array to JSONGameModel, else save Territory array to JSONGameModel.
+     */
     @SuppressWarnings("unchecked")
     private void savingPlayer(JSONGameModel game_json, boolean savePlayer) {
         JSONArray savingArr = new JSONArray();
@@ -295,6 +314,10 @@ public class GameModel{
         }
     }
 
+    /**
+     * This method is used to set up all the territories for the JSONGameModel.
+     * @param game_json the JSONGameModel
+     */
     private void prepareTerritoriesJSON(JSONGameModel game_json){
         JSONArray territoryList = game_json.getTerritory_array();
         HashMap<String, Set<String>> old_links = new HashMap<>();
@@ -313,6 +336,10 @@ public class GameModel{
         }
     }
 
+    /**
+     * This method is used to set up all the players for the JSONGameModel.
+     * @param game_json the JSONGameModel
+     */
     private void preparePlayersJSON(JSONGameModel game_json){
         JSONArray players = game_json.getPlayer_array();
         for(Object playerObj : players){
@@ -325,6 +352,4 @@ public class GameModel{
             }
         }
     }
-
-
 }

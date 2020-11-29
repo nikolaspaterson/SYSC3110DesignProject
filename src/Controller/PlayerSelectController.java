@@ -67,18 +67,31 @@ public class PlayerSelectController implements ActionListener {
         }
     }
 
+    /**
+     * This method is used to add a player to the view.
+     *
+     * @param index the player to add
+     */
     private void addPlayers(int index) {
         playerSelectView.getPlayerList().add(playerSelectView.getPlayers().get(index));
         playerSelectView.getPlayerArrayList().add(playerSelectView.getPlayers().get(index));
         refresh();
     }
 
+    /**
+     * This method is used to remove a player from the view.
+     *
+     * @param index the player to remove
+     */
     private void removePlayers(int index) {
         playerSelectView.getPlayerList().remove(playerSelectView.getPlayers().get(index));
         playerSelectView.getPlayerArrayList().remove(playerSelectView.getPlayers().get(index));
         refresh();
     }
 
+    /**
+     * This method is used to refresh the view.
+     */
     private void refresh() {
         playerSelectView.getPlayerList().revalidate();
         playerSelectView.getPlayerList().repaint();

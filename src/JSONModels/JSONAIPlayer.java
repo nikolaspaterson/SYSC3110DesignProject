@@ -1,50 +1,58 @@
 package JSONModels;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import java.awt.*;
 
+/**
+ * This class is used to form the AIPlayers from the JSON file
+ */
 public class JSONAIPlayer extends JSONPlayer {
 
-    private final JSONObject ai_player;
+    private final JSONObject aiPlayer;
     private boolean attacking;
 
+    /**
+     * Class constructor for the JSONAIPlayer class.
+     */
     public JSONAIPlayer(){
-        ai_player = new JSONObject();
+        aiPlayer = new JSONObject();
     }
 
+    /**
+     * Class constructor for the JSONAIPlayer class.
+     *
+     * @param load the JSON object
+     */
     public JSONAIPlayer(JSONObject load){
-        ai_player = new JSONObject();
+        aiPlayer = new JSONObject();
         setPlayer_json();
         loadJson(load);
     }
 
+    /**
+     * This method is used to load the AIPlayer's from JSON object.
+     * @param player the player in a JSON Object
+     */
     @Override
     public void loadJson(JSONObject player){
-        setPlayer((String) player.get("Name"));
-        setTotalTroops((int) (long)player.get("TotalTroops"));
-        setDeployableTroops((int) (long) player.get("DeployableTroops"));
-        setFortify((boolean) player.get("Fortify"));
-        setTerritories((JSONArray) player.get("OccupiedTerritories"));
-        setColor(new Color((int) (long) player.get("Color")));
-        setPlayerIndex((int) (long)player.get("PlayerIndex"));
-        setInGame((boolean) player.get("InGame"));
+        super.loadJson(player);
         setAttacking((boolean) player.get("Attacking"));
-        setIconPath((String) player.get("FilePath"));
     }
 
     @SuppressWarnings("unchecked")
     public void setAttacking(boolean attacking){
         this.attacking = attacking;
-        ai_player.put("Attacking", attacking);
+        aiPlayer.put("Attacking", attacking);
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject getAi_player() {
-        ai_player.putAll(getPlayer_json());
-        return ai_player;
+    public JSONObject getAiPlayer() {
+        aiPlayer.putAll(getPlayer_json());
+        return aiPlayer;
     }
 
+    /**
+     * This method returns a boolean which expresses if the AI is attacking or not.
+     */
     public boolean isAttacking() {
         return attacking;
     }

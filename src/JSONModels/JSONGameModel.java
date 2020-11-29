@@ -4,6 +4,9 @@ import Model.GameState;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+/**
+ * This class is used to form the GameModel from the JSON file.
+ */
 public class JSONGameModel {
 
     private final JSONObject game_json;
@@ -13,10 +16,18 @@ public class JSONGameModel {
     private String gameName;
     private int currentPlayerIndex;
 
+    /**
+     * Class constructor for the JSONGameModel class.
+     */
     public JSONGameModel(){
         game_json = new JSONObject();
     }
 
+    /**
+     * Class constructor for the JSONGameModel class.
+     *
+     * @param load the load
+     */
     public JSONGameModel(JSONObject load){
         loadJSON(load);
         game_json = load;
@@ -46,6 +57,10 @@ public class JSONGameModel {
         return currentPlayerIndex;
     }
 
+    /**
+     * This method is used to load the AIPlayer's from JSON object.
+     * @param game_json the game in JSONObject
+     */
     public void loadJSON(JSONObject game_json) {
         player_array = (JSONArray) game_json.get("Players");
         territory_array = (JSONArray) game_json.get("Territories");
@@ -54,6 +69,10 @@ public class JSONGameModel {
         currentPlayerIndex = (int) (long) game_json.get("CurrentPlayer");
     }
 
+    /**
+     * Sets the GameState according to what state the JSON file was saved at.
+     * @param state
+     */
     private void setGameState(String state) {
         switch (state) {
             case "REINFORCE" -> gameState = GameState.REINFORCE;
@@ -62,30 +81,50 @@ public class JSONGameModel {
         }
     }
 
+    /**
+     * sets the player array.
+     * @param player_array the player array.
+     */
     @SuppressWarnings("unchecked")
     public void setPlayer_array(JSONArray player_array) {
         this.player_array = player_array;
         game_json.put("Players", player_array);
     }
 
+    /**
+     * sets the territory array.
+     * @param territory_array the territory array.
+     */
     @SuppressWarnings("unchecked")
     public void setTerritory_array(JSONArray territory_array) {
         this.territory_array = territory_array;
         game_json.put("Territories",territory_array);
     }
 
+    /**
+     * sets the GameState.
+     * @param gameState the state of the game.
+     */
     @SuppressWarnings("unchecked")
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
         game_json.put("GameState",gameState.toString());
     }
 
+    /**
+     * Sets the name of the game
+     * @param gameName the game name
+     */
     @SuppressWarnings("unchecked")
     public void setGameName(String gameName) {
         this.gameName = gameName;
         game_json.put("GameName",gameName);
     }
 
+    /**
+     * sets the current players index.
+     * @param currentPlayerIndex the player's turn
+     */
     @SuppressWarnings("unchecked")
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
         this.currentPlayerIndex = currentPlayerIndex;

@@ -5,18 +5,24 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * This class is used to form the Continents from the JSON file.
+ */
 public class JSONContinent {
 
-    private String name;
-    private int troopBonus;
-    private ArrayList<JSONMapTerritory> territories;
+    private final String name;
+    private final int troopBonus;
+    private final ArrayList<JSONMapTerritory> territories;
 
-    @SuppressWarnings("unchecked")
+    /**
+     * Class constructor for the JSONContinent class.
+     * @param continent the continent
+     */
     public JSONContinent(JSONObject continent) {
         name = continent.get("Continent").toString();
         troopBonus = (int) (long) continent.get("TroopBonus");
         territories = new ArrayList<>();
-        for(Object territory : (JSONArray) continent.get("Continents")) {
+        for(Object territory : (JSONArray) continent.get("Territories")) {
             territories.add(new JSONMapTerritory((JSONObject) territory));
         }
     }
@@ -32,6 +38,4 @@ public class JSONContinent {
     public ArrayList<JSONMapTerritory> getTerritories() {
         return territories;
     }
-
-
 }

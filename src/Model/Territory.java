@@ -42,6 +42,25 @@ public class Territory {
     }
 
     /**
+     * Constructor for the Territory class. This constructor is used to create the Territory from the JSON file.
+     * @param territory the JSONObject
+     * @param old_territory the old Territory Object
+     */
+    public Territory(JSONObject territory,Territory old_territory){
+        territoryViews = new ArrayList<>();
+        JSONTerritory territory_json = new JSONTerritory(territory);
+        territoryName = territory_json.getTerritoryName();
+        troops = territory_json.getTroops();
+        neighbours = new HashMap<>();
+        continentName = old_territory.getContinentName();
+        territoryViews.addAll(old_territory.removeTerritoryViews());
+        linkedNeighbours = new ArrayList<>();
+        blinking_yours = new Timer("flash_yours");
+        blinking_theirs = new Timer("flash_theirs");
+
+    }
+
+    /**
      * Sets the color of the neighbouring territory.
      * @param color the color to set
      */
@@ -269,6 +288,10 @@ public class Territory {
         }
     }
 
+    /**
+     * Saves the Territory to the JSONPlayer
+     * @return JSONObject Territory
+     */
     public JSONObject saveJSON(){
         JSONTerritory territory_json = new JSONTerritory();
         territory_json.setTerritoryName(territoryName);
@@ -276,19 +299,11 @@ public class Territory {
         return territory_json.getTerritory_json();
     }
 
-    public Territory(JSONObject territory,Territory old_territory){
-        territoryViews = new ArrayList<>();
-        JSONTerritory territory_json = new JSONTerritory(territory);
-        territoryName = territory_json.getTerritoryName();
-        troops = territory_json.getTroops();
-        neighbours = new HashMap<>();
-        continentName = old_territory.getContinentName();
-        territoryViews.addAll(old_territory.removeTerritoryViews());
-        linkedNeighbours = new ArrayList<>();
-        blinking_yours = new Timer("flash_yours");
-        blinking_theirs = new Timer("flash_theirs");
-
-    }
+    /**
+     * This method is used to update the links between this Territory and it's neighbours.
+     * @param neighbours the set of neighbouring territories
+     * @param map the current map
+     */
     public void updateLink(Set<String> neighbours, HashMap<String,Territory> map){
         for (String territory_names : neighbours){
             this.neighbours.put(territory_names,map.get(territory_names));

@@ -34,6 +34,39 @@ public class AIPlayer extends Player {
     }
 
     /**
+     * Class constructor for the AIPlayer class. This constructor is used to create the AIPlayer from a JSON file.
+     * @param player the player in JSONObject form
+     * @param currentMap the map
+     * @param gameModel the game model
+     */
+    public AIPlayer(JSONObject player, HashMap<String,Territory> currentMap,GameModel gameModel){
+        super(player,currentMap);
+        this.gameModel = gameModel;
+        this.gameEvent = new GameEvent(this);
+        JSONAIPlayer player_json = new JSONAIPlayer(player);
+        setName(player_json.getName());
+        setTotal_troops(player_json.getTotal_troops());
+        setDeployableTroops(player_json.getDeployableTroops());
+        setFortifyStatus(player_json.isFortifyStatus());
+        JSONArray list_territories = player_json.getTerritories();
+        setTerritoriesOccupied(new HashMap<>());
+        setPlayer_color(player_json.getColor());
+        HashMap<String,Territory> ref_map = getTerritoriesOccupied();
+        for(Object territoryObj : list_territories){
+            String territoryName = (String) territoryObj;
+            ref_map.put(territoryName, currentMap.get(territoryName));
+            currentMap.get(territoryName).setOccupant(this);
+        }
+        setPlayerNumber(player_json.getPlayerNumber());
+        setPlayerListeners(new ArrayList<>());
+        setInGame(player_json.isInGame());
+        attacking = player_json.isAttacking();
+        if(getFilePath() != null) {
+            setPlayer_icon(scaleImage(player_json.getFilePath()));
+        }
+    }
+
+    /**
      * This method is used to find all the neighbours around the given territory and return a ratio of how many of those neighbouring territories are the enemy.
      *
      * @param territory the territory to check
@@ -180,6 +213,11 @@ public class AIPlayer extends Player {
         }
     }
 
+    /**
+     * This method is used when an AIPlayer defeats the defending territory and gets to move troops into the newly won territory.
+     * @param attacking the attacking territory
+     * @param defending the defending territory
+     */
     public void winningAttackingMove(Territory attacking, Territory defending) {
         if(gameEvent.getAttackerWon()) {
             int value = leastEnemySurrounded(enemyNeighbourRatio(attacking));
@@ -192,6 +230,11 @@ public class AIPlayer extends Player {
         }
     }
 
+    /**
+     * This method decides the attacking move for the AIPlayer
+     * @param attacker the attacking territory
+     * @param defender the defending territory
+     */
     public void attackingMove(Territory attacker, Territory defender) {
         if(attacker.getTroops() >= 4){
             gameEvent.attack(attacker, defender, 3);
@@ -431,7 +474,10 @@ public class AIPlayer extends Player {
         return true;
     }
 
-
+    /**
+     * Sets all the attributes of the AIPlayer into the JSON file.
+     * @return JSONObject holds the AIPlayer attributes
+     */
     public JSONObject saveJSON(){
         JSONAIPlayer player_json = new JSONAIPlayer();
         player_json.setPlayer(getName());
@@ -445,34 +491,7 @@ public class AIPlayer extends Player {
         player_json.setOccupiedTerritories(getTerritoriesOccupied().keySet());
         player_json.setAttacking(attacking);
         player_json.setIconPath(getFilePath());
-        return player_json.getAi_player();
-    }
-
-    public AIPlayer(JSONObject player, HashMap<String,Territory> currentMap,GameModel gameModel){
-        super(player,currentMap);
-        this.gameModel = gameModel;
-        this.gameEvent = new GameEvent(this);
-        JSONAIPlayer player_json = new JSONAIPlayer(player);
-        setName(player_json.getName());
-        setTotal_troops(player_json.getTotal_troops());
-        setDeployableTroops(player_json.getDeployableTroops());
-        setFortifyStatus(player_json.isFortifyStatus());
-        JSONArray list_territories = player_json.getTerritories();
-        setTerritoriesOccupied(new HashMap<>());
-        setPlayer_color(player_json.getColor());
-        HashMap<String,Territory> ref_map = getTerritoriesOccupied();
-        for(Object territoryObj : list_territories){
-            String territoryName = (String) territoryObj;
-            ref_map.put(territoryName, currentMap.get(territoryName));
-            currentMap.get(territoryName).setOccupant(this);
-        }
-        setPlayerNumber(player_json.getPlayerNumber());
-        setPlayerListeners(new ArrayList<>());
-        setInGame(player_json.isInGame());
-        attacking = player_json.isAttacking();
-        if(getFilePath() != null) {
-            setPlayer_icon(scaleImage(player_json.getFilePath()));
-        }
+        return player_json.getAiPlayer();
     }
 
 }

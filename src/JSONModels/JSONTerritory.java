@@ -2,16 +2,26 @@ package JSONModels;
 
 import org.json.simple.JSONObject;
 
+/**
+ * This class is used to form the Territory from the JSON file.
+ */
 public class JSONTerritory {
 
     private final JSONObject territory_json;
     private String territoryName;
     private int troops;
 
+    /**
+     * Class constructor for the JSONTerritory class.
+     */
     public JSONTerritory(){
         this.territory_json = new JSONObject();
     }
 
+    /**
+     * Class constructor for the JSONTerritory class.
+     * @param load the load
+     */
     public JSONTerritory(JSONObject load){
         loadJSON(load);
         this.territory_json = load;
@@ -29,6 +39,10 @@ public class JSONTerritory {
         return troops;
     }
 
+    /**
+     * This method is used to load the Territory from JSON object.
+     * @param territory_json the territory JSONObject
+     */
     public void loadJSON(JSONObject territory_json) {
         territoryName = (String) territory_json.get("Territory");
         troops = (int) (long) territory_json.get("Troops");

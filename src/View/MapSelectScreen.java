@@ -1,11 +1,12 @@
 package View;
 
 import Controller.MapSelectController;
+import JSONModels.JSONContinent;
+import JSONModels.JSONMap;
+import JSONModels.JSONMapTerritory;
 import Model.Territory;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -15,12 +16,18 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+/**
+ * The MapSelectScreen class is used to make the GUI for the MapSelectScreen.
+ */
 public class MapSelectScreen extends JFrame {
 
     private final JPanel mapPanel;
     private JButton defaultMap;
     private final HashMap<String, Territory> world_map;
 
+    /**
+     * Constructor for the MapSelectScreen class.
+     */
     public MapSelectScreen() {
         super("Map Select Screen!");
 
@@ -50,6 +57,10 @@ public class MapSelectScreen extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * This method is used to load the custom map on the screen.
+     * @param mapSelectController the controller
+     */
     private void loadCustomMap(MapSelectController mapSelectController) {
         try {
             String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
@@ -80,6 +91,9 @@ public class MapSelectScreen extends JFrame {
         }
     }
 
+    /**
+     * This method is used to load the default map on the screen.
+     */
     private void loadDefaultMap() {
         try {
             String path = "/resources/DefaultMap.json";
@@ -96,38 +110,43 @@ public class MapSelectScreen extends JFrame {
         }
     }
 
+    /**
+     * This method is used to check if the custom map provided is valid.
+     * @param path the custom map path
+     * @return boolean true if custom map is valid, else if not
+     */
     public boolean checkCustomMapValidity(String path){
         try {
             int total_territories = 0;
             FileReader jsonFile = new FileReader(path);
             JSONParser parser = new JSONParser();
-            JSONObject map = (JSONObject) parser.parse(jsonFile);
-            for(Object obj_c : (JSONArray) map.get("Continents")){
-                JSONObject continent = (JSONObject) obj_c;
-                for(Object obj_t : (JSONArray) continent.get("Territories")){
-                    JSONObject territory = (JSONObject) obj_t;
-                    JSONArray neighbours = (JSONArray) territory.get("Neighbours");
-                    String territory_name = (String) territory.get("Territory");
-                    addToWorld(territory_name);
-                    for(Object neighbour_n:neighbours){
-                        String neighbour_name = (String) neighbour_n;
-                        addToWorld(neighbour_name);
-                        world_map.get(territory_name).addNeighbour(world_map.get(neighbour_name));
+            JSONMap map = new JSONMap((JSONObject) parser.parse(jsonFile));
+            for(JSONContinent continent : map.getContinents()){
+                for(JSONMapTerritory territory : continent.getTerritories()){
+                    addToWorld(territory.getName());
+                    for(String neighbour : territory.getNeighbours()){
+                        addToWorld(neighbour);
+                        world_map.get(territory.getName()).addNeighbour(world_map.get(neighbour));
                     }
                     total_territories++;
                 }
             }
-            for( Territory check_territory : world_map.values()){
+            for(Territory check_territory : world_map.values()){
                 if(check_territory.debugLink().size() != total_territories){
                     return false;
                 }
             }
         } catch (Exception e){
             e.printStackTrace();
+            return false;
         }
         return true;
     }
 
+    /**
+     * This method is used to add territories to the world map.
+     * @param territory_name the territory name
+     */
     private void addToWorld(String territory_name){
         if(world_map.get(territory_name) == null){
             Territory new_territory = new Territory(territory_name);
@@ -150,9 +169,5 @@ public class MapSelectScreen extends JFrame {
         Image img = scaledImg.getImage().getScaledInstance( 300, 250,  java.awt.Image.SCALE_SMOOTH );
         scaledImg = new ImageIcon(img);
         return scaledImg;
-    }
-
-    public static void main(String[] args) {
-        new MapSelectScreen();
     }
 }

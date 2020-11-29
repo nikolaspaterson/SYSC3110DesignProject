@@ -5,15 +5,22 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * The JSONMapTerritory class is used to form the territory from the JSON file.
+ */
 public class JSONMapTerritory {
 
-    private ArrayList<String> neighbours;
-    private String name;
-    private int X1;
-    private int Y1;
-    private int X2;
-    private int Y2;
+    private final ArrayList<String> neighbours;
+    private final String name;
+    private final int X1;
+    private final int Y1;
+    private final int X2;
+    private final int Y2;
 
+    /**
+     * Class constructor for the JSONMapTerritory class.
+     * @param territory the territory to load
+     */
     public JSONMapTerritory(JSONObject territory) {
         neighbours = new ArrayList<>();
         JSONArray temp = (JSONArray) territory.get("Neighbours");
@@ -25,7 +32,6 @@ public class JSONMapTerritory {
         Y1 = (int) (long) territory.get("Y1");
         X2 = (int) (long) territory.get("X2");
         Y2 = (int) (long) territory.get("Y2");
-
     }
 
     public ArrayList<String> getNeighbours() {

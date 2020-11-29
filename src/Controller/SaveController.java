@@ -15,21 +15,40 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The SaveController class is used to save the game or load it to the GameView.
+ */
 public class SaveController implements ActionListener {
 
     private GameMenuBar menuBar;
     private final GameView gameView;
     private final String output_path;
 
+    /**
+     * Class constructor for SaveController class.
+     *
+     * @param gameView the game view
+     * @param output_path the output path
+     */
     public SaveController(GameView gameView,String output_path){
         this.gameView = gameView;
         this.output_path = output_path;
     }
 
+    /**
+     * This method is used to add a GameMenuBar
+     *
+     * @param menuBar the menu bar
+     */
     public void addView(GameMenuBar menuBar){
         this.menuBar = menuBar;
     }
 
+    /**
+     * Checks to see which button is responsible for the ActionEvent and performs the respected action based on which button was pressed.
+     *
+     * @param event the action event
+     */
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getActionCommand().equals("Save")) {
@@ -39,6 +58,9 @@ public class SaveController implements ActionListener {
         }
     }
 
+    /**
+     * This method is used to save the game to a JSON file.
+     */
     private void saveAction() {
         try {
             JSONObject save_file = gameView.getModel().saveJSON();
@@ -54,6 +76,11 @@ public class SaveController implements ActionListener {
         }
     }
 
+    /**
+     * This method is used to load the game based on which previous saved game you select.
+     *
+     * @param actionCommand the filepath
+     */
     private void loadAction(String actionCommand) {
         String path = output_path + actionCommand;
         try {

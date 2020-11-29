@@ -7,18 +7,33 @@ import Model.Territory;
 import View.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * The GameController class is used to change and update the View.GameView based which buttons are pressed.
+ */
 public class GameController {
 
     private GameModel gameModel;
     private final GameView gameView;
     private final static int popUpX = 300;
     private final static int popUpY = 350;
+    private final static int ZERO_TROOPS_DEPLOYABLE = 0;
 
+    /**
+     * Class constructor for the GameController class.
+     *
+     * @param gameModel the game model
+     * @param gameView the game view
+     */
     public GameController(GameModel gameModel, GameView gameView){
         this.gameModel = gameModel;
         this.gameView = gameView;
     }
 
+    /**
+     * This method is used to update Game Model.
+     *
+     * @param gameModel the game model
+     */
     public void updateModel(GameModel gameModel){
         this.gameModel = gameModel;
     }
@@ -45,8 +60,13 @@ public class GameController {
         }
     }
 
+    /**
+     * This method is used handle the reinforce action when the player selects which a territory during the Reinforce stage.
+     *
+     * @param temp_territory the territory to reinforce
+     */
     private void reinforceAction(Territory temp_territory) {
-        if (temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getDeployableTroops() != 0) {
+        if (temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getDeployableTroops() != ZERO_TROOPS_DEPLOYABLE) {
             gameModel.addCommandTerritory(temp_territory);
             ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
             temp.show(gameView, popUpX, popUpY);
@@ -55,6 +75,12 @@ public class GameController {
         }
     }
 
+    /**
+     * This method is used handle the attack action when the player selects which
+     * territory they are attacking with and which one they want to attack.
+     *
+     * @param temp_territory the territory to attack
+     */
     private void attackAction(Territory temp_territory) {
         if (gameModel.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && temp_territory.getTroops() > 1) {
             temp_territory.activateTimer();
@@ -78,6 +104,11 @@ public class GameController {
         }
     }
 
+    /**
+     * This method is used handle the fortify action when the player selects which two territories he wants to move troops from and into.
+     *
+     * @param temp_territory the territory to fortify
+     */
     private void fortifyAction(Territory temp_territory) {
         if (gameModel.getCommandTerritorySize() == 0 && temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getFortifyStatus()) {
             gameModel.clearCommandTerritory();

@@ -5,6 +5,9 @@ import org.json.simple.JSONObject;
 import java.awt.*;
 import java.util.Set;
 
+/**
+ * This class is used to form the Player from the JSON file
+ */
 public class JSONPlayer {
 
     private JSONObject player_json;
@@ -19,15 +22,26 @@ public class JSONPlayer {
     private JSONArray territories;
     private String filePath;
 
+    /**
+     * Class constructor for the JSONPlayer class.
+     */
     public JSONPlayer(){
         player_json = new JSONObject();
     }
 
+    /**
+     * Class constructor for the JSONPlayer class.
+     * @param load the load
+     */
     public JSONPlayer(JSONObject load){
         loadJson(load);
         player_json = load;
     }
 
+    /**
+     * This method is used to load the Player from JSON object.
+     * @param player the player in a JSON Object
+     */
     public void loadJson(JSONObject player){
         name = (String) player.get("Name");
         total_troops = (int) (long)player.get("TotalTroops");

@@ -6,7 +6,6 @@ import JSONModels.JSONMapTerritory;
 import Model.Continent;
 import Model.Player;
 import Model.Territory;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import java.io.File;
@@ -33,7 +32,6 @@ public class GameSetup {
     private final String jsonPath;
     private String output_subdirectory;
     private String gameName;
-
 
     /**
      * View.GameSetup is in charge of calling private methods which
@@ -113,7 +111,10 @@ public class GameSetup {
         int territory_num = number_generator.nextInt(list_of_territories.size()) ;
         return list_of_territories.get(territory_num);
     }
-    
+
+    /**
+     * This method is used to create a save folder.
+     */
     private void createSaveFolder(){
         try{
             String path =  this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
@@ -130,8 +131,8 @@ public class GameSetup {
         catch (Exception e){
             e.printStackTrace();
         }
-
     }
+
     public String getGameName(){
         return gameName;
     }
@@ -140,6 +141,10 @@ public class GameSetup {
         return output_subdirectory;
     }
 
+    /**
+     * This method is used to create a folder.
+     * @param path the path
+     */
     private void createFolder(String path){
         File file = new File(path);
         if(file.exists()){
@@ -151,6 +156,9 @@ public class GameSetup {
         }
     }
 
+    /**
+     * This method is used to set up all territories from the JSON file.
+     */
     private void set_neighboursJson(){
         try {
             int total_territories = 0;
@@ -204,6 +212,11 @@ public class GameSetup {
         }
     }
 
+    /**
+     * This method is used to add territories and their corresponding continent they are contained in to the world map.
+     * @param territory_name the territory name
+     * @param continent the continent
+     */
     private void addToWorld(String territory_name, String continent){
         if(world_map.get(territory_name) == null){
             Territory new_territory = new Territory(territory_name);

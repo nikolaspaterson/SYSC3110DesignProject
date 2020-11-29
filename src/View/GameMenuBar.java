@@ -5,6 +5,9 @@ import Controller.SaveController;
 import javax.swing.*;
 import java.io.File;
 
+/**
+ * The GameMenuBar class is used to display the Save and Loading buttons on top of the main GameView.
+ */
 public class GameMenuBar extends JMenuBar {
 
     private final JMenuItem save;
@@ -12,7 +15,12 @@ public class GameMenuBar extends JMenuBar {
     private final SaveController controller;
     private final String outputPath;
 
-    public GameMenuBar(SaveController controller,String path){
+    /**
+     * Constructor for the GameMenuBar class.
+     * @param controller the controller
+     * @param path the path to save
+     */
+    public GameMenuBar(SaveController controller, String path){
         JMenuItem save_load = new JMenu();
         save = new JMenuItem();
         this.controller = controller;
@@ -30,6 +38,9 @@ public class GameMenuBar extends JMenuBar {
         this.add(save_load);
     }
 
+    /**
+     * This method is used to display all saved files in the load menu.
+     */
     public void loadAll(){
         try{
             System.out.println(outputPath);
@@ -47,6 +58,10 @@ public class GameMenuBar extends JMenuBar {
         }
     }
 
+    /**
+     * This method is used to add a singular saved file in the load menu.
+     * @param new_save
+     */
     public void addLoad(String new_save){
         JMenuItem temp_button = new JMenuItem(new_save);
         temp_button.addActionListener(this.controller);
@@ -56,5 +71,4 @@ public class GameMenuBar extends JMenuBar {
     public JMenuItem getSave() {
         return save;
     }
-
 }

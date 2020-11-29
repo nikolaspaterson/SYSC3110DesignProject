@@ -44,6 +44,11 @@ public class Player {
         fortifyStatus = true;
     }
 
+    /**
+     * Constructor for the Player class. This constructor is used to create the Player from the JSON file.
+     * @param player the JSONObject
+     * @param currentMap the current map
+     */
     public Player(JSONObject player, HashMap<String,Territory> currentMap){
         JSONPlayer player_json = new JSONPlayer(player);
         name = player_json.getName();
@@ -355,6 +360,10 @@ public class Player {
         this.inGame = inGame;
     }
 
+    /**
+     * Saves the Player to the JSONPlayer
+     * @return JSONObject the JSONPlayer
+     */
     public JSONObject saveJSON(){
         JSONPlayer player_json = new JSONPlayer();
         player_json.setPlayer(name);
@@ -370,6 +379,11 @@ public class Player {
         return player_json.getPlayer_json();
     }
 
+    /**
+     * This method is used to initialize the Territories that the Player owns which is read from the JSONPlayer object
+     * @param player_json JSONPlayer
+     * @param currentMap the current map
+     */
     private void initializeTerritories(JSONPlayer player_json, HashMap<String,Territory> currentMap) {
         JSONArray list_territories = player_json.getTerritories();
         for(Object territoryObj : list_territories){
@@ -379,6 +393,11 @@ public class Player {
         }
     }
 
+    /**
+     * This method is used to scale an image
+     * @param filename the image filename
+     * @return ImageIcon the image
+     */
     public ImageIcon scaleImage(String filename) {
         ImageIcon scaledImg = new ImageIcon(getClass().getResource(filename));
         Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );

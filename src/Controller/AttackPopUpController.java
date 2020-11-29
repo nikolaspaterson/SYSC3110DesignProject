@@ -16,7 +16,6 @@ public class AttackPopUpController implements ActionListener {
     private final AttackPopUp attackPopUp;
     private final GameEvent gameEvent;
 
-
     /**
      * Class constructor for Controller.AttackPopUpController class.
      * @param attackPopUp the view that needs to be changed.

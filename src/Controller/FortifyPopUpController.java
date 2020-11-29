@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class that responds to actions performed in View.FortifyPopUp.
+ * The FortifyPopUpController class is used to change and update the View.FortifyPopUp based which buttons are pressed.
  */
 public class FortifyPopUpController implements ActionListener {
 
