@@ -348,6 +348,9 @@ public class Player {
         this.total_troops = total_troops;
     }
 
+    public void setActive(boolean state){
+    }
+
     public void setPlayer_icon(Icon player_icon) {
         this.player_icon = player_icon;
     }

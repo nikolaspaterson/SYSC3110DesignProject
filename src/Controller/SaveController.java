@@ -65,7 +65,7 @@ public class SaveController implements ActionListener{
             FileReader load_file = new FileReader(json_file);
             JSONParser parser = new JSONParser();
             JSONObject loadedJSON = (JSONObject) parser.parse(load_file);
-            gameView.getModel().stopAITimer();
+            gameView.getModel().pauseGame();
             gameView.newGameModel(new GameModel(loadedJSON, gameView.getModel()));
         }catch (Exception e){
             JOptionPane.showMessageDialog(gameView, "ERROR! SAVE FILE CORRUPTED!");

@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
 
 /**
  * The AIPlayer class is used to make the decisions made by the "AI" player in the game of Risk.
@@ -18,6 +19,7 @@ public class AIPlayer extends Player {
     private final GameModel gameModel;
     private final GameEvent gameEvent;
     private boolean attacking;
+    private Timer aiTimer;
 
     /**
      * Class constructor for the AIPlayer class. Sets the name of the AI and passes in a reference to the gameView to simply control
@@ -31,6 +33,7 @@ public class AIPlayer extends Player {
         this.gameModel = gameModel;
         gameEvent = new GameEvent(this);
         attacking = true;
+        aiTimer = new Timer("AI");
     }
 
     /**
@@ -43,6 +46,7 @@ public class AIPlayer extends Player {
         super(player,currentMap);
         this.gameModel = gameModel;
         this.gameEvent = new GameEvent(this);
+        aiTimer = new Timer("AI");
         JSONAIPlayer player_json = new JSONAIPlayer(player);
         setName(player_json.getName());
         setTotal_troops(player_json.getTotal_troops());
@@ -66,6 +70,34 @@ public class AIPlayer extends Player {
         }
     }
 
+
+    /**
+     * Used for starting and stopping the timer for AIPlayer.
+     * @param state boolean that determines if the timer should start.
+     */
+    @Override
+    public void setActive(boolean state) {
+        if(state){
+            initializeAITimer();
+        }else {
+            stopAITimer();
+        }
+    }
+
+    /**
+     * Stop the current timer and set up a new timer for the next instance of the AIPlayer's turn.
+     */
+    public void stopAITimer(){
+        aiTimer.cancel();
+        aiTimer = new Timer();
+    }
+    /**
+     * This method is used to start adding the Timer which will allow for AIPlayer to play.
+     */
+    public void initializeAITimer() {
+        int AISpeed = 100;
+        aiTimer.scheduleAtFixedRate(new AITimer(this), AISpeed, AISpeed);
+    }
     /**
      * This method is used to find all the neighbours around the given territory and return a ratio of how many of those neighbouring territories are the enemy.
      *

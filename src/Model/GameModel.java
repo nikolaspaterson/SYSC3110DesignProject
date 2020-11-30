@@ -27,7 +27,6 @@ public class GameModel{
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
-    private Timer aiTimer;
     private final ArrayList<UserStatusListener> gameViews;
     private String gameName;
     private final ArrayList<SaveListener> saveView;
@@ -40,7 +39,6 @@ public class GameModel{
         currentPlayer = null;
         gameViews = new ArrayList<>();
         outOfGame = 0;
-        aiTimer = new Timer("AI");
         currentState = GameState.REINFORCE;
         currentPlayerIndex = 0;
         commandTerritory = new ArrayList<>();
@@ -64,7 +62,6 @@ public class GameModel{
         gameViews = new ArrayList<>();
         gameViews.addAll(oldGame.removeListeners());
         outOfGame = 0;
-        aiTimer = new Timer("AI");
         currentPlayerIndex = game_json.getCurrentPlayerIndex();
         continentMap.putAll(oldGame.getContinentMap());
         worldMap.putAll(oldGame.getWorldMap());
@@ -75,7 +72,7 @@ public class GameModel{
         currentState = game_json.getGameState();
         saveView = new ArrayList<>();
         saveView.addAll(oldGame.removeAllSaveView());
-        initializeAITimer();
+        currentPlayer.setActive(true);
         updateView();
     }
 
@@ -83,6 +80,12 @@ public class GameModel{
         gameName = name;
     }
 
+    /**
+     * Method is required to stop the AITimer to prevent the AI from playing during load of the game.
+     */
+    public void pauseGame(){
+        currentPlayer.setActive(false);
+    }
     /**
      * This method is used to add UserStatuslisteners of the model.
      * @param view the Listener to add
@@ -167,15 +170,6 @@ public class GameModel{
         return continentMap;
     }
 
-    /**
-     * This method is used to check if the Player is an AIPlayer and if so, to start adding the delay to all the AIPlayer's moves.
-     */
-    public void initializeAITimer() {
-        if(currentPlayer instanceof AIPlayer) {
-            int AISpeed = 100;
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer), AISpeed, AISpeed);
-        }
-    }
 
     /**
      * Gets the models for continentMap and worldMap and initializes the game to start.
@@ -187,7 +181,6 @@ public class GameModel{
         this.worldMap = worldMap;
         currentPlayer = playerList.get(currentPlayerIndex);
         currentPlayer.playerBonus(continentMap);
-        initializeAITimer();
         updateView();
     }
 
@@ -206,8 +199,8 @@ public class GameModel{
      */
     public void nextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+        currentPlayer.setActive(false);
         currentPlayer = playerList.get(currentPlayerIndex);
-        stopAITimer();
         if(currentPlayer.getTerritoriesOccupied().size() == 0){
             outOfGame++;
             nextPlayer();
@@ -216,14 +209,10 @@ public class GameModel{
         }else{
             outOfGame = 0;
             currentPlayer.playerBonus(continentMap);
-            initializeAITimer();
+            currentPlayer.setActive(true);
         }
     }
 
-    public void stopAITimer(){
-        aiTimer.cancel();
-        aiTimer = new Timer();
-    }
 
     /**
      * This method is in charge of handling the switching of states and is called everytime the View.StatusBar nextButton
