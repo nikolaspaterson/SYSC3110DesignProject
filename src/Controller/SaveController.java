@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -69,7 +72,7 @@ public class SaveController implements ActionListener{
             menuBar.addLoad(save_file.get(JSONGameModelKeys.NAME.getKey()) + dateFormat.format(new_date) + FilePath.JSON_FILE_SIGNATURE.getPath());
             writer.write(value);
             writer.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

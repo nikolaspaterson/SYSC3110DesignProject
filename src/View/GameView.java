@@ -34,9 +34,8 @@ public class GameView extends JFrame implements UserStatusListener {
     /**
      * Constructor for the GameView class.
      * @param players the list of players that were passed in from the player select phase
-     * @throws IOException exception
      */
-    public GameView(ArrayList<PlayerSelectPanel> players,String path) throws IOException {
+    public GameView(ArrayList<PlayerSelectPanel> players,String path) {
         super("Risk!");
         color_list = new Stack<>();
         color_list.add(new Color(239, 150, 75));
