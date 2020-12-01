@@ -19,10 +19,10 @@ public class JSONContinent {
      * @param continent the continent
      */
     public JSONContinent(JSONObject continent) {
-        name = continent.get("Continent").toString();
-        troopBonus = (int) (long) continent.get("TroopBonus");
+        name = continent.get(JSONContinentKeys.NAME.getKey()).toString();
+        troopBonus = (int) (long) continent.get(JSONContinentKeys.TROOP_BONUS.getKey());
         territories = new ArrayList<>();
-        for(Object territory : (JSONArray) continent.get("Territories")) {
+        for(Object territory : (JSONArray) continent.get(JSONContinentKeys.TERRITORIES.getKey())) {
             territories.add(new JSONMapTerritory((JSONObject) territory));
         }
     }

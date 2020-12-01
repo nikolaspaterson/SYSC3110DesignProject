@@ -32,6 +32,9 @@ public class GameSetup {
     private final String jsonPath;
     private String output_subdirectory;
     private String gameName;
+    private final static int TWO_PLAYER_TROOP_COUNT = 50;
+    private final static int THREE_PLAYER_TROOP_COUNT = 35;
+    private final static int REMOVE_TROOP_THRESHOLD = 5;
 
     /**
      * View.GameSetup is in charge of calling private methods which
@@ -58,8 +61,8 @@ public class GameSetup {
      */
     private void provide_troops(ArrayList<Player> players) {
         int distribute_val;
-        if(players.size() == 2){distribute_val = 50;}
-        else{distribute_val = 35 - 5 * (players.size() - 3);}
+        if(players.size() == 2){distribute_val = TWO_PLAYER_TROOP_COUNT;}
+        else{distribute_val = THREE_PLAYER_TROOP_COUNT - REMOVE_TROOP_THRESHOLD * (players.size() - 3);}
         for (Player x : players) {
             x.setDeployableTroops(distribute_val);
         }
@@ -120,7 +123,7 @@ public class GameSetup {
             String path =  this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
             String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
             File chop_jar = new File(decodedPath);
-            if(chop_jar.getName().contains(".jar")){
+            if(chop_jar.getName().contains(FilePath.JSON_FILE_SIGNATURE.getPath())){
                 decodedPath = decodedPath.replace(chop_jar.getName(),"");
             }
             String output_folder = decodedPath + "output/";
@@ -163,7 +166,7 @@ public class GameSetup {
         try {
             JSONParser parser = new JSONParser();
             JSONMap map;
-            if(jsonPath.contains("/resources/DefaultMap.json")){
+            if(jsonPath.contains(FilePath.DEFAULT_MAP_JSON.getPath())){
                 InputStreamReader jsonFile = new InputStreamReader(getClass().getResourceAsStream(jsonPath));
                 map = new JSONMap((JSONObject) parser.parse(jsonFile));
                 background = new BackgroundPanel(map.getFilePath());

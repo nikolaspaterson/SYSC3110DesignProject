@@ -62,16 +62,16 @@ public class JSONGameModel {
      * @param game_json the game in JSONObject
      */
     public void loadJSON(JSONObject game_json) {
-        player_array = (JSONArray) game_json.get("Players");
-        territory_array = (JSONArray) game_json.get("Territories");
-        setGameState((String)game_json.get("GameState"));
-        gameName = (String) game_json.get("GameName");
-        currentPlayerIndex = (int) (long) game_json.get("CurrentPlayer");
+        player_array = (JSONArray) game_json.get(JSONGameModelKeys.PLAYERS.getKey());
+        territory_array = (JSONArray) game_json.get(JSONGameModelKeys.TERRITORIES.getKey());
+        setGameState((String)game_json.get(JSONGameModelKeys.GAME_STATE.getKey()));
+        gameName = (String) game_json.get(JSONGameModelKeys.NAME.getKey());
+        currentPlayerIndex = (int) (long) game_json.get(JSONGameModelKeys.CURRENT_PLAYER.getKey());
     }
 
     /**
      * Sets the GameState according to what state the JSON file was saved at.
-     * @param state
+     * @param state the state of the game
      */
     private void setGameState(String state) {
         switch (state) {
@@ -88,7 +88,7 @@ public class JSONGameModel {
     @SuppressWarnings("unchecked")
     public void setPlayer_array(JSONArray player_array) {
         this.player_array = player_array;
-        game_json.put("Players", player_array);
+        game_json.put(JSONGameModelKeys.PLAYERS.getKey(), player_array);
     }
 
     /**
@@ -98,7 +98,7 @@ public class JSONGameModel {
     @SuppressWarnings("unchecked")
     public void setTerritory_array(JSONArray territory_array) {
         this.territory_array = territory_array;
-        game_json.put("Territories",territory_array);
+        game_json.put(JSONGameModelKeys.TERRITORIES.getKey(),territory_array);
     }
 
     /**
@@ -108,7 +108,7 @@ public class JSONGameModel {
     @SuppressWarnings("unchecked")
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
-        game_json.put("GameState",gameState.toString());
+        game_json.put(JSONGameModelKeys.GAME_STATE.getKey(),gameState.toString());
     }
 
     /**
@@ -118,7 +118,7 @@ public class JSONGameModel {
     @SuppressWarnings("unchecked")
     public void setGameName(String gameName) {
         this.gameName = gameName;
-        game_json.put("GameName",gameName);
+        game_json.put(JSONGameModelKeys.NAME.getKey(),gameName);
     }
 
     /**
@@ -128,6 +128,6 @@ public class JSONGameModel {
     @SuppressWarnings("unchecked")
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
         this.currentPlayerIndex = currentPlayerIndex;
-        game_json.put("CurrentPlayer", currentPlayerIndex);
+        game_json.put(JSONGameModelKeys.CURRENT_PLAYER.getKey(), currentPlayerIndex);
     }
 }

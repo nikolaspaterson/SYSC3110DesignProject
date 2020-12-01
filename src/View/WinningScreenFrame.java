@@ -45,13 +45,13 @@ public class WinningScreenFrame extends JFrame {
         playerIconName.add(name, BorderLayout.SOUTH);
 
         JLabel confettiLeft = new JLabel();
-        ImageIcon b = new ImageIcon(getClass().getResource("/resources/confetti.png"));
+        ImageIcon b = new ImageIcon(getClass().getResource(FilePath.CONFETTI.getPath()));
         Image m = b.getImage().getScaledInstance( 200, 200,  java.awt.Image.SCALE_SMOOTH );
         b = new ImageIcon(m);
         confettiLeft.setIcon(b);
 
         JLabel confettiRight = new JLabel();
-        ImageIcon img1 = new ImageIcon(getClass().getResource("/resources/confettiflip.png"));
+        ImageIcon img1 = new ImageIcon(getClass().getResource(FilePath.CONFETTI_FLIPPED.getPath()));
         Image m1 = img1.getImage().getScaledInstance( 200, 200,  java.awt.Image.SCALE_SMOOTH );
         img1 = new ImageIcon(m1);
         confettiRight.setIcon(img1);
@@ -66,7 +66,7 @@ public class WinningScreenFrame extends JFrame {
         winnerText.setVerticalAlignment(winnerText.CENTER);
 
         JLabel crown = new JLabel();
-        ImageIcon c = new ImageIcon(getClass().getResource("/resources/crown1.gif"));
+        ImageIcon c = new ImageIcon(getClass().getResource(FilePath.CROWN_GIF.getPath()));
         crown.setIcon(c);
         crown.setHorizontalAlignment(crown.CENTER);
         crown.setVerticalAlignment(crown.CENTER);
@@ -75,7 +75,7 @@ public class WinningScreenFrame extends JFrame {
         winnerFrame.add(crown, BorderLayout.CENTER);
         winnerFrame.add(playerPanel, BorderLayout.SOUTH);
 
-        gameView.playMusic("/resources/allido.wav");
+        gameView.playMusic(FilePath.WINNING_MUSIC.getPath());
 
         winnerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         winnerFrame.setVisible(true);

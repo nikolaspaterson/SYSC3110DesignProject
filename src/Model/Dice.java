@@ -11,6 +11,10 @@ public class Dice {
 
     private final Random random;
     private int[] rolls;
+    private static final int MIN_NUM_DIE = 1;
+    private static final int MAX_NUM_DIE = 3;
+    private static final int MIN_TROOPS_TO_ATTACK = 2;
+    private static final int MIN_TROOPS_TO_DEFEND = 1;
 
     /**
      * Class constructor for Model.Dice class.
@@ -42,18 +46,18 @@ public class Dice {
      * @return Model.Dice (attacker's rolls)
      */
     public Dice setUpAttackingDice(int troops, int numDice) {
-        if((troops > 1 && troops != numDice) && (numDice > 0 && numDice <= 3)) {
+        if((troops >= MIN_TROOPS_TO_ATTACK && troops != numDice) && (numDice >= MIN_NUM_DIE && numDice <= MAX_NUM_DIE)) {
             if (numDice < (troops + 1)) {
                 return new Dice(numDice);
             }
         }
-        if(troops <= 1) {
+        if(troops < MIN_TROOPS_TO_ATTACK) {
             System.out.println("You need at least two troops to attack.");
         }
         if(numDice >= troops){
             System.out.println("You cannot roll with " + numDice + " because you have " + troops +" troops!");
         }
-        if(numDice <= 0 || numDice > 3) {
+        if(numDice < MIN_NUM_DIE || numDice > MAX_NUM_DIE) {
             System.out.println("You cannot roll with " + (numDice) + " dice!");
         }
         return null;
@@ -66,8 +70,8 @@ public class Dice {
      * @return Model.Dice (defender's rolls)
      */
     public Dice setUpDefendingDice(int troops) {
-        if(troops > 0) {
-            if(troops == 1) {
+        if(troops >= MIN_TROOPS_TO_DEFEND) {
+            if(troops == MIN_TROOPS_TO_DEFEND) {
                 return new Dice(1);
             } else {
                 return new Dice(2);

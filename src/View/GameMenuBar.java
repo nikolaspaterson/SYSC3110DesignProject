@@ -48,7 +48,7 @@ public class GameMenuBar extends JMenuBar {
             File[] files = file.listFiles();
             if (files != null) {
                 for(File temp_file : files){
-                    if(temp_file.getName().contains(".json")){
+                    if(temp_file.getName().contains(FilePath.JSON_FILE_SIGNATURE.getPath())){
                         addLoad(temp_file.getName());
                     }
                 }
@@ -60,7 +60,7 @@ public class GameMenuBar extends JMenuBar {
 
     /**
      * This method is used to add a singular saved file in the load menu.
-     * @param new_save
+     * @param new_save the new save
      */
     public void addLoad(String new_save){
         JMenuItem temp_button = new JMenuItem(new_save);

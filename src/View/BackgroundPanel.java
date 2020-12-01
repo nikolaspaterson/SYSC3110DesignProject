@@ -20,7 +20,7 @@ public class BackgroundPanel extends JPanel {
     public BackgroundPanel(String path) {
         try{
             BufferedImage image;
-            if(path.contains("/resources/Map.png")){
+            if(path.contains(FilePath.DEFAULT_MAP_PNG.getPath())){
                 image = ImageIO.read(getClass().getResourceAsStream(path));
             } else {
                 image = ImageIO.read(new File(path));

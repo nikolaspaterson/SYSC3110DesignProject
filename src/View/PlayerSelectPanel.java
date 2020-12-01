@@ -42,16 +42,16 @@ public class PlayerSelectPanel extends JPanel {
         });
 
         ArrayList<String> file = new ArrayList<>();
-        file.add("/resources/Chizzy.png");
-        file.add("/resources/TA.png");
-        file.add("/resources/Captain.png");
-        file.add("/resources/nik.png");
-        file.add("/resources/passki.png");
-        file.add("/resources/Bruce.png");
+        file.add(FilePath.CHIZZY.getPath());
+        file.add(FilePath.TA.getPath());
+        file.add(FilePath.CAPTAIN.getPath());
+        file.add(FilePath.NIK.getPath());
+        file.add(FilePath.PASSKI.getPath());
+        file.add(FilePath.BRUCE.getPath());
 
         ImageIcon chizzy = scaleImage(file.get(0));
         ImageIcon TA = scaleImage(file.get(1));
-        ImageIcon chip = scaleImage((file.get(2)));
+        ImageIcon captain = scaleImage((file.get(2)));
         ImageIcon nik = scaleImage((file.get(3)));
         ImageIcon pass = scaleImage((file.get(4)));
         ImageIcon bruce = scaleImage((file.get(5)));
@@ -59,27 +59,25 @@ public class PlayerSelectPanel extends JPanel {
         photo = new JButton();
         photo.setIcon(chizzy);
 
-
-
         photo.addActionListener(e -> {
             if(photo.getIcon().equals(chizzy)) {
                 photo.setIcon(TA);
-                filePath = "/resources/TA.png";
+                filePath = FilePath.TA.getPath();
             } else if (photo.getIcon().equals(TA)) {
-                photo.setIcon(chip);
-                filePath = "/resources/Captain.png";
-            } else if (photo.getIcon().equals(chip)) {
+                photo.setIcon(captain);
+                filePath = FilePath.CAPTAIN.getPath();
+            } else if (photo.getIcon().equals(captain)) {
                 photo.setIcon(nik);
-                filePath = "/resources/nik.png";
+                filePath = FilePath.NIK.getPath();
             } else if (photo.getIcon().equals(nik)){
                 photo.setIcon(pass);
-                filePath = "/resources/passki.png";
+                filePath = FilePath.PASSKI.getPath();
             } else if (photo.getIcon().equals(pass)) {
                 photo.setIcon(bruce);
-                filePath = "/resources/Bruce.png";
+                filePath = FilePath.BRUCE.getPath();
             } else{
                 photo.setIcon(chizzy);
-                filePath = "/resources/Chizzy.png";
+                filePath = FilePath.CHIZZY.getPath();
             }
         });
 

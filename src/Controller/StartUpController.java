@@ -31,7 +31,7 @@ public class StartUpController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("How to Play")){
+        if(e.getActionCommand().equals(JButtonActionCommands.HOW_TO_PLAY.getCommand())){
 
             //Create frame and panel
             JFrame popUpFrame = new JFrame();

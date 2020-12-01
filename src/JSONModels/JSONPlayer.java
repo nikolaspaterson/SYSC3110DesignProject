@@ -43,15 +43,15 @@ public class JSONPlayer {
      * @param player the player in a JSON Object
      */
     public void loadJson(JSONObject player){
-        name = (String) player.get("Name");
-        total_troops = (int) (long)player.get("TotalTroops");
-        deployableTroops = (int) (long) player.get("DeployableTroops");
-        fortifyStatus = (boolean) player.get("Fortify");
-        territories = (JSONArray) player.get("OccupiedTerritories");
-        color = new Color((int) (long) player.get("Color"));
-        playerNumber = (int) (long)player.get("PlayerIndex");
-        inGame = (boolean) player.get("InGame");
-        filePath = (String) player.get("FilePath");
+        name = (String) player.get(JSONPlayerKeys.NAME.getKey());
+        total_troops = (int) (long)player.get(JSONPlayerKeys.TOTAL_TROOPS.getKey());
+        deployableTroops = (int) (long) player.get(JSONPlayerKeys.DEPLOYABLE_TROOPS.getKey());
+        fortifyStatus = (boolean) player.get(JSONPlayerKeys.FORTIFY_STATUS.getKey());
+        territories = (JSONArray) player.get(JSONPlayerKeys.OCCUPIED_TERRITORIES.getKey());
+        color = new Color((int) (long) player.get(JSONPlayerKeys.PLAYER_COLOR.getKey()));
+        playerNumber = (int) (long)player.get(JSONPlayerKeys.PLAYER_NUMBER.getKey());
+        inGame = (boolean) player.get(JSONPlayerKeys.PLAYER_STATUS.getKey());
+        filePath = (String) player.get(JSONPlayerKeys.PLAYER_ICON.getKey());
     }
 
     public void setPlayer_json(){
@@ -61,7 +61,7 @@ public class JSONPlayer {
     @SuppressWarnings("unchecked")
     public void setIconPath(String filePath) {
         this.filePath = filePath;
-        player_json.put("FilePath", filePath);
+        player_json.put(JSONPlayerKeys.PLAYER_ICON.getKey(), filePath);
     }
 
     public String getFilePath() { return filePath; }
@@ -69,49 +69,49 @@ public class JSONPlayer {
     @SuppressWarnings("unchecked")
     public void setPlayer(String player){
         name = player;
-        player_json.put("Name",player);
+        player_json.put(JSONPlayerKeys.NAME.getKey(),player);
     }
 
     @SuppressWarnings("unchecked")
     public void setPlayerIndex(int playerNumber){
         this.playerNumber = playerNumber;
-        player_json.put("PlayerIndex", playerNumber);
+        player_json.put(JSONPlayerKeys.PLAYER_NUMBER.getKey(), playerNumber);
     }
 
     @SuppressWarnings("unchecked")
     public void setColor(Color color){
         this.color = color;
-        player_json.put("Color", color.getRGB());
+        player_json.put(JSONPlayerKeys.PLAYER_COLOR.getKey(), color.getRGB());
     }
 
     @SuppressWarnings("unchecked")
     public void setDeployableTroops(int deployableTroops){
         this.deployableTroops = deployableTroops;
-        player_json.put("DeployableTroops", deployableTroops);
+        player_json.put(JSONPlayerKeys.DEPLOYABLE_TROOPS.getKey(), deployableTroops);
     }
 
     @SuppressWarnings("unchecked")
     public void setFortify(boolean fortifyStatus){
         this.fortifyStatus = fortifyStatus;
-        player_json.put("Fortify", fortifyStatus);
+        player_json.put(JSONPlayerKeys.FORTIFY_STATUS.getKey(), fortifyStatus);
     }
 
     @SuppressWarnings("unchecked")
     public void setTotalTroops(int total_troops){
         this.total_troops = total_troops;
-        player_json.put("TotalTroops",total_troops);
+        player_json.put(JSONPlayerKeys.TOTAL_TROOPS.getKey(), total_troops);
     }
 
     @SuppressWarnings("unchecked")
     public void setType(String type){
         this.type = type;
-        player_json.put("Type",type);
+        player_json.put(JSONPlayerKeys.TYPE.getKey(), type);
     }
 
     @SuppressWarnings("unchecked")
     public void setInGame(boolean inGame){
         this.inGame = inGame;
-        player_json.put("InGame",inGame);
+        player_json.put(JSONPlayerKeys.PLAYER_STATUS.getKey(), inGame);
     }
 
     @SuppressWarnings("unchecked")
@@ -119,7 +119,7 @@ public class JSONPlayer {
         JSONArray occupiedTerritories = new JSONArray();
         occupiedTerritories.addAll(territories);
         this.territories = occupiedTerritories;
-        player_json.put("OccupiedTerritories",occupiedTerritories);
+        player_json.put(JSONPlayerKeys.OCCUPIED_TERRITORIES.getKey(), occupiedTerritories);
     }
 
     public void setTerritories(JSONArray territories) {

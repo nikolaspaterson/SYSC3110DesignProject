@@ -44,19 +44,19 @@ public class JSONTerritory {
      * @param territory_json the territory JSONObject
      */
     public void loadJSON(JSONObject territory_json) {
-        territoryName = (String) territory_json.get("Territory");
-        troops = (int) (long) territory_json.get("Troops");
+        territoryName = (String) territory_json.get(JSONMapKeys.TERRITORY.getKey());
+        troops = (int) (long) territory_json.get(JSONMapKeys.TROOPS.getKey());
     }
 
     @SuppressWarnings("unchecked")
     public void setTerritoryName(String territoryName) {
         this.territoryName = territoryName;
-        territory_json.put("Territory",territoryName);
+        territory_json.put(JSONMapKeys.TERRITORY.getKey(),territoryName);
     }
 
     @SuppressWarnings("unchecked")
     public void setTroops(int troops) {
         this.troops = troops;
-        territory_json.put("Troops",troops);
+        territory_json.put(JSONMapKeys.TROOPS.getKey(),troops);
     }
 }

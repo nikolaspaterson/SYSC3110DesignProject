@@ -49,7 +49,7 @@ public class PlayerSelectView extends JFrame {
 
         // JButton (left arrow)
         leftArrow = new JButton();
-        ImageIcon icon = scaleImage("/resources/leftarrow.png");
+        ImageIcon icon = scaleImage(FilePath.LEFT_ARROW.getPath());
         leftArrow.setIcon(icon);
         p2.add(leftArrow);
 
@@ -62,7 +62,7 @@ public class PlayerSelectView extends JFrame {
 
         // JButton (right arrow)
         rightArrow = new JButton();
-        ImageIcon icon2 = scaleImage("/resources/rightarrow.png");
+        ImageIcon icon2 = scaleImage(FilePath.RIGHT_ARROW.getPath());
         rightArrow.setIcon(icon2);
         p2.add(rightArrow);
 

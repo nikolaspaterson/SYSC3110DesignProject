@@ -30,6 +30,7 @@ public class GameView extends JFrame implements UserStatusListener {
     private final GameController game_controller;
     private GameModel gameModel;
     private final BackgroundPanel background;
+    private final static String AI = "AI";
 
     /**
      * Constructor for the GameView class.
@@ -86,12 +87,12 @@ public class GameView extends JFrame implements UserStatusListener {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
-        playMusic("/resources/beat.wav");
+        playMusic(FilePath.BEAT_FILEPATH.getPath());
     }
 
     /**
      * This method is used to set the GameModel and update the controller to use the new game model as well.
-     * @param newModel
+     * @param newModel the new game model
      */
     public void newGameModel(GameModel newModel){
         gameModel = newModel;
@@ -140,7 +141,7 @@ public class GameView extends JFrame implements UserStatusListener {
         int player_index = 0;
         for(PlayerSelectPanel x : players){
             Player newPlayer;
-            if(x.getPlayerType().equals("AI")) {
+            if(x.getPlayerType().equals(AI)) {
                 newPlayer = new AIPlayer(x.getPlayerName(), gameModel);
             } else {
                 newPlayer = new Player(x.getPlayerName());

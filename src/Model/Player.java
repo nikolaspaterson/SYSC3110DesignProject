@@ -30,6 +30,10 @@ public class Player {
     private ArrayList<PlayerListener> playerListeners;
     private int playerNumber;
     private String filePath;
+    private final static int BONUS_TERRITORY_THRESHOLD = 9;
+    private final static int MIN_TROOP_BONUS = 3;
+    private final static int PER_3_TERRITORIES_OWNED = 3;
+    private final static int ZERO_DEPLOYABLE_TROOPS = 0;
 
     /**
      * Class constructor for the Model.Player class. Sets the name of the player and initializes the HashMap which will store what territory the player occupies.
@@ -101,10 +105,10 @@ public class Player {
             }
         }
 
-        if ((this.getTerritoriesOccupied().size()) <= 9) {
-            troops += 3;
+        if ((this.getTerritoriesOccupied().size()) <= BONUS_TERRITORY_THRESHOLD) {
+            troops += MIN_TROOP_BONUS;
         } else {
-            troops += ((this.getTerritoriesOccupied().size()) / 3);
+            troops += ((this.getTerritoriesOccupied().size()) / PER_3_TERRITORIES_OWNED);
         }
         this.addDeployableTroops(troops);
     }
@@ -228,13 +232,13 @@ public class Player {
      * @return int - The amount of deployable troops.
      */
     public int placeDeployableTroops(int troop_count) {
-        if (deployableTroops - troop_count >= 0) {
+        if (deployableTroops - troop_count >= ZERO_DEPLOYABLE_TROOPS) {
             deployableTroops -= troop_count;
             updateListeners();
             return troop_count;
         } else {
             int temp = deployableTroops;
-            deployableTroops = 0;
+            deployableTroops = ZERO_DEPLOYABLE_TROOPS;
             updateListeners();
             return temp;
         }

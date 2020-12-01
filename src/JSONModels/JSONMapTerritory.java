@@ -23,15 +23,15 @@ public class JSONMapTerritory {
      */
     public JSONMapTerritory(JSONObject territory) {
         neighbours = new ArrayList<>();
-        JSONArray temp = (JSONArray) territory.get("Neighbours");
+        JSONArray temp = (JSONArray) territory.get(JSONMapKeys.NEIGHBOURS.getKey());
         for(Object curr : temp) {
             neighbours.add(curr.toString());
         }
-        name = territory.get("Territory").toString();
-        X1 = (int) (long) territory.get("X1");
-        Y1 = (int) (long) territory.get("Y1");
-        X2 = (int) (long) territory.get("X2");
-        Y2 = (int) (long) territory.get("Y2");
+        name = territory.get(JSONMapKeys.TERRITORY.getKey()).toString();
+        X1 = (int) (long) territory.get(JSONMapKeys.COORDINATE_X1.getKey());
+        Y1 = (int) (long) territory.get(JSONMapKeys.COORDINATE_Y1.getKey());
+        X2 = (int) (long) territory.get(JSONMapKeys.COORDINATE_X2.getKey());
+        Y2 = (int) (long) territory.get(JSONMapKeys.COORDINATE_Y2.getKey());
     }
 
     public ArrayList<String> getNeighbours() {

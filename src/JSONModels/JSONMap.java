@@ -19,11 +19,11 @@ public class JSONMap {
      * @param map the map
      */
     public JSONMap(JSONObject map) {
-        name = map.get("Name").toString();
-        filePath = map.get("Background").toString();
+        name = map.get(JSONMapKeys.NAME.getKey()).toString();
+        filePath = map.get(JSONMapKeys.BACKGROUND.getKey()).toString();
         System.out.println(filePath);
         continents = new ArrayList<>();
-        for(Object continent : (JSONArray) map.get("Continents")) {
+        for(Object continent : (JSONArray) map.get(JSONMapKeys.CONTINENTS.getKey())) {
             continents.add(new JSONContinent((JSONObject) continent));
             System.out.println();
         }

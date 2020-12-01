@@ -79,7 +79,7 @@ public class PlayerView extends JPanel implements PlayerListener {
         if(!x){
             setBackground(new Color(0x404040));
             removeAll();
-            ImageIcon scaledImg = new ImageIcon(getClass().getResource("/resources/redx.png"));
+            ImageIcon scaledImg = new ImageIcon(getClass().getResource(FilePath.RED_X.getPath()));
             Image img = scaledImg.getImage().getScaledInstance( 85, 85,  java.awt.Image.SCALE_SMOOTH );
             scaledImg = new ImageIcon(img);
             JLabel x_mark = new JLabel();

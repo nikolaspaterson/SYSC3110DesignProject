@@ -109,8 +109,8 @@ public class GameEvent {
 
     /**
      * This method is used to store the attacker's and defender's rolls in a string.
-     * @param attackingDice
-     * @param defendingDice
+     * @param attackingDice the attacker's rolls
+     * @param defendingDice the defender's rolls
      */
     private void setResultRolls(Dice attackingDice, Dice defendingDice) {
         attackingRolls = "";

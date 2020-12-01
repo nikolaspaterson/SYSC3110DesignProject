@@ -3,6 +3,7 @@ package View;
 import Controller.MapSelectController;
 import JSONModels.JSONContinent;
 import JSONModels.JSONMap;
+import JSONModels.JSONMapKeys;
 import JSONModels.JSONMapTerritory;
 import Model.Territory;
 import org.json.simple.JSONObject;
@@ -66,7 +67,7 @@ public class MapSelectScreen extends JFrame {
             String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
             String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
             File chop_jar = new File(decodedPath);
-            if (chop_jar.getName().contains(".jar")) {
+            if (chop_jar.getName().contains(FilePath.JAR_FILE_SIGNATURE.getPath())) {
                 decodedPath = decodedPath.replace(chop_jar.getName(), "");
             }
             String outputFolder = decodedPath + "Maps/";
@@ -74,12 +75,12 @@ public class MapSelectScreen extends JFrame {
             File[] files = file.listFiles();
             assert files != null;
             for(File temp_file : files) {
-                if(temp_file.getName().contains(".json")) {
+                if(temp_file.getName().contains(FilePath.JSON_FILE_SIGNATURE.getPath())) {
                     JButton customMap = new JButton();
                     FileReader jsonFile = new FileReader(temp_file.getPath());
                     JSONParser parser = new JSONParser();
                     JSONObject map = (JSONObject) parser.parse(jsonFile);
-                    ImageIcon icon2 = scaleImage( outputFolder + map.get("Background"), false);
+                    ImageIcon icon2 = scaleImage( outputFolder + map.get(JSONMapKeys.BACKGROUND.getKey()), false);
                     customMap.setActionCommand(temp_file.getPath());
                     customMap.setIcon(icon2);
                     mapPanel.add(customMap);
@@ -96,13 +97,12 @@ public class MapSelectScreen extends JFrame {
      */
     private void loadDefaultMap() {
         try {
-            String path = "/resources/DefaultMap.json";
             defaultMap = new JButton();
-            InputStreamReader jsonFile = new InputStreamReader(getClass().getResourceAsStream(path));
+            InputStreamReader jsonFile = new InputStreamReader(getClass().getResourceAsStream(FilePath.DEFAULT_MAP_JSON.getPath()));
             JSONParser parser = new JSONParser();
             JSONObject map = (JSONObject) parser.parse(jsonFile);
-            ImageIcon icon2 = scaleImage(map.get("Background").toString(), true);
-            defaultMap.setActionCommand(path);
+            ImageIcon icon2 = scaleImage(map.get(JSONMapKeys.BACKGROUND.getKey()).toString(), true);
+            defaultMap.setActionCommand(FilePath.DEFAULT_MAP_JSON.getPath());
             defaultMap.setIcon(icon2);
             mapPanel.add(defaultMap);
         } catch(Exception e){

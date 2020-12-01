@@ -2,6 +2,7 @@ package Model;
 
 import Event.UserStatusEvent;
 import JSONModels.JSONGameModel;
+import JSONModels.JSONPlayerKeys;
 import JSONModels.JSONTerritory;
 import Listener.UserStatusListener;
 import org.json.simple.JSONArray;
@@ -28,6 +29,7 @@ public class GameModel{
     private Timer aiTimer;
     private final ArrayList<UserStatusListener> gameViews;
     private String gameName;
+    private final static String typeAIPlayer = "AIPlayer";
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -344,8 +346,8 @@ public class GameModel{
         JSONArray players = game_json.getPlayer_array();
         for(Object playerObj : players){
             JSONObject temp_player  = (JSONObject) playerObj;
-            String type = (String) temp_player.get("Type");
-            if(type.contains("AIPlayer")){
+            String type = (String) temp_player.get(JSONPlayerKeys.TYPE.getKey());
+            if(type.contains(typeAIPlayer)){
                 playerList.add(new AIPlayer(temp_player,worldMap,this));
             }else{
                 playerList.add(new Player(temp_player,worldMap));

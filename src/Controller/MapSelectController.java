@@ -32,7 +32,7 @@ public class MapSelectController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().contains("resources")) {
+        if(e.getActionCommand().contains(JButtonActionCommands.RESOURCES.getCommand())) {
             mapSelectScreen.dispose();
             new PlayerSelectView(e.getActionCommand());
         } else {

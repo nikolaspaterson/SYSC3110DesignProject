@@ -1,6 +1,8 @@
 package Controller;
 
+import JSONModels.JSONGameModelKeys;
 import Model.GameModel;
+import View.FilePath;
 import View.GameMenuBar;
 import View.GameView;
 import org.json.simple.JSONObject;
@@ -51,7 +53,7 @@ public class SaveController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (event.getActionCommand().equals("Save")) {
+        if (event.getActionCommand().equals(JButtonActionCommands.SAVE.getCommand())) {
             saveAction();
         } else {
             loadAction(event.getActionCommand());
@@ -66,9 +68,9 @@ public class SaveController implements ActionListener {
             JSONObject save_file = gameView.getModel().saveJSON();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-HH-mm-ss");
             Date new_date = new Date();
-            FileWriter writer = new FileWriter(output_path + save_file.get("GameName") + dateFormat.format(new_date)+".json");
+            FileWriter writer = new FileWriter(output_path + save_file.get(JSONGameModelKeys.NAME.getKey()) + dateFormat.format(new_date) + FilePath.JSON_FILE_SIGNATURE.getPath());
             String value = save_file.toString();
-            menuBar.addLoad(save_file.get("GameName") + dateFormat.format(new_date)+".json");
+            menuBar.addLoad(save_file.get(JSONGameModelKeys.NAME.getKey()) + dateFormat.format(new_date) + FilePath.JSON_FILE_SIGNATURE.getPath());
             writer.write(value);
             writer.close();
         } catch (IOException e) {

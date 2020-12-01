@@ -35,13 +35,13 @@ public class JSONAIPlayer extends JSONPlayer {
     @Override
     public void loadJson(JSONObject player){
         super.loadJson(player);
-        setAttacking((boolean) player.get("Attacking"));
+        setAttacking((boolean) player.get(JSONPlayerKeys.AIPLAYER_ATTACKING.getKey()));
     }
 
     @SuppressWarnings("unchecked")
     public void setAttacking(boolean attacking){
         this.attacking = attacking;
-        aiPlayer.put("Attacking", attacking);
+        aiPlayer.put(JSONPlayerKeys.AIPLAYER_ATTACKING.getKey(), attacking);
     }
 
     @SuppressWarnings("unchecked")
