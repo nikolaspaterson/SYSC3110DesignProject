@@ -13,7 +13,6 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -72,6 +71,7 @@ public class GameView extends JFrame implements UserStatusListener {
 
         SaveController saveController = new SaveController(this, setupGame.getOutput_subdirectory());
         GameMenuBar menuBar = new GameMenuBar(saveController, setupGame.getOutput_subdirectory());
+        gameModel.addSaveView(menuBar);
         saveController.addView(menuBar);
         setJMenuBar(menuBar);
 
@@ -92,7 +92,7 @@ public class GameView extends JFrame implements UserStatusListener {
 
     /**
      * This method is used to set the GameModel and update the controller to use the new game model as well.
-     * @param newModel the new game model
+     * @param newModel newGameModel
      */
     public void newGameModel(GameModel newModel){
         gameModel = newModel;

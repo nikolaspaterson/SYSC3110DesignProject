@@ -59,11 +59,7 @@ public class PlayerSelectController implements ActionListener {
         } else if (e.getSource() == playerSelectView.getStartButton()){ //Start Button
             System.out.println("We started");
             playerSelectView.dispose();
-            try {
-                new GameView(playerSelectView.getPlayerArrayList(), playerSelectView.getMapFilePath());
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
+            new GameView(playerSelectView.getPlayerArrayList(), playerSelectView.getMapFilePath());
         }
     }
 

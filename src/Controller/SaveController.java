@@ -12,15 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 /**
  * The SaveController class is used to save the game or load it to the GameView.
  */
-public class SaveController implements ActionListener {
+public class SaveController implements ActionListener{
 
     private GameMenuBar menuBar;
     private final GameView gameView;
@@ -48,13 +45,12 @@ public class SaveController implements ActionListener {
 
     /**
      * Checks to see which button is responsible for the ActionEvent and performs the respected action based on which button was pressed.
-     *
      * @param event the action event
      */
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getActionCommand().equals(JButtonActionCommands.SAVE.getCommand())) {
-            saveAction();
+            gameView.getModel().saveAction(output_path);
         } else {
             loadAction(event.getActionCommand());
         }
@@ -80,17 +76,16 @@ public class SaveController implements ActionListener {
 
     /**
      * This method is used to load the game based on which previous saved game you select.
-     *
      * @param actionCommand the filepath
      */
-    private void loadAction(String actionCommand) {
+    public void loadAction(String actionCommand) {
         String path = output_path + actionCommand;
         try {
             File json_file = new File(path);
             FileReader load_file = new FileReader(json_file);
             JSONParser parser = new JSONParser();
             JSONObject loadedJSON = (JSONObject) parser.parse(load_file);
-            gameView.getModel().stopAITimer();
+            gameView.getModel().pauseGame();
             gameView.newGameModel(new GameModel(loadedJSON, gameView.getModel()));
         }catch (Exception e){
             JOptionPane.showMessageDialog(gameView, "ERROR! SAVE FILE CORRUPTED!");

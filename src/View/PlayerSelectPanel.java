@@ -58,6 +58,9 @@ public class PlayerSelectPanel extends JPanel {
 
         photo = new JButton();
         photo.setIcon(chizzy);
+        filePath = FilePath.CHIZZY.getPath();
+
+
 
         photo.addActionListener(e -> {
             if(photo.getIcon().equals(chizzy)) {

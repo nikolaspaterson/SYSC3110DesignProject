@@ -1,17 +1,19 @@
 package Model;
 
 import Event.UserStatusEvent;
+import Event.SaveEvent;
 import JSONModels.JSONGameModel;
 import JSONModels.JSONPlayerKeys;
 import JSONModels.JSONTerritory;
+import Listener.SaveListener;
 import Listener.UserStatusListener;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Timer;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * This class is used to handle all the logic of the Game.
@@ -26,10 +28,10 @@ public class GameModel{
     private int outOfGame;
     private final ArrayList<Territory> commandTerritory;
     private HashMap<String, Territory> worldMap;
-    private Timer aiTimer;
     private final ArrayList<UserStatusListener> gameViews;
     private String gameName;
     private final static String typeAIPlayer = "AIPlayer";
+    private final ArrayList<SaveListener> saveView;
 
     /**
      * Constructor of the Gameview, it is called in Controller.PlayerSelectController and the game begins after the construction of the class.
@@ -39,10 +41,10 @@ public class GameModel{
         currentPlayer = null;
         gameViews = new ArrayList<>();
         outOfGame = 0;
-        aiTimer = new Timer("AI");
         currentState = GameState.REINFORCE;
         currentPlayerIndex = 0;
         commandTerritory = new ArrayList<>();
+        saveView = new ArrayList<>();
     }
 
     /**
@@ -62,7 +64,6 @@ public class GameModel{
         gameViews = new ArrayList<>();
         gameViews.addAll(oldGame.removeListeners());
         outOfGame = 0;
-        aiTimer = new Timer("AI");
         currentPlayerIndex = game_json.getCurrentPlayerIndex();
         continentMap.putAll(oldGame.getContinentMap());
         worldMap.putAll(oldGame.getWorldMap());
@@ -71,7 +72,9 @@ public class GameModel{
         commandTerritory = new ArrayList<>();
         currentPlayer = playerList.get(currentPlayerIndex);
         currentState = game_json.getGameState();
-        initializeAITimer();
+        saveView = new ArrayList<>();
+        saveView.addAll(oldGame.removeAllSaveView());
+        currentPlayer.setActive(true);
         updateView();
     }
 
@@ -79,6 +82,12 @@ public class GameModel{
         gameName = name;
     }
 
+    /**
+     * Method is required to stop the AITimer to prevent the AI from playing during load of the game.
+     */
+    public void pauseGame(){
+        currentPlayer.setActive(false);
+    }
     /**
      * This method is used to add UserStatuslisteners of the model.
      * @param view the Listener to add
@@ -95,6 +104,52 @@ public class GameModel{
         ArrayList<UserStatusListener> duplicate = new ArrayList<>(gameViews);
         gameViews.clear();
         return duplicate;
+    }
+
+    /**
+     * This method is used to add saveListener to the model.
+     * @param listener save Listener
+     */
+    public void addSaveView(SaveListener listener){
+        saveView.add(listener);
+    }
+
+    /**
+     * This method is used to remove saveListener to the model.
+     * @param listener saveListener
+     */
+    public void removeSaveView(SaveListener listener){
+        saveView.remove(listener);
+    }
+
+    /**
+     * This method is used to remove all saveListener to the model.
+     * @return Arraylist of listeners
+     */
+    public ArrayList<SaveListener> removeAllSaveView(){
+        ArrayList<SaveListener> temp = new ArrayList<>(saveView);
+        saveView.clear();
+        return temp;
+    }
+
+    /**
+     * Method that saves game state
+     * @param output_path location where file is saved
+     */
+    public void saveAction(String output_path) {
+        try {
+            JSONObject save_file = saveJSON();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-HH-mm-ss");
+            Date new_date = new Date();
+            String fileName = gameName + dateFormat.format(new_date)+".json";
+            FileWriter writer = new FileWriter(output_path + fileName);
+            String value = save_file.toString();
+            writer.write(value);
+            writer.close();
+            updateSaveView(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -117,15 +172,6 @@ public class GameModel{
         return continentMap;
     }
 
-    /**
-     * This method is used to check if the Player is an AIPlayer and if so, to start adding the delay to all the AIPlayer's moves.
-     */
-    public void initializeAITimer() {
-        if(currentPlayer instanceof AIPlayer) {
-            int AISpeed = 100;
-            aiTimer.scheduleAtFixedRate(new AITimer((AIPlayer) currentPlayer), AISpeed, AISpeed);
-        }
-    }
 
     /**
      * Gets the models for continentMap and worldMap and initializes the game to start.
@@ -137,7 +183,6 @@ public class GameModel{
         this.worldMap = worldMap;
         currentPlayer = playerList.get(currentPlayerIndex);
         currentPlayer.playerBonus(continentMap);
-        initializeAITimer();
         updateView();
     }
 
@@ -156,8 +201,8 @@ public class GameModel{
      */
     public void nextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerList.size();
+        currentPlayer.setActive(false);
         currentPlayer = playerList.get(currentPlayerIndex);
-        stopAITimer();
         if(currentPlayer.getTerritoriesOccupied().size() == 0){
             outOfGame++;
             nextPlayer();
@@ -166,14 +211,10 @@ public class GameModel{
         }else{
             outOfGame = 0;
             currentPlayer.playerBonus(continentMap);
-            initializeAITimer();
+            currentPlayer.setActive(true);
         }
     }
 
-    public void stopAITimer(){
-        aiTimer.cancel();
-        aiTimer = new Timer();
-    }
 
     /**
      * This method is in charge of handling the switching of states and is called everytime the View.StatusBar nextButton
@@ -278,6 +319,17 @@ public class GameModel{
     private void updateView(){
         for(UserStatusListener temp : gameViews){
             temp.updateUserStatus(new UserStatusEvent(this, currentPlayer, currentState));
+        }
+    }
+
+    /**
+     * This method is used to loop through every UserStatusListener that is listening to this and
+     * create UserStatusEvents that will notify the view of the changes
+     * @param fileName name of file
+     */
+    public void updateSaveView(String fileName){
+        for(SaveListener temp : saveView){
+            temp.updateSave(new SaveEvent(this,fileName));
         }
     }
 

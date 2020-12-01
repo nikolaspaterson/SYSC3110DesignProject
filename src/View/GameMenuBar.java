@@ -8,7 +8,7 @@ import java.io.File;
 /**
  * The GameMenuBar class is used to display the Save and Loading buttons on top of the main GameView.
  */
-public class GameMenuBar extends JMenuBar {
+public class GameMenuBar extends JMenuBar implements SaveListener {
 
     private final JMenuItem save;
     private final JMenu load;
@@ -60,7 +60,7 @@ public class GameMenuBar extends JMenuBar {
 
     /**
      * This method is used to add a singular saved file in the load menu.
-     * @param new_save the new save
+     * @param new_save
      */
     public void addLoad(String new_save){
         JMenuItem temp_button = new JMenuItem(new_save);
@@ -70,5 +70,10 @@ public class GameMenuBar extends JMenuBar {
 
     public JMenuItem getSave() {
         return save;
+    }
+
+    @Override
+    public void updateSave(SaveEvent e) {
+        addLoad(e.getSaveName());
     }
 }
