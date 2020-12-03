@@ -183,6 +183,7 @@ public class GameModel{
         this.worldMap = worldMap;
         currentPlayer = playerList.get(currentPlayerIndex);
         currentPlayer.playerBonus(continentMap);
+        currentPlayer.setActive(true);
         updateView();
     }
 
