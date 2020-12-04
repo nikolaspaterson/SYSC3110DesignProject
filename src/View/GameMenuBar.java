@@ -1,6 +1,7 @@
 
 package View;
 
+import Controller.JButtonActionCommands;
 import Controller.SaveController;
 import Event.SaveEvent;
 import Listener.SaveListener;
@@ -31,7 +32,7 @@ public class GameMenuBar extends JMenuBar implements SaveListener {
 
         outputPath = path;
         save_load.setText("File");
-        save.setText("Save");
+        save.setText(JButtonActionCommands.SAVE.getCommand());
         load.setText("Load");
         loadAll();
         save.addActionListener(this.controller);
@@ -63,7 +64,7 @@ public class GameMenuBar extends JMenuBar implements SaveListener {
 
     /**
      * This method is used to add a singular saved file in the load menu.
-     * @param new_save
+     * @param new_save the name of the saved file
      */
     public void addLoad(String new_save){
         JMenuItem temp_button = new JMenuItem(new_save);

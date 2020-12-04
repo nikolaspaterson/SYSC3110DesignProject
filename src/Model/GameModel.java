@@ -343,30 +343,35 @@ public class GameModel{
         game_json.setGameState(currentState);
         game_json.setGameName(gameName);
         game_json.setCurrentPlayerIndex(currentPlayerIndex);
-        savingPlayer(game_json, true);
-        savingPlayer(game_json, false);
+        savingPlayer(game_json);
+        saveTerritories(game_json);
         return game_json.getGame_json();
     }
 
     /**
-     * Saves the list of players or the Territories in an JSONArray to the JSONGameModel.
+     * Saves the list of players in an JSONArray to the JSONGameModel.
      * @param game_json the JSONGameModel
-     * @param savePlayer true if saving Player array to JSONGameModel, else save Territory array to JSONGameModel.
      */
     @SuppressWarnings("unchecked")
-    private void savingPlayer(JSONGameModel game_json, boolean savePlayer) {
+    private void savingPlayer(JSONGameModel game_json) {
         JSONArray savingArr = new JSONArray();
-        if(savePlayer) {
-            for(Player temp_player : playerList){
-                savingArr.add(temp_player.saveJSON());
-            }
-            game_json.setPlayer_array(savingArr);
-        } else {
-            for(Territory temp_territory : worldMap.values()){
-                savingArr.add(temp_territory.saveJSON());
-            }
-            game_json.setTerritory_array(savingArr);
+        for(Player temp_player : playerList){
+            savingArr.add(temp_player.saveJSON());
         }
+        game_json.setPlayer_array(savingArr);
+    }
+
+    /**
+     * Saves the list of Territories in an JSONArray to the JSONGameModel.
+     * @param game_json the JSONGameModel
+     */
+    @SuppressWarnings("unchecked")
+    private void saveTerritories(JSONGameModel game_json){
+        JSONArray savingArr = new JSONArray();
+        for(Territory temp_territory : worldMap.values()){
+            savingArr.add(temp_territory.saveJSON());
+        }
+        game_json.setTerritory_array(savingArr);
     }
 
     /**

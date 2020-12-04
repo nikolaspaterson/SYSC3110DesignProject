@@ -1,5 +1,6 @@
 package View;
 
+import Controller.JButtonActionCommands;
 import Controller.StartUpController;
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +35,7 @@ public class StartUpView extends JFrame {
         welcomeTextLabel.setFont(new Font("Impact", Font.PLAIN, 40));
 
         // How to Play Button
-        JButton howToPlayButton = new JButton("How to Play");
+        JButton howToPlayButton = new JButton(JButtonActionCommands.HOW_TO_PLAY.getCommand());
         howToPlayButton.setFont(new Font("Impact", Font.PLAIN, 60));
 
         // Play Button

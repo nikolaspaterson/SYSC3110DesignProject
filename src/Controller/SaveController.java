@@ -60,24 +60,6 @@ public class SaveController implements ActionListener{
     }
 
     /**
-     * This method is used to save the game to a JSON file.
-     */
-    private void saveAction() {
-        try {
-            JSONObject save_file = gameView.getModel().saveJSON();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-HH-mm-ss");
-            Date new_date = new Date();
-            FileWriter writer = new FileWriter(output_path + save_file.get(JSONGameModelKeys.NAME.getKey()) + dateFormat.format(new_date) + FilePath.JSON_FILE_SIGNATURE.getPath());
-            String value = save_file.toString();
-            menuBar.addLoad(save_file.get(JSONGameModelKeys.NAME.getKey()) + dateFormat.format(new_date) + FilePath.JSON_FILE_SIGNATURE.getPath());
-            writer.write(value);
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * This method is used to load the game based on which previous saved game you select.
      * @param actionCommand the filepath
      */
