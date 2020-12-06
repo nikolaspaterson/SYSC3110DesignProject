@@ -197,13 +197,13 @@ There still arent any known issues in our code.
 |JSON Model | Author(s) |
 | --- | --- |
 | JSONAIPlayer | Erik Iuhas |
-| JSONContinent | Erik Iuhas |
-| JSONContinentKeys | Erik Iuhas |
+| JSONContinent | Erik Iuhas, Ahmad El-Sammak|
+| JSONContinentKeys | Erik Iuhas, Ahmad El-Sammak |
 | JSONGameModel | Erik Iuhas |
-| JSONGameModelKeys | Erik Iuhas |
+| JSONGameModelKeys | Erik Iuhas, Ahmad El-Sammak |
 | JSONMap | Erik Iuhas |
-| JSONMapKeys | Erik Iuhas |
-| JSONMapTerritory | Erik Iuhas |
+| JSONMapKeys | Erik Iuhas, Ahmad El-Sammak |
+| JSONMapTerritory | Erik Iuhas , Ahmad El-Sammak|
 | JSONPlayer | Erik Iuhas |
 | JSONPlayerKeys | Erik Iuhas |
 | JSONTerritory | Erik Iuhas |
