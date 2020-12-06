@@ -138,7 +138,7 @@ There still arent any known issues in our code.
 | ReinforcePopUp	| Nikolas Paterson |
 | WinningScreenFrame | Ahmad El-Sammak|
 | FilePath | Ahmad El-Sammak |
-| GameMenuBar | Ahmad El-Sammak, Erik Iuhas |
+| GameMenuBar | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 
 **Controllers**
 
