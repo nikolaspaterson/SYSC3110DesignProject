@@ -137,6 +137,7 @@ There still arent any known issues in our code.
 | PlayerSelectPanel	| Ahmad El-Sammak |
 | ReinforcePopUp	| Nikolas Paterson |
 | WinningScreenFrame | Ahmad El-Sammak|
+| FilePath | Ahmad El-Sammak |
 
 **Controllers**
 
