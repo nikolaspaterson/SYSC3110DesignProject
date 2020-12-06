@@ -118,6 +118,8 @@ There still arent any known issues in our code.
 | AIPlayer | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 | AttackResult | Ahmad El-Sammak |
 | AITimer | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| FlasTimerTask | Erik Iuhas |
+| GameState | Ahmad El-Sammak |
 
 
 **Views**
