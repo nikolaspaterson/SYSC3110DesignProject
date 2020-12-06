@@ -206,7 +206,7 @@ There still arent any known issues in our code.
 | JSONMapKeys | Erik Iuhas, Ahmad El-Sammak |
 | JSONMapTerritory | Erik Iuhas , Ahmad El-Sammak|
 | JSONPlayer | Erik Iuhas |
-| JSONPlayerKeys | Erik Iuhas |
+| JSONPlayerKeys | Erik Iuhas, Ahmad El-Sammak |
 | JSONTerritory | Erik Iuhas |
 
 **Documentation**
