@@ -123,7 +123,7 @@ public class GameSetup {
             String path =  this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
             String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
             File chop_jar = new File(decodedPath);
-            if(chop_jar.getName().contains(FilePath.JSON_FILE_SIGNATURE.getPath())){
+            if(chop_jar.getName().contains(FilePath.JAR_FILE_SIGNATURE.getPath())){
                 decodedPath = decodedPath.replace(chop_jar.getName(),"");
             }
             String output_folder = decodedPath + "output/";

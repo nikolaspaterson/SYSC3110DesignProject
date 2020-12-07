@@ -4,6 +4,15 @@
   <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-www.bluestacks.com%2Fbs-images%2Flogo239.png&f=1&nofb=1" />
 </p>
 
+### How to Install
+User must have java JDK installed to run the program.
+Game has been optimized to run on Windows and some features maynot function on Mac & Linux
+
+1. Download ZIP file
+2. Extract ZIP
+3. Launch SYSC3110DesignProject.jar
+
+
 The goal of this team project is to reproduce a simplified version of the classic strategy game RISK.
 
 
@@ -34,20 +43,20 @@ TA(Carleton's Best)
 - [x] Milestone 1: Create a text-based playable game.
 - [x] Milestone 2: Make game GUI based.
 - [x] Milestone 3: Implement AI players and many more features!
-- [ ] Milestone 4: Save/load game and custom maps
+- [x] Milestone 4: Save/load game and custom maps
 
 ### Milestone 1 Deliverables
 1. Readme :white_check_mark:
 2. Source code + jar executable :white_check_mark:
 3. UML Diagram :white_check_mark:
-4. Documentaion :white_check_mark:
+4. Documentation :white_check_mark:
 
 The readme file is used to describe our project and the roadmap ahead.
 The source code consists of classes that work work together to make our text based game playable.
 The UML diagram displays how our classes interact with one another.
 We documented all of our code and provided a Word Document describing our choice in data structures.
 
-### Milesstone 2 Deliverables
+### Milestone 2 Deliverables
 1. Readme :white_check_mark:
 2. Design file :white_check_mark:
 3. Unit tests :white_check_mark:
@@ -63,10 +72,10 @@ We documented all of our code and provided a Word Document describing our choice
 
 
 ### Milestone 4 Deliverables
-1. Readme :x:
-2. Source code :x:
-3. Unit tests :x:
-4. Documentation :x:
+1. Readme :white_check_mark:
+2. Source code :white_check_mark:
+3. Unit tests :white_check_mark:
+4. Documentation :white_check_mark:
 
 
 ### Changes Made
@@ -78,6 +87,9 @@ In Milestone 2, we had to update the entire game to be GUI based so we went out 
 
 #### Milestone 3
 Are you smarter than our AI? Thats right, in the third milestone we added an ai player that you can compete against. We also added implemented unit testing, this means we were able to fix any bugs that I player may abuse to get an unfair advantage.
+
+#### Milestone 4
+We have allowed users to save their game so they can resume playing at a later time. We also implemented custom maps, users can create maps as a JSON file which can be loaded into our game and played. An example JSON map can be seen in our source code.
 
 ### Known Issues
 There still arent any known issues in our code. 
@@ -106,6 +118,8 @@ There still arent any known issues in our code.
 | AIPlayer | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 | AttackResult | Ahmad El-Sammak |
 | AITimer | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| FlasTimerTask | Erik Iuhas |
+| GameState | Ahmad El-Sammak |
 
 
 **Views**
@@ -125,6 +139,8 @@ There still arent any known issues in our code.
 | PlayerSelectPanel	| Ahmad El-Sammak |
 | ReinforcePopUp	| Nikolas Paterson |
 | WinningScreenFrame | Ahmad El-Sammak|
+| FilePath | Ahmad El-Sammak |
+| GameMenuBar | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 
 **Controllers**
 
@@ -137,6 +153,9 @@ There still arent any known issues in our code.
 | ReinforcePopUpController | Nikolas Paterson |
 | StartUpController | Nikolas Paterson |
 | TerritoryButtonController | Ahmad El-Sammak, Erik Iuhas|
+| JButtonActionCommands | Ahmad El-Sammak |
+| MapSelectController | Ahmad El-Sammak |
+| SaveController | Erik Iuhas |
 
 **Unit Tests**
 
@@ -146,6 +165,8 @@ There still arent any known issues in our code.
 | GameModelTest | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 | MockDice | Ahmad El-Sammak |
 | MockGameEvent | Ahmad El-Sammak |
+| SaveTest | Nikolas Paterson |
+| MockSave | Erik Iuhas, Nikolas Paterson |
 
 **Resources**
 
@@ -163,7 +184,8 @@ There still arent any known issues in our code.
 | --- | --- |
 | PlayerEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
 | UserStatusEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
-| TerritoryEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
+| TerritoryEvent | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| SaveEvent | Erik Iuhas, Nikolas Paterson | 
 
 **Listener**
 
@@ -172,6 +194,23 @@ There still arent any known issues in our code.
 | PlayerListener | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 | TerritoryView | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson | 
 | UserStatusListener | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
+| SaveEvent | Erik Iuhas, Nikolas Paterson |
+
+**JSONModels**
+
+|JSON Model | Author(s) |
+| --- | --- |
+| JSONAIPlayer | Erik Iuhas |
+| JSONContinent | Erik Iuhas, Ahmad El-Sammak|
+| JSONContinentKeys | Erik Iuhas, Ahmad El-Sammak |
+| JSONGameModel | Erik Iuhas |
+| JSONGameModelKeys | Erik Iuhas, Ahmad El-Sammak |
+| JSONMap | Erik Iuhas |
+| JSONMapKeys | Erik Iuhas, Ahmad El-Sammak |
+| JSONMapTerritory | Erik Iuhas , Ahmad El-Sammak|
+| JSONPlayer | Erik Iuhas |
+| JSONPlayerKeys | Erik Iuhas, Ahmad El-Sammak |
+| JSONTerritory | Erik Iuhas |
 
 **Documentation**
 
@@ -183,11 +222,9 @@ There still arent any known issues in our code.
 | Write Up | Ahmad El-Sammak, Erik Iuhas, Nikolas Paterson |
 
 ### Project Roadmap
-Milestone 4! In the fourth milestone we are going to create a save and load feature so you can pick up your game at a different time. We are looking forward to implementing this feature because it will also allow the user to load in their very own custom maps! We are hopeful to finish the final milestone early so polish off the project and get a head start on studying for exams.
+The project is complete and archived so if you would like to modify the code you must fork the project. This project was a great learning experience and it was a true pleasure to work with such a strong and devoted team. Many skills were learned and applied while designing this game, including but not limited to team work & communication, refining & refactoring code base, testing and documenting code. Many of these skills will be very useful when applied to a real world project.
 
 ### Copyright matters
-If you are interested in our game please check out its original insperation, [Risk: Global Domination](https://store.steampowered.com/app/1128810/RISK_Global_Domination/).
-We are creating this game for educational purposes which falls under fair use.
+If you are interested in our game please check out its original inspiration, [Risk: Global Domination](https://store.steampowered.com/app/1128810/RISK_Global_Domination/).
+We are created this game for educational purposes which falls under fair use.
 If you have concerns about copyrighted material please contact one of the project creators.
-
-See you again when we have completed Milestone 4! :metal:
