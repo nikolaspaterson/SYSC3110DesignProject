@@ -64,7 +64,7 @@ public class JSONGameModel {
     public void loadJSON(JSONObject game_json) {
         player_array = (JSONArray) game_json.get(JSONGameModelKeys.PLAYERS.getKey());
         territory_array = (JSONArray) game_json.get(JSONGameModelKeys.TERRITORIES.getKey());
-        setGameState((String)game_json.get(JSONGameModelKeys.GAME_STATE.getKey()));
+        setGameState((String) game_json.get(JSONGameModelKeys.GAME_STATE.getKey()));
         gameName = (String) game_json.get(JSONGameModelKeys.NAME.getKey());
         currentPlayerIndex = (int) (long) game_json.get(JSONGameModelKeys.CURRENT_PLAYER.getKey());
     }
@@ -74,10 +74,12 @@ public class JSONGameModel {
      * @param state the state of the game
      */
     private void setGameState(String state) {
-        switch (state) {
-            case "REINFORCE" -> gameState = GameState.REINFORCE;
-            case "ATTACK" -> gameState = GameState.ATTACK;
-            case "FORTIFY" -> gameState = GameState.FORTIFY;
+        if (state.equals(GameState.REINFORCE.toString())) {
+            gameState = GameState.REINFORCE;
+        } else if (state.equals(GameState.ATTACK.toString())) {
+            gameState = GameState.ATTACK;
+        } else if (state.equals(GameState.FORTIFY.toString())) {
+            gameState = GameState.FORTIFY;
         }
     }
 

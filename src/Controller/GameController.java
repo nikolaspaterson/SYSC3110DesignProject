@@ -14,8 +14,8 @@ public class GameController {
 
     private GameModel gameModel;
     private final GameView gameView;
-    private final static int popUpX = 300;
-    private final static int popUpY = 350;
+    private final static int POPUP_X = 300;
+    private final static int POPUP_Y = 350;
     private final static int ZERO_TROOPS_DEPLOYABLE = 0;
 
     /**
@@ -69,7 +69,7 @@ public class GameController {
         if (temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCurrentPlayer().getDeployableTroops() != ZERO_TROOPS_DEPLOYABLE) {
             gameModel.addCommandTerritory(temp_territory);
             ReinforcePopUp temp = new ReinforcePopUp(temp_territory);
-            temp.show(gameView, popUpX, popUpY);
+            temp.show(gameView, POPUP_X, POPUP_Y);
             System.out.println("Pop up Reinforce + \n" + temp_territory.toString());
             gameModel.clearCommandTerritory();
         }
@@ -92,7 +92,7 @@ public class GameController {
             gameModel.addCommandTerritory(temp_territory);
         } else if (gameModel.getCommandTerritorySize() == 1 && !temp_territory.getOccupant().equals(gameModel.getCurrentPlayer()) && gameModel.getCommandTerritory().get(0).isNeighbour(temp_territory)) {
             AttackPopUp attackPopUp = new AttackPopUp(gameModel.getCommandTerritory().get(0), temp_territory, gameView);
-            attackPopUp.show(gameView, popUpX, popUpY);
+            attackPopUp.show(gameView, POPUP_X, POPUP_Y);
             System.out.println("Attacker: " + gameModel.getCommandTerritory().get(0).toString() + "Defender: " + temp_territory.toString());
             gameModel.getCommandTerritory().get(0).cancel_timer();
             gameModel.clearCommandTerritory();
@@ -117,7 +117,7 @@ public class GameController {
             gameModel.addCommandTerritory(temp_territory);
             System.out.println("Ally1: " + gameModel.getCommandTerritory().get(0).toString() + "Ally2: " + gameModel.getCommandTerritory().get(1).toString());
             FortifyPopUp fortifyPopUp = new FortifyPopUp(gameModel.getCommandTerritory().get(0), gameModel.getCommandTerritory().get(1));
-            fortifyPopUp.show(gameView, popUpX, popUpY);
+            fortifyPopUp.show(gameView, POPUP_X, POPUP_Y);
             gameModel.clearCommandTerritory();
         } else {
             gameModel.clearCommandTerritory();

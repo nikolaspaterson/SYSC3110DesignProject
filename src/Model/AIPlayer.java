@@ -20,6 +20,14 @@ public class AIPlayer extends Player {
     private final GameEvent gameEvent;
     private boolean attacking;
     private Timer aiTimer;
+    private final static int AISPEED = 100;
+    private final static int INDEX_ATTACKING = 0;
+    private final static int INDEX_DEFENDING = 1;
+    private final static double ZER0_PERCENT = 0;
+    private final static double TWENTY_FIVE_PERCENT = 0.25;
+    private final static double FIFTY_PERCENT = 0.50;
+    private final static double SEVENTY_FIVE_PERCENT = 0.75;
+    private final static double HUNDRED_PERCENT = 1;
 
     /**
      * Class constructor for the AIPlayer class. Sets the name of the AI and passes in a reference to the gameView to simply control
@@ -33,7 +41,7 @@ public class AIPlayer extends Player {
         this.gameModel = gameModel;
         gameEvent = new GameEvent(this);
         attacking = true;
-        aiTimer = new Timer("AI");
+        aiTimer = new Timer();
     }
 
     /**
@@ -46,7 +54,7 @@ public class AIPlayer extends Player {
         super(player,currentMap);
         this.gameModel = gameModel;
         this.gameEvent = new GameEvent(this);
-        aiTimer = new Timer("AI");
+        aiTimer = new Timer();
         JSONAIPlayer player_json = new JSONAIPlayer(player);
         setName(player_json.getName());
         setTotal_troops(player_json.getTotal_troops());
@@ -95,7 +103,7 @@ public class AIPlayer extends Player {
      * This method is used to start adding the Timer which will allow for AIPlayer to play.
      */
     public void initializeAITimer() {
-        int AISpeed = 100;
+        int AISpeed = AISPEED;
         aiTimer.scheduleAtFixedRate(new AITimer(this), AISpeed, AISpeed);
     }
     /**
@@ -121,14 +129,14 @@ public class AIPlayer extends Player {
      * @return int the priority
      */
     public int leastEnemySurrounded(float enemyNeighbourRatio) {
-        if(enemyNeighbourRatio <= 0.25 && enemyNeighbourRatio > 0) {
-            return 6;
-        } else if(enemyNeighbourRatio > 0.25 && enemyNeighbourRatio <= 0.50) {
-            return 4;
-        } else if(enemyNeighbourRatio > 0.50 && enemyNeighbourRatio <= 0.75) {
-            return 2;
+        if(enemyNeighbourRatio <= TWENTY_FIVE_PERCENT && enemyNeighbourRatio > ZER0_PERCENT) {
+            return Priority.SIX.getValue();
+        } else if(enemyNeighbourRatio > TWENTY_FIVE_PERCENT && enemyNeighbourRatio <= FIFTY_PERCENT) {
+            return Priority.FOUR.getValue();
+        } else if(enemyNeighbourRatio > FIFTY_PERCENT && enemyNeighbourRatio <= SEVENTY_FIVE_PERCENT) {
+            return Priority.TWO.getValue();
         } else {
-            return -100;
+            return Priority.LOWEST_PRIORITY.getValue();
         }
     }
 
@@ -140,11 +148,11 @@ public class AIPlayer extends Player {
      */
     public int lowestTroopTerritory(Territory territory) {
         if(territory.getTroops() == 1) {
-            return 3;
+            return Priority.THREE.getValue();
         } else if(territory.getTroops() == 2) {
-            return 2;
+            return Priority.TWO.getValue();
         } else {
-            return 1;
+            return Priority.ONE.getValue();
         }
     }
 
@@ -189,10 +197,10 @@ public class AIPlayer extends Player {
      */
     public int splitDeployTroops() {
         int troops = this.getDeployableTroops();
-        if(troops <= 3) {
+        if(troops <= Priority.DEPLOY_THRESHOLD.getValue()) {
             return troops;
         }
-        return (troops/3);
+        return (troops/Priority.DEPLOY_THRESHOLD.getValue());
     }
 
     /**
@@ -211,8 +219,8 @@ public class AIPlayer extends Player {
      */
     public ArrayList<Territory> bestAttackTerritory() {
         ArrayList<Territory> weakest = new ArrayList<>();
-        double highestValue = 2;
-        double threshold = 2;
+        double threshold = Priority.ATTACK_THRESHOLD.getValue();
+        double highestValue = threshold;
         for(Territory allTerritories : getTerritoriesOccupied().values()){
             for(Territory currentEnemy : allTerritories.getNeighbours().values()){
                 if(!currentEnemy.getOccupant().equals(this)){
@@ -223,8 +231,8 @@ public class AIPlayer extends Player {
                         weakest.add(currentEnemy);
                     }else if(highestValue < newValue){
                         highestValue = newValue;
-                        weakest.set(0,allTerritories);
-                        weakest.set(1,currentEnemy);
+                        weakest.set(INDEX_ATTACKING,allTerritories);
+                        weakest.set(INDEX_DEFENDING,currentEnemy);
                     }
                 }
             }
@@ -238,8 +246,8 @@ public class AIPlayer extends Player {
     public void attack() {
         ArrayList<Territory> terrAttack = bestAttackTerritory();
         if (terrAttack.size() != 0){
-            attackingMove(terrAttack.get(0), terrAttack.get(1));
-            winningAttackingMove(terrAttack.get(0), terrAttack.get(1));
+            attackingMove(terrAttack.get(INDEX_ATTACKING), terrAttack.get(INDEX_DEFENDING));
+            winningAttackingMove(terrAttack.get(INDEX_ATTACKING), terrAttack.get(INDEX_DEFENDING));
         }else {
             attacking = false;
         }
@@ -253,10 +261,10 @@ public class AIPlayer extends Player {
     public void winningAttackingMove(Territory attacking, Territory defending) {
         if(gameEvent.getAttackerWon()) {
             int value = leastEnemySurrounded(enemyNeighbourRatio(attacking));
-            if(value < 0) {
-                gameEvent.fortify(attacking, defending, (attacking.getTroops()-1));
+            if(value < Priority.ZERO.getValue()) {
+                gameEvent.fortify(attacking, defending, (attacking.getTroops()-1)); // Move all troops
             } else {
-                gameEvent.fortify(attacking, defending, (attacking.getTroops()/2));
+                gameEvent.fortify(attacking, defending, (attacking.getTroops()/Priority.MOVE_HALF.getValue()));
             }
             this.setFortifyStatus(true);
         }
@@ -268,12 +276,12 @@ public class AIPlayer extends Player {
      * @param defender the defending territory
      */
     public void attackingMove(Territory attacker, Territory defender) {
-        if(attacker.getTroops() >= 4){
-            gameEvent.attack(attacker, defender, 3);
-        }else if(attacker.getTroops() == 3){
-            gameEvent.attack(attacker, defender, 2);
+        if(attacker.getTroops() >= Priority.ROLL_THREE.getValue()){
+            gameEvent.attack(attacker, defender, Priority.THREE_DICE.getValue());
+        }else if(attacker.getTroops() == Priority.ROLL_TWO.getValue()){
+            gameEvent.attack(attacker, defender, Priority.TWO_DICE.getValue());
         }else {
-            gameEvent.attack(attacker, defender, 1);
+            gameEvent.attack(attacker, defender, Priority.ONE_DIE.getValue());
         }
     }
 
@@ -308,15 +316,16 @@ public class AIPlayer extends Player {
 
         int total = allyTerritory.getTroops() + enemyTerritory.getTroops();
         float troopDifference = (float) (allyTerritory.getTroops() - enemyTerritory.getTroops())/total;
+        float troopRatio = troopDifference_with/troopDifference;
 
-        if(troopDifference_with/troopDifference > 2) {
-            return 3;
-        } else if(troopDifference > 1.5){
-            return 2;
-        }else if(troopDifference > 1.25) {
-            return 1;
+        if(troopRatio > 2) {
+            return Priority.THREE.getValue();
+        } else if(troopRatio > 1.5){
+            return Priority.TWO.getValue();
+        }else if(troopRatio > 1.25) {
+            return Priority.ONE.getValue();
         }else{
-            return 0;
+            return Priority.ZERO.getValue();
         }
     }
 
@@ -359,12 +368,12 @@ public class AIPlayer extends Player {
             }
         }
         float continentRatio = (float) ownedTerritories/continentSize;
-        if (continentRatio == 1){
-            return -5;
-        } else if(continentRatio >= 0.75){
-            return 5;
+        if (continentRatio == HUNDRED_PERCENT){
+            return Priority.NEG_FIVE.getValue();
+        } else if(continentRatio >= SEVENTY_FIVE_PERCENT){
+            return Priority.FIVE.getValue();
         }else {
-           return  0;
+           return Priority.ZERO.getValue();
         }
     }
 
@@ -374,7 +383,7 @@ public class AIPlayer extends Player {
     public void fortify(){
         Territory[] territories = bestFortifyTerritory();
         if(territories != null){
-            gameEvent.fortify(territories[0], territories[1], availableTroopsToReceive(territories[0]));
+            gameEvent.fortify(territories[INDEX_ATTACKING], territories[INDEX_DEFENDING], availableTroopsToReceive(territories[INDEX_ATTACKING]));
         }
     }
 
@@ -452,14 +461,14 @@ public class AIPlayer extends Player {
      * @return threat level
      */
     private int assignThreatLevel(Territory t, int troops){
-        int threat = 0;
+        int threat = Priority.ZERO.getValue();
         if (!isSafe(t)) {
             for (Territory neighbourTerritory : t.getNeighbours().values()) {
                 if (!neighbourTerritory.getOccupant().equals(t.getOccupant())) {
-                    if (troops > neighbourTerritory.getTroops() && threat < 1) {
-                        threat = 1;
+                    if (troops > neighbourTerritory.getTroops() && threat < Priority.ONE.getValue()) {
+                        threat = Priority.ONE.getValue();
                     } else {
-                        threat = 2;
+                        threat = Priority.TWO.getValue();
                     }
                 }
             }
@@ -477,7 +486,7 @@ public class AIPlayer extends Player {
      */
     private int availableTroopsToReceive(Territory t){
         if(isSafe(t)){
-            return t.getTroops()-1;
+            return t.getTroops()-1; // donates all but one troop
         }else{
             //Check for neighbouring enemy with highest number of troops (AKA Biggest threat)
             int enemyTroops = 0;
@@ -488,7 +497,7 @@ public class AIPlayer extends Player {
                     }
                 }
             }
-            return t.getTroops() - (enemyTroops + 2);
+            return t.getTroops() - (enemyTroops + 2); // keeps two more troops than the enemy and donates the rest
         }
     }
 
